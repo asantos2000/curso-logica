@@ -1,0 +1,646 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<style>:root{color-scheme:light dark}body{margin:0;font:14px/1.5 system-ui,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style>
+</head>
+<body>
+<title>A Linguagem Antes do Símbolo</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,600&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<style>
+:root{
+  --ground:#EEF1EE; --surface:#FAFBF9; --surface-2:#E2E7E3; --raised:#FFFFFF;
+  --ink:#131A18; --ink-soft:#38443F; --muted:#5F6C66; --line:#CBD4CE; --line-soft:#DDE4DF;
+  --accent:#0C6355; --accent-ink:#08463C; --accent-soft:#D6E7E2;
+  --verum:#0C6355; --falsum:#A33C20; --brass:#8A6D0B;
+  --shadow:0 1px 2px rgba(19,26,24,.06), 0 8px 24px -12px rgba(19,26,24,.18);
+  --serif:"Spectral", Georgia, "Times New Roman", serif;
+  --mono:"IBM Plex Mono", "SFMono-Regular", Consolas, monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --ground:#0E1413; --surface:#151D1B; --surface-2:#1D2926; --raised:#1A2422;
+    --ink:#E4EAE6; --ink-soft:#BCC7C2; --muted:#8D9C96; --line:#2B3835; --line-soft:#222E2B;
+    --accent:#4FBCA6; --accent-ink:#8FD8C8; --accent-soft:#17332E;
+    --verum:#4FBCA6; --falsum:#DE8461; --brass:#CFA93A;
+    --shadow:0 1px 2px rgba(0,0,0,.4), 0 10px 30px -14px rgba(0,0,0,.7);
+  }
+}
+:root[data-theme="dark"]{
+  --ground:#0E1413; --surface:#151D1B; --surface-2:#1D2926; --raised:#1A2422;
+  --ink:#E4EAE6; --ink-soft:#BCC7C2; --muted:#8D9C96; --line:#2B3835; --line-soft:#222E2B;
+  --accent:#4FBCA6; --accent-ink:#8FD8C8; --accent-soft:#17332E;
+  --verum:#4FBCA6; --falsum:#DE8461; --brass:#CFA93A;
+  --shadow:0 1px 2px rgba(0,0,0,.4), 0 10px 30px -14px rgba(0,0,0,.7);
+}
+
+*{box-sizing:border-box}
+body{margin:0;background:var(--ground);color:var(--ink);font-family:var(--serif);
+  font-size:17px;line-height:1.62;-webkit-font-smoothing:antialiased}
+.shell{max-width:1180px;margin:0 auto;padding:0 24px;display:grid;
+  grid-template-columns:220px minmax(0,1fr);gap:52px;align-items:start}
+.hero{grid-column:1/-1;padding:52px 0 32px;border-bottom:1px solid var(--line)}
+.hero .eyebrow{font:600 10.5px/1 var(--mono);letter-spacing:.18em;text-transform:uppercase;color:var(--accent)}
+.hero h1{font-size:clamp(34px,4.8vw,54px);font-weight:600;letter-spacing:-.032em;line-height:1.03;
+  margin:16px 0 12px;max-width:17ch;text-wrap:balance}
+.hero .lede{font-size:19px;color:var(--ink-soft);max-width:62ch;margin:0 0 28px}
+.facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:0;border-top:1px solid var(--line)}
+.facts div{padding:14px 20px 14px 0}
+.facts .k{font:600 10px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.facts .v{font-size:16.5px;margin-top:6px;line-height:1.3}
+nav.toc{position:sticky;top:26px;padding:32px 0 40px;font-size:14px}
+nav.toc .lbl{font:600 10px/1 var(--mono);letter-spacing:.16em;text-transform:uppercase;color:var(--muted);
+  padding-bottom:10px;border-bottom:1px solid var(--line);display:block;margin-bottom:12px}
+nav.toc a{display:block;color:var(--muted);text-decoration:none;padding:5px 0 5px 12px;
+  border-left:2px solid transparent;line-height:1.35}
+nav.toc a:hover{color:var(--ink)}
+nav.toc a.on{color:var(--accent);border-left-color:var(--accent);font-weight:500}
+article{padding:32px 0 90px;max-width:72ch}
+article h2{font-size:26px;font-weight:600;letter-spacing:-.018em;line-height:1.16;
+  margin:52px 0 4px;scroll-margin-top:28px;text-wrap:balance}
+article h2:first-of-type{margin-top:10px}
+article h2 .num{font:600 11px/1 var(--mono);letter-spacing:.14em;color:var(--accent);display:block;margin-bottom:10px}
+article h3{font-size:19px;font-weight:600;margin:32px 0 8px;letter-spacing:-.01em;scroll-margin-top:28px}
+article h4{font-size:16.5px;font-weight:600;margin:24px 0 6px}
+article p{margin:0 0 16px;color:var(--ink-soft)}
+article p strong{color:var(--ink);font-weight:600}
+article .intro{font-size:18.5px;color:var(--ink);margin-bottom:22px}
+.m{font-family:var(--mono);font-size:.92em;background:var(--surface);padding:1px 5px;border-radius:2px;color:var(--ink)}
+.tw{overflow-x:auto;margin:20px 0 24px;border:1px solid var(--line);border-radius:4px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;font-size:14.6px;min-width:440px}
+th,td{text-align:left;padding:10px 13px;border-bottom:1px solid var(--line-soft);vertical-align:top;color:var(--ink-soft)}
+tr:last-child td{border-bottom:0}
+th{font:600 10px/1.4 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--muted);
+  border-bottom:1px solid var(--line);background:var(--ground)}
+td.m2{font-family:var(--mono);font-size:13.5px;white-space:nowrap;color:var(--ink)}
+td.c{text-align:center;font-family:var(--mono)}
+td strong{color:var(--ink)}
+/* blocos formais */
+.fx{font-family:var(--mono);font-size:15px;background:var(--surface);border:1px solid var(--line);
+  border-radius:4px;padding:14px 16px;margin:0 0 18px;overflow-x:auto;color:var(--ink);white-space:pre-wrap}
+.thm{border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:4px;background:var(--surface);
+  padding:18px 20px;margin:22px 0}
+.thm .lb{font:600 10.5px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--accent);
+  display:block;margin-bottom:9px}
+.thm p{margin:0 0 10px;color:var(--ink)}
+.thm p:last-child{margin-bottom:0}
+.thm.lema{border-left-color:var(--brass)}
+.thm.lema .lb{color:var(--brass)}
+.prova{border-left:2px solid var(--line);padding:2px 0 2px 16px;margin:16px 0 22px}
+.prova .lb{font:600 10px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--muted);
+  display:block;margin-bottom:8px}
+.prova p{font-size:16px;margin:0 0 12px}
+.prova p:last-child{margin-bottom:0}
+.qed::after{content:" ▪";color:var(--accent)}
+.marco{border-left:3px solid var(--brass);padding:4px 0 4px 15px;margin:26px 0;font-size:16px;color:var(--ink)}
+.marco b{font:600 10px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--brass);
+  display:block;margin-bottom:6px}
+.note{font-size:14.5px;color:var(--muted);border-left:2px solid var(--line);padding-left:16px;margin:22px 0}
+figure{margin:28px 0 32px}
+figure svg{width:100%;height:auto;display:block;border:1px solid var(--line);border-radius:4px;background:var(--surface)}
+figcaption{font-size:13.5px;color:var(--muted);margin-top:10px;line-height:1.5}
+figcaption b{font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--accent);font-weight:600;margin-right:8px}
+.svg-t{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.06em;fill:var(--muted)}
+.svg-l{font-family:Spectral,Georgia,serif;font-size:14px;fill:var(--ink)}
+.svg-s{font-family:Spectral,Georgia,serif;font-size:12.5px;fill:var(--muted)}
+.svg-bx{fill:var(--ground);stroke:var(--line);stroke-width:1.2}
+.svg-bx-a{fill:var(--accent-soft);stroke:var(--accent);stroke-width:1.4}
+.svg-ar{stroke:var(--muted);stroke-width:1.3;fill:none}
+/* interativos genéricos */
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:9px;margin:18px 0}
+.card{text-align:left;border:1px solid var(--line);border-radius:4px;background:var(--surface);
+  padding:11px 13px;cursor:pointer;font-family:var(--serif);color:var(--ink)}
+.card:hover{border-color:var(--accent)}
+.card[aria-pressed="true"]{border-color:var(--accent);background:var(--accent-soft)}
+.card .n{font:600 10px/1 var(--mono);letter-spacing:.1em;color:var(--muted);display:block;margin-bottom:5px}
+.card .t{font-size:14.5px;font-weight:500;line-height:1.25}
+.readout{border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:4px;
+  background:var(--surface);padding:16px 18px;margin-bottom:8px}
+.readout .rk{font:600 10px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:8px}
+.readout p{font-size:15px;margin:0 0 8px;color:var(--ink-soft)}
+.readout p:last-child{margin-bottom:0}
+.readout ol{margin:6px 0 0;padding-left:20px;font-size:14.5px;color:var(--ink-soft)}
+.readout ol li{margin-bottom:5px}
+.refs{margin-top:12px}
+.refs p{padding-left:34px;text-indent:-34px;font-size:15.5px;margin-bottom:13px}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+@media (max-width:900px){
+  .shell{grid-template-columns:1fr;gap:0}
+  nav.toc{position:static;padding:22px 0 0;columns:2;column-gap:24px}
+  nav.toc .lbl{column-span:all}
+  article{padding-top:22px}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+<style>
+.cbar{display:flex;align-items:center;gap:14px;flex-wrap:wrap;padding:9px 24px;
+  border-bottom:1px solid var(--line);background:var(--surface-2);
+  font:500 12.5px/1 var(--mono);position:sticky;top:0;z-index:20}
+.cbar a{color:var(--accent);text-decoration:none;white-space:nowrap}
+.cbar a:hover{text-decoration:underline}
+.cbar .home{font-weight:600}
+.cbar .where{color:var(--muted);letter-spacing:.06em;text-transform:uppercase;font-size:10.5px}
+.cbar .sp{flex:1}
+.cbar .nx{color:var(--ink-soft)}
+.nextgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px;margin:22px 0 8px}
+.nextgrid .nx{display:block;text-decoration:none;border:1px solid var(--line);border-radius:4px;
+  background:var(--surface);padding:16px 18px;color:var(--ink)}
+.nextgrid .nx:hover{border-color:var(--accent)}
+.nextgrid .k{font:600 10px/1 var(--mono);letter-spacing:.13em;text-transform:uppercase;color:var(--accent);display:block}
+.nextgrid .t{font-size:16.5px;font-weight:600;margin:9px 0 6px;line-height:1.2;display:block}
+.nextgrid .d{font-size:14px;color:var(--muted);line-height:1.45;display:block}
+</style>
+<nav class="cbar"><a class="home" href="index.html">&#9666; Índice do curso</a><span class="where">Nível A · módulo 2</span><span class="sp"></span><a class="nx" href="01b-modulo-1a.html">&larr; Módulo 1A · Argumentação informal</a><a class="nx" href="03-modulo-3.html">Módulo 3 · Cálculo proposicional &rarr;</a></nav>
+<style>
+.lab{border:1px solid var(--line);border-radius:5px;background:var(--surface);padding:20px 22px;margin:24px 0}
+.lab h4{margin:0 0 4px;font-size:17px}
+.lab .sub{font-size:14px;color:var(--muted);margin:0 0 16px}
+.ctl{font:600 9.5px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--muted);display:block;margin:0 0 9px}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:14px}
+.seg{display:flex;border:1px solid var(--line);border-radius:3px;overflow:hidden}
+.seg button{font:500 12px/1 var(--mono);padding:8px 12px;background:var(--ground);border:0;
+  border-right:1px solid var(--line);color:var(--muted);cursor:pointer}
+.seg button:last-child{border-right:0}
+.seg button[aria-pressed="true"]{background:var(--accent);color:var(--surface)}
+.seg button:hover:not([aria-pressed="true"]){background:var(--surface-2);color:var(--ink)}
+.seg .lbl{font:600 9.5px/1 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--muted);
+  padding:9px 10px;background:var(--surface-2);border-right:1px solid var(--line)}
+/* quadrado */
+.sqwrap{display:grid;grid-template-columns:minmax(260px,1fr) minmax(240px,1fr);gap:22px;align-items:start}
+@media (max-width:720px){.sqwrap{grid-template-columns:1fr}}
+.sq{border:1px solid var(--line-soft);border-radius:4px;background:var(--ground);padding:8px}
+.sq svg{width:100%;height:auto;display:block}
+.corner{cursor:pointer}
+.corner rect{fill:var(--surface);stroke:var(--line);stroke-width:1.3}
+.corner.v rect{fill:var(--accent-soft);stroke:var(--accent);stroke-width:2}
+.corner.f rect{stroke:var(--falsum);stroke-width:2}
+.corner.q rect{stroke-dasharray:3 3}
+/* silogismo */
+.sil{display:grid;grid-template-columns:minmax(230px,1fr) minmax(250px,1.1fr);gap:22px;align-items:start}
+@media (max-width:720px){.sil{grid-template-columns:1fr}}
+.forma{font-family:var(--mono);font-size:14px;background:var(--ground);border:1px solid var(--line-soft);
+  border-radius:4px;padding:13px 15px;line-height:1.85;color:var(--ink)}
+.forma .t{color:var(--accent);font-weight:600}
+.concl{width:100%;border-collapse:collapse;font-size:13.5px}
+.concl th{font:600 9.5px/1.3 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--muted);
+  text-align:left;padding:8px 10px;border-bottom:1px solid var(--line);background:var(--ground)}
+.concl td{padding:8px 10px;border-bottom:1px solid var(--line-soft);color:var(--ink-soft)}
+.concl td.f{font-family:var(--mono);font-size:13px;color:var(--ink);white-space:nowrap}
+.pill{font:600 9.5px/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;padding:4px 7px;border-radius:3px;
+  border:1px solid var(--line);color:var(--muted);display:inline-block}
+.pill.yes{background:var(--accent-soft);border-color:var(--accent);color:var(--accent-ink)}
+.pill.no{border-color:var(--falsum);color:var(--falsum)}
+.nome{font:600 11px/1 var(--mono);color:var(--brass);letter-spacing:.06em}
+/* uso e menção */
+.frases{display:flex;flex-direction:column;gap:7px;margin-bottom:14px}
+.fr{text-align:left;border:1px solid var(--line);border-radius:3px;background:var(--ground);
+  padding:10px 13px;cursor:pointer;font-family:var(--serif);font-size:15.5px;color:var(--ink)}
+.fr:hover{border-color:var(--accent)}
+.fr.ok{border-color:var(--verum);background:var(--accent-soft)}
+.fr.no{border-color:var(--falsum)}
+.fr .tag{font:600 9.5px/1 var(--mono);letter-spacing:.1em;text-transform:uppercase;
+  float:right;margin-left:10px;color:var(--muted)}
+</style>
+<div class="shell">
+  <header class="hero">
+    <div class="eyebrow">Curso de fluência em lógica · módulo 2</div>
+    <h1>A linguagem antes do símbolo</h1>
+    <p class="lede">Módulo de instrumentação. Fornece as duas ferramentas de que a formalização dependerá, o controle metalinguístico e a teoria elementar de conjuntos, e situa a disciplina em sua história, de Heráclito ao silogismo aristotélico.</p>
+    <div class="facts">
+      <div><div class="k">Nível</div><div class="v">A · iniciante</div></div>
+      <div><div class="k">Unidades</div><div class="v">Cinco</div></div>
+      <div><div class="k">Pré-requisito</div><div class="v">Marco A1</div></div>
+      <div><div class="k">Marco</div><div class="v">A2</div></div>
+      <div><div class="k">Notação lógica</div><div class="v">Ainda nenhuma</div></div>
+      <div><div class="k">Texto-base</div><div class="v">Mortari (2016, caps. 3–4)</div></div>
+    </div>
+  </header>
+
+  <nav class="toc" id="toc">
+    <span class="lbl">Unidades</span>
+    <a href="#i">O que este módulo instala</a>
+    <a href="#u1">2.1 Linguagens, uso e menção</a>
+    <a href="#u2">2.2 Teoria elementar de conjuntos</a>
+    <a href="#u3">2.3 Origens gregas</a>
+    <a href="#u4">2.4 Aristóteles</a>
+    <a href="#quadrado">O quadrado das oposições</a>
+    <a href="#silogismo">Verificador de silogismos</a>
+    <a href="#u5">2.5 Estoicos e medievais</a>
+    <a href="#marco">Marco A2</a>
+    <a href="#proximo">Próximo passo</a>
+    <a href="#ref">Referências</a>
+  </nav>
+
+  <article>
+    <h2 id="i"><span class="num">Abertura</span>O que este módulo instala</h2>
+    <p class="intro">O módulo 1 tratou de argumentos em língua natural. O módulo 3 tratará de uma linguagem artificial. Entre um e outro há um intervalo que a maioria dos cursos atravessa depressa demais, e que consiste em duas coisas: saber falar sobre linguagem sem confundir-se, e dispor de um vocabulário para descrever coleções.</p>
+    <p>A primeira ferramenta parece trivial e não é. Quando, no módulo 3, se disser que «P é uma fórmula» ou que «α representa uma fórmula qualquer», estará em curso um discurso sobre expressões, e não sobre aquilo de que as expressões falam. Quem não distingue os dois níveis tropeça na primeira definição recursiva e não sabe por quê.</p>
+    <p>A segunda ferramenta parece desnecessária e não é. A semântica do módulo 3 define valorações como funções, a do módulo 5 define estruturas como pares formados por um domínio e uma interpretação, e ambas as definições são ilegíveis para quem não sabe o que é uma função ou um par ordenado. O aluno que salta este capítulo costuma tropeçar dois módulos depois, sem identificar a origem do tropeço.</p>
+    <p>A esse trabalho instrumental o módulo acrescenta a história, que aqui não é ornamento. Os paradoxos de Zenão são o primeiro uso sistemático da redução ao absurdo, que reaparece como regra no módulo 4; o quadrado aristotélico é o primeiro sistema completo de avaliação de validade, apresentado antes que exista notação para ele; e a discussão dos futuros contingentes é a motivação histórica das lógicas polivalentes do módulo 6.</p>
+
+    <h2 id="u1"><span class="num">Unidade 2.1</span>Linguagens, uso e menção, metalinguagem</h2>
+    <p>Uma <strong>linguagem natural</strong> é a que se aprende por imersão, tem vocabulário aberto, gramática irregular e depende do contexto para desambiguar. Uma <strong>linguagem artificial</strong> é construída por estipulação, tem vocabulário fixado por lista, gramática dada por regras explícitas e é desenhada para eliminar a ambiguidade. As linguagens dos módulos 3 e 5 são artificiais nesse sentido estrito, e é por isso que a sua sintaxe poderá ser definida em meia página.</p>
+    <h4>Uso e menção</h4>
+    <p>Uma expressão é <strong>usada</strong> quando se fala daquilo a que ela se refere, e <strong>mencionada</strong> quando se fala dela própria. A convenção que separa os dois casos é a das aspas: escreve-se a expressão entre aspas quando ela é mencionada.</p>
+    <div class="fx">Sócrates era filósofo.        A palavra é usada; fala-se do homem.
+«Sócrates» tem oito letras.   A palavra é mencionada; fala-se da palavra.
+Sócrates tem oito letras.     Falso: o homem não tem letras.
+«Sócrates» era filósofo.      Falso: a palavra não fazia filosofia.</div>
+    <p>A confusão entre os dois não é rara nem inofensiva. Ela produz os paradoxos semânticos, e produz também, de modo mais prosaico, a incapacidade de ler a definição de fórmula do módulo 3, na qual símbolos são mencionados o tempo todo.</p>
+    <div class="lab" id="labum">
+      <h4>Exercício de uso e menção</h4>
+      <p class="sub">Clique em cada sentença para verificar se ela é verdadeira. Três delas confundem os níveis.</p>
+      <div class="frases" id="frases"></div>
+      <div class="readout" id="frOut"><div class="rk">Leitura</div><p>A pergunta a fazer diante de cada sentença é simples: o predicado que ela atribui convém a uma palavra ou àquilo que a palavra designa?</p></div>
+    </div>
+    <h4>Linguagem-objeto e metalinguagem</h4>
+    <p>Quando se estuda uma linguagem, é preciso outra para falar dela. A linguagem estudada chama-se <strong>linguagem-objeto</strong>; aquela em que o estudo é escrito chama-se <strong>metalinguagem</strong>. Neste curso, a linguagem-objeto é o cálculo proposicional ou o de predicados, e a metalinguagem é o português acrescido de alguns símbolos auxiliares.</p>
+    <p>Os símbolos auxiliares mais importantes são as <strong>variáveis metalinguísticas</strong>, escritas com letras gregas. Quando se escreve «para toda fórmula α», a letra α não pertence à linguagem-objeto: ela é um recurso do português para falar de fórmulas quaisquer. Essa é a razão pela qual, no módulo 4, as regras de inferência são enunciadas com α e β, e não com P e Q: elas valem para fórmulas de qualquer complexidade, e não apenas para letras sentenciais.</p>
+    <div class="note">A distinção explica também por que ⊢ e ⊨, introduzidos no módulo 4, não são operadores da linguagem-objeto. Não existe fórmula «Γ ⊢ α»; existe uma afirmação, feita em português, de que há uma derivação de α a partir de Γ. Confundir os dois níveis leva o aluno a tentar aplicar regras de inferência a asserções metalinguísticas.</div>
+    <h2 id="u2"><span class="num">Unidade 2.2</span>Teoria elementar de conjuntos</h2>
+    <p>Um <strong>conjunto</strong> é uma coleção determinada de objetos, chamados seus elementos. Determinada significa que, para todo objeto, a pergunta «pertence?» tem resposta. Escreve-se a ∈ A para dizer que a pertence a A, e a ∉ A para dizer que não pertence.</p>
+    <p>Conjuntos podem ser especificados por <strong>enumeração</strong>, listando os elementos entre chaves, ou por <strong>abstração</strong>, dando uma condição que os caracteriza. Duas consequências imediatas da definição merecem registro, porque contrariam a intuição de quem chega da aritmética: a ordem não importa, de modo que {1, 2} e {2, 1} são o mesmo conjunto, e a repetição não importa, de modo que {1, 1, 2} e {1, 2} também o são.</p>
+    <div class="fx">Por enumeração   A = {2, 3, 5, 7}
+Por abstração    A = {x : x é primo e x &lt; 10}
+Identidade       A = B  se e somente se  A e B têm exatamente os mesmos elementos</div>
+    <h4>Conjuntos especiais e relações</h4>
+    <p>O <strong>conjunto vazio</strong>, escrito ∅, não tem elemento algum, e é único justamente pelo critério de identidade acima. O <strong>conjunto universo</strong> U é aquele que, num contexto dado, contém tudo o que está em discussão. O <strong>conjunto das partes</strong> de A, escrito ℘(A), é o conjunto de todos os subconjuntos de A, e tem 2ⁿ elementos quando A tem n.</p>
+    <p>A relação central é a <strong>inclusão</strong>: A ⊆ B quando todo elemento de A é elemento de B. Convém não confundi-la com a pertinência. A pertinência relaciona um objeto a um conjunto; a inclusão relaciona dois conjuntos. Assim, 2 ∈ {1, 2} é verdadeiro e {2} ∈ {1, 2} é falso, ao passo que {2} ⊆ {1, 2} é verdadeiro. O conjunto vazio está incluído em todo conjunto, por vacuidade, e essa é a primeira ocorrência no curso de um raciocínio que reaparecerá com frequência.</p>
+    <figure>
+      <svg viewBox="0 0 880 152" role="img" aria-label="Quatro diagramas de Venn com as regiões de união, intersecção, diferença e complemento sombreadas.">
+        <defs>
+          <mask id="mnotB"><rect x="0" y="0" width="880" height="152" fill="#fff"/><circle cx="512" cy="74" r="40" fill="#000"/></mask>
+          <mask id="mnotA"><rect x="0" y="0" width="880" height="152" fill="#fff"/><circle cx="700" cy="74" r="40" fill="#000"/></mask>
+          <clipPath id="clipA"><circle cx="272" cy="74" r="40"/></clipPath>
+        </defs>
+        <g>
+          <text class="svg-t" x="16" y="20">UNIÃO · A ∪ B</text>
+          <circle cx="62" cy="74" r="40" fill="var(--accent)" fill-opacity=".22" stroke="var(--accent)" stroke-width="1.4"/>
+          <circle cx="118" cy="74" r="40" fill="var(--accent)" fill-opacity=".22" stroke="var(--accent)" stroke-width="1.4"/>
+          <text class="svg-s" x="36" y="79" text-anchor="middle">A</text><text class="svg-s" x="144" y="79" text-anchor="middle">B</text>
+          <text class="svg-s" x="16" y="140">Em A, em B ou em ambos.</text>
+
+          <text class="svg-t" x="226" y="20">INTERSECÇÃO · A ∩ B</text>
+          <circle cx="272" cy="74" r="40" fill="none" stroke="var(--accent)" stroke-width="1.4"/>
+          <g clip-path="url(#clipA)"><circle cx="328" cy="74" r="40" fill="var(--accent)" fill-opacity=".35"/></g>
+          <circle cx="328" cy="74" r="40" fill="none" stroke="var(--accent)" stroke-width="1.4"/>
+          <text class="svg-s" x="246" y="79" text-anchor="middle">A</text><text class="svg-s" x="354" y="79" text-anchor="middle">B</text>
+          <text class="svg-s" x="226" y="140">Em A e em B ao mesmo tempo.</text>
+
+          <text class="svg-t" x="446" y="20">DIFERENÇA · A − B</text>
+          <circle cx="456" cy="74" r="40" fill="var(--accent)" fill-opacity=".3" stroke="var(--accent)" stroke-width="1.4" mask="url(#mnotB)"/>
+          <circle cx="456" cy="74" r="40" fill="none" stroke="var(--accent)" stroke-width="1.4"/>
+          <circle cx="512" cy="74" r="40" fill="none" stroke="var(--accent)" stroke-width="1.4"/>
+          <text class="svg-s" x="430" y="79" text-anchor="middle">A</text><text class="svg-s" x="538" y="79" text-anchor="middle">B</text>
+          <text class="svg-s" x="446" y="140">Em A, mas não em B.</text>
+
+          <text class="svg-t" x="644" y="20">COMPLEMENTO · A&#772;</text>
+          <rect x="644" y="30" width="200" height="88" fill="var(--accent)" fill-opacity=".18" stroke="var(--line)" stroke-width="1.2" mask="url(#mnotA)"/>
+          <rect x="644" y="30" width="200" height="88" fill="none" stroke="var(--line)" stroke-width="1.2"/>
+          <circle cx="700" cy="74" r="40" fill="none" stroke="var(--accent)" stroke-width="1.4"/>
+          <text class="svg-s" x="700" y="79" text-anchor="middle">A</text>
+          <text class="svg-t" x="832" y="44" text-anchor="end">U</text>
+          <text class="svg-s" x="644" y="140">No universo U, fora de A.</text>
+        </g>
+      </svg>
+      <figcaption><b>Figura 1</b>As quatro operações. O retângulo do quarto painel é o conjunto universo, e a sua presença é o que torna o complemento uma operação bem definida: sem universo fixado, «tudo o que não está em A» não determina conjunto algum.</figcaption>
+    </figure>
+    <p>As operações satisfazem leis que o aluno reencontrará, sob outros nomes, no módulo 3. A comutatividade, a associatividade e a distributividade de ∪ e ∩ têm análogos exatos em ∨ e ∧, e as leis de De Morgan para conjuntos são as mesmas que o módulo 4 apresentará como regras derivadas. Não se trata de coincidência, e a razão dela é matéria do módulo 6.</p>
+    <div class="tw"><table>
+      <tr><th>Lei</th><th>Em conjuntos</th><th>Reaparece no módulo 3 como</th></tr>
+      <tr><td>Comutatividade</td><td class="m2">A ∪ B = B ∪ A</td><td class="m2">α ∨ β equivale a β ∨ α</td></tr>
+      <tr><td>Distributividade</td><td class="m2">A ∩ (B ∪ C) = (A ∩ B) ∪ (A ∩ C)</td><td class="m2">α ∧ (β ∨ γ) equivale a (α ∧ β) ∨ (α ∧ γ)</td></tr>
+      <tr><td>De Morgan</td><td class="m2">A ∪ B com barra = A&#772; ∩ B&#772;</td><td class="m2">¬(α ∨ β) equivale a ¬α ∧ ¬β</td></tr>
+      <tr><td>Dupla complementação</td><td class="m2">A&#772;&#772; = A</td><td class="m2">¬¬α equivale a α</td></tr>
+    </table></div>
+    <h4>Pares ordenados, relações e funções</h4>
+    <p>No par ordenado ⟨a, b⟩, ao contrário do que ocorre em conjuntos, a ordem importa: ⟨a, b⟩ e ⟨b, a⟩ são distintos, exceto quando a e b coincidem. O <strong>produto cartesiano</strong> A × B é o conjunto de todos os pares ordenados cujo primeiro membro está em A e o segundo em B.</p>
+    <p>Uma <strong>relação</strong> de A em B é qualquer subconjunto de A × B, e uma <strong>função</strong> de A em B é uma relação que associa a cada elemento de A exatamente um elemento de B. As três propriedades que o curso usará são as seguintes. Uma função é <strong>injetiva</strong> quando elementos distintos do domínio têm imagens distintas; <strong>sobrejetiva</strong> quando todo elemento de B é imagem de algum elemento de A; e <strong>bijetiva</strong> quando é as duas coisas.</p>
+    <div class="note">A definição de valoração, no módulo 3, será exatamente esta: uma função do conjunto das letras sentenciais no conjunto {V, F}. A definição de interpretação, no módulo 5, será uma função que associa a cada constante de predicado um subconjunto do domínio. Nenhuma das duas é compreensível sem este parágrafo.</div>
+    <h4>Conjuntos infinitos</h4>
+    <p>Dois conjuntos têm o mesmo número de elementos quando existe uma bijeção entre eles. O critério é inócuo no caso finito e produz, no caso infinito, o resultado que fundou a teoria: o conjunto dos números naturais e o dos números pares têm o mesmo tamanho, pois n ↦ 2n é uma bijeção, ainda que um esteja propriamente contido no outro. Um conjunto é <strong>enumerável</strong> quando pode ser posto em bijeção com os naturais, isto é, quando os seus elementos podem ser dispostos em uma lista infinita indexada.</p>
+    <p>O conceito não é apresentado aqui por curiosidade. A demonstração da completude, no módulo complementar 7, depende de que a linguagem tenha uma quantidade enumerável de fórmulas, pois é isso que permite dispô-las em fila e percorrê-las uma a uma. Sem esta unidade, aquele argumento é literalmente inexecutável.</p>
+    <h2 id="u3"><span class="num">Unidade 2.3</span>Origens gregas</h2>
+    <p>A lógica não nasceu como técnica. Nasceu de um problema metafísico sobre a possibilidade de o mesmo ser e não ser, e o percurso de Heráclito a Platão é o percurso pelo qual esse problema se transformou em uma questão sobre o que se pode inferir do quê.</p>
+    <h4>Heráclito e Parmênides</h4>
+    <p>Heráclito sustenta o devir: as coisas mudam, e a mudança envolve que algo deixe de ser o que era. Parmênides sustenta o uno: o que é, é, e o não ser não pode sequer ser pensado. A oposição interessa à lógica porque põe em disputa aquilo que mais tarde se chamará princípio de não contradição, e porque mostra que esse princípio não é uma trivialidade linguística, mas uma tese sobre o mundo (Morais et al., 2019, caps. 1–3).</p>
+    <p>O aluno reencontrará a disputa no módulo complementar 8, quando as lógicas paraconsistentes recusarem que uma contradição trivialize um corpo de afirmações. A questão de Heráclito, portanto, não foi encerrada: foi formalizada.</p>
+    <h4>Zenão e a redução ao absurdo</h4>
+    <p>Zenão de Eleia defende Parmênides pelo método que interessa a este curso. Ele não argumenta diretamente que o movimento é impossível: supõe que exista e extrai da suposição consequências inaceitáveis. Aquiles não alcança a tartaruga; a flecha não se move; a dicotomia impede qualquer percurso de começar (Morais et al., 2019, cap. 4).</p>
+    <p>Esta é a primeira ocorrência sistemática, na história, do procedimento que o módulo 4 apresentará como regra de inferência com o nome de redução ao absurdo, e que o módulo complementar 7 empregará em quase todas as demonstrações. A estrutura é idêntica: levanta-se uma hipótese, deriva-se dela uma contradição, e conclui-se a sua negação. O que Zenão não tinha era o aparato que permite verificar se a contradição foi de fato derivada, e é esse aparato que o curso vai construir.</p>
+    <h4>Platão e os sofistas</h4>
+    <p>Com Platão, a distinção decisiva se estabelece: entre persuadir e demonstrar. O sofista vence a discussão; o dialético estabelece a verdade. A distinção é a mesma que a unidade 1A.5 retomará sob os nomes de retórica e dialética, e é a razão pela qual o curso avalia argumentos por critérios que independem do efeito que produzem no ouvinte (Morais et al., 2019, cap. 5).</p>
+
+    <h2 id="u4"><span class="num">Unidade 2.4</span>Aristóteles: termos, quadrado e silogismo</h2>
+    <p>Aristóteles é o primeiro a tratar a forma do argumento como objeto autônomo. A sua análise parte do <strong>termo</strong>, que é aquilo em que uma proposição se decompõe, e chega ao <strong>silogismo</strong>, que é um argumento de duas premissas e uma conclusão, ligando três termos.</p>
+    <h4>As proposições categóricas</h4>
+    <p>Toda proposição categórica relaciona dois termos, um sujeito S e um predicado P, e varia em dois eixos: a quantidade, que é universal ou particular, e a qualidade, que é afirmativa ou negativa. Disso resultam quatro formas, designadas pelas vogais das palavras latinas <em>affirmo</em> e <em>nego</em>.</p>
+    <div class="tw"><table>
+      <tr><th>Letra</th><th>Forma</th><th>Quantidade</th><th>Qualidade</th><th>No módulo 5</th></tr>
+      <tr><td class="m2">A</td><td>Todo S é P</td><td>Universal</td><td>Afirmativa</td><td class="m2">∀x(Sx → Px)</td></tr>
+      <tr><td class="m2">E</td><td>Nenhum S é P</td><td>Universal</td><td>Negativa</td><td class="m2">∀x(Sx → ¬Px)</td></tr>
+      <tr><td class="m2">I</td><td>Algum S é P</td><td>Particular</td><td>Afirmativa</td><td class="m2">∃x(Sx ∧ Px)</td></tr>
+      <tr><td class="m2">O</td><td>Algum S não é P</td><td>Particular</td><td>Negativa</td><td class="m2">∃x(Sx ∧ ¬Px)</td></tr>
+    </table></div>
+    <p>A última coluna antecipa o módulo 5 e merece atenção desde já: a universal afirmativa se formaliza com um condicional, e a particular afirmativa com uma conjunção. A assimetria não é arbitrária, e a unidade 5.2 mostrará que ela é exatamente o que faz a lógica moderna divergir da aristotélica quanto ao ponto tratado a seguir.</p>
+
+    <div class="lab" id="quadrado">
+      <h4>O quadrado das oposições</h4>
+      <p class="sub">Clique em um vértice para atribuir-lhe um valor. O quadro propaga as consequências. Alterne entre as duas leituras e observe quantas consequências sobrevivem.</p>
+      <div class="row">
+        <div class="seg" role="group" aria-label="Leitura adotada">
+          <span class="lbl">Leitura</span>
+          <button type="button" data-modo="trad" aria-pressed="true">Tradicional</button>
+          <button type="button" data-modo="mod" aria-pressed="false">Moderna</button>
+        </div>
+        <div class="seg" role="group" aria-label="Limpar">
+          <button type="button" id="limpar">Limpar</button>
+        </div>
+      </div>
+      <div class="sqwrap">
+        <div class="sq"><svg viewBox="0 0 340 240" id="sqsvg" role="img" aria-label="Quadrado das oposições com as quatro proposições categóricas nos vértices."></svg></div>
+        <div>
+          <div class="readout" id="sqOut"><div class="rk">Consequências</div><p>Nenhum vértice fixado. Clique em A, E, I ou O e escolha um valor.</p></div>
+          <p style="font-size:13.5px;color:var(--muted);margin:12px 0 0">Na leitura tradicional, supõe-se que o termo sujeito não seja vazio. É essa suposição que sustenta a contrariedade, a subcontrariedade e a subalternação. A contradição entre A e O e entre E e I não depende dela, e por isso sobrevive nas duas leituras.</p>
+        </div>
+      </div>
+    </div>
+
+    <p>A diferença entre as duas leituras é o assunto da seção A.6 do apêndice de Mortari (2016), e vale enunciá-la sem rodeios. Na formalização moderna, «Todo S é P» é ∀x(Sx → Px), que é verdadeira por vacuidade quando não há nenhum S. Dela não se segue ∃x(Sx ∧ Px), pois essa exige que haja algum S. A subalternação, portanto, falha. A tradição aristotélica supunha que os termos designassem classes não vazias, e sob essa suposição as quatro relações do quadrado se sustentam.</p>
+    <p>Não se trata de a lógica moderna ter corrigido um erro. Trata-se de duas convenções distintas sobre o que uma proposição universal afirma, e o aluno precisa saber qual está em uso para avaliar um argumento. É a primeira ocasião, no curso, em que a resposta a «este argumento é válido?» depende de uma decisão declarada.</p>
+
+    <h4>O silogismo</h4>
+    <p>Um silogismo categórico tem duas premissas e uma conclusão, e nele ocorrem exatamente três termos. O <strong>termo médio</strong> M aparece nas duas premissas e não na conclusão; o <strong>termo maior</strong> P é o predicado da conclusão e aparece na premissa maior; o <strong>termo menor</strong> S é o sujeito da conclusão e aparece na premissa menor. A posição de M nas premissas determina a <strong>figura</strong>, e as letras das três proposições determinam o <strong>modo</strong>.</p>
+    <div class="fx">Figura 1   M–P , S–M      Figura 2   P–M , S–M
+Figura 3   M–P , M–S      Figura 4   P–M , M–S
+
+Barbara, modo AAA na figura 1:
+   Todo M é P          (A)
+   Todo S é M          (A)
+   ∴ Todo S é P        (A)</div>
+    <p>Há 4 figuras e 4 escolhas de forma para cada uma das três proposições, o que dá 256 combinações possíveis. Destas, apenas algumas são válidas, e determinar quais foi o programa de pesquisa da lógica por dois milênios. O verificador abaixo o executa por força bruta, examinando todos os modelos com até três indivíduos.</p>
+
+    <div class="lab" id="silogismo">
+      <h4>Verificador de silogismos</h4>
+      <p class="sub">Escolha a forma de cada premissa e a figura. O verificador percorre todos os modelos possíveis com até três indivíduos e informa quais conclusões se seguem, nas duas leituras.</p>
+      <div class="row">
+        <div class="seg" role="group" aria-label="Premissa maior">
+          <span class="lbl">Maior</span>
+          <button type="button" data-p1="A" aria-pressed="true">A</button>
+          <button type="button" data-p1="E" aria-pressed="false">E</button>
+          <button type="button" data-p1="I" aria-pressed="false">I</button>
+          <button type="button" data-p1="O" aria-pressed="false">O</button>
+        </div>
+        <div class="seg" role="group" aria-label="Premissa menor">
+          <span class="lbl">Menor</span>
+          <button type="button" data-p2="A" aria-pressed="true">A</button>
+          <button type="button" data-p2="E" aria-pressed="false">E</button>
+          <button type="button" data-p2="I" aria-pressed="false">I</button>
+          <button type="button" data-p2="O" aria-pressed="false">O</button>
+        </div>
+        <div class="seg" role="group" aria-label="Figura">
+          <span class="lbl">Figura</span>
+          <button type="button" data-fig="1" aria-pressed="true">1</button>
+          <button type="button" data-fig="2" aria-pressed="false">2</button>
+          <button type="button" data-fig="3" aria-pressed="false">3</button>
+          <button type="button" data-fig="4" aria-pressed="false">4</button>
+        </div>
+      </div>
+      <div class="sil">
+        <div>
+          <span class="ctl">Forma do argumento</span>
+          <div class="forma" id="forma"></div>
+          <p style="font-size:13px;color:var(--muted);margin:12px 0 0" id="nomeModo"></p>
+        </div>
+        <div>
+          <span class="ctl">Conclusões que se seguem</span>
+          <table class="concl" id="tabconcl"></table>
+        </div>
+      </div>
+    </div>
+    <p>Duas experiências valem a pena. A primeira é percorrer os quatro modos da figura 1 que os medievais batizaram de Barbara, Celarent, Darii e Ferio, e verificar que valem nas duas leituras. A segunda é examinar o modo AAI na figura 3, chamado Darapti, que vale apenas na leitura tradicional: ele conclui uma particular de duas universais, o que exige que o termo médio não seja vazio. Contando ao todo, são quinze os modos válidos na leitura moderna e vinte e quatro na tradicional.</p>
+    <h2 id="u5"><span class="num">Unidade 2.5</span>Estoicos, medievais e a virada contemporânea</h2>
+    <h4>A lógica estoica</h4>
+    <p>Os estoicos, sobretudo Crisipo de Solos, desenvolveram uma lógica de tipo inteiramente distinto do aristotélico. Onde Aristóteles analisa proposições em termos, os estoicos tratam proposições inteiras como unidades e estudam como se combinam. Dividiram a lógica em retórica, que estuda o discurso, e dialética, que estuda o verdadeiro e o falso por perguntas e respostas, e dentro da dialética analisaram os <em>dizíveis</em>, entre os quais os <em>asseríveis</em>, que são os que podem ser verdadeiros ou falsos (Morais et al., 2019, cap. 7).</p>
+    <p>A relevância para este curso é direta: os cinco modos indemonstráveis dos estoicos são, essencialmente, as regras de inferência do cálculo proposicional. O primeiro deles é o que o módulo 4 chamará de modus ponens. O aluno que chegar ao módulo 4 deve saber que aquela lista de regras tem vinte e três séculos, e que a novidade moderna não está nas regras, mas no aparato que permite demonstrar que elas bastam.</p>
+    <p>A observação corrige, aliás, um erro histórico comum. Durante muito tempo tratou-se a lógica aristotélica como a lógica antiga, e a proposicional como invenção moderna. As duas são antigas, e são de tipos diferentes: a de termos e a de proposições. A lógica contemporânea não escolheu entre elas: subordinou a primeira à segunda, e é isso que o módulo 5 fará ao formalizar as categóricas com quantificadores.</p>
+    <h4>Os medievais</h4>
+    <p>A contribuição medieval que interessa aqui é a discussão sobre universais e particulares, e o refinamento da teoria da suposição, que trata de como um termo se refere conforme a posição que ocupa na proposição (Morais et al., 2019, cap. 8). O problema é o antepassado direto da distinção entre variáveis livres e ligadas, que o módulo 5 introduzirá com aparato próprio.</p>
+    <h4>A virada contemporânea</h4>
+    <p>A lógica permanece substancialmente aristotélica até o século XIX, quando dois desenvolvimentos a refundam. O primeiro é a algebrização, com Boole, que trata as operações lógicas como operações de cálculo. O segundo, decisivo, é a introdução dos quantificadores por Frege, que permite exprimir a estrutura interna das proposições com generalidade que a teoria dos termos nunca alcançou. É a partir daí que se torna possível formalizar «todo amigo de alguém tem um amigo», enunciado que o silogismo não representa (Mortari, 2016, §2.5).</p>
+    <p>O curso segue essa herança. Os módulos 3 e 4 desenvolvem a linha estoica, proposicional; o módulo 5 desenvolve a linha fregeana, quantificacional, e nela reabsorve a aristotélica. O apêndice sobre silogismo que o aluno acaba de estudar é, nessa ordem, um capítulo fechado, e é assim que Mortari (2016) o apresenta.</p>
+
+    <h2 id="marco"><span class="num">Verificação</span>Marco A2 e exercícios</h2>
+    <div class="marco"><b>Marco A2</b>Empregar corretamente aspas de menção em sentenças que falam de expressões; operar com união, intersecção, diferença e complemento, e distinguir pertinência de inclusão; e decidir a validade de um silogismo categórico por diagramas de Venn-Euler, declarando qual leitura das categóricas está sendo adotada.</div>
+    <h4>Exercícios</h4>
+    <p><strong>1.</strong> Escreva quatro sentenças verdadeiras sobre a palavra «lógica»: duas em que ela seja usada e duas em que seja mencionada. Depois escreva duas sentenças falsas que resultem de trocar um caso pelo outro.</p>
+    <p><strong>2.</strong> Sendo A = {1, 2, 3} e B = {3, 4}, determine ℘(B), A − B, B − A e (A ∪ B) − (A ∩ B). Verifique que a última operação, chamada diferença simétrica, corresponde a uma disjunção exclusiva.</p>
+    <p><strong>3.</strong> Mostre que ∅ ⊆ A vale para todo conjunto A. Identifique, na sua demonstração, o ponto em que se raciocina por vacuidade, e relacione-o com a linha da tabela de verdade do condicional em que o antecedente é falso.</p>
+    <p><strong>4.</strong> Exiba uma função dos naturais nos naturais que seja injetiva e não sobrejetiva, e outra que seja sobrejetiva e não injetiva. Explique por que nenhuma das duas seria possível se o domínio fosse finito.</p>
+    <p><strong>5.</strong> Use o quadrado das oposições na leitura tradicional para determinar todos os valores que se seguem de «Algum político não é honesto» ser verdadeira. Repita na leitura moderna e explique a diferença.</p>
+    <p><strong>6.</strong> No verificador de silogismos, encontre os quatro modos válidos da figura 1 nas duas leituras e os cinco modos que só valem na tradicional. Para um destes últimos, exiba o modelo com um termo vazio que o refuta na leitura moderna.</p>
+    <p><strong>7.</strong> Formalize «Todo S é P» e «Algum S é P» como indicado na tabela da unidade 2.4 e explique, sem usar o aparato do módulo 5, por que a primeira não implica a segunda quando não há nenhum S.</p>
+
+    <h2 id="proximo"><span class="num">Encerramento</span>Próximo passo</h2><p>O ciclo de cada módulo se fecha em três movimentos: resolver os exercícios, verificar o marco no banco de itens e submeter o artefato escrito à rubrica correspondente.</p><div class="nextgrid"><a class="nx" href="provas.html#A2"><span class="k">Verificar o marco</span><span class="t">Provas de Domínio · marco A2</span><span class="d">Itens autocorrigidos com justificativa e fonte. O marco é vencido a partir de 75% de acerto.</span></a><a class="nx" href="03-modulo-3.html"><span class="k">Seguir</span><span class="t">Módulo 3 · Cálculo proposicional</span><span class="d">Nível B · módulo 3 no percurso.</span></a></div>
+
+    <h2 id="ref">Referências</h2>
+    <div class="refs">
+      <p>Morais, B. R., Figueiró, F. H., Pires, L. T., Veríssimo, L. M., &amp; Sapunaru, R. A. (Orgs.). (2019). <em>Introdução à lógica a partir de sua história filosófica: Vol. 1. De Heráclito aos medievais</em>. Editora Fi.</p>
+      <p>Mortari, C. A. (2016). <em>Introdução à lógica</em> (2a ed.). Editora Unesp.</p>
+      <p>Mortari, C. A. (2023). <em>Plano de ensino: FIL 6021 Lógica I</em> [Plano de ensino]. Universidade Federal de Santa Catarina, Departamento de Filosofia.</p>
+      <p>Neves Filho, E. F. das, &amp; Rui, M. de L. (2016). <em>Elementos de lógica</em> (Série Dissertatio de Filosofia, Vol. 11). NEPFIL Online.</p>
+      <p>Pagani, L. A. (s.d.). <em>Respostas para exercícios do livro Introdução à lógica, de Cezar Mortari</em> [Material didático não publicado].</p>
+    </div>
+  </article>
+</div>
+<script>
+(function(){
+  /* ---------- 2.1 uso e menção ---------- */
+  const FR = [
+    ["«Lógica» tem seis letras.", true, "Menção correta: fala-se da palavra, e a palavra tem seis letras."],
+    ["Lógica tem seis letras.", false, "Uso indevido: a disciplina não tem letras. Faltam as aspas."],
+    ["A lógica estuda a validade dos argumentos.", true, "Uso correto: fala-se da disciplina, e é dela que se predica o estudo."],
+    ["«A lógica» estuda a validade dos argumentos.", false, "Menção indevida: a expressão citada não estuda coisa alguma."],
+    ["«Sócrates» é um nome próprio.", true, "Menção correta: ser nome próprio é propriedade da expressão."],
+    ["Sócrates é um nome próprio.", false, "Uso indevido: o homem não é um nome; o nome dele é que é."]
+  ];
+  const box = document.getElementById("frases"), out = document.getElementById("frOut");
+  FR.forEach(f => {
+    const b = document.createElement("button");
+    b.type = "button"; b.className = "fr"; b.textContent = f[0];
+    b.addEventListener("click", () => {
+      b.classList.add(f[1] ? "ok" : "no");
+      if(!b.querySelector(".tag")){
+        const t = document.createElement("span"); t.className = "tag";
+        t.textContent = f[1] ? "verdadeira" : "falsa"; b.prepend(t);
+      }
+      out.innerHTML = '<div class="rk">' + (f[1] ? "Verdadeira" : "Falsa") + "</div><p>" + f[2] + "</p>";
+    });
+    box.appendChild(b);
+  });
+
+  /* ---------- 2.4 quadrado das oposições ---------- */
+  const TXT = {A:"Todo S é P", E:"Nenhum S é P", I:"Algum S é P", O:"Algum S não é P"};
+  const POS = {A:[30,44], E:[214,44], I:[30,178], O:[214,178]};
+  let modo = "trad", fixado = null;
+
+  const TRAD = {
+    "A:V":{A:"V",E:"F",I:"V",O:"F"}, "A:F":{A:"F",E:"?",I:"?",O:"V"},
+    "E:V":{A:"F",E:"V",I:"F",O:"V"}, "E:F":{A:"?",E:"F",I:"V",O:"?"},
+    "I:V":{A:"?",E:"F",I:"V",O:"?"}, "I:F":{A:"F",E:"V",I:"F",O:"V"},
+    "O:V":{A:"F",E:"?",I:"?",O:"V"}, "O:F":{A:"V",E:"F",I:"V",O:"F"}
+  };
+  const MOD = {
+    "A:V":{A:"V",E:"?",I:"?",O:"F"}, "A:F":{A:"F",E:"?",I:"?",O:"V"},
+    "E:V":{A:"?",E:"V",I:"F",O:"?"}, "E:F":{A:"?",E:"F",I:"V",O:"?"},
+    "I:V":{A:"?",E:"F",I:"V",O:"?"}, "I:F":{A:"?",E:"V",I:"F",O:"?"},
+    "O:V":{A:"F",E:"?",I:"?",O:"V"}, "O:F":{A:"V",E:"?",I:"?",O:"F"}
+  };
+  const svg = document.getElementById("sqsvg");
+
+  function estado(){
+    if(!fixado) return {A:"?",E:"?",I:"?",O:"?"};
+    return (modo === "trad" ? TRAD : MOD)[fixado];
+  }
+  function desenhaQuadrado(){
+    const e = estado(), rot = modo === "trad";
+    const cinza = rot ? "var(--muted)" : "var(--line)";
+    function etiqueta(x, y, w, txt, cor){
+      return '<rect x="' + (x - w/2) + '" y="' + (y - 10) + '" width="' + w + '" height="14" fill="var(--ground)"/>' +
+             '<text class="svg-t" x="' + x + '" y="' + y + '" text-anchor="middle" style="fill:' + cor + '">' + txt + "</text>";
+    }
+    let s = "";
+    s += '<line x1="126" y1="65" x2="214" y2="65" stroke="' + cinza + '" stroke-width="1.2"/>';
+    s += '<line x1="126" y1="199" x2="214" y2="199" stroke="' + cinza + '" stroke-width="1.2"/>';
+    s += '<line x1="78" y1="86" x2="78" y2="178" stroke="' + cinza + '" stroke-width="1.2"/>';
+    s += '<line x1="266" y1="86" x2="266" y2="178" stroke="' + cinza + '" stroke-width="1.2"/>';
+    s += '<line x1="126" y1="86" x2="214" y2="178" stroke="var(--accent)" stroke-width="1.4"/>';
+    s += '<line x1="214" y1="86" x2="126" y2="178" stroke="var(--accent)" stroke-width="1.4"/>';
+    s += etiqueta(170, 69, 82, "CONTRÁRIAS", cinza);
+    s += etiqueta(170, 203, 88, "SUBCONTRÁRIAS", cinza);
+    s += etiqueta(78, 136, 52, "SUBALT.", cinza);
+    s += etiqueta(266, 136, 52, "SUBALT.", cinza);
+    s += etiqueta(170, 136, 106, "CONTRADITÓRIAS", "var(--accent)");
+    "AEIO".split("").forEach(k => {
+      const [x,y] = POS[k], v = e[k];
+      const cls = v === "V" ? "v" : (v === "F" ? "f" : "q");
+      s += '<g class="corner ' + cls + '" data-k="' + k + '">';
+      s += '<rect x="' + x + '" y="' + y + '" width="96" height="42" rx="4"/>';
+      s += '<text x="' + (x+10) + '" y="' + (y+18) + '" style="font-family:\'IBM Plex Mono\',monospace;font-size:11.5px;font-weight:600;fill:var(--accent)">' + k + '</text>';
+      s += '<text x="' + (x+10) + '" y="' + (y+34) + '" style="font-family:Spectral,serif;font-size:12px;fill:var(--ink)">' + TXT[k] + '</text>';
+      s += '<text x="' + (x+86) + '" y="' + (y+22) + '" text-anchor="end" style="font-family:\'IBM Plex Mono\',monospace;font-size:15px;font-weight:600;fill:' +
+           (v === "V" ? "var(--verum)" : v === "F" ? "var(--falsum)" : "var(--line)") + '">' + v + '</text>';
+      s += "</g>";
+    });
+    svg.innerHTML = s;
+    svg.querySelectorAll(".corner").forEach(g => g.addEventListener("click", () => {
+      const k = g.dataset.k, atual = fixado && fixado.startsWith(k + ":") ? fixado.slice(2) : null;
+      if(atual === "V") fixado = k + ":F";
+      else if(atual === "F") fixado = null;
+      else fixado = k + ":V";
+      pintaQuadrado();
+    }));
+  }
+  function pintaQuadrado(){
+    desenhaQuadrado();
+    const o = document.getElementById("sqOut");
+    if(!fixado){ o.innerHTML = '<div class="rk">Consequências</div><p>Nenhum vértice fixado. Clique em A, E, I ou O; um segundo clique alterna para falso, e o terceiro limpa.</p>'; return; }
+    const [k, v] = fixado.split(":");
+    const e = estado();
+    const det = "AEIO".split("").filter(x => x !== k && e[x] !== "?");
+    const ind = "AEIO".split("").filter(x => e[x] === "?");
+    let h = '<div class="rk">' + k + " = " + v + " · leitura " + (modo === "trad" ? "tradicional" : "moderna") + "</div>";
+    h += "<p>Determinadas: " + (det.length ? det.map(x => x + " = " + e[x]).join(", ") : "nenhuma") + ".</p>";
+    h += "<p>Indeterminadas: " + (ind.length ? ind.join(", ") : "nenhuma") + ".</p>";
+    if(modo === "mod") h += "<p style='color:var(--muted)'>Na leitura moderna só a contradição opera, e por isso um único vértice fixado determina apenas o seu oposto na diagonal.</p>";
+    o.innerHTML = h;
+  }
+  document.querySelectorAll("[data-modo]").forEach(b => b.addEventListener("click", () => {
+    modo = b.dataset.modo;
+    document.querySelectorAll("[data-modo]").forEach(o => o.setAttribute("aria-pressed", String(o === b)));
+    pintaQuadrado();
+  }));
+  document.getElementById("limpar").addEventListener("click", () => { fixado = null; pintaQuadrado(); });
+  pintaQuadrado();
+
+  /* ---------- 2.4 verificador de silogismos ---------- */
+  const N = 3, SUBS = (() => { const r = []; for(let m = 0; m < (1 << N); m++){ const s = new Set();
+    for(let i = 0; i < N; i++) if(m >> i & 1) s.add(i); r.push(s); } return r; })();
+  function vale(t, X, Y){
+    switch(t){
+      case "A": return [...X].every(u => Y.has(u));
+      case "E": return [...X].every(u => !Y.has(u));
+      case "I": return [...X].some(u => Y.has(u));
+      case "O": return [...X].some(u => !Y.has(u));
+    }
+  }
+  const FIG = {1:[["M","P"],["S","M"]], 2:[["P","M"],["S","M"]], 3:[["M","P"],["M","S"]], 4:[["P","M"],["M","S"]]};
+  function segue(t1, t2, tc, fig, importe){
+    const f = FIG[fig];
+    for(const S of SUBS) for(const P of SUBS) for(const M of SUBS){
+      if(importe && (S.size === 0 || P.size === 0 || M.size === 0)) continue;
+      const V = {S,P,M};
+      if(vale(t1, V[f[0][0]], V[f[0][1]]) && vale(t2, V[f[1][0]], V[f[1][1]]) && !vale(tc, V.S, V.P)) return false;
+    }
+    return true;
+  }
+  const NOMES = {
+    "AAA1":"Barbara","EAE1":"Celarent","AII1":"Darii","EIO1":"Ferio","AAI1":"Barbari","EAO1":"Celaront",
+    "EAE2":"Cesare","AEE2":"Camestres","EIO2":"Festino","AOO2":"Baroco","EAO2":"Cesaro","AEO2":"Camestros",
+    "AAI3":"Darapti","IAI3":"Disamis","AII3":"Datisi","EAO3":"Felapton","OAO3":"Bocardo","EIO3":"Ferison",
+    "AAI4":"Bamalip","AEE4":"Camenes","IAI4":"Dimatis","EAO4":"Fesapo","EIO4":"Fresison","AEO4":"Camenos"
+  };
+  const FRASE = {A:"Todo X é Y", E:"Nenhum X é Y", I:"Algum X é Y", O:"Algum X não é Y"};
+  function frase(t, x, y){ return FRASE[t].replace("X", x).replace("Y", y); }
+  let p1 = "A", p2 = "A", fig = 1;
+
+  function pintaSil(){
+    const f = FIG[fig];
+    document.getElementById("forma").innerHTML =
+      '<span class="t">' + p1 + "</span>&nbsp; " + frase(p1, f[0][0], f[0][1]) + "<br>" +
+      '<span class="t">' + p2 + "</span>&nbsp; " + frase(p2, f[1][0], f[1][1]) + "<br>" +
+      "&nbsp;&nbsp;&nbsp;&nbsp;∴ &nbsp;conclusão da forma S–P";
+    let h = "<tr><th>Conclusão</th><th>Moderna</th><th>Tradicional</th><th>Nome</th></tr>";
+    let algum = false;
+    "AEIO".split("").forEach(tc => {
+      const m = segue(p1, p2, tc, fig, false), t = segue(p1, p2, tc, fig, true);
+      if(m || t) algum = true;
+      const nome = NOMES[p1 + p2 + tc + fig] || "";
+      h += "<tr><td class='f'>" + tc + " · " + frase(tc, "S", "P") + "</td>" +
+           "<td><span class='pill " + (m ? "yes" : "no") + "'>" + (m ? "vale" : "não") + "</span></td>" +
+           "<td><span class='pill " + (t ? "yes" : "no") + "'>" + (t ? "vale" : "não") + "</span></td>" +
+           "<td><span class='nome'>" + nome + "</span></td></tr>";
+    });
+    document.getElementById("tabconcl").innerHTML = h;
+    document.getElementById("nomeModo").textContent = algum
+      ? "Modo " + p1 + p2 + " na figura " + fig + ". Os nomes latinos foram dados pelos medievais como mnemônica das reduções à primeira figura."
+      : "Modo " + p1 + p2 + " na figura " + fig + ". Nenhuma conclusão se segue, em nenhuma das duas leituras.";
+  }
+  function liga(attr, set){
+    document.querySelectorAll("[" + attr + "]").forEach(b => b.addEventListener("click", () => {
+      set(b.getAttribute(attr));
+      document.querySelectorAll("[" + attr + "]").forEach(o => o.setAttribute("aria-pressed", String(o === b)));
+      pintaSil();
+    }));
+  }
+  liga("data-p1", v => p1 = v); liga("data-p2", v => p2 = v); liga("data-fig", v => fig = +v);
+  pintaSil();
+})();
+</script>
+<script>
+(function(){
+  const links = Array.from(document.querySelectorAll("nav.toc a"));
+  const alvos = links.map(a => document.getElementById(a.getAttribute("href").slice(1))).filter(Boolean);
+  function spy(){
+    let atual = alvos[0];
+    alvos.forEach(t => { if(t.getBoundingClientRect().top <= 120) atual = t; });
+    links.forEach(a => a.classList.toggle("on", a.getAttribute("href") === "#" + (atual ? atual.id : "")));
+  }
+  window.addEventListener("scroll", spy, {passive:true}); spy();
+})();
+</script>
+
+</body>
+</html>

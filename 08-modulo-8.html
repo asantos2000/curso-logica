@@ -1,0 +1,521 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<style>:root{color-scheme:light dark}body{margin:0;font:14px/1.5 system-ui,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style>
+</head>
+<body>
+<title>Seis Lógicas Não Clássicas</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,600&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<style>
+:root{
+  --ground:#EEF1EE; --surface:#FAFBF9; --surface-2:#E2E7E3; --raised:#FFFFFF;
+  --ink:#131A18; --ink-soft:#38443F; --muted:#5F6C66; --line:#CBD4CE; --line-soft:#DDE4DF;
+  --accent:#0C6355; --accent-ink:#08463C; --accent-soft:#D6E7E2;
+  --verum:#0C6355; --falsum:#A33C20; --brass:#8A6D0B;
+  --shadow:0 1px 2px rgba(19,26,24,.06), 0 8px 24px -12px rgba(19,26,24,.18);
+  --serif:"Spectral", Georgia, "Times New Roman", serif;
+  --mono:"IBM Plex Mono", "SFMono-Regular", Consolas, monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --ground:#0E1413; --surface:#151D1B; --surface-2:#1D2926; --raised:#1A2422;
+    --ink:#E4EAE6; --ink-soft:#BCC7C2; --muted:#8D9C96; --line:#2B3835; --line-soft:#222E2B;
+    --accent:#4FBCA6; --accent-ink:#8FD8C8; --accent-soft:#17332E;
+    --verum:#4FBCA6; --falsum:#DE8461; --brass:#CFA93A;
+    --shadow:0 1px 2px rgba(0,0,0,.4), 0 10px 30px -14px rgba(0,0,0,.7);
+  }
+}
+:root[data-theme="dark"]{
+  --ground:#0E1413; --surface:#151D1B; --surface-2:#1D2926; --raised:#1A2422;
+  --ink:#E4EAE6; --ink-soft:#BCC7C2; --muted:#8D9C96; --line:#2B3835; --line-soft:#222E2B;
+  --accent:#4FBCA6; --accent-ink:#8FD8C8; --accent-soft:#17332E;
+  --verum:#4FBCA6; --falsum:#DE8461; --brass:#CFA93A;
+  --shadow:0 1px 2px rgba(0,0,0,.4), 0 10px 30px -14px rgba(0,0,0,.7);
+}
+
+*{box-sizing:border-box}
+body{margin:0;background:var(--ground);color:var(--ink);font-family:var(--serif);
+  font-size:17px;line-height:1.62;-webkit-font-smoothing:antialiased}
+.shell{max-width:1180px;margin:0 auto;padding:0 24px;display:grid;
+  grid-template-columns:220px minmax(0,1fr);gap:52px;align-items:start}
+.hero{grid-column:1/-1;padding:52px 0 32px;border-bottom:1px solid var(--line)}
+.hero .eyebrow{font:600 10.5px/1 var(--mono);letter-spacing:.18em;text-transform:uppercase;color:var(--accent)}
+.hero h1{font-size:clamp(34px,4.8vw,54px);font-weight:600;letter-spacing:-.032em;line-height:1.03;
+  margin:16px 0 12px;max-width:17ch;text-wrap:balance}
+.hero .lede{font-size:19px;color:var(--ink-soft);max-width:62ch;margin:0 0 28px}
+.facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:0;border-top:1px solid var(--line)}
+.facts div{padding:14px 20px 14px 0}
+.facts .k{font:600 10px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.facts .v{font-size:16.5px;margin-top:6px;line-height:1.3}
+nav.toc{position:sticky;top:26px;padding:32px 0 40px;font-size:14px}
+nav.toc .lbl{font:600 10px/1 var(--mono);letter-spacing:.16em;text-transform:uppercase;color:var(--muted);
+  padding-bottom:10px;border-bottom:1px solid var(--line);display:block;margin-bottom:12px}
+nav.toc a{display:block;color:var(--muted);text-decoration:none;padding:5px 0 5px 12px;
+  border-left:2px solid transparent;line-height:1.35}
+nav.toc a:hover{color:var(--ink)}
+nav.toc a.on{color:var(--accent);border-left-color:var(--accent);font-weight:500}
+article{padding:32px 0 90px;max-width:72ch}
+article h2{font-size:26px;font-weight:600;letter-spacing:-.018em;line-height:1.16;
+  margin:52px 0 4px;scroll-margin-top:28px;text-wrap:balance}
+article h2:first-of-type{margin-top:10px}
+article h2 .num{font:600 11px/1 var(--mono);letter-spacing:.14em;color:var(--accent);display:block;margin-bottom:10px}
+article h3{font-size:19px;font-weight:600;margin:32px 0 8px;letter-spacing:-.01em;scroll-margin-top:28px}
+article h4{font-size:16.5px;font-weight:600;margin:24px 0 6px}
+article p{margin:0 0 16px;color:var(--ink-soft)}
+article p strong{color:var(--ink);font-weight:600}
+article .intro{font-size:18.5px;color:var(--ink);margin-bottom:22px}
+.m{font-family:var(--mono);font-size:.92em;background:var(--surface);padding:1px 5px;border-radius:2px;color:var(--ink)}
+.tw{overflow-x:auto;margin:20px 0 24px;border:1px solid var(--line);border-radius:4px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;font-size:14.6px;min-width:440px}
+th,td{text-align:left;padding:10px 13px;border-bottom:1px solid var(--line-soft);vertical-align:top;color:var(--ink-soft)}
+tr:last-child td{border-bottom:0}
+th{font:600 10px/1.4 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--muted);
+  border-bottom:1px solid var(--line);background:var(--ground)}
+td.m2{font-family:var(--mono);font-size:13.5px;white-space:nowrap;color:var(--ink)}
+td.c{text-align:center;font-family:var(--mono)}
+td strong{color:var(--ink)}
+/* blocos formais */
+.fx{font-family:var(--mono);font-size:15px;background:var(--surface);border:1px solid var(--line);
+  border-radius:4px;padding:14px 16px;margin:0 0 18px;overflow-x:auto;color:var(--ink);white-space:pre-wrap}
+.thm{border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:4px;background:var(--surface);
+  padding:18px 20px;margin:22px 0}
+.thm .lb{font:600 10.5px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--accent);
+  display:block;margin-bottom:9px}
+.thm p{margin:0 0 10px;color:var(--ink)}
+.thm p:last-child{margin-bottom:0}
+.thm.lema{border-left-color:var(--brass)}
+.thm.lema .lb{color:var(--brass)}
+.prova{border-left:2px solid var(--line);padding:2px 0 2px 16px;margin:16px 0 22px}
+.prova .lb{font:600 10px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--muted);
+  display:block;margin-bottom:8px}
+.prova p{font-size:16px;margin:0 0 12px}
+.prova p:last-child{margin-bottom:0}
+.qed::after{content:" ▪";color:var(--accent)}
+.marco{border-left:3px solid var(--brass);padding:4px 0 4px 15px;margin:26px 0;font-size:16px;color:var(--ink)}
+.marco b{font:600 10px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--brass);
+  display:block;margin-bottom:6px}
+.note{font-size:14.5px;color:var(--muted);border-left:2px solid var(--line);padding-left:16px;margin:22px 0}
+figure{margin:28px 0 32px}
+figure svg{width:100%;height:auto;display:block;border:1px solid var(--line);border-radius:4px;background:var(--surface)}
+figcaption{font-size:13.5px;color:var(--muted);margin-top:10px;line-height:1.5}
+figcaption b{font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--accent);font-weight:600;margin-right:8px}
+.svg-t{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.06em;fill:var(--muted)}
+.svg-l{font-family:Spectral,Georgia,serif;font-size:14px;fill:var(--ink)}
+.svg-s{font-family:Spectral,Georgia,serif;font-size:12.5px;fill:var(--muted)}
+.svg-bx{fill:var(--ground);stroke:var(--line);stroke-width:1.2}
+.svg-bx-a{fill:var(--accent-soft);stroke:var(--accent);stroke-width:1.4}
+.svg-ar{stroke:var(--muted);stroke-width:1.3;fill:none}
+/* interativos genéricos */
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:9px;margin:18px 0}
+.card{text-align:left;border:1px solid var(--line);border-radius:4px;background:var(--surface);
+  padding:11px 13px;cursor:pointer;font-family:var(--serif);color:var(--ink)}
+.card:hover{border-color:var(--accent)}
+.card[aria-pressed="true"]{border-color:var(--accent);background:var(--accent-soft)}
+.card .n{font:600 10px/1 var(--mono);letter-spacing:.1em;color:var(--muted);display:block;margin-bottom:5px}
+.card .t{font-size:14.5px;font-weight:500;line-height:1.25}
+.readout{border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:4px;
+  background:var(--surface);padding:16px 18px;margin-bottom:8px}
+.readout .rk{font:600 10px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:8px}
+.readout p{font-size:15px;margin:0 0 8px;color:var(--ink-soft)}
+.readout p:last-child{margin-bottom:0}
+.readout ol{margin:6px 0 0;padding-left:20px;font-size:14.5px;color:var(--ink-soft)}
+.readout ol li{margin-bottom:5px}
+.refs{margin-top:12px}
+.refs p{padding-left:34px;text-indent:-34px;font-size:15.5px;margin-bottom:13px}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+@media (max-width:900px){
+  .shell{grid-template-columns:1fr;gap:0}
+  nav.toc{position:static;padding:22px 0 0;columns:2;column-gap:24px}
+  nav.toc .lbl{column-span:all}
+  article{padding-top:22px}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+<style>
+.cbar{display:flex;align-items:center;gap:14px;flex-wrap:wrap;padding:9px 24px;
+  border-bottom:1px solid var(--line);background:var(--surface-2);
+  font:500 12.5px/1 var(--mono);position:sticky;top:0;z-index:20}
+.cbar a{color:var(--accent);text-decoration:none;white-space:nowrap}
+.cbar a:hover{text-decoration:underline}
+.cbar .home{font-weight:600}
+.cbar .where{color:var(--muted);letter-spacing:.06em;text-transform:uppercase;font-size:10.5px}
+.cbar .sp{flex:1}
+.cbar .nx{color:var(--ink-soft)}
+.nextgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px;margin:22px 0 8px}
+.nextgrid .nx{display:block;text-decoration:none;border:1px solid var(--line);border-radius:4px;
+  background:var(--surface);padding:16px 18px;color:var(--ink)}
+.nextgrid .nx:hover{border-color:var(--accent)}
+.nextgrid .k{font:600 10px/1 var(--mono);letter-spacing:.13em;text-transform:uppercase;color:var(--accent);display:block}
+.nextgrid .t{font-size:16.5px;font-weight:600;margin:9px 0 6px;line-height:1.2;display:block}
+.nextgrid .d{font-size:14px;color:var(--muted);line-height:1.45;display:block}
+</style>
+<nav class="cbar"><a class="home" href="index.html">&#9666; Índice do curso</a><span class="where">Nível C · complementar</span><span class="sp"></span><a class="nx" href="07-modulo-7.html">&larr; Módulo 7 · Correção e completude</a></nav>
+<style>
+.lab{border:1px solid var(--line);border-radius:5px;background:var(--surface);padding:20px 22px;margin:24px 0}
+.lab h4{margin:0 0 4px;font-size:17px}
+.lab .sub{font-size:14px;color:var(--muted);margin:0 0 16px}
+.labgrid{display:grid;grid-template-columns:minmax(240px,1fr) minmax(240px,1fr);gap:22px;align-items:start}
+@media (max-width:760px){.labgrid{grid-template-columns:1fr}}
+.kg{border:1px solid var(--line-soft);border-radius:4px;background:var(--ground);padding:6px}
+.kg svg{width:100%;height:auto;display:block}
+.ctl{font:600 9.5px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--muted);
+  display:block;margin:0 0 8px}
+.mx{border-collapse:collapse;font-family:var(--mono);font-size:12.5px;min-width:0;width:auto}
+.mx th,.mx td{border:1px solid var(--line);padding:0;text-align:center}
+.mx th{background:var(--ground);color:var(--muted);font-size:11px;padding:5px 9px;letter-spacing:.05em}
+.tg{width:38px;height:30px;border:0;background:none;cursor:pointer;font:600 13px/1 var(--mono);color:var(--line)}
+.tg.on{background:var(--accent);color:var(--surface)}
+.tg:hover:not(.on){background:var(--surface-2);color:var(--ink)}
+.presets{display:flex;gap:6px;flex-wrap:wrap;margin-top:12px}
+.presets button{font:500 11px/1 var(--mono);letter-spacing:.06em;padding:7px 10px;border:1px solid var(--line);
+  background:var(--ground);color:var(--ink-soft);border-radius:3px;cursor:pointer}
+.presets button:hover{background:var(--accent-soft);border-color:var(--accent);color:var(--ink)}
+.axt{width:100%;border-collapse:collapse;font-size:13.5px;margin-top:16px}
+.axt th{font:600 9.5px/1.3 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--muted);
+  text-align:left;padding:8px 10px;border-bottom:1px solid var(--line);background:var(--ground)}
+.axt td{padding:8px 10px;border-bottom:1px solid var(--line-soft);color:var(--ink-soft)}
+.axt td.f{font-family:var(--mono);font-size:13px;color:var(--ink);white-space:nowrap}
+.pill{font:600 9.5px/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;padding:4px 7px;border-radius:3px;
+  border:1px solid var(--line);color:var(--muted);display:inline-block}
+.pill.yes{background:var(--accent-soft);border-color:var(--accent);color:var(--accent-ink)}
+.pill.no{border-color:var(--falsum);color:var(--falsum)}
+.match{font:500 11px/1 var(--mono);color:var(--muted)}
+.match.bad{color:var(--falsum);font-weight:600}
+.vv{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px;font-family:var(--mono);font-size:12.5px;color:var(--muted)}
+.vv span{border:1px solid var(--line);border-radius:3px;padding:5px 9px}
+.vv b{color:var(--ink);font-weight:600}
+</style>
+<div class="shell">
+  <header class="hero">
+    <div class="eyebrow">Curso de fluência em lógica · módulo complementar 8</div>
+    <h1>Seis lógicas não clássicas</h1>
+    <p class="lede">Módulo próprio para as famílias que a unidade 6.5 apenas mencionava, com tratamento estendido das modais. Cada família é apresentada pelo pressuposto clássico que recusa ou pelo recurso expressivo que acrescenta, e não como curiosidade isolada.</p>
+    <div class="facts">
+      <div><div class="k">Posição</div><div class="v">Após o módulo 7</div></div>
+      <div><div class="k">Nível</div><div class="v">C · avançado</div></div>
+      <div><div class="k">Unidades</div><div class="v">Seis</div></div>
+      <div><div class="k">Ênfase</div><div class="v">Modais aléticas</div></div>
+      <div><div class="k">Pré-requisito</div><div class="v">Marco C2</div></div>
+      <div><div class="k">Marco</div><div class="v">C4</div></div>
+    </div>
+  </header>
+
+  <nav class="toc" id="toc">
+    <span class="lbl">Unidades</span>
+    <a href="#i">O mapa</a>
+    <a href="#u1">8.1 O que é ser clássica</a>
+    <a href="#u2">8.2 Modais aléticas</a>
+    <a href="#lab">Laboratório de Kripke</a>
+    <a href="#u3">8.3 Deônticas, epistêmicas, temporais</a>
+    <a href="#u4">8.4 Polivalentes</a>
+    <a href="#u5">8.5 Intuicionista</a>
+    <a href="#u6">8.6 Relevância e paraconsistência</a>
+    <a href="#marco">Marco C4</a>
+    <a href="#proximo">Próximo passo</a>
+    <a href="#ref">Referências</a>
+  </nav>
+
+  <article>
+    <h2 id="i"><span class="num">Abertura</span>O mapa</h2>
+    <p class="intro">A unidade 6.5 tratava seis famílias de lógicas não clássicas em uma única aula, o que bastava para nomeá-las e não para operá-las. Este módulo dá a cada uma o espaço de uma unidade, e às modais aléticas o de uma unidade com laboratório, uma vez que são elas que fornecem o aparato semântico do qual várias das demais dependem.</p>
+    <p>A organização segue um critério único: cada família é identificada pelo que faz com a lógica clássica. Ou acrescenta recursos expressivos preservando tudo o que era válido, ou recusa algum princípio e passa a validar menos. A distinção, na formulação de Haack (2002), separa lógicas <strong>suplementares</strong> de lógicas <strong>rivais</strong>, e é a única maneira de impedir que o assunto se dissolva em uma lista.</p>
+
+    <h2 id="u1"><span class="num">Unidade 8.1</span>O que é ser clássica</h2>
+    <p>Convém enunciar os pressupostos antes de recusá-los. A lógica desenvolvida nos módulos 3 a 7 satisfaz, entre outros, os seguintes princípios.</p>
+    <div class="tw"><table>
+      <tr><th>Princípio</th><th>Enunciado</th><th>Recusado por</th></tr>
+      <tr><td><strong>Bivalência</strong></td><td>Toda proposição é verdadeira ou falsa, e não ambas</td><td>Polivalentes</td></tr>
+      <tr><td><strong>Veritofuncionalidade</strong></td><td>O valor do composto depende só do valor das partes</td><td>Modais (por acréscimo)</td></tr>
+      <tr><td><strong>Terceiro excluído</strong></td><td>⊨ α ∨ ¬α</td><td>Intuicionista; polivalentes com {1} designado</td></tr>
+      <tr><td><strong>Dupla negação</strong></td><td>¬¬α ⊨ α</td><td>Intuicionista</td></tr>
+      <tr><td><strong>Explosão</strong></td><td>α, ¬α ⊨ β, para β qualquer</td><td>Paraconsistentes</td></tr>
+      <tr><td><strong>Monotonicidade</strong></td><td>Se Γ ⊨ α, então Γ ∪ {β} ⊨ α</td><td>Lógicas não monotônicas</td></tr>
+      <tr><td><strong>Irrelevância admitida</strong></td><td>⊨ α → (β → α), sem conexão entre α e β</td><td>Lógicas da relevância</td></tr>
+    </table></div>
+    <p>A tabela permite ler a diferença entre os dois tipos. Uma lógica <strong>suplementar</strong> acrescenta operadores e mantém válido tudo o que era válido: as modais, as temporais e as epistêmicas são desta espécie, e uma fórmula sem operadores modais é válida na lógica modal exatamente quando é válida na clássica. Uma lógica <strong>rival</strong> recusa algum princípio e invalida teoremas: a intuicionista, as polivalentes, as paraconsistentes e as da relevância são desta espécie, e a discussão sobre elas é substantiva, isto é, sobre qual lógica está certa, e não meramente sobre qual é mais conveniente.</p>
+    <div class="note">A distinção não é limpa em todos os casos. Uma lógica modal com quantificadores levanta questões sobre a validade de fórmulas puramente quantificacionais, e sistemas paraconsistentes podem ser apresentados como extensões de fragmentos clássicos. O critério serve para orientar, não para classificar exaustivamente.</div>
+
+    <h2 id="u2"><span class="num">Unidade 8.2</span>Modais aléticas</h2>
+    <p>A linguagem acrescenta dois operadores unários: □α, lido «necessariamente α», e ◇α, «possivelmente α», interdefiníveis por ◇α ≡ ¬□¬α. O acréscimo rompe a veritofuncionalidade: saber que α é verdadeira não determina o valor de □α, pois há verdades necessárias e verdades contingentes. Nenhuma tabela de verdade pode, portanto, dar a semântica de □, e é preciso outra coisa.</p>
+    <h4>Semântica de mundos possíveis</h4>
+    <p>Um <strong>frame</strong> é um par ⟨W, R⟩, em que W é um conjunto não vazio de mundos e R ⊆ W × W é a relação de acessibilidade. Um <strong>modelo</strong> acrescenta uma valoração V que atribui, a cada letra sentencial e cada mundo, um dos dois valores. A verdade é relativa a um mundo:</p>
+    <div class="fx">M, w ⊨ P        sse  V(P, w) = V
+M, w ⊨ ¬α       sse  M, w ⊭ α
+M, w ⊨ α ∧ β    sse  M, w ⊨ α  e  M, w ⊨ β        (e analogamente ∨, →, ↔)
+M, w ⊨ □α       sse  M, u ⊨ α  para todo u tal que wRu
+M, w ⊨ ◇α       sse  M, u ⊨ α  para algum u tal que wRu</div>
+    <p>Os operadores modais são, portanto, quantificadores restritos sobre mundos acessíveis, e a intuição a fixar é esta: <strong>o que é necessário depende de quais mundos se enxergam</strong>. A relação R é o parâmetro que o sistema modal escolhe, e é por isso que existe uma família de lógicas modais e não apenas uma.</p>
+    <h4>O sistema mínimo e as extensões</h4>
+    <p>O sistema <span class="m">K</span> consiste na lógica clássica mais o esquema K, isto é, □(α→β) → (□α→□β), mais a regra de necessitação, que permite inferir □α de α quando α é um teorema. K é válido em todo frame, sem qualquer exigência sobre R.</p>
+    <p>Os sistemas mais fortes acrescentam esquemas, e o resultado central da área, a <strong>teoria da correspondência</strong>, estabelece que cada um dos cinco esquemas abaixo é válido exatamente nos frames cuja relação tem uma propriedade determinada. A generalização não vale para todo esquema modal: o axioma de McKinsey não tem correspondente de primeira ordem, e o de Löb corresponde a uma condição que também não o é.</p>
+    <div class="tw"><table>
+      <tr><th>Esquema</th><th>Fórmula</th><th>Propriedade de R</th><th>Sistema</th></tr>
+      <tr><td class="m2">T</td><td class="m2">□α → α</td><td>Reflexiva</td><td>T = K + T</td></tr>
+      <tr><td class="m2">D</td><td class="m2">□α → ◇α</td><td>Serial</td><td>D = K + D</td></tr>
+      <tr><td class="m2">4</td><td class="m2">□α → □□α</td><td>Transitiva</td><td>S4 = T + 4</td></tr>
+      <tr><td class="m2">B</td><td class="m2">α → □◇α</td><td>Simétrica</td><td>B = T + B</td></tr>
+      <tr><td class="m2">5</td><td class="m2">◇α → □◇α</td><td>Euclidiana</td><td>S5 = T + 5</td></tr>
+    </table></div>
+    <p>A leitura filosófica de cada propriedade é imediata. A reflexividade diz que o mundo atual é possível relativamente a si mesmo, e é o que faz o necessário ser verdadeiro; a sua recusa é apropriada em leituras deônticas, onde o obrigatório nem sempre ocorre. A transitividade diz que o que é necessário é necessariamente necessário, isto é, que a própria modalidade não é contingente. Em S5, em que R é de equivalência, todos os mundos se enxergam mutuamente e as modalidades iteradas colapsam: □□α equivale a □α, e a modalidade passa a não depender do ponto de vista.</p>
+    <p>O laboratório abaixo permite verificar a correspondência diretamente. O aluno altera a relação de acessibilidade e observa quais esquemas passam a valer no frame, sem consultar a tabela.</p>
+    <div class="lab" id="lab">
+      <h4>Laboratório de Kripke</h4>
+      <p class="sub">Três mundos. Clique na matriz para alterar a acessibilidade e nos valores para alterar a valoração. A validade no frame é verificada por força bruta sobre todas as 64 valorações possíveis de p e q.</p>
+      <div class="labgrid">
+        <div>
+          <span class="ctl">Frame ⟨W, R⟩</span>
+          <div class="kg"><svg viewBox="0 0 300 210" id="graph" role="img" aria-label="Grafo dos três mundos e das setas de acessibilidade."></svg></div>
+          <div class="presets">
+            <button type="button" data-preset="K">Frame vazio</button>
+            <button type="button" data-preset="T">Reflexivo (T)</button>
+            <button type="button" data-preset="S4">Pré-ordem (S4)</button>
+            <button type="button" data-preset="S5">Equivalência (S5)</button>
+            <button type="button" data-preset="D">Serial sem reflexão (D)</button>
+          </div>
+        </div>
+        <div>
+          <span class="ctl">Acessibilidade · linha vê coluna</span>
+          <table class="mx" id="rel"></table>
+          <span class="ctl" style="margin-top:16px">Valoração no modelo atual</span>
+          <table class="mx" id="val"></table>
+          <div class="vv" id="props"></div>
+        </div>
+      </div>
+      <table class="axt" id="axiomas">
+        <tr><th>Esquema</th><th>Fórmula</th><th>Vale no frame</th><th>Propriedade de R</th><th>Presente</th></tr>
+      </table>
+      <p style="font-size:13.5px;color:var(--muted);margin:14px 0 0">As duas últimas colunas devem coincidir sempre. Quando coincidem, o aluno está observando a teoria da correspondência em funcionamento; se alguma linha divergisse, haveria erro no laboratório e não na teoria.</p>
+    </div>
+    <p>Duas experiências valem a pena. A primeira é partir do frame vazio, em que nenhum mundo acessa nenhum: ali □α é vacuamente verdadeira para toda α, e ◇α é falsa para toda α, de modo que D falha e T falha. A segunda é construir um frame transitivo e não reflexivo, verificando que 4 vale e T não, o que separa duas propriedades que a intuição costuma confundir.</p>
+    <h4>De dicto e de re</h4>
+    <p>Quando quantificadores entram na linguagem modal, surge uma ambiguidade que o português não desfaz. «Todo solteiro é necessariamente não casado» admite duas leituras: ∀x(Sx → □¬Cx), que atribui a cada solteiro a propriedade de necessariamente não ser casado, e □∀x(Sx → ¬Cx), que atribui necessidade ao enunciado inteiro. A primeira é de re, a segunda de dicto, e apenas a segunda é verdadeira. Distingui-las é a aplicação mais imediata do módulo 5 a este material.</p>
+    <p>A lógica modal quantificada levanta ainda a questão de saber se o domínio varia de mundo para mundo. Se não varia, a <strong>fórmula de Barcan</strong>, ◇∃xα → ∃x◇α, é válida, e com ela o compromisso de que nada poderia existir além do que existe. Mais precisamente, ela corresponde a domínios decrescentes, isto é, à condição de que o domínio de um mundo acessível esteja contido no do mundo de partida; são os domínios crescentes que a invalidam, ao custo de complicar a semântica dos termos que não denotam em todos os mundos.</p>
+    <h2 id="u3"><span class="num">Unidade 8.3</span>Deônticas, epistêmicas e temporais</h2>
+    <p>O mesmo aparato serve a outras leituras do operador, e a escolha do sistema passa a ser uma questão substantiva sobre o domínio interpretado.</p>
+    <h4>Deônticas</h4>
+    <p>Lê-se □ como «é obrigatório que» e ◇ como «é permitido que». Os mundos acessíveis são os deonticamente ideais, aqueles em que tudo o que deve ser feito é feito. O ponto decisivo é que <strong>T falha</strong>: do fato de algo ser obrigatório não se segue que ocorra, e uma lógica deôntica que validasse □α → α tornaria impossível a transgressão. O sistema apropriado é D, cujo axioma □α → ◇α diz apenas que o obrigatório é permitido, isto é, que o conjunto de mundos ideais não é vazio. Os chamados paradoxos deônticos, entre eles o dos imperativos condicionais contrários ao dever, ocupam boa parte da literatura da área.</p>
+    <h4>Epistêmicas</h4>
+    <p>Lê-se □<sub>a</sub>α como «o agente a sabe que α», e os mundos acessíveis são os compatíveis com a informação de que a dispõe. Aqui T é apropriado, pois o que se sabe é verdadeiro, e a discussão recai sobre 4 e 5, isto é, sobre saber que se sabe e sobre saber que não se sabe. A dificuldade estrutural é a <strong>onisciência lógica</strong>: a semântica valida a necessitação, e portanto faz o agente saber todas as consequências lógicas do que sabe, o que nenhum agente real satisfaz.</p>
+    <h4>Temporais</h4>
+    <p>Prior organizou a lógica do tempo com quatro operadores: Fα, α será verdadeira; Pα, α foi verdadeira; Gα, α sempre será; Hα, α sempre foi. A relação de acessibilidade é a ordem temporal, e as propriedades que se lhe atribuem, como a transitividade, a linearidade ou a densidade, correspondem a teses sobre a estrutura do tempo. É neste ponto que o arco histórico do curso se fecha: a discussão aristotélica sobre a batalha naval e os futuros contingentes, apresentada na unidade 2.4 e retomada na 6.5, encontra aqui uma formulação em que a pergunta pode ser posta com precisão, e é o mesmo problema que motivou a unidade seguinte.</p>
+
+    <h2 id="u4"><span class="num">Unidade 8.4</span>Polivalentes</h2>
+    <p>Recusa-se a bivalência: além de V e F, admite-se ao menos um terceiro valor, tipicamente lido como indeterminado. A motivação histórica de Łukasiewicz foi exatamente o estatuto dos enunciados sobre futuros contingentes, aos quais atribuir V ou F pareceria comprometer-se com o determinismo.</p>
+    <p>Escrevendo 1 para verdadeiro, ½ para indeterminado e 0 para falso, o sistema Ł₃ define a negação por 1 − a, a conjunção pelo mínimo e a disjunção pelo máximo. O condicional é o que caracteriza o sistema.</p>
+    <div class="labgrid" style="margin:18px 0 22px">
+      <div><span class="ctl">Negação em Ł₃, K₃ e LP</span>
+        <div class="tw" style="margin:0"><table style="min-width:0">
+          <tr><th>α</th><th>1</th><th>½</th><th>0</th></tr>
+          <tr><td class="m2">¬α</td><td class="c">0</td><td class="c">½</td><td class="c">1</td></tr>
+        </table></div>
+        <span class="ctl" style="margin-top:14px">Condicional de Łukasiewicz</span>
+        <div class="tw" style="margin:0"><table style="min-width:0">
+          <tr><th>α → β</th><th>β=1</th><th>β=½</th><th>β=0</th></tr>
+          <tr><td class="m2">α=1</td><td class="c">1</td><td class="c">½</td><td class="c">0</td></tr>
+          <tr><td class="m2">α=½</td><td class="c">1</td><td class="c">1</td><td class="c">½</td></tr>
+          <tr><td class="m2">α=0</td><td class="c">1</td><td class="c">1</td><td class="c">1</td></tr>
+        </table></div>
+      </div>
+      <div><span class="ctl">Onde os sistemas divergem</span>
+        <div class="tw" style="margin:0"><table style="min-width:0">
+          <tr><th>Sistema</th><th>Tabelas</th><th>Designados</th></tr>
+          <tr><td class="m2">Ł₃</td><td>→ próprio</td><td class="c">{1}</td></tr>
+          <tr><td class="m2">K₃</td><td>→ como ¬α ∨ β</td><td class="c">{1}</td></tr>
+          <tr><td class="m2">LP</td><td>→ como ¬α ∨ β</td><td class="c">{1, ½}</td></tr>
+          <tr><td class="m2">Bochvar</td><td>½ contamina tudo</td><td class="c">{1}</td></tr>
+        </table></div>
+        <p style="font-size:14px;margin-top:12px">O conceito que organiza a comparação é o de <strong>valor designado</strong>: um argumento é válido quando toda atribuição que dá valor designado às premissas dá valor designado à conclusão.</p>
+      </div>
+    </div>
+    <p>As consequências dessa escolha são drásticas e fáceis de verificar. Em Ł₃, o terceiro excluído falha: com α valendo ½, α ∨ ¬α vale máximo entre ½ e ½, isto é, ½, que não é designado. Em K₃, cujo único valor designado é 1 e cujas tabelas nunca produzem 1 a partir de ½ apenas, não há tautologia alguma. Em LP, que tem exatamente as mesmas tabelas de K₃ mas designa também ½, todas as tautologias clássicas voltam a valer, e o que se perde é a explosão: com α valendo ½, tanto α quanto ¬α são designadas, ao passo que uma β qualquer pode valer 0. LP é, por isso, uma lógica paraconsistente, e será reencontrada na unidade 8.6. O preço, contudo, não se limita à explosão: com α valendo ½ e β valendo 0, tanto α quanto α → β são designadas e β não é, de modo que o modus ponens e o silogismo disjuntivo também falham. O conjunto das fórmulas válidas coincide com o clássico; a relação de consequência, não.</p>
+    <p>Note-se que K₃ e LP diferem <em>apenas</em> na escolha dos valores designados, e ainda assim uma não tem tautologias e a outra tem todas as clássicas. É a demonstração mais econômica de que a relação de consequência não é determinada apenas pelas tabelas.</p>
+    <div class="note">Ł₃ e K₃ divergem em um único ponto das tabelas: quando antecedente e consequente valem ½, o condicional de Łukasiewicz vale 1 e o de Kleene vale ½. É dessa única casa que decorre a validade de α → α em Ł₃ e a sua falha em K₃.</div>
+
+    <h2 id="u5"><span class="num">Unidade 8.5</span>Intuicionista</h2>
+    <p>A motivação não é semântica, e sim epistemológica. Na interpretação de Brouwer, Heyting e Kolmogorov, afirmar α é dispor de uma construção que prova α. Daí decorre a leitura dos operadores: uma prova de α ∧ β é um par de provas; uma prova de α ∨ β é uma prova de um dos disjuntos, com a indicação de qual; uma prova de α → β é um procedimento que converte provas de α em provas de β; e ¬α abrevia α → ⊥.</p>
+    <p>Com essa leitura, o terceiro excluído deixa de ser evidente: afirmar α ∨ ¬α exigiria dispor, para qualquer α, de uma prova de α ou de uma prova de que α leva ao absurdo, o que não se tem. Caem com ele a eliminação da dupla negação, uma das leis de De Morgan e a lei de Peirce. O que permanece é considerável, e a lógica intuicionista não é uma lógica clássica mutilada arbitrariamente: ela é exatamente o fragmento que a leitura construtiva sustenta.</p>
+    <p>A semântica de Kripke aplica-se aqui, com duas alterações. Os mundos são estados de informação ordenados por uma relação reflexiva e transitiva, a valoração é <strong>monotônica</strong>, de modo que o que foi provado permanece provado, e a cláusula do condicional passa a quantificar sobre estados futuros: w força α → β quando todo estado u acessível a partir de w que força α também força β. A negação recebe tratamento análogo, e é por isso que w pode não forçar α nem forçar ¬α.</p>
+    <div class="note">Este é o ponto de contato com o módulo 7. A demonstração da completude ali apresentada depende do lema 2(b), cuja obtenção usa a eliminação da dupla negação, e é essa dependência, na lógica-objeto, que a torna inaplicável aqui. Sem a dupla negação não se obtêm conjuntos maximais consistentes que decidam toda fórmula, e a construção precisa ser refeita com <em>teorias primas</em>, isto é, conjuntos fechados por consequência nos quais α ∨ β só pertence ao conjunto quando α ou β pertence, ordenados por inclusão. A completude da lógica intuicionista relativamente à semântica de Kripke é um teorema demonstrado por essa via.</div>
+
+    <h2 id="u6"><span class="num">Unidade 8.6</span>Relevância e paraconsistência</h2>
+    <p>As duas famílias atacam pontos distintos, mas partem da mesma insatisfação com o condicional material.</p>
+    <h4>Relevância</h4>
+    <p>São válidas classicamente as fórmulas α → (β → α) e ¬α → (α → β), conhecidas como paradoxos da implicação material. Elas permitem inferir um condicional cujo antecedente e cujo consequente nada têm entre si, e para as lógicas da relevância isso é um defeito e não uma peculiaridade. O requisito imposto é o <strong>compartilhamento de variáveis</strong>: em um condicional válido, antecedente e consequente devem partilhar ao menos uma letra sentencial. Os sistemas R e E, de Anderson e Belnap, formalizam a exigência, ao custo de uma semântica consideravelmente mais complexa, com uma relação ternária entre mundos.</p>
+    <h4>Paraconsistência</h4>
+    <p>Aqui o alvo é a explosão. Em lógica clássica, um único par contraditório trivializa a teoria inteira, e qualquer fórmula passa a ser demonstrável, o que se verifica pelo lema 2(c) do módulo 7. Uma lógica é <strong>paraconsistente</strong> quando a explosão falha, isto é, quando é possível conter uma contradição sem que tudo se siga.</p>
+    <p>A motivação é em parte prática: bancos de dados, corpos de conhecimento científico em transição e sistemas jurídicos contêm inconsistências localizadas, e o interesse está em raciocinar com eles sem descartá-los. O sistema LP da unidade 8.4 é o exemplo mais simples. Os sistemas C<sub>n</sub> de Newton da Costa constituem a contribuição brasileira mais influente à área e organizam hierarquicamente graus de tolerância à contradição. O <strong>dialeteísmo</strong>, defendido por Priest, dá um passo adicional e sustenta que algumas contradições são verdadeiras, tese metafísica que a paraconsistência técnica não exige.</p>
+    <p>Observe-se, para encerrar, que o lema 2(c) do módulo 7 mostra exatamente <em>como</em> a explosão é obtida na dedução natural clássica: por redução ao absurdo, com introdução da conjunção, seguida de eliminação da dupla negação. Um sistema que conserve as três regras terá a explosão como consequência inevitável, e é este o critério de leitura que o módulo 7 oferece.</p><p>O que os sistemas efetivamente existentes abandonam, porém, não é a dupla negação. LP a conserva, pois ¬¬α e α recebem sempre o mesmo valor nas suas tabelas, e os sistemas C<sub>n</sub> de da Costa também a conservam. O que eles restringem é a redução ao absurdo e, de modo característico, o silogismo disjuntivo, cuja falha em LP foi verificada na unidade 8.4. Ler um sistema paraconsistente é, portanto, perguntar antes de tudo o que ele fez com essas duas regras.</p>
+
+    <h2 id="marco"><span class="num">Verificação</span>Marco C4 e exercícios</h2>
+    <div class="marco"><b>Marco C4</b>Construir um frame de Kripke que valide 4 e invalide T, exibindo a valoração que refuta T; formalizar uma ambiguidade de dicto e de re e mostrar em que modelo as duas leituras divergem; calcular, nas tabelas de Ł₃, um caso em que o terceiro excluído falha; e explicar por que K₃ e LP, tendo as mesmas tabelas, validam conjuntos de fórmulas radicalmente distintos.</div>
+    <h4>Exercícios</h4>
+    <p><strong>1.</strong> No laboratório, construa um frame em que 5 valha e 4 não valha, ou demonstre que isso é impossível para três mundos.</p>
+    <p><strong>2.</strong> Verifique, pelas tabelas da unidade 8.4, que α → α é válida em Ł₃ e não é válida em K₃. Identifique a única linha responsável pela diferença.</p>
+    <p><strong>3.</strong> Mostre que em LP o argumento «α, ¬α, portanto β» é inválido, exibindo a atribuição de valores que o refuta.</p>
+    <p><strong>4.</strong> Explique por que uma lógica deôntica não deve validar □α → α, e proponha um exemplo em português em que a validação produziria conclusão inaceitável.</p>
+    <p><strong>5.</strong> Percorra a demonstração do lema 2(c) do módulo 7 e identifique o conjunto mínimo de regras cuja conservação torna a explosão inevitável. Verifique, em seguida, pelas tabelas da unidade 8.4, que LP conserva a eliminação da dupla negação, e conclua qual das demais regras ele necessariamente abandona.</p>
+    <p><strong>6.</strong> A lógica modal é suplementar à clássica, no sentido da unidade 8.1. Enuncie com precisão o que isso significa a respeito das fórmulas sem operadores modais, e explique por que a lógica modal quantificada torna a afirmação menos simples.</p>
+
+    <h2 id="proximo"><span class="num">Encerramento</span>Próximo passo</h2><p>O ciclo de cada módulo se fecha em três movimentos: resolver os exercícios, verificar o marco no banco de itens e submeter o artefato escrito à rubrica correspondente.</p><div class="nextgrid"><a class="nx" href="provas.html"><span class="k">Verificar</span><span class="t">Provas de Domínio</span><span class="d">O banco cobre os marcos A1 a C2; o marco C4 verifica-se por produção escrita.</span></a><a class="nx" href="prompts.html#p7"><span class="k">Corrigir o artefato</span><span class="t">Prompt 7 · Trabalho integrador</span><span class="d">Rubrica mais próxima do artefato escrito exigido pelo marco C4.</span></a></div>
+
+    <h2 id="ref">Referências</h2>
+    <div class="refs">
+      <p>Haack, S. (2002). <em>Filosofia das lógicas</em> (C. A. Mortari &amp; L. H. de A. Dutra, Trads.). Editora Unesp.</p>
+      <p>Mortari, C. A. (2016). <em>Introdução à lógica</em> (2a ed.). Editora Unesp.</p>
+      <p>Mortari, C. A. (2023). <em>Plano de ensino: FIL 6021 Lógica I</em> [Plano de ensino]. Universidade Federal de Santa Catarina, Departamento de Filosofia.</p>
+      <p>Priest, G. (2008). <em>An introduction to non-classical logic: From if to is</em> (2nd ed.). Cambridge University Press.</p>
+    </div>
+  </article>
+</div>
+<script>
+(function(){
+  const N = 3, NOMES = ["w₁","w₂","w₃"], ATOMS = ["p","q"];
+  let R = [[false,false,false],[false,false,false],[false,false,false]];
+  let V = {p:[true,false,false], q:[false,true,false]};
+
+  const AX = [
+    ["T", "□p → p",            ["→",["□",["at","p"]],["at","p"]],                                  "Reflexiva",  "refl"],
+    ["D", "□p → ◇p",           ["→",["□",["at","p"]],["◇",["at","p"]]],                            "Serial",     "ser"],
+    ["4", "□p → □□p",          ["→",["□",["at","p"]],["□",["□",["at","p"]]]],                      "Transitiva", "trans"],
+    ["B", "p → □◇p",           ["→",["at","p"],["□",["◇",["at","p"]]]],                            "Simétrica",  "sim"],
+    ["5", "◇p → □◇p",          ["→",["◇",["at","p"]],["□",["◇",["at","p"]]]],                      "Euclidiana", "eucl"],
+    ["K", "□(p→q) → (□p→□q)",  ["→",["□",["→",["at","p"],["at","q"]]],["→",["□",["at","p"]],["□",["at","q"]]]], "Nenhuma", "sempre"]
+  ];
+
+  function ev(a, w, val){
+    switch(a[0]){
+      case "at": return val[a[1]][w];
+      case "¬":  return !ev(a[1], w, val);
+      case "∧":  return ev(a[1], w, val) && ev(a[2], w, val);
+      case "∨":  return ev(a[1], w, val) || ev(a[2], w, val);
+      case "→":  return !ev(a[1], w, val) || ev(a[2], w, val);
+      case "□":  { for(let u=0;u<N;u++) if(R[w][u] && !ev(a[1], u, val)) return false; return true; }
+      case "◇":  { for(let u=0;u<N;u++) if(R[w][u] && ev(a[1], u, val)) return true; return false; }
+    }
+  }
+  function frameValid(a){
+    for(let m=0; m<64; m++){
+      const val = {p:[], q:[]};
+      for(let w=0; w<N; w++){ val.p[w] = !!(m >> w & 1); val.q[w] = !!(m >> (w+3) & 1); }
+      for(let w=0; w<N; w++) if(!ev(a, w, val)) return false;
+    }
+    return true;
+  }
+  const PROP = {
+    refl:  () => [0,1,2].every(w => R[w][w]),
+    ser:   () => [0,1,2].every(w => [0,1,2].some(u => R[w][u])),
+    trans: () => [0,1,2].every(w => [0,1,2].every(u => [0,1,2].every(v => !(R[w][u] && R[u][v]) || R[w][v]))),
+    sim:   () => [0,1,2].every(w => [0,1,2].every(u => !R[w][u] || R[u][w])),
+    eucl:  () => [0,1,2].every(w => [0,1,2].every(u => [0,1,2].every(v => !(R[w][u] && R[w][v]) || R[u][v]))),
+    sempre:() => true
+  };
+
+  /* --- controles --- */
+  function grid(el, rows, cols, get, set, headRow, headCol){
+    let h = "<tr><th></th>" + headCol.map(c => "<th>" + c + "</th>").join("") + "</tr>";
+    for(let i=0;i<rows;i++){
+      h += "<tr><th>" + headRow[i] + "</th>";
+      for(let j=0;j<cols;j++) h += '<td><button type="button" class="tg" data-i="'+i+'" data-j="'+j+'"></button></td>';
+      h += "</tr>";
+    }
+    el.innerHTML = h;
+    el.querySelectorAll(".tg").forEach(b => b.addEventListener("click", () => {
+      set(+b.dataset.i, +b.dataset.j); paint();
+    }));
+  }
+  const relEl = document.getElementById("rel"), valEl = document.getElementById("val");
+  grid(relEl, 3, 3, null, (i,j) => { R[i][j] = !R[i][j]; }, NOMES, NOMES);
+  grid(valEl, 2, 3, null, (i,j) => { V[ATOMS[i]][j] = !V[ATOMS[i]][j]; }, ATOMS, NOMES);
+
+  document.querySelectorAll("[data-preset]").forEach(b => b.addEventListener("click", () => {
+    const p = b.dataset.preset;
+    const z = () => [[false,false,false],[false,false,false],[false,false,false]];
+    if(p === "K") R = z();
+    if(p === "T"){ R = z(); for(let i=0;i<3;i++) R[i][i] = true; R[0][1] = true; R[1][2] = true; }
+    if(p === "S4"){ R = z(); for(let i=0;i<3;i++) for(let j=i;j<3;j++) R[i][j] = true; }
+    if(p === "S5"){ R = [[true,true,true],[true,true,true],[true,true,true]]; }
+    if(p === "D"){ R = z(); R[0][1] = true; R[1][2] = true; R[2][0] = true; }
+    paint();
+  }));
+
+  /* --- grafo --- */
+  const POS = [[62,58],[238,58],[150,158]], Rd = 24;
+  function edge(from, to){
+    const dx = to[0]-from[0], dy = to[1]-from[1], L = Math.hypot(dx,dy);
+    return [from[0] + dx/L*Rd, from[1] + dy/L*Rd, to[0] - dx/L*(Rd+7), to[1] - dy/L*(Rd+7)];
+  }
+  function drawGraph(){
+    let s = '<defs><marker id="am" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="var(--accent)"/></marker></defs>';
+    for(let i=0;i<N;i++) for(let j=0;j<N;j++){
+      if(!R[i][j]) continue;
+      if(i === j){
+        const [x,y] = POS[i];
+        s += '<path d="M'+(x-9)+' '+(y-Rd+3)+' C'+(x-26)+' '+(y-Rd-30)+' '+(x+26)+' '+(y-Rd-30)+' '+(x+8)+' '+(y-Rd+2)+
+             '" fill="none" stroke="var(--accent)" stroke-width="1.6" marker-end="url(#am)"/>';
+      } else {
+        const [x1,y1,x2,y2] = edge(POS[i], POS[j]);
+        const mx = (x1+x2)/2, my = (y1+y2)/2, nx = -(y2-y1), ny = (x2-x1), L = Math.hypot(nx,ny);
+        const cx = mx + nx/L*16, cy = my + ny/L*16;
+        s += '<path d="M'+x1+' '+y1+' Q'+cx+' '+cy+' '+x2+' '+y2+'" fill="none" stroke="var(--accent)" stroke-width="1.6" marker-end="url(#am)"/>';
+      }
+    }
+    for(let i=0;i<N;i++){
+      const [x,y] = POS[i];
+      const at = ATOMS.filter(a => V[a][i]).join(" ") || "—";
+      s += '<circle cx="'+x+'" cy="'+y+'" r="'+Rd+'" fill="var(--surface)" stroke="var(--line)" stroke-width="1.4"/>';
+      s += '<text x="'+x+'" y="'+(y-1)+'" text-anchor="middle" style="font-family:Spectral,serif;font-size:13px;fill:var(--ink)">'+NOMES[i]+'</text>';
+      s += '<text x="'+x+'" y="'+(y+13)+'" text-anchor="middle" style="font-family:\'IBM Plex Mono\',monospace;font-size:10px;fill:var(--accent)">'+at+'</text>';
+    }
+    document.getElementById("graph").innerHTML = s;
+  }
+
+  /* --- pintura geral --- */
+  function paint(){
+    relEl.querySelectorAll(".tg").forEach(b => {
+      const on = R[+b.dataset.i][+b.dataset.j];
+      b.classList.toggle("on", on); b.textContent = on ? "●" : "○";
+      b.setAttribute("aria-label", NOMES[+b.dataset.i] + " acessa " + NOMES[+b.dataset.j] + (on ? ": sim" : ": não"));
+    });
+    valEl.querySelectorAll(".tg").forEach(b => {
+      const on = V[ATOMS[+b.dataset.i]][+b.dataset.j];
+      b.classList.toggle("on", on); b.textContent = on ? "V" : "F";
+    });
+    drawGraph();
+    const nomes = {refl:"reflexiva", ser:"serial", trans:"transitiva", sim:"simétrica", eucl:"euclidiana"};
+    document.getElementById("props").innerHTML = Object.keys(nomes).map(k =>
+      "<span>" + nomes[k] + " <b>" + (PROP[k]() ? "sim" : "não") + "</b></span>").join("");
+    const t = document.getElementById("axiomas");
+    t.innerHTML = '<tr><th>Esq.</th><th>Fórmula</th><th>Vale no frame</th><th>Propriedade de R</th><th>Presente</th></tr>' +
+      AX.map(a => {
+        const vale = frameValid(a[2]), tem = PROP[a[4]]();
+        const bate = (a[4] === "sempre") ? vale : (vale === tem);
+        return "<tr><td class='f'>" + a[0] + "</td><td class='f'>" + a[1] + "</td>" +
+          "<td><span class='pill " + (vale ? "yes" : "no") + "'>" + (vale ? "sim" : "não") + "</span></td>" +
+          "<td>" + a[3] + "</td><td>" + (a[4] === "sempre"
+            ? "<span class='match'>não requer</span>"
+            : "<span class='pill " + (tem ? "yes" : "no") + "'>" + (tem ? "sim" : "não") + "</span>") +
+          (bate ? "" : " <span class='match bad'>divergência</span>") + "</td></tr>";
+      }).join("");
+  }
+
+  document.querySelector("[data-preset='T']").click();
+})();
+</script>
+<script>
+(function(){
+  const links = Array.from(document.querySelectorAll("nav.toc a"));
+  const alvos = links.map(a => document.getElementById(a.getAttribute("href").slice(1))).filter(Boolean);
+  function spy(){
+    let atual = alvos[0];
+    alvos.forEach(t => { if(t.getBoundingClientRect().top <= 120) atual = t; });
+    links.forEach(a => a.classList.toggle("on", a.getAttribute("href") === "#" + (atual ? atual.id : "")));
+  }
+  window.addEventListener("scroll", spy, {passive:true}); spy();
+})();
+</script>
+
+</body>
+</html>

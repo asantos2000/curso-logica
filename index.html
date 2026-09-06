@@ -1,0 +1,285 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<style>:root{color-scheme:light dark}body{margin:0;font:14px/1.5 system-ui,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style>
+</head>
+<body>
+<title>Curso de Fluência em Lógica</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,600&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<style>
+:root{
+  --ground:#EEF1EE; --surface:#FAFBF9; --surface-2:#E2E7E3; --raised:#FFFFFF;
+  --ink:#131A18; --ink-soft:#38443F; --muted:#5F6C66; --line:#CBD4CE; --line-soft:#DDE4DF;
+  --accent:#0C6355; --accent-ink:#08463C; --accent-soft:#D6E7E2;
+  --verum:#0C6355; --falsum:#A33C20; --brass:#8A6D0B;
+  --shadow:0 1px 2px rgba(19,26,24,.06), 0 8px 24px -12px rgba(19,26,24,.18);
+  --serif:"Spectral", Georgia, "Times New Roman", serif;
+  --mono:"IBM Plex Mono", "SFMono-Regular", Consolas, monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --ground:#0E1413; --surface:#151D1B; --surface-2:#1D2926; --raised:#1A2422;
+    --ink:#E4EAE6; --ink-soft:#BCC7C2; --muted:#8D9C96; --line:#2B3835; --line-soft:#222E2B;
+    --accent:#4FBCA6; --accent-ink:#8FD8C8; --accent-soft:#17332E;
+    --verum:#4FBCA6; --falsum:#DE8461; --brass:#CFA93A;
+    --shadow:0 1px 2px rgba(0,0,0,.4), 0 10px 30px -14px rgba(0,0,0,.7);
+  }
+}
+:root[data-theme="dark"]{
+  --ground:#0E1413; --surface:#151D1B; --surface-2:#1D2926; --raised:#1A2422;
+  --ink:#E4EAE6; --ink-soft:#BCC7C2; --muted:#8D9C96; --line:#2B3835; --line-soft:#222E2B;
+  --accent:#4FBCA6; --accent-ink:#8FD8C8; --accent-soft:#17332E;
+  --verum:#4FBCA6; --falsum:#DE8461; --brass:#CFA93A;
+  --shadow:0 1px 2px rgba(0,0,0,.4), 0 10px 30px -14px rgba(0,0,0,.7);
+}
+
+*{box-sizing:border-box}
+body{margin:0;background:var(--ground);color:var(--ink);font-family:var(--serif);
+  font-size:17px;line-height:1.62;-webkit-font-smoothing:antialiased}
+.shell{max-width:1180px;margin:0 auto;padding:0 24px;display:grid;
+  grid-template-columns:220px minmax(0,1fr);gap:52px;align-items:start}
+.hero{grid-column:1/-1;padding:52px 0 32px;border-bottom:1px solid var(--line)}
+.hero .eyebrow{font:600 10.5px/1 var(--mono);letter-spacing:.18em;text-transform:uppercase;color:var(--accent)}
+.hero h1{font-size:clamp(34px,4.8vw,54px);font-weight:600;letter-spacing:-.032em;line-height:1.03;
+  margin:16px 0 12px;max-width:17ch;text-wrap:balance}
+.hero .lede{font-size:19px;color:var(--ink-soft);max-width:62ch;margin:0 0 28px}
+.facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:0;border-top:1px solid var(--line)}
+.facts div{padding:14px 20px 14px 0}
+.facts .k{font:600 10px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.facts .v{font-size:16.5px;margin-top:6px;line-height:1.3}
+nav.toc{position:sticky;top:26px;padding:32px 0 40px;font-size:14px}
+nav.toc .lbl{font:600 10px/1 var(--mono);letter-spacing:.16em;text-transform:uppercase;color:var(--muted);
+  padding-bottom:10px;border-bottom:1px solid var(--line);display:block;margin-bottom:12px}
+nav.toc a{display:block;color:var(--muted);text-decoration:none;padding:5px 0 5px 12px;
+  border-left:2px solid transparent;line-height:1.35}
+nav.toc a:hover{color:var(--ink)}
+nav.toc a.on{color:var(--accent);border-left-color:var(--accent);font-weight:500}
+article{padding:32px 0 90px;max-width:72ch}
+article h2{font-size:26px;font-weight:600;letter-spacing:-.018em;line-height:1.16;
+  margin:52px 0 4px;scroll-margin-top:28px;text-wrap:balance}
+article h2:first-of-type{margin-top:10px}
+article h2 .num{font:600 11px/1 var(--mono);letter-spacing:.14em;color:var(--accent);display:block;margin-bottom:10px}
+article h3{font-size:19px;font-weight:600;margin:32px 0 8px;letter-spacing:-.01em;scroll-margin-top:28px}
+article h4{font-size:16.5px;font-weight:600;margin:24px 0 6px}
+article p{margin:0 0 16px;color:var(--ink-soft)}
+article p strong{color:var(--ink);font-weight:600}
+article .intro{font-size:18.5px;color:var(--ink);margin-bottom:22px}
+.m{font-family:var(--mono);font-size:.92em;background:var(--surface);padding:1px 5px;border-radius:2px;color:var(--ink)}
+.tw{overflow-x:auto;margin:20px 0 24px;border:1px solid var(--line);border-radius:4px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;font-size:14.6px;min-width:440px}
+th,td{text-align:left;padding:10px 13px;border-bottom:1px solid var(--line-soft);vertical-align:top;color:var(--ink-soft)}
+tr:last-child td{border-bottom:0}
+th{font:600 10px/1.4 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--muted);
+  border-bottom:1px solid var(--line);background:var(--ground)}
+td.m2{font-family:var(--mono);font-size:13.5px;white-space:nowrap;color:var(--ink)}
+td.c{text-align:center;font-family:var(--mono)}
+td strong{color:var(--ink)}
+/* blocos formais */
+.fx{font-family:var(--mono);font-size:15px;background:var(--surface);border:1px solid var(--line);
+  border-radius:4px;padding:14px 16px;margin:0 0 18px;overflow-x:auto;color:var(--ink);white-space:pre-wrap}
+.thm{border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:4px;background:var(--surface);
+  padding:18px 20px;margin:22px 0}
+.thm .lb{font:600 10.5px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--accent);
+  display:block;margin-bottom:9px}
+.thm p{margin:0 0 10px;color:var(--ink)}
+.thm p:last-child{margin-bottom:0}
+.thm.lema{border-left-color:var(--brass)}
+.thm.lema .lb{color:var(--brass)}
+.prova{border-left:2px solid var(--line);padding:2px 0 2px 16px;margin:16px 0 22px}
+.prova .lb{font:600 10px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--muted);
+  display:block;margin-bottom:8px}
+.prova p{font-size:16px;margin:0 0 12px}
+.prova p:last-child{margin-bottom:0}
+.qed::after{content:" ▪";color:var(--accent)}
+.marco{border-left:3px solid var(--brass);padding:4px 0 4px 15px;margin:26px 0;font-size:16px;color:var(--ink)}
+.marco b{font:600 10px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--brass);
+  display:block;margin-bottom:6px}
+.note{font-size:14.5px;color:var(--muted);border-left:2px solid var(--line);padding-left:16px;margin:22px 0}
+figure{margin:28px 0 32px}
+figure svg{width:100%;height:auto;display:block;border:1px solid var(--line);border-radius:4px;background:var(--surface)}
+figcaption{font-size:13.5px;color:var(--muted);margin-top:10px;line-height:1.5}
+figcaption b{font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--accent);font-weight:600;margin-right:8px}
+.svg-t{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.06em;fill:var(--muted)}
+.svg-l{font-family:Spectral,Georgia,serif;font-size:14px;fill:var(--ink)}
+.svg-s{font-family:Spectral,Georgia,serif;font-size:12.5px;fill:var(--muted)}
+.svg-bx{fill:var(--ground);stroke:var(--line);stroke-width:1.2}
+.svg-bx-a{fill:var(--accent-soft);stroke:var(--accent);stroke-width:1.4}
+.svg-ar{stroke:var(--muted);stroke-width:1.3;fill:none}
+/* interativos genéricos */
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:9px;margin:18px 0}
+.card{text-align:left;border:1px solid var(--line);border-radius:4px;background:var(--surface);
+  padding:11px 13px;cursor:pointer;font-family:var(--serif);color:var(--ink)}
+.card:hover{border-color:var(--accent)}
+.card[aria-pressed="true"]{border-color:var(--accent);background:var(--accent-soft)}
+.card .n{font:600 10px/1 var(--mono);letter-spacing:.1em;color:var(--muted);display:block;margin-bottom:5px}
+.card .t{font-size:14.5px;font-weight:500;line-height:1.25}
+.readout{border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:4px;
+  background:var(--surface);padding:16px 18px;margin-bottom:8px}
+.readout .rk{font:600 10px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:8px}
+.readout p{font-size:15px;margin:0 0 8px;color:var(--ink-soft)}
+.readout p:last-child{margin-bottom:0}
+.readout ol{margin:6px 0 0;padding-left:20px;font-size:14.5px;color:var(--ink-soft)}
+.readout ol li{margin-bottom:5px}
+.refs{margin-top:12px}
+.refs p{padding-left:34px;text-indent:-34px;font-size:15.5px;margin-bottom:13px}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+@media (max-width:900px){
+  .shell{grid-template-columns:1fr;gap:0}
+  nav.toc{position:static;padding:22px 0 0;columns:2;column-gap:24px}
+  nav.toc .lbl{column-span:all}
+  article{padding-top:22px}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+<style>
+.shell.solo{grid-template-columns:minmax(0,1fr);max-width:980px}
+.trilha{border:1px solid var(--line);border-radius:5px;overflow:hidden;background:var(--surface);margin:20px 0 30px}
+.tr-nivel{background:var(--surface-2);padding:9px 20px;font:600 10px/1 var(--mono);letter-spacing:.16em;
+  text-transform:uppercase;color:var(--accent-ink);border-bottom:1px solid var(--line)}
+.it{display:grid;grid-template-columns:52px minmax(0,1fr) auto;gap:16px;align-items:baseline;
+  padding:15px 20px;border-bottom:1px solid var(--line-soft);text-decoration:none;color:var(--ink)}
+.it:last-child{border-bottom:0}
+.it:hover{background:var(--accent-soft)}
+.it .num{font:600 13px/1 var(--mono);color:var(--muted);font-variant-numeric:tabular-nums}
+.it .t{font-size:17.5px;font-weight:600;line-height:1.25;margin:0 0 5px;letter-spacing:-.01em}
+.it .d{font-size:14.5px;color:var(--muted);line-height:1.5;margin:0}
+.it .chip{font:600 9.5px/1 var(--mono);letter-spacing:.1em;text-transform:uppercase;white-space:nowrap;
+  border:1px solid var(--line);border-radius:3px;padding:5px 8px;color:var(--muted)}
+.it .chip.marco{border-color:var(--brass);color:var(--brass)}
+.it .chip.compl{border-color:var(--accent);color:var(--accent-ink);background:var(--accent-soft)}
+@media (max-width:640px){.it{grid-template-columns:38px minmax(0,1fr);}.it .chip{grid-column:2}}
+.ciclo{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:12px;margin:22px 0 26px}
+.et{border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:4px;background:var(--surface);padding:15px 17px}
+.et .n{font:600 10px/1 var(--mono);letter-spacing:.13em;text-transform:uppercase;color:var(--accent);display:block;margin-bottom:8px}
+.et p{font-size:14.5px;margin:0;color:var(--ink-soft)}
+.inst{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:12px;margin:20px 0 26px}
+.inst a{display:block;text-decoration:none;border:1px solid var(--line);border-radius:4px;background:var(--surface);
+  padding:17px 19px;color:var(--ink)}
+.inst a:hover{border-color:var(--accent)}
+.inst .k{font:600 10px/1 var(--mono);letter-spacing:.13em;text-transform:uppercase;color:var(--accent);display:block}
+.inst .t{font-size:17px;font-weight:600;margin:9px 0 6px;display:block;line-height:1.2}
+.inst .d{font-size:14px;color:var(--muted);line-height:1.45;display:block}
+</style>
+<div class="shell solo">
+  <header class="hero">
+    <div class="eyebrow">Ponto de entrada</div>
+    <h1>Curso de fluência em lógica</h1>
+    <p class="lede">Percurso autoinstrucional do iniciante absoluto à metateoria e às lógicas não clássicas, construído sobre seis fontes em português e organizado por marcos de domínio. Esta página é o índice: comece por ela e volte a ela.</p>
+    <div class="facts">
+      <div><div class="k">Módulos</div><div class="v">Nove</div></div>
+      <div><div class="k">Obrigatórios</div><div class="v">Seis</div></div>
+      <div><div class="k">Complementares</div><div class="v">Três</div></div>
+      <div><div class="k">Marcos</div><div class="v">Oito</div></div>
+      <div><div class="k">Progressão</div><div class="v">Por domínio, não por calendário</div></div>
+      <div><div class="k">Pré-requisito</div><div class="v">Nenhum</div></div>
+    </div>
+  </header>
+
+  <article style="max-width:none">
+    <h2 id="uso"><span class="num">Antes de começar</span>Como o material funciona</h2>
+    <p class="intro">Há três espécies de material aqui, e confundi-las torna o percurso mais difícil do que precisa ser. Os <strong>módulos</strong> são a referência: texto expositivo, figuras, laboratórios interativos e exercícios. O <strong>banco de provas</strong> verifica se o marco foi vencido. Os <strong>prompts</strong> corrigem aquilo que nenhum teste automático alcança, que é a produção escrita.</p>
+    <p>O ciclo de cada módulo tem quatro movimentos, e pular o terceiro ou o quarto é o modo mais comum de terminar o curso sabendo reconhecer respostas certas sem saber produzi-las.</p>
+    <div class="ciclo">
+      <div class="et"><span class="n">Primeiro</span><p>Ler o módulo inteiro, operando os laboratórios à medida que aparecem. Eles não são ilustração: calculam de verdade.</p></div>
+      <div class="et"><span class="n">Segundo</span><p>Resolver os exercícios do fim do módulo e os do livro-texto indicados, conferindo no gabarito quando houver.</p></div>
+      <div class="et"><span class="n">Terceiro</span><p>Fazer o teste do marco no banco de provas. A partir de setenta e cinco por cento de acerto, o marco está vencido.</p></div>
+      <div class="et"><span class="n">Quarto</span><p>Escrever o artefato que o marco exige e submetê-lo ao prompt de correção correspondente, refazendo-o antes de avançar.</p></div>
+    </div>
+    <p>Ao fim de cada módulo há um bloco chamado «Próximo passo», com os três destinos já ligados: o marco no banco de provas, o prompt da rubrica certa e o módulo seguinte. A barra no alto de cada página traz o caminho de volta a este índice.</p>
+
+    <h2 id="percurso"><span class="num">Índice</span>O percurso</h2>
+    <p>A ordem abaixo é a recomendada. Os módulos marcados como complementares podem ser omitidos sem prejuízo dos demais, e os obrigatórios pressupõem o marco do módulo anterior.</p>
+
+    <div class="trilha">
+      <div class="tr-nivel">Documento de referência</div>
+      <a class="it" href="00-proposta.html">
+        <span class="num">00</span>
+        <span><span class="t">Proposta curricular</span><span class="d">O desenho do curso: diagnóstico das fontes, princípios de organização, os seis módulos unidade a unidade e o plano de avaliação. Leitura útil para quem vai ensinar; dispensável para quem vai estudar.</span></span>
+        <span class="chip">relatório</span>
+      </a>
+
+      <div class="tr-nivel">Nível A · iniciante absoluto · sem notação</div>
+      <a class="it" href="01-modulo-1.html">
+        <span class="num">01</span>
+        <span><span class="t">Argumento, inferência e validade</span><span class="d">Premissas e conclusão em texto corrido, validade como propriedade da forma, correção, dedução e indução, e oito falácias informais. Nenhum símbolo.</span></span>
+        <span class="chip marco">marco A1</span>
+      </a>
+      <a class="it" href="01a-slides-modulo-1.html">
+        <span class="num">01a</span>
+        <span><span class="t">Anatomia do argumento · aula</span><span class="d">Os mesmos conteúdos do módulo 1 em treze slides, com reconstrução por clique, quadro interativo de validade e verdade e verificação imediata.</span></span>
+        <span class="chip">aula</span>
+      </a>
+      <a class="it" href="01b-modulo-1a.html">
+        <span class="num">01b</span>
+        <span><span class="t">Bons e maus argumentos</span><span class="d">Argumentação informal: reconstrução caridosa, premissas implícitas, estrutura de apoio, esquemas argumentativos com perguntas críticas, ônus da prova e força indutiva.</span></span>
+        <span class="chip compl">complementar</span>
+      </a>
+      <a class="it" href="02-modulo-2.html">
+        <span class="num">02</span>
+        <span><span class="t">A linguagem antes do símbolo</span><span class="d">Uso e menção, metalinguagem, teoria elementar de conjuntos, origens gregas e Aristóteles, com quadrado das oposições e verificador de silogismos.</span></span>
+        <span class="chip marco">marco A2</span>
+      </a>
+
+      <div class="tr-nivel">Nível B · intermediário · cálculo proposicional</div>
+      <a class="it" href="03-modulo-3.html">
+        <span class="num">03</span>
+        <span><span class="t">A primeira linguagem formal</span><span class="d">Sintaxe como definição recursiva, tradução do português, valorações e tabelas de verdade, com laboratório que analisa fórmulas e testa argumentos.</span></span>
+        <span class="chip marco">marco B1</span>
+      </a>
+      <a class="it" href="04-modulo-4.html">
+        <span class="num">04</span>
+        <span><span class="t">Como se escreve uma prova</span><span class="d">Tablôs semânticos com construtor automático, sistemas formais, as dez regras da dedução natural, regras derivadas e a distinção entre ⊢ e ⊨.</span></span>
+        <span class="chip marco">marco B2</span>
+      </a>
+
+      <div class="tr-nivel">Nível C · avançado · primeira ordem e metateoria</div>
+      <a class="it" href="05-modulo-5.html">
+        <span class="num">05</span>
+        <span><span class="t">Dentro da proposição</span><span class="d">Cálculo de predicados, quantificação múltipla, estruturas e verdade, tablôs quantificacionais, dedução natural com restrições e identidade.</span></span>
+        <span class="chip marco">marco C1</span>
+      </a>
+      <a class="it" href="06-modulo-6.html">
+        <span class="num">06</span>
+        <span><span class="t">O sistema como objeto</span><span class="d">Teorias formalizadas, correção e completude enunciadas, decidibilidade, o mapa das lógicas não clássicas e calculadora que compara cinco sistemas.</span></span>
+        <span class="chip marco">marco C2</span>
+      </a>
+      <a class="it" href="07-modulo-7.html">
+        <span class="num">07</span>
+        <span><span class="t">Correção e completude</span><span class="d">As demonstrações: indução sobre derivações, lema de Lindenbaum, modelo canônico, compacidade, método de Henkin, indecidibilidade e incompletude.</span></span>
+        <span class="chip compl">complementar</span>
+      </a>
+      <a class="it" href="08-modulo-8.html">
+        <span class="num">08</span>
+        <span><span class="t">Seis lógicas não clássicas</span><span class="d">Modais aléticas com laboratório de Kripke, deônticas, epistêmicas e temporais, polivalentes, intuicionista, relevância e paraconsistência.</span></span>
+        <span class="chip compl">complementar</span>
+      </a>
+    </div>
+
+    <h2 id="instrumentos"><span class="num">Transversais</span>Instrumentos</h2>
+    <p>Estes três acompanham o curso inteiro e não pertencem a nenhum módulo em particular.</p>
+    <div class="inst">
+      <a href="atlas.html"><span class="k">Mapa</span><span class="t">Atlas da Lógica</span><span class="d">Árvore navegável dos três níveis, seis módulos e trinta e três unidades, com ficha por nó, notação típica, fonte e filtro por eixo de fluência.</span></a>
+      <a href="provas.html"><span class="k">Avaliação</span><span class="t">Provas de Domínio</span><span class="d">Vinte e nove itens autocorrigidos, distribuídos pelos marcos A1 a C2, com justificativa e fonte em cada resposta e registro de progresso.</span></a>
+      <a href="prompts.html"><span class="k">Correção</span><span class="t">Sete Prompts de Correção</span><span class="d">Rubricas prontas para submeter cada tipo de artefato escrito a um modelo de linguagem, com protocolo de conferência do veredito.</span></a>
+    </div>
+
+    <h2 id="fontes"><span class="num">Base</span>As fontes</h2>
+    <p>Todo o material foi construído sobre seis fontes em português, e cada unidade indica de qual capítulo provém. O curso não substitui a leitura delas: organiza-a, verifica-a e a torna praticável sem professor.</p>
+    <div class="tw"><table>
+      <tr><th>Fonte</th><th>Papel</th></tr>
+      <tr><td>Mortari (2016), <em>Introdução à lógica</em></td><td>Espinha dorsal. Fornece a sequência e o rigor de todos os módulos</td></tr>
+      <tr><td>Neves Filho e Rui (2016), <em>Elementos de lógica</em></td><td>Primeira leitura do nível A e única fonte para as falácias</td></tr>
+      <tr><td>Sell (2014), <em>Lógica II</em></td><td>Exercícios de dedução natural, na notação de Nolt e Rohatyn</td></tr>
+      <tr><td>Morais et al. (2019), <em>Introdução à lógica a partir de sua história filosófica</em></td><td>Contextualização histórica do módulo 2</td></tr>
+      <tr><td>Mortari (2023), plano de ensino FIL 6021</td><td>Referência de sequência, validada em uso institucional</td></tr>
+      <tr><td>Pagani (s.d.), gabarito comentado</td><td>Torna o formato autoinstrucional viável até o capítulo 12</td></tr>
+    </table></div>
+    <p class="note">Os arquivos são autocontidos: abrem sem conexão, em qualquer navegador, e podem ser copiados ou distribuídos como uma pasta. Os laboratórios interativos rodam localmente, sem servidor.</p>
+  </article>
+</div>
+
+</body>
+</html>

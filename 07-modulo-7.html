@@ -1,0 +1,442 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<style>:root{color-scheme:light dark}body{margin:0;font:14px/1.5 system-ui,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style>
+</head>
+<body>
+<title>Correção e Completude</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,600&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<style>
+:root{
+  --ground:#EEF1EE; --surface:#FAFBF9; --surface-2:#E2E7E3; --raised:#FFFFFF;
+  --ink:#131A18; --ink-soft:#38443F; --muted:#5F6C66; --line:#CBD4CE; --line-soft:#DDE4DF;
+  --accent:#0C6355; --accent-ink:#08463C; --accent-soft:#D6E7E2;
+  --verum:#0C6355; --falsum:#A33C20; --brass:#8A6D0B;
+  --shadow:0 1px 2px rgba(19,26,24,.06), 0 8px 24px -12px rgba(19,26,24,.18);
+  --serif:"Spectral", Georgia, "Times New Roman", serif;
+  --mono:"IBM Plex Mono", "SFMono-Regular", Consolas, monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --ground:#0E1413; --surface:#151D1B; --surface-2:#1D2926; --raised:#1A2422;
+    --ink:#E4EAE6; --ink-soft:#BCC7C2; --muted:#8D9C96; --line:#2B3835; --line-soft:#222E2B;
+    --accent:#4FBCA6; --accent-ink:#8FD8C8; --accent-soft:#17332E;
+    --verum:#4FBCA6; --falsum:#DE8461; --brass:#CFA93A;
+    --shadow:0 1px 2px rgba(0,0,0,.4), 0 10px 30px -14px rgba(0,0,0,.7);
+  }
+}
+:root[data-theme="dark"]{
+  --ground:#0E1413; --surface:#151D1B; --surface-2:#1D2926; --raised:#1A2422;
+  --ink:#E4EAE6; --ink-soft:#BCC7C2; --muted:#8D9C96; --line:#2B3835; --line-soft:#222E2B;
+  --accent:#4FBCA6; --accent-ink:#8FD8C8; --accent-soft:#17332E;
+  --verum:#4FBCA6; --falsum:#DE8461; --brass:#CFA93A;
+  --shadow:0 1px 2px rgba(0,0,0,.4), 0 10px 30px -14px rgba(0,0,0,.7);
+}
+
+*{box-sizing:border-box}
+body{margin:0;background:var(--ground);color:var(--ink);font-family:var(--serif);
+  font-size:17px;line-height:1.62;-webkit-font-smoothing:antialiased}
+.shell{max-width:1180px;margin:0 auto;padding:0 24px;display:grid;
+  grid-template-columns:220px minmax(0,1fr);gap:52px;align-items:start}
+.hero{grid-column:1/-1;padding:52px 0 32px;border-bottom:1px solid var(--line)}
+.hero .eyebrow{font:600 10.5px/1 var(--mono);letter-spacing:.18em;text-transform:uppercase;color:var(--accent)}
+.hero h1{font-size:clamp(34px,4.8vw,54px);font-weight:600;letter-spacing:-.032em;line-height:1.03;
+  margin:16px 0 12px;max-width:17ch;text-wrap:balance}
+.hero .lede{font-size:19px;color:var(--ink-soft);max-width:62ch;margin:0 0 28px}
+.facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:0;border-top:1px solid var(--line)}
+.facts div{padding:14px 20px 14px 0}
+.facts .k{font:600 10px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.facts .v{font-size:16.5px;margin-top:6px;line-height:1.3}
+nav.toc{position:sticky;top:26px;padding:32px 0 40px;font-size:14px}
+nav.toc .lbl{font:600 10px/1 var(--mono);letter-spacing:.16em;text-transform:uppercase;color:var(--muted);
+  padding-bottom:10px;border-bottom:1px solid var(--line);display:block;margin-bottom:12px}
+nav.toc a{display:block;color:var(--muted);text-decoration:none;padding:5px 0 5px 12px;
+  border-left:2px solid transparent;line-height:1.35}
+nav.toc a:hover{color:var(--ink)}
+nav.toc a.on{color:var(--accent);border-left-color:var(--accent);font-weight:500}
+article{padding:32px 0 90px;max-width:72ch}
+article h2{font-size:26px;font-weight:600;letter-spacing:-.018em;line-height:1.16;
+  margin:52px 0 4px;scroll-margin-top:28px;text-wrap:balance}
+article h2:first-of-type{margin-top:10px}
+article h2 .num{font:600 11px/1 var(--mono);letter-spacing:.14em;color:var(--accent);display:block;margin-bottom:10px}
+article h3{font-size:19px;font-weight:600;margin:32px 0 8px;letter-spacing:-.01em;scroll-margin-top:28px}
+article h4{font-size:16.5px;font-weight:600;margin:24px 0 6px}
+article p{margin:0 0 16px;color:var(--ink-soft)}
+article p strong{color:var(--ink);font-weight:600}
+article .intro{font-size:18.5px;color:var(--ink);margin-bottom:22px}
+.m{font-family:var(--mono);font-size:.92em;background:var(--surface);padding:1px 5px;border-radius:2px;color:var(--ink)}
+.tw{overflow-x:auto;margin:20px 0 24px;border:1px solid var(--line);border-radius:4px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;font-size:14.6px;min-width:440px}
+th,td{text-align:left;padding:10px 13px;border-bottom:1px solid var(--line-soft);vertical-align:top;color:var(--ink-soft)}
+tr:last-child td{border-bottom:0}
+th{font:600 10px/1.4 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--muted);
+  border-bottom:1px solid var(--line);background:var(--ground)}
+td.m2{font-family:var(--mono);font-size:13.5px;white-space:nowrap;color:var(--ink)}
+td.c{text-align:center;font-family:var(--mono)}
+td strong{color:var(--ink)}
+/* blocos formais */
+.fx{font-family:var(--mono);font-size:15px;background:var(--surface);border:1px solid var(--line);
+  border-radius:4px;padding:14px 16px;margin:0 0 18px;overflow-x:auto;color:var(--ink);white-space:pre-wrap}
+.thm{border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:4px;background:var(--surface);
+  padding:18px 20px;margin:22px 0}
+.thm .lb{font:600 10.5px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--accent);
+  display:block;margin-bottom:9px}
+.thm p{margin:0 0 10px;color:var(--ink)}
+.thm p:last-child{margin-bottom:0}
+.thm.lema{border-left-color:var(--brass)}
+.thm.lema .lb{color:var(--brass)}
+.prova{border-left:2px solid var(--line);padding:2px 0 2px 16px;margin:16px 0 22px}
+.prova .lb{font:600 10px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--muted);
+  display:block;margin-bottom:8px}
+.prova p{font-size:16px;margin:0 0 12px}
+.prova p:last-child{margin-bottom:0}
+.qed::after{content:" ▪";color:var(--accent)}
+.marco{border-left:3px solid var(--brass);padding:4px 0 4px 15px;margin:26px 0;font-size:16px;color:var(--ink)}
+.marco b{font:600 10px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--brass);
+  display:block;margin-bottom:6px}
+.note{font-size:14.5px;color:var(--muted);border-left:2px solid var(--line);padding-left:16px;margin:22px 0}
+figure{margin:28px 0 32px}
+figure svg{width:100%;height:auto;display:block;border:1px solid var(--line);border-radius:4px;background:var(--surface)}
+figcaption{font-size:13.5px;color:var(--muted);margin-top:10px;line-height:1.5}
+figcaption b{font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--accent);font-weight:600;margin-right:8px}
+.svg-t{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.06em;fill:var(--muted)}
+.svg-l{font-family:Spectral,Georgia,serif;font-size:14px;fill:var(--ink)}
+.svg-s{font-family:Spectral,Georgia,serif;font-size:12.5px;fill:var(--muted)}
+.svg-bx{fill:var(--ground);stroke:var(--line);stroke-width:1.2}
+.svg-bx-a{fill:var(--accent-soft);stroke:var(--accent);stroke-width:1.4}
+.svg-ar{stroke:var(--muted);stroke-width:1.3;fill:none}
+/* interativos genéricos */
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:9px;margin:18px 0}
+.card{text-align:left;border:1px solid var(--line);border-radius:4px;background:var(--surface);
+  padding:11px 13px;cursor:pointer;font-family:var(--serif);color:var(--ink)}
+.card:hover{border-color:var(--accent)}
+.card[aria-pressed="true"]{border-color:var(--accent);background:var(--accent-soft)}
+.card .n{font:600 10px/1 var(--mono);letter-spacing:.1em;color:var(--muted);display:block;margin-bottom:5px}
+.card .t{font-size:14.5px;font-weight:500;line-height:1.25}
+.readout{border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:4px;
+  background:var(--surface);padding:16px 18px;margin-bottom:8px}
+.readout .rk{font:600 10px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:8px}
+.readout p{font-size:15px;margin:0 0 8px;color:var(--ink-soft)}
+.readout p:last-child{margin-bottom:0}
+.readout ol{margin:6px 0 0;padding-left:20px;font-size:14.5px;color:var(--ink-soft)}
+.readout ol li{margin-bottom:5px}
+.refs{margin-top:12px}
+.refs p{padding-left:34px;text-indent:-34px;font-size:15.5px;margin-bottom:13px}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+@media (max-width:900px){
+  .shell{grid-template-columns:1fr;gap:0}
+  nav.toc{position:static;padding:22px 0 0;columns:2;column-gap:24px}
+  nav.toc .lbl{column-span:all}
+  article{padding-top:22px}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+<style>
+.cbar{display:flex;align-items:center;gap:14px;flex-wrap:wrap;padding:9px 24px;
+  border-bottom:1px solid var(--line);background:var(--surface-2);
+  font:500 12.5px/1 var(--mono);position:sticky;top:0;z-index:20}
+.cbar a{color:var(--accent);text-decoration:none;white-space:nowrap}
+.cbar a:hover{text-decoration:underline}
+.cbar .home{font-weight:600}
+.cbar .where{color:var(--muted);letter-spacing:.06em;text-transform:uppercase;font-size:10.5px}
+.cbar .sp{flex:1}
+.cbar .nx{color:var(--ink-soft)}
+.nextgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px;margin:22px 0 8px}
+.nextgrid .nx{display:block;text-decoration:none;border:1px solid var(--line);border-radius:4px;
+  background:var(--surface);padding:16px 18px;color:var(--ink)}
+.nextgrid .nx:hover{border-color:var(--accent)}
+.nextgrid .k{font:600 10px/1 var(--mono);letter-spacing:.13em;text-transform:uppercase;color:var(--accent);display:block}
+.nextgrid .t{font-size:16.5px;font-weight:600;margin:9px 0 6px;line-height:1.2;display:block}
+.nextgrid .d{font-size:14px;color:var(--muted);line-height:1.45;display:block}
+</style>
+<nav class="cbar"><a class="home" href="index.html">&#9666; Índice do curso</a><span class="where">Nível C · complementar</span><span class="sp"></span><a class="nx" href="06-modulo-6.html">&larr; Módulo 6 · Metateoria</a><a class="nx" href="08-modulo-8.html">Módulo 8 · Lógicas não clássicas &rarr;</a></nav>
+<div class="shell">
+  <header class="hero">
+    <div class="eyebrow">Curso de fluência em lógica · módulo complementar 7</div>
+    <h1>Correção e completude</h1>
+    <p class="lede">Módulo metateórico com as demonstrações. O que o módulo 6 enuncia, este demonstra: que o cálculo não prova nada de falso, que prova tudo o que decorre semanticamente, e onde exatamente esse acordo termina.</p>
+    <div class="facts">
+      <div><div class="k">Posição</div><div class="v">Após o módulo 6</div></div>
+      <div><div class="k">Nível</div><div class="v">C · avançado</div></div>
+      <div><div class="k">Unidades</div><div class="v">Nove</div></div>
+      <div><div class="k">Pré-requisito</div><div class="v">Marcos C1 e C2</div></div>
+      <div><div class="k">Marco</div><div class="v">C3</div></div>
+      <div><div class="k">Exige</div><div class="v">Indução matemática</div></div>
+    </div>
+  </header>
+
+  <nav class="toc" id="toc">
+    <span class="lbl">Unidades</span>
+    <a href="#i">O que se vai demonstrar</a>
+    <a href="#u1">7.1 Aparato e duas induções</a>
+    <a href="#u2">7.2 Correção</a>
+    <a href="#u3">7.3 Consistência e maximalidade</a>
+    <a href="#u4">7.4 Lema de Lindenbaum</a>
+    <a href="#u5">7.5 Conjuntos maximais</a>
+    <a href="#u6">7.6 Modelo canônico</a>
+    <a href="#u7">7.7 Completude</a>
+    <a href="#u8">7.8 Corolários</a>
+    <a href="#u9">7.9 Primeira ordem</a>
+    <a href="#u10">7.10 Duas completudes</a>
+    <a href="#marco">Marco C3</a>
+    <a href="#proximo">Próximo passo</a>
+    <a href="#ref">Referências</a>
+  </nav>
+
+  <article>
+    <h2 id="i"><span class="num">Abertura</span>O que se vai demonstrar</h2>
+    <p class="intro">A unidade 6.2 enuncia dois teoremas e discute o que afirmam. Este módulo os demonstra. A escolha original de não demonstrá-los seguia o tratamento do livro-texto e era adequada a um curso introdutório; para o aluno disposto a acompanhar duas induções e uma construção, a demonstração rende algo que o enunciado não rende, que é entender <em>por que</em> as duas relações coincidem e quão pouco disso é acidental.</p>
+    <p>O aparato exigido é modesto: indução matemática, a noção de conjunto enumerável e a disposição de acompanhar uma construção infinita por etapas. Nada além do que o módulo 2 já forneceu.</p>
+    <p>As demonstrações são apresentadas primeiro para o cálculo proposicional, onde a construção é transparente, e depois estendidas ao cálculo de predicados, onde apenas uma dificuldade nova aparece e uma única ideia a resolve. O módulo termina na fronteira, distinguindo a completude do cálculo, que se demonstra, da completude de uma teoria, que em geral falha.</p>
+
+    <h2 id="u1"><span class="num">Unidade 7.1</span>Aparato e duas induções</h2>
+    <p>Fixe-se a linguagem proposicional do módulo 3, com letras sentenciais em quantidade enumerável e os operadores ¬, ∧, ∨, → e ↔, e o sistema de dedução natural do módulo 4, chamado aqui de <span class="m">N</span>. As duas relações em questão foram definidas na unidade 4.5.</p>
+    <div class="thm"><span class="lb">Definições</span>
+      <p><strong>Γ ⊢ α</strong> quando existe uma derivação de α em <span class="m">N</span> cujas hipóteses não descarregadas pertencem todas a Γ.</p>
+      <p><strong>Γ ⊨ α</strong> quando toda valoração que atribui V a cada membro de Γ atribui V a α.</p>
+    </div>
+    <p>Duas observações sobre ⊢ serão usadas sem menção. A primeira é a <strong>monotonicidade</strong>: se Γ ⊢ α e Γ ⊆ Γ′, então Γ′ ⊢ α, pois a mesma derivação serve. A segunda é a <strong>finitude</strong>: se Γ ⊢ α, então algum subconjunto finito de Γ já prova α, pois uma derivação é um objeto finito e emprega, portanto, um número finito de hipóteses. A finitude é trivial aqui e terá consequência nada trivial na unidade 7.8.</p>
+    <p>Duas induções distintas serão empregadas, e confundi-las é o erro mais comum nesta matéria.</p>
+    <h4>Indução na complexidade da fórmula</h4>
+    <p>Para provar que toda fórmula tem a propriedade Φ, mostra-se que toda fórmula atômica tem Φ, e que, se α e β têm Φ, então ¬α, α∧β, α∨β, α→β e α↔β têm Φ. Como toda fórmula é obtida das atômicas por um número finito de aplicações das regras de formação da unidade 3.1, segue-se que toda fórmula tem Φ.</p>
+    <h4>Indução na estrutura da derivação</h4>
+    <p>Para provar que toda derivação tem a propriedade Ψ, mostra-se que a derivação de uma linha só, consistindo em uma hipótese, tem Ψ, e que, se as subderivações imediatas de uma derivação têm Ψ, então ela também tem. Como toda derivação é construída por um número finito de aplicações de regras, segue-se que toda derivação tem Ψ.</p>
+    <p>A primeira indução percorre a linguagem; a segunda percorre o sistema dedutivo. A demonstração da correção usa a segunda; a do lema do modelo canônico usa a primeira.</p>
+
+    <h2 id="u2"><span class="num">Unidade 7.2</span>Correção</h2>
+    <div class="thm"><span class="lb">Teorema 1 · correção</span>
+      <p>Para todo conjunto Γ de fórmulas e toda fórmula α, se Γ ⊢ α, então Γ ⊨ α.</p>
+    </div>
+    <div class="prova"><span class="lb">Demonstração</span>
+      <p>Por indução na estrutura da derivação. Prova-se o seguinte, mais forte e mais cômodo: para toda derivação D, se α é a sua conclusão e Γ é o conjunto das suas hipóteses não descarregadas, então Γ ⊨ α.</p>
+      <p><strong>Base.</strong> D consiste em uma única linha, a hipótese α. Então Γ = {α}, e toda valoração que atribui V a α atribui V a α. Logo Γ ⊨ α.</p>
+      <p><strong>Passo.</strong> Examina-se cada regra. Escreve-se v ⊨ Γ para «v atribui V a todo membro de Γ».</p>
+      <p><em>Introdução da conjunção.</em> Por hipótese de indução, Γ₁ ⊨ α e Γ₂ ⊨ β. Seja v tal que v ⊨ Γ₁ ∪ Γ₂. Então v(α) = v(β) = V, e pela tabela de ∧, v(α∧β) = V. Logo Γ₁ ∪ Γ₂ ⊨ α∧β.</p>
+      <p><em>Eliminação da conjunção, introdução da disjunção, eliminação da dupla negação, eliminação e introdução do bicondicional.</em> Todos por verificação direta na tabela do operador correspondente, no mesmo padrão do caso anterior.</p>
+      <p><em>Modus ponens.</em> Por hipótese de indução, Γ₁ ⊨ α→β e Γ₂ ⊨ α. Seja v ⊨ Γ₁ ∪ Γ₂. Então v(α→β) = V e v(α) = V. Se fosse v(β) = F, a tabela de → daria v(α→β) = F. Logo v(β) = V.</p>
+      <p><em>Eliminação da disjunção.</em> Por hipótese de indução, Γ₁ ⊨ α∨β, Γ₂ ∪ {α} ⊨ γ e Γ₃ ∪ {β} ⊨ γ. Seja v ⊨ Γ₁ ∪ Γ₂ ∪ Γ₃. Como v(α∨β) = V, tem-se v(α) = V ou v(β) = V. No primeiro caso v ⊨ Γ₂ ∪ {α}, e portanto v(γ) = V; no segundo, v ⊨ Γ₃ ∪ {β}, e novamente v(γ) = V.</p>
+      <p><em>Prova do condicional.</em> Por hipótese de indução, Γ ∪ {α} ⊨ β. Seja v ⊨ Γ. Se v(α) = F, então v(α→β) = V pela tabela de →. Se v(α) = V, então v ⊨ Γ ∪ {α}, donde v(β) = V e novamente v(α→β) = V. Em qualquer caso Γ ⊨ α→β.</p>
+      <p><em>Redução ao absurdo.</em> Por hipótese de indução, Γ ∪ {α} ⊨ β∧¬β para alguma fórmula β. Seja v ⊨ Γ e suponha-se, por absurdo, que v(¬α) = F, isto é, v(α) = V. Então v ⊨ Γ ∪ {α}, donde v(β∧¬β) = V, o que exigiria v(β) = V e v(¬β) = V, impossível pela tabela de ¬. Logo v(¬α) = V, e Γ ⊨ ¬α.</p>
+      <p class="qed">Esgotadas as regras, a indução está completa.</p>
+    </div>
+    <p>Duas observações sobre a demonstração. A primeira é que ela é, em essência, uma tabela de correspondência: a cada regra de inferência corresponde exatamente um fato sobre a tabela de verdade do operador que ela manipula. É neste sentido preciso que as regras foram bem escolhidas, e a demonstração serve também de justificativa <em>a posteriori</em> das escolhas feitas no módulo 4.</p>
+    <p>A segunda é que os passos não imediatos são exatamente os das três regras que descarregam hipóteses, a saber a eliminação da disjunção, a prova do condicional e a redução ao absurdo. Só nelas o conjunto de hipóteses da conclusão difere do das subderivações, e é por isso que a unidade 4.3 insistiu em que o descarregamento fosse registrado com precisão.</p>
+    <div class="thm lema"><span class="lb">Corolário 1.1</span>
+      <p>Todo conjunto satisfazível é consistente.</p>
+    </div>
+    <div class="prova"><span class="lb">Demonstração</span>
+      <p>Seja Γ satisfazível, digamos por v, e suponha-se Γ inconsistente, isto é, Γ ⊢ β e Γ ⊢ ¬β para alguma β. Pelo teorema 1, Γ ⊨ β e Γ ⊨ ¬β. Como v ⊨ Γ, seguir-se-ia v(β) = V e v(¬β) = V, impossível. <span class="qed"></span></p>
+    </div>
+    <p>Convém notar que a demonstração da completude não usará a correção em nenhum de seus passos: o teorema 6 se apoia nos lemas 3 e 5, e o teorema 7 se apoia no lema 2(b) e no teorema 6. O corolário 1.1 servirá a outra coisa, a saber, converter o teorema 6 na equivalência entre consistência e satisfazibilidade, na unidade 7.6, e sustentar a segunda forma da compacidade, na unidade 7.8. A recíproca dele, «todo conjunto consistente é satisfazível», é precisamente o que a completude exigirá e que ainda não se tem.</p>
+    <h2 id="u3"><span class="num">Unidade 7.3</span>Consistência e maximalidade</h2>
+    <div class="thm"><span class="lb">Definições</span>
+      <p><strong>Γ é inconsistente</strong> quando existe uma fórmula β tal que Γ ⊢ β e Γ ⊢ ¬β. Caso contrário, Γ é <strong>consistente</strong>.</p>
+      <p><strong>Δ é maximal consistente</strong> quando Δ é consistente e, para toda fórmula α, α ∈ Δ ou ¬α ∈ Δ.</p>
+    </div>
+    <p>Registre-se que consistência é noção puramente sintática: nada nela menciona valorações. Toda a força da demonstração da completude está em transformar essa noção sintática em um objeto semântico.</p>
+    <div class="thm lema"><span class="lb">Lema 2 · absurdo e negação</span>
+      <p>(a) Se Γ ∪ {α} é inconsistente, então Γ ⊢ ¬α.</p>
+      <p>(b) Se Γ ∪ {¬α} é inconsistente, então Γ ⊢ α.</p>
+      <p>(c) <em>Ex falso quodlibet</em>: se Γ ⊢ α e Γ ⊢ ¬α, então Γ ⊢ β para toda fórmula β.</p>
+    </div>
+    <div class="prova"><span class="lb">Demonstração</span>
+      <p>(a) Por hipótese há β com Γ ∪ {α} ⊢ β e Γ ∪ {α} ⊢ ¬β. Justapondo as duas derivações e aplicando a introdução da conjunção, obtém-se Γ ∪ {α} ⊢ β∧¬β. A regra de redução ao absurdo descarrega então a hipótese α e fornece Γ ⊢ ¬α.</p>
+      <p>(b) O mesmo argumento aplicado a ¬α fornece Γ ⊢ ¬¬α; a eliminação da dupla negação fornece Γ ⊢ α.</p>
+      <p>(c) Levante-se ¬β como hipótese. Sob ela continuam disponíveis as derivações de α e de ¬α a partir de Γ, e a introdução da conjunção fornece α∧¬α. A redução ao absurdo descarrega ¬β e dá Γ ⊢ ¬¬β; a eliminação da dupla negação dá Γ ⊢ β. Note-se que a hipótese ¬β não é usada na obtenção da contradição, o que é permitido: a regra exige que a contradição seja obtida sob a hipótese, e não que dependa dela. <span class="qed"></span></p>
+    </div>
+    <div class="note">É exatamente aqui que a demonstração se compromete com a lógica clássica. A passagem de ¬¬α a α em (b) não é disponível na dedução natural intuicionista, e o módulo 8 mostrará que, sem ela, tudo o que se segue precisa ser refeito com outra semântica.</div>
+
+    <h2 id="u4"><span class="num">Unidade 7.4</span>Lema de Lindenbaum</h2>
+    <div class="thm"><span class="lb">Lema 3 · Lindenbaum</span>
+      <p>Todo conjunto consistente Γ está contido em algum conjunto maximal consistente Δ.</p>
+    </div>
+    <div class="prova"><span class="lb">Demonstração</span>
+      <p>A linguagem tem uma quantidade enumerável de símbolos, e portanto uma quantidade enumerável de fórmulas. Fixe-se uma enumeração α₀, α₁, α₂, … de todas elas. Define-se por recursão uma cadeia de conjuntos:</p>
+      <div class="fx">Δ₀ = Γ
+Δ<sub>n+1</sub> = Δ<sub>n</sub> ∪ {α<sub>n</sub>}   se este conjunto for consistente
+Δ<sub>n+1</sub> = Δ<sub>n</sub> ∪ {¬α<sub>n</sub>}  caso contrário
+Δ   = ⋃<sub>n≥0</sub> Δ<sub>n</sub></div>
+      <p><strong>Cada Δ<sub>n</sub> é consistente.</strong> Por indução em n. Δ₀ = Γ é consistente por hipótese. Suponha-se Δ<sub>n</sub> consistente. Se Δ<sub>n</sub> ∪ {α<sub>n</sub>} for consistente, Δ<sub>n+1</sub> é consistente por construção. Se não for, então pelo lema 2(a) tem-se Δ<sub>n</sub> ⊢ ¬α<sub>n</sub>; caso Δ<sub>n</sub> ∪ {¬α<sub>n</sub>} também fosse inconsistente, o lema 2(b) daria Δ<sub>n</sub> ⊢ α<sub>n</sub>, e Δ<sub>n</sub> seria inconsistente, contra a hipótese de indução. Logo Δ<sub>n+1</sub> = Δ<sub>n</sub> ∪ {¬α<sub>n</sub>} é consistente.</p>
+      <p><strong>Δ é consistente.</strong> Suponha-se que não. Então Δ ⊢ β e Δ ⊢ ¬β para alguma β. Pela finitude registrada na unidade 7.1, cada uma dessas derivações usa apenas um número finito de membros de Δ. Como a cadeia Δ₀ ⊆ Δ₁ ⊆ ⋯ é crescente, todos esses membros pertencem a um mesmo Δ<sub>k</sub>, para k suficientemente grande. Então Δ<sub>k</sub> seria inconsistente, contra o que se acabou de provar.</p>
+      <p><strong>Δ é maximal.</strong> Dada qualquer fórmula α, ela ocupa alguma posição n na enumeração, e a etapa n da construção colocou α<sub>n</sub> ou ¬α<sub>n</sub> em Δ<sub>n+1</sub> ⊆ Δ. <span class="qed"></span></p>
+    </div>
+    <p>Vale registrar o que a demonstração usou: a enumerabilidade da linguagem, para dispor as fórmulas em fila, e a finitude das derivações, para que a inconsistência do limite se manifestasse já em alguma etapa finita. Sem a segunda, a união de conjuntos consistentes poderia ser inconsistente, e o lema falharia.</p>
+
+    <h2 id="u5"><span class="num">Unidade 7.5</span>O comportamento dos conjuntos maximais</h2>
+    <p>Um conjunto maximal consistente decide toda fórmula, e o modo como decide as fórmulas compostas reproduz, termo a termo, as tabelas de verdade. É esse paralelismo que a próxima unidade converte em uma valoração.</p>
+    <div class="thm lema"><span class="lb">Lema 4 · propriedades de Δ</span>
+      <p>Seja Δ maximal consistente. Então, para quaisquer α e β:</p>
+      <p>(i) se Δ ⊢ α, então α ∈ Δ;&nbsp;&nbsp; (ii) ¬α ∈ Δ se e somente se α ∉ Δ;</p>
+      <p>(iii) α∧β ∈ Δ sse α ∈ Δ e β ∈ Δ;&nbsp;&nbsp; (iv) α∨β ∈ Δ sse α ∈ Δ ou β ∈ Δ;</p>
+      <p>(v) α→β ∈ Δ sse α ∉ Δ ou β ∈ Δ;&nbsp;&nbsp; (vi) α↔β ∈ Δ sse (α ∈ Δ exatamente quando β ∈ Δ).</p>
+    </div>
+    <div class="prova"><span class="lb">Demonstração</span>
+      <p>(i) Suponha-se Δ ⊢ α e α ∉ Δ. Por maximalidade, ¬α ∈ Δ, donde Δ ⊢ ¬α. Com Δ ⊢ α, isso torna Δ inconsistente.</p>
+      <p>(ii) Se ¬α ∈ Δ e também α ∈ Δ, então Δ ⊢ α e Δ ⊢ ¬α, e Δ seria inconsistente; logo α ∉ Δ. Reciprocamente, se α ∉ Δ, a maximalidade dá ¬α ∈ Δ.</p>
+      <p>(iii) Se α∧β ∈ Δ, a eliminação da conjunção dá Δ ⊢ α e Δ ⊢ β, e (i) põe ambas em Δ. Se α ∈ Δ e β ∈ Δ, a introdução da conjunção dá Δ ⊢ α∧β, e (i) conclui.</p>
+      <p>(iv) Se α ∈ Δ, a introdução da disjunção dá Δ ⊢ α∨β, e (i) conclui; simetricamente para β. Reciprocamente, suponha-se α∨β ∈ Δ com α ∉ Δ e β ∉ Δ. Por (ii), ¬α ∈ Δ e ¬β ∈ Δ. Fixe-se uma fórmula qualquer γ. Sob a hipótese α, dispõe-se de α e de ¬α, e o lema 2(c) fornece γ; sob a hipótese β, dispõe-se de β e de ¬β, e o mesmo lema fornece γ. Como as duas subderivações têm a mesma conclusão, a eliminação da disjunção aplicada a α∨β dá Δ ⊢ γ. Tomando γ como α e depois como ¬α, obtém-se Δ ⊢ α e Δ ⊢ ¬α, e Δ seria inconsistente.</p>
+      <p>(v) Se α→β ∈ Δ e α ∈ Δ, modus ponens dá Δ ⊢ β e (i) põe β em Δ; logo α ∉ Δ ou β ∈ Δ. Reciprocamente: se β ∈ Δ, a prova do condicional a partir da hipótese α, que não é usada, dá Δ ⊢ α→β; se α ∉ Δ, então ¬α ∈ Δ por (ii); sob a hipótese α dispõe-se de α e de ¬α, e o lema 2(c) fornece β, de modo que a prova do condicional descarrega α e dá Δ ⊢ α→β. Em ambos os casos (i) conclui.</p>
+      <p>(vi) Decorre de (iii) e (v) aplicados às duas direções do bicondicional, com as regras de introdução e eliminação de ↔. <span class="qed"></span></p>
+    </div>
+    <p>A leitura correta do lema 4 é esta: um conjunto maximal consistente já <em>é</em>, em tudo o que importa, uma valoração escrita em outra notação. A unidade seguinte apenas registra o fato.</p>
+
+    <h2 id="u6"><span class="num">Unidade 7.6</span>O modelo canônico</h2>
+    <div class="thm"><span class="lb">Definição · valoração canônica</span>
+      <p>Seja Δ maximal consistente. Define-se a valoração v<sub>Δ</sub> pondo, para cada letra sentencial P: v<sub>Δ</sub>(P) = V se P ∈ Δ, e v<sub>Δ</sub>(P) = F se P ∉ Δ.</p>
+    </div>
+    <div class="thm lema"><span class="lb">Lema 5 · lema da verdade</span>
+      <p>Para toda fórmula α: v<sub>Δ</sub>(α) = V se e somente se α ∈ Δ.</p>
+    </div>
+    <div class="prova"><span class="lb">Demonstração</span>
+      <p>Por indução na complexidade de α.</p>
+      <p><strong>Base.</strong> Para α atômica, o enunciado é a própria definição de v<sub>Δ</sub>.</p>
+      <p><strong>Negação.</strong> v<sub>Δ</sub>(¬α) = V sse v<sub>Δ</sub>(α) = F, pela tabela de ¬; sse α ∉ Δ, pela hipótese de indução; sse ¬α ∈ Δ, pelo lema 4(ii).</p>
+      <p><strong>Conjunção.</strong> v<sub>Δ</sub>(α∧β) = V sse v<sub>Δ</sub>(α) = V e v<sub>Δ</sub>(β) = V; sse α ∈ Δ e β ∈ Δ, por hipótese de indução; sse α∧β ∈ Δ, pelo lema 4(iii).</p>
+      <p><strong>Disjunção, condicional e bicondicional.</strong> Idênticos, com os itens (iv), (v) e (vi) do lema 4 no lugar de (iii). No caso do condicional, por exemplo: v<sub>Δ</sub>(α→β) = V sse v<sub>Δ</sub>(α) = F ou v<sub>Δ</sub>(β) = V; sse α ∉ Δ ou β ∈ Δ; sse α→β ∈ Δ. <span class="qed"></span></p>
+    </div>
+    <p>Observe-se a articulação das duas induções anunciadas na unidade 7.1. Cada passo do lema 5 combina uma linha de tabela de verdade, que é semântica, com um item do lema 4, que é sintático. O lema da verdade é o ponto exato em que as duas metades do curso se encontram.</p>
+    <div class="thm"><span class="lb">Teorema 6 · existência de modelo</span>
+      <p>Todo conjunto consistente é satisfazível.</p>
+    </div>
+    <div class="prova"><span class="lb">Demonstração</span>
+      <p>Seja Γ consistente. Pelo lema 3 existe Δ maximal consistente com Γ ⊆ Δ. Pelo lema 5, v<sub>Δ</sub> atribui V a toda fórmula de Δ, e em particular a toda fórmula de Γ. Logo v<sub>Δ</sub> satisfaz Γ. <span class="qed"></span></p>
+    </div>
+    <p>Com o corolário 1.1, obtém-se a equivalência entre uma noção sintática e uma semântica: um conjunto é consistente se e somente se é satisfazível. A completude é agora um curto passo.</p>
+    <h2 id="u7"><span class="num">Unidade 7.7</span>Completude</h2>
+    <div class="thm"><span class="lb">Teorema 7 · completude</span>
+      <p>Para todo conjunto Γ e toda fórmula α, se Γ ⊨ α, então Γ ⊢ α.</p>
+    </div>
+    <div class="prova"><span class="lb">Demonstração</span>
+      <p>Por contraposição. Suponha-se Γ ⊬ α. Então Γ ∪ {¬α} é consistente: se fosse inconsistente, o lema 2(b) daria Γ ⊢ α, contra a suposição. Pelo teorema 6, Γ ∪ {¬α} é satisfazível, isto é, existe uma valoração v com v ⊨ Γ e v(¬α) = V, ou seja, v(α) = F. Essa mesma v é, portanto, uma valoração que satisfaz Γ sem satisfazer α, e por definição Γ ⊭ α. <span class="qed"></span></p>
+    </div>
+    <figure>
+      <svg viewBox="0 0 700 452" role="img" aria-label="Cadeia da demonstração da completude, de Γ não prova alfa até Γ não acarreta alfa, com o lema usado em cada passagem.">
+        <defs><marker id="a7" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="var(--muted)"/></marker></defs>
+        <g>
+          <rect class="svg-bx" x="20" y="16" width="380" height="54" rx="4"/>
+          <text class="svg-l" x="40" y="40">Γ ⊬ α</text><text class="svg-s" x="40" y="59">suposição da contraposição</text>
+          <path class="svg-ar" d="M210 70 V100" marker-end="url(#a7)"/>
+          <text class="svg-t" x="420" y="89">LEMA 2(b)</text>
+
+          <rect class="svg-bx" x="20" y="104" width="380" height="54" rx="4"/>
+          <text class="svg-l" x="40" y="128">Γ ∪ {¬α} é consistente</text><text class="svg-s" x="40" y="147">noção puramente sintática</text>
+          <path class="svg-ar" d="M210 158 V188" marker-end="url(#a7)"/>
+          <text class="svg-t" x="420" y="177">LEMA 3 · LINDENBAUM</text>
+
+          <rect class="svg-bx" x="20" y="192" width="380" height="54" rx="4"/>
+          <text class="svg-l" x="40" y="216">Δ maximal consistente, Γ ∪ {¬α} ⊆ Δ</text><text class="svg-s" x="40" y="235">decide toda fórmula da linguagem</text>
+          <path class="svg-ar" d="M210 246 V276" marker-end="url(#a7)"/>
+          <text class="svg-t" x="420" y="265">LEMA 5 · VERDADE</text>
+
+          <rect class="svg-bx-a" x="20" y="280" width="380" height="54" rx="4"/>
+          <text class="svg-l" x="40" y="304">v(β) = V exatamente quando β ∈ Δ</text><text class="svg-s" x="40" y="323">objeto semântico obtido do sintático</text>
+          <path class="svg-ar" d="M210 334 V364" marker-end="url(#a7)"/>
+          <text class="svg-t" x="420" y="353">DEFINIÇÃO DE ⊨</text>
+
+          <rect class="svg-bx" x="20" y="368" width="380" height="54" rx="4"/>
+          <text class="svg-l" x="40" y="392">Γ ⊭ α</text><text class="svg-s" x="40" y="411">v satisfaz Γ e falsifica α</text>
+        </g>
+      </svg>
+      <figcaption><b>Figura 1</b>A arquitetura da demonstração. O passo decisivo é o terceiro: o lema de Lindenbaum produz, a partir da mera ausência de contradição, um objeto suficientemente determinado para ser lido como valoração. Tudo o mais é contabilidade.</figcaption>
+    </figure>
+    <p>Convém notar o que a demonstração <em>não</em> faz. Ela não fornece a derivação de α a partir de Γ, nem indica como encontrá-la. Prova que existe uma, e prova isso por contraposição, a partir da inexistência de contramodelo. É uma demonstração não construtiva, e este é um dos motivos pelos quais ela não sobrevive intacta em ambiente intuicionista.</p>
+
+    <h2 id="u8"><span class="num">Unidade 7.8</span>Corolários</h2>
+    <div class="thm"><span class="lb">Corolário 8.1 · adequação</span>
+      <p>Γ ⊢ α se e somente se Γ ⊨ α.</p>
+    </div>
+    <p>Este é o enunciado que a unidade 4.5 antecipou e a unidade 6.2 apenas afirmou. As duas relações, definidas por meios inteiramente distintos, coincidem em extensão. A coincidência não é necessária nem óbvia: ela vale para este sistema e esta semântica, e o módulo 8 exibirá pares em que falha.</p>
+    <div class="thm"><span class="lb">Corolário 8.2 · compacidade</span>
+      <p>Se Γ ⊨ α, então existe Γ₀ ⊆ Γ finito com Γ₀ ⊨ α. Equivalentemente: se todo subconjunto finito de Γ é satisfazível, então Γ é satisfazível.</p>
+    </div>
+    <div class="prova"><span class="lb">Demonstração</span>
+      <p>Suponha-se Γ ⊨ α. Pelo teorema 7, Γ ⊢ α. Pela finitude das derivações, algum Γ₀ ⊆ Γ finito satisfaz Γ₀ ⊢ α. Pelo teorema 1, Γ₀ ⊨ α.</p>
+      <p>Para a segunda forma: se Γ fosse insatisfazível, seria inconsistente pelo teorema 6, isto é, Γ ⊢ β e Γ ⊢ ¬β para alguma β; pela finitude, um mesmo Γ₀ finito prova ambas, e Γ₀ seria inconsistente, logo insatisfazível pelo corolário 1.1. <span class="qed"></span></p>
+    </div>
+    <p>Vale reparar no que acaba de acontecer. A compacidade é um enunciado exclusivamente semântico, sobre satisfazibilidade, e não menciona derivações. A demonstração, contudo, passa pelo sistema dedutivo, e o único fato relevante empregado é o de que uma derivação é finita. Uma propriedade trivial do aparato sintático produz, via adequação, uma propriedade nada trivial da semântica. Este é o rendimento característico da metateoria.</p>
+    <div class="thm"><span class="lb">Corolário 8.3 · decidibilidade do cálculo proposicional</span>
+      <p>Existe um procedimento efetivo que, para quaisquer Γ finito e α, decide em número finito de passos se Γ ⊢ α.</p>
+    </div>
+    <div class="prova"><span class="lb">Demonstração</span>
+      <p>Pela adequação, basta decidir se Γ ⊨ α. Sejam P₁, …, P<sub>n</sub> as letras sentenciais que ocorrem em Γ ∪ {α}. A verdade das fórmulas envolvidas depende apenas dos valores dessas n letras, e há exatamente 2<sup>n</sup> atribuições possíveis. Percorrem-se todas, verificando se alguma torna V todo membro de Γ e F a fórmula α. O procedimento termina sempre, e responde corretamente. <span class="qed"></span></p>
+    </div>
+    <p>É este corolário que faz do tablô proposicional um procedimento de decisão, como afirmou a unidade 4.1. No cálculo de predicados o resultado análogo é falso, e a unidade seguinte explica por quê.</p>
+
+    <h2 id="u9"><span class="num">Unidade 7.9</span>Primeira ordem: o que muda</h2>
+    <p>Os dois teoremas valem para o cálculo de predicados clássico, mas as demonstrações exigem ajustes, e é instrutivo saber quais.</p>
+    <h4>Correção</h4>
+    <p>A indução na estrutura da derivação permanece, com dois acréscimos. O primeiro é o <strong>lema da substituição</strong>, que relaciona a verdade de α(x/t) em uma estrutura à verdade de α sob a atribuição que envia x ao valor de t; sem ele, os passos relativos a ∀E e ∃I não podem sequer ser enunciados. O segundo é o tratamento das <strong>restrições sobre a variável própria</strong>.</p>
+    <p>Este segundo ponto é o que dá sentido à exigência que a unidade 5.6 impôs sem justificar. Na introdução do universal, a variável própria não pode ocorrer livre em nenhuma hipótese não descarregada. Sem a restrição, seria possível partir da hipótese Px e concluir ∀xPx, o que é semanticamente desastroso: existem estruturas e atribuições em que Px é verdadeira e ∀xPx é falsa. Com a restrição, o passo indutivo se completa, porque a ausência de x nas hipóteses garante que a verdade <em>das hipóteses</em> não depende do valor atribuído a x. Como Γ ⊨ Px vale para toda atribuição que satisfaz Γ, e satisfazer Γ é insensível ao valor de x, segue-se Γ ⊨ ∀xPx. A restrição não é, portanto, uma convenção de escrita: é exatamente a condição sob a qual a correção sobrevive.</p>
+    <h4>Completude</h4>
+    <p>Aqui aparece uma dificuldade genuinamente nova. Um conjunto maximal consistente Δ pode conter ∃xα sem conter nenhuma instância α(x/t), e então não há como interpretar o quantificador existencial no modelo canônico: a construção fica sem testemunha.</p>
+    <p>A solução é a de Henkin (1949). Acrescenta-se à linguagem uma quantidade enumerável de constantes novas, e a construção de Lindenbaum é entrelaçada com a introdução de testemunhas: sempre que ∃xα entra no conjunto, acrescenta-se também α(x/c) para uma constante nova c ainda não usada. Prova-se que o acréscimo preserva a consistência, precisamente porque c é nova e nada foi antes afirmado a respeito dela. O resultado é um Δ que é maximal consistente e <strong>completo quanto ao existencial</strong>: toda fórmula existencial que ele contém tem uma testemunha explícita.</p>
+    <p>O modelo canônico é então construído com os próprios termos como objetos. O domínio é o conjunto dos termos fechados da linguagem estendida; cada constante denota a si mesma; e um predicado vale de uma sequência de termos exatamente quando a fórmula atômica correspondente pertence a Δ. Quando a linguagem tem identidade, o domínio é tomado sobre as classes de equivalência dos termos pela relação «t = u pertence a Δ», que os axiomas da identidade garantem ser de fato uma equivalência compatível com predicados e funções. O lema da verdade é então provado por indução, e os dois casos quantificacionais são exatamente os que a completude existencial resolve.</p>
+    <div class="thm"><span class="lb">Teorema 9 · completude do cálculo de predicados</span>
+      <p>Para todo conjunto Γ de fórmulas de primeira ordem e toda fórmula α, se Γ ⊨ α, então Γ ⊢ α (Gödel, 1930; a demonstração aqui esboçada é a de Henkin, 1949).</p>
+    </div>
+    <h4>Três consequências</h4>
+    <p>A <strong>compacidade</strong> vale com a mesma demonstração do corolário 8.2, e agora sem análogo proposicional trivial: dela seguem-se os resultados sobre modelos não standard da aritmética que a unidade 6.1 mencionou.</p>
+    <p>O <strong>teorema de Löwenheim-Skolem descendente</strong> é imediato da construção: o modelo canônico tem por domínio um conjunto de termos de uma linguagem enumerável, e é portanto no máximo enumerável. Toda teoria de primeira ordem satisfazível em linguagem enumerável tem modelo enumerável, o que produz o chamado paradoxo de Skolem quando aplicado à teoria dos conjuntos.</p>
+    <p>A <strong>semidecidibilidade</strong> decorre de que as derivações podem ser enumeradas mecanicamente: para α válida, o procedimento que gera todas as derivações em ordem acaba encontrando uma. Para α inválida, porém, ele não para. E aqui o resultado é negativo e definitivo.</p>
+    <div class="thm"><span class="lb">Teorema 10 · indecidibilidade</span>
+      <p>Não existe procedimento efetivo que decida, para toda fórmula de primeira ordem, se ela é válida (Church, 1936; Turing, 1936).</p>
+    </div>
+    <p>É este teorema que a unidade 5.5 registrou ao observar que há tablôs que não terminam. A comparação com o corolário 8.3 fixa a diferença: no cálculo proposicional, o número de valorações relevantes é finito e a busca esgota-se; no cálculo de predicados, o número de estruturas a considerar não admite redução análoga, e nenhuma outra redução é possível.</p>
+
+    <h2 id="u10"><span class="num">Unidade 7.10</span>Duas completudes que não se devem confundir</h2>
+    <p>A palavra «completude» nomeia dois enunciados diferentes, e a confusão entre eles é o erro mais frequente de quem encontra estes teoremas pela primeira vez.</p>
+    <div class="tw"><table>
+      <tr><th></th><th>Completude do cálculo</th><th>Completude de uma teoria</th></tr>
+      <tr><td class="m2">Sujeito</td><td>O sistema dedutivo</td><td>Um conjunto de axiomas T</td></tr>
+      <tr><td class="m2">Enunciado</td><td>Se Γ ⊨ α, então Γ ⊢ α</td><td>Para toda sentença α, T ⊢ α ou T ⊢ ¬α</td></tr>
+      <tr><td class="m2">Estatuto</td><td>Verdadeiro, demonstrado por Gödel em 1930</td><td>Falso para teorias aritméticas, demonstrado por Gödel em 1931</td></tr>
+      <tr><td class="m2">Significa</td><td>O aparato dedutivo não deixa escapar nenhuma consequência</td><td>Os axiomas decidem toda pergunta formulável</td></tr>
+    </table></div>
+    <div class="thm"><span class="lb">Teorema 11 · primeiro teorema da incompletude</span>
+      <p>Seja T uma teoria consistente, axiomatizada de modo efetivo e suficientemente forte para representar a aritmética elementar. Então existe uma sentença α da linguagem de T tal que T ⊬ α e T ⊬ ¬α (Gödel, 1931; o enunciado com a mera consistência como hipótese é o de Rosser, 1936, que dispensa a ω-consistência originalmente exigida).</p>
+    </div>
+    <p>Não há tensão alguma entre os teoremas 9 e 11, e ver por quê é o objetivo desta unidade. O teorema 9 afirma que o cálculo deriva tudo o que decorre dos axiomas. O teorema 11 afirma que os axiomas, em certos casos, não têm como consequência nem α nem ¬α. Ambos são verdadeiros porque falam de coisas diferentes: o primeiro, do aparato dedutivo; o segundo, do poder de um conjunto particular de premissas. Pela adequação, aliás, o teorema 11 tem leitura semântica imediata: existem modelos de T em que α é verdadeira e modelos de T em que é falsa.</p>
+    <p>O <strong>segundo teorema da incompletude</strong> acrescenta que, nas mesmas condições, T não demonstra a própria consistência. É o resultado que encerra o programa de fundamentação a que a unidade 6.1 e o capítulo 17 do livro-texto fazem referência, e é o ponto natural de saída do curso: o aluno que chega aqui sabe, com precisão, o que o método formal entrega e onde ele para.</p>
+
+    <h2 id="marco"><span class="num">Verificação</span>Marco C3 e exercícios</h2>
+    <div class="marco"><b>Marco C3</b>Reproduzir a demonstração da completude proposicional sem consulta, indicando, para cada passo, qual lema é usado e onde a hipótese de consistência é empregada; explicar por que a demonstração é não construtiva; e enunciar com precisão a diferença entre o teorema 9 e o teorema 11.</div>
+    <h4>Exercícios</h4>
+    <p><strong>1.</strong> A demonstração do lema 3 usa a enumerabilidade da linguagem. Onde exatamente? Que parte do argumento falha se a linguagem tiver uma quantidade não enumerável de letras sentenciais, e como o lema pode ser recuperado nesse caso?</p>
+    <p><strong>2.</strong> Mostre que, se Γ é maximal consistente, então Γ é fechado por consequência semântica: se Γ ⊨ α, então α ∈ Γ. Que teorema deste módulo você precisou usar?</p>
+    <p><strong>3.</strong> Exiba uma estrutura, uma atribuição e uma fórmula que mostrem por que a introdução do universal sem a restrição sobre a variável própria destruiria a correção.</p>
+    <p><strong>4.</strong> A compacidade foi aqui demonstrada a partir da completude. Explique por que <em>esta</em> demonstração da compacidade não pode, por sua vez, ser usada para demonstrar a completude, e localize o ponto exato da circularidade. Em seguida, descreva o que seria preciso ter para que a rota inversa funcionasse, isto é, uma demonstração da compacidade por meios exclusivamente semânticos.</p>
+    <p><strong>5.</strong> O corolário 8.3 estabelece que o cálculo proposicional é decidível; o teorema 10 estabelece que o de predicados não é. Como isso é possível, se todo argumento proposicional é também um argumento de primeira ordem?</p>
+    <p><strong>6.</strong> Suponha que alguém proponha acrescentar ao sistema <span class="m">N</span> a regra «de α infira ∀xα», sem restrição. Verifique, percorrendo a demonstração do teorema 1, qual passo indutivo deixa de funcionar.</p>
+
+    <h2 id="proximo"><span class="num">Encerramento</span>Próximo passo</h2><p>O ciclo de cada módulo se fecha em três movimentos: resolver os exercícios, verificar o marco no banco de itens e submeter o artefato escrito à rubrica correspondente.</p><div class="nextgrid"><a class="nx" href="provas.html"><span class="k">Verificar</span><span class="t">Provas de Domínio</span><span class="d">O banco cobre os marcos A1 a C2; o marco C3 verifica-se por produção escrita.</span></a><a class="nx" href="prompts.html#p7"><span class="k">Corrigir o artefato</span><span class="t">Prompt 7 · Trabalho integrador</span><span class="d">Rubrica mais próxima do artefato escrito exigido pelo marco C3.</span></a><a class="nx" href="08-modulo-8.html"><span class="k">Seguir</span><span class="t">Módulo 8 · Lógicas não clássicas</span><span class="d">Nível C · complementar no percurso.</span></a></div>
+
+    <h2 id="ref">Referências</h2>
+    <div class="refs">
+      <p>Church, A. (1936). A note on the Entscheidungsproblem. <em>The Journal of Symbolic Logic</em>, <em>1</em>(1), 40–41.</p>
+      <p>Gödel, K. (1930). Die Vollständigkeit der Axiome des logischen Funktionenkalküls. <em>Monatshefte für Mathematik und Physik</em>, <em>37</em>, 349–360.</p>
+      <p>Gödel, K. (1931). Über formal unentscheidbare Sätze der Principia Mathematica und verwandter Systeme I. <em>Monatshefte für Mathematik und Physik</em>, <em>38</em>, 173–198.</p>
+      <p>Henkin, L. (1949). The completeness of the first-order functional calculus. <em>The Journal of Symbolic Logic</em>, <em>14</em>(3), 159–166.</p>
+      <p>Mortari, C. A. (2016). <em>Introdução à lógica</em> (2a ed.). Editora Unesp.</p>
+      <p>Rosser, J. B. (1936). Extensions of some theorems of Gödel and Church. <em>The Journal of Symbolic Logic</em>, <em>1</em>(3), 87–91.</p>
+      <p>Turing, A. M. (1936). On computable numbers, with an application to the Entscheidungsproblem. <em>Proceedings of the London Mathematical Society</em>, <em>42</em>, 230–265.</p>
+    </div>
+  </article>
+</div>
+<script>
+(function(){
+  const links = Array.from(document.querySelectorAll("nav.toc a"));
+  const alvos = links.map(a => document.getElementById(a.getAttribute("href").slice(1))).filter(Boolean);
+  function spy(){
+    let atual = alvos[0];
+    alvos.forEach(t => { if(t.getBoundingClientRect().top <= 120) atual = t; });
+    links.forEach(a => a.classList.toggle("on", a.getAttribute("href") === "#" + (atual ? atual.id : "")));
+  }
+  window.addEventListener("scroll", spy, {passive:true}); spy();
+})();
+</script>
+
+</body>
+</html>

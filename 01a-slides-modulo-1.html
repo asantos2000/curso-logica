@@ -1,0 +1,521 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<style>:root{color-scheme:light dark}body{margin:0;font:14px/1.5 system-ui,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style>
+</head>
+<body>
+<title>Anatomia do Argumento</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<style>
+:root{
+  --ground:#EEF1EE; --surface:#FAFBF9; --surface-2:#E2E7E3; --raised:#FFFFFF;
+  --ink:#131A18; --ink-soft:#38443F; --muted:#5F6C66; --line:#CBD4CE; --line-soft:#DDE4DF;
+  --accent:#0C6355; --accent-ink:#08463C; --accent-soft:#D6E7E2;
+  --verum:#0C6355; --falsum:#A33C20; --brass:#8A6D0B;
+  --shadow:0 1px 2px rgba(19,26,24,.06), 0 8px 24px -12px rgba(19,26,24,.18);
+  --serif:"Spectral", Georgia, "Times New Roman", serif;
+  --mono:"IBM Plex Mono", "SFMono-Regular", Consolas, monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --ground:#0E1413; --surface:#151D1B; --surface-2:#1D2926; --raised:#1A2422;
+    --ink:#E4EAE6; --ink-soft:#BCC7C2; --muted:#8D9C96; --line:#2B3835; --line-soft:#222E2B;
+    --accent:#4FBCA6; --accent-ink:#8FD8C8; --accent-soft:#17332E;
+    --verum:#4FBCA6; --falsum:#DE8461; --brass:#CFA93A;
+    --shadow:0 1px 2px rgba(0,0,0,.4), 0 10px 30px -14px rgba(0,0,0,.7);
+  }
+}
+:root[data-theme="dark"]{
+  --ground:#0E1413; --surface:#151D1B; --surface-2:#1D2926; --raised:#1A2422;
+  --ink:#E4EAE6; --ink-soft:#BCC7C2; --muted:#8D9C96; --line:#2B3835; --line-soft:#222E2B;
+  --accent:#4FBCA6; --accent-ink:#8FD8C8; --accent-soft:#17332E;
+  --verum:#4FBCA6; --falsum:#DE8461; --brass:#CFA93A;
+  --shadow:0 1px 2px rgba(0,0,0,.4), 0 10px 30px -14px rgba(0,0,0,.7);
+}
+
+*{box-sizing:border-box}
+body{margin:0;background:var(--ground);color:var(--ink);font-family:var(--serif);line-height:1.5}
+.app{min-height:100vh;display:flex;flex-direction:column}
+
+/* rail */
+.rail{display:flex;align-items:center;gap:14px;padding:10px 20px;border-bottom:1px solid var(--line);
+  background:var(--surface);position:sticky;top:0;z-index:5;flex-wrap:wrap}
+.rail .id{font:600 10.5px/1 var(--mono);letter-spacing:.16em;text-transform:uppercase;color:var(--accent)}
+.rail .id b{color:var(--ink);font-weight:600}
+.ticks{display:flex;gap:3px;flex:1;min-width:160px}
+.tick{height:5px;flex:1;background:var(--line);border:0;padding:0;border-radius:1px;cursor:pointer}
+.tick:hover{background:var(--muted)}
+.tick.done{background:var(--accent-soft)}
+.tick.now{background:var(--accent)}
+.rail .nav{display:flex;gap:6px;align-items:center}
+.nb{font:500 12px/1 var(--mono);padding:7px 11px;border:1px solid var(--line);background:var(--ground);
+  color:var(--ink-soft);border-radius:3px;cursor:pointer}
+.nb:hover{background:var(--surface-2);color:var(--ink)}
+.nb[aria-pressed="true"]{background:var(--accent);color:var(--surface);border-color:var(--accent)}
+.count{font:500 12px/1 var(--mono);color:var(--muted);font-variant-numeric:tabular-nums;min-width:52px;text-align:right}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+
+/* stage */
+.stage{flex:1;display:flex;justify-content:center;padding:26px 20px 40px}
+.slide{display:none;width:min(980px,100%)}
+.slide.on{display:block}
+.eyebrow{font:600 10.5px/1 var(--mono);letter-spacing:.16em;text-transform:uppercase;color:var(--accent);margin-bottom:14px}
+.slide h2{font-size:clamp(26px,3.4vw,38px);font-weight:600;letter-spacing:-.02em;line-height:1.12;
+  margin:0 0 6px;text-wrap:balance}
+.slide .deck{font-size:17px;color:var(--muted);margin:0 0 24px;max-width:62ch}
+.slide p{font-size:17px;max-width:64ch;margin:0 0 14px;color:var(--ink-soft)}
+.slide p strong{color:var(--ink);font-weight:600}
+
+/* cover */
+.cover{border-left:5px solid var(--accent);padding:34px 0 34px 30px}
+.cover h1{font-size:clamp(34px,5.4vw,58px);font-weight:600;letter-spacing:-.03em;line-height:1.02;margin:0 0 14px;text-wrap:balance}
+.cover .lede{font-size:19px;color:var(--ink-soft);max-width:56ch;margin:0 0 26px}
+.meta{display:flex;flex-wrap:wrap;gap:0;border-top:1px solid var(--line);max-width:640px}
+.meta div{flex:1;min-width:130px;padding:12px 16px 12px 0}
+.meta .k{font:600 10px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.meta .v{font-size:16px;margin-top:5px}
+
+/* generic blocks */
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px;margin:20px 0}
+.box{border:1px solid var(--line);border-radius:4px;padding:16px 18px;background:var(--surface)}
+.box h3{margin:0 0 8px;font-size:16px;font-weight:600}
+.box p{font-size:15px;margin:0;max-width:none}
+.box.neg{border-left:4px solid var(--falsum)}
+.box.pos{border-left:4px solid var(--verum)}
+.fx{font-family:var(--mono);font-size:15px;background:var(--surface);border:1px solid var(--line);
+  border-radius:4px;padding:14px 16px;margin:0 0 16px;overflow-x:auto;color:var(--ink)}
+.fx .lbl{color:var(--muted);display:inline-block;width:9ch}
+.arg{border-left:3px solid var(--line);padding:2px 0 2px 16px;margin:0 0 18px;max-width:60ch}
+.arg .pr{font-size:16.5px;margin:0 0 4px;color:var(--ink-soft)}
+.arg .cc{font-size:16.5px;margin:8px 0 0;color:var(--ink);font-weight:500}
+.arg .cc::before{content:"∴ ";font-family:var(--mono);color:var(--accent)}
+table{border-collapse:collapse;width:100%;font-size:15px;margin:4px 0 18px}
+th,td{text-align:left;padding:9px 12px;border-bottom:1px solid var(--line-soft);vertical-align:top}
+th{font:600 10.5px/1.3 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--muted);
+  border-bottom:1px solid var(--line)}
+td.m{font-family:var(--mono);white-space:nowrap}
+.tw{overflow-x:auto}
+.note{font-size:14px;color:var(--muted);border-top:1px solid var(--line-soft);padding-top:10px;margin-top:22px;max-width:70ch}
+.note b{font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);
+  display:block;margin-bottom:4px;font-weight:600}
+.notes-off .note{display:none}
+
+/* interactive: sentence picker */
+.para{font-size:19px;line-height:1.75;max-width:60ch;margin:0 0 18px}
+.sent{cursor:pointer;border-bottom:1px dashed var(--line);padding:1px 0;transition:background .15s}
+.sent:hover{background:var(--accent-soft)}
+.sent.r-conclusao{background:var(--accent-soft);border-bottom:2px solid var(--accent)}
+.sent.r-premissa{background:var(--surface-2);border-bottom:2px solid var(--muted)}
+.sent.r-ruido{opacity:.5;border-bottom:1px solid var(--line)}
+.sent .tag{font:600 9.5px/1 var(--mono);letter-spacing:.1em;text-transform:uppercase;
+  vertical-align:super;margin-left:4px;color:var(--accent)}
+.sent.r-ruido .tag{color:var(--muted)}
+
+/* interactive: 2x2 */
+.matrix{display:grid;grid-template-columns:auto 1fr 1fr;gap:1px;background:var(--line);
+  border:1px solid var(--line);border-radius:4px;overflow:hidden;max-width:660px;margin:0 0 18px}
+.matrix>*{background:var(--surface);padding:12px 14px}
+.matrix .hd{font:600 10.5px/1.3 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--muted);background:var(--ground)}
+.cell{text-align:left;border:0;font-family:var(--serif);font-size:15px;color:var(--ink);cursor:pointer}
+.cell:hover{background:var(--accent-soft)}
+.cell[aria-pressed="true"]{background:var(--accent-soft);box-shadow:inset 0 0 0 2px var(--accent)}
+.cell .verdict{font:600 10.5px/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;display:block;margin-bottom:6px}
+.cell.ok .verdict{color:var(--verum)}
+.cell.no .verdict{color:var(--falsum)}
+.readout{border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:4px;
+  background:var(--surface);padding:16px 18px;min-height:92px;max-width:660px}
+.readout .rk{font:600 10px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:8px}
+.readout p{font-size:15px;margin:0 0 6px;max-width:none}
+
+/* interactive: fallacy cards */
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:10px;margin-bottom:18px}
+.fcard{text-align:left;border:1px solid var(--line);border-radius:4px;background:var(--surface);
+  padding:11px 13px;cursor:pointer;font-family:var(--serif);color:var(--ink)}
+.fcard:hover{border-color:var(--accent)}
+.fcard[aria-pressed="true"]{border-color:var(--accent);background:var(--accent-soft)}
+.fcard .n{font:600 10px/1 var(--mono);letter-spacing:.1em;color:var(--muted);display:block;margin-bottom:5px}
+.fcard .t{font-size:15px;font-weight:500;line-height:1.25}
+
+/* quiz */
+.q{border:1px solid var(--line);border-radius:4px;background:var(--surface);padding:16px 18px;margin-bottom:12px}
+.q .stem{font-size:16px;margin:0 0 12px;color:var(--ink)}
+.opts{display:flex;flex-direction:column;gap:6px}
+.opt{text-align:left;font-family:var(--serif);font-size:15px;padding:9px 12px;border:1px solid var(--line);
+  border-radius:3px;background:var(--ground);color:var(--ink);cursor:pointer}
+.opt:hover{border-color:var(--accent)}
+.opt.right{border-color:var(--verum);background:var(--accent-soft)}
+.opt.wrong{border-color:var(--falsum);opacity:.75}
+.fb{font-size:14.5px;color:var(--ink-soft);margin:11px 0 0;padding-top:10px;border-top:1px solid var(--line-soft)}
+.fb:empty{display:none}
+@media (max-width:700px){
+  .matrix{min-width:520px}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+<style>
+.cbar{display:flex;align-items:center;gap:14px;flex-wrap:wrap;padding:9px 24px;
+  border-bottom:1px solid var(--line);background:var(--surface-2);
+  font:500 12.5px/1 var(--mono);position:sticky;top:0;z-index:20}
+.cbar a{color:var(--accent);text-decoration:none;white-space:nowrap}
+.cbar a:hover{text-decoration:underline}
+.cbar .home{font-weight:600}
+.cbar .where{color:var(--muted);letter-spacing:.06em;text-transform:uppercase;font-size:10.5px}
+.cbar .sp{flex:1}
+.cbar .nx{color:var(--ink-soft)}
+.nextgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px;margin:22px 0 8px}
+.nextgrid .nx{display:block;text-decoration:none;border:1px solid var(--line);border-radius:4px;
+  background:var(--surface);padding:16px 18px;color:var(--ink)}
+.nextgrid .nx:hover{border-color:var(--accent)}
+.nextgrid .k{font:600 10px/1 var(--mono);letter-spacing:.13em;text-transform:uppercase;color:var(--accent);display:block}
+.nextgrid .t{font-size:16.5px;font-weight:600;margin:9px 0 6px;line-height:1.2;display:block}
+.nextgrid .d{font-size:14px;color:var(--muted);line-height:1.45;display:block}
+</style>
+<nav class="cbar"><a class="home" href="index.html">&#9666; Índice do curso</a><span class="where">Nível A · aula</span><span class="sp"></span><a class="nx" href="01-modulo-1.html">&larr; Módulo 1 · Argumento e validade</a><a class="nx" href="01b-modulo-1a.html">Módulo 1A · Argumentação informal &rarr;</a></nav>
+<div class="app" id="app">
+  <div class="rail">
+    <div class="id">Módulo 1 · <b>Nível A</b></div>
+    <div class="ticks" id="ticks"></div>
+    <div class="nav">
+      <button class="nb" id="prev" aria-label="Slide anterior">&larr;</button>
+      <button class="nb" id="next" aria-label="Próximo slide">&rarr;</button>
+      <button class="nb" id="notes" aria-pressed="true" title="Mostrar ou ocultar notas do professor">Notas</button>
+    </div>
+    <div class="count" id="count">1 / 13</div>
+  </div>
+
+  <main class="stage">
+
+  <section class="slide on">
+    <div class="cover">
+      <div class="eyebrow">Curso de fluência em lógica · Módulo 1</div>
+      <h1>Anatomia do argumento</h1>
+      <p class="lede">Antes de qualquer símbolo: como reconhecer um argumento em texto corrido, e por que a sua validade nada tem a ver com a verdade do que ele afirma.</p>
+      <div class="meta">
+        <div><div class="k">Nível</div><div class="v">Iniciante absoluto</div></div>
+        <div><div class="k">Unidades</div><div class="v">1.1 a 1.6</div></div>
+        <div><div class="k">Pré-requisito</div><div class="v">Nenhum</div></div>
+        <div><div class="k">Marco</div><div class="v">A1</div></div>
+      </div>
+    </div>
+    <p class="note"><b>Nota do professor</b>Este módulo trabalha inteiramente em português. Nenhuma letra sentencial aparece antes da unidade 3.1: a experiência de sala mostra que quem simboliza cedo demais aprende a manipular fórmulas sem reconhecer o argumento que elas representam.</p>
+  </section>
+
+  <section class="slide">
+    <div class="eyebrow">Roteiro</div>
+    <h2>O que este módulo entrega</h2>
+    <p class="deck">Seis unidades, uma competência de saída, um teste de verificação.</p>
+    <div class="tw"><table>
+      <tr><th>Unidade</th><th>Assunto</th><th>Fonte</th></tr>
+      <tr><td class="m">1.1</td><td>O que é lógica; raciocínio e inferência</td><td>Mortari (2016, §§1.1–1.2)</td></tr>
+      <tr><td class="m">1.2</td><td>Premissas, conclusão, indicadores</td><td>Mortari (2016, §1.3)</td></tr>
+      <tr><td class="m">1.3</td><td>Sentenças, proposições, enunciados</td><td>Mortari (2016, §1.4)</td></tr>
+      <tr><td class="m">1.4</td><td>Validade e forma; validade e correção</td><td>Mortari (2016, §§2.1–2.2)</td></tr>
+      <tr><td class="m">1.5</td><td>Dedução, indução e analogia</td><td>Mortari (2016, §2.3)</td></tr>
+      <tr><td class="m">1.6</td><td>Falácias informais</td><td>Neves Filho e Rui (2016, cap. IV)</td></tr>
+    </table></div>
+    <p><strong>Marco A1.</strong> O aluno extrai premissas e conclusão de um parágrafo argumentativo, julga validade e correção separadamente e nomeia oito falácias informais em exemplos inéditos.</p>
+  </section>
+
+  <section class="slide">
+    <div class="eyebrow">Unidade 1.1</div>
+    <h2>A lógica não descreve como pensamos</h2>
+    <p class="deck">A distinção que abre o curso, e que costuma ser o primeiro obstáculo.</p>
+    <div class="grid2">
+      <div class="box neg"><h3>O que a lógica não é</h3><p>Não é o estudo empírico dos processos mentais de quem raciocina. Que uma pessoa de fato conclua algo, sob pressão ou por hábito, é assunto da psicologia.</p></div>
+      <div class="box pos"><h3>O que a lógica é</h3><p>É o estudo de quais passos de um conjunto de afirmações a outra preservam verdade. A pergunta não é como se chegou à conclusão, e sim se ela se segue.</p></div>
+    </div>
+    <p>Mortari (2016) formula a diferença como a que existe entre <strong>raciocínio</strong>, um processo que ocorre no tempo e pode ser bom ou ruim por muitas razões, e <strong>inferência</strong>, uma relação entre proposições que se sustenta ou não se sustenta.</p>
+    <p class="note"><b>Nota do professor</b>Peça um exemplo em que alguém chega a uma conclusão verdadeira por um caminho péssimo. A intuição de que há aí algo defeituoso, ainda que o resultado esteja certo, é exatamente a intuição de validade.</p>
+  </section>
+
+  <section class="slide">
+    <div class="eyebrow">Unidade 1.2 · exercício</div>
+    <h2>Encontre o argumento</h2>
+    <p class="deck">Clique em cada período. O curso classifica: conclusão, premissa ou material que não sustenta nada.</p>
+    <p class="para" id="para">
+      <span class="sent" data-role="conclusao">O aumento da tarifa não pode ser justificado pelo custo do combustível.</span>
+      <span class="sent" data-role="premissa">O combustível responde por menos de um quinto do custo operacional da frota.</span>
+      <span class="sent" data-role="premissa">Além disso, o preço do diesel caiu seis por cento no último trimestre.</span>
+      <span class="sent" data-role="ruido">É verdade que a empresa vem operando com margens apertadas.</span>
+    </p>
+    <div class="readout" id="paraOut"><div class="rk">Leitura</div><p>Nenhum período selecionado. Comece pelo que a passagem quer que você aceite: essa é a conclusão.</p></div>
+    <p class="note"><b>Nota do professor</b>O quarto período é uma concessão. Aparece em quase todo texto argumentativo real e não é premissa: retirá-lo não enfraquece a conclusão. Aprender a descartá-lo é metade do trabalho de reconstrução.</p>
+  </section>
+
+  <section class="slide">
+    <div class="eyebrow">Unidade 1.2</div>
+    <h2>Indicadores, e o que fazer sem eles</h2>
+    <p class="deck">Marcadores linguísticos ajudam, mas a maior parte dos argumentos reais não os traz.</p>
+    <div class="tw"><table>
+      <tr><th>Antecedem a conclusão</th><th>Antecedem premissas</th></tr>
+      <tr><td>logo, portanto, assim, segue-se que, conclui-se que, consequentemente</td><td>pois, porque, já que, uma vez que, dado que, visto que</td></tr>
+    </table></div>
+    <p>Quando não há indicador, o teste é funcional: pergunte de cada período <strong>o que ele está fazendo ali</strong>. Se a passagem oferece o período como razão para aceitar outro, é premissa; se é aquilo que a passagem quer que se aceite, é conclusão.</p>
+    <p>A reconstrução frequentemente exige <strong>explicitar uma premissa implícita</strong>. Nesse caso vale a regra da caridade: acrescente a premissa mais fraca que torna o argumento válido, não a mais conveniente para refutá-lo.</p>
+  </section>
+
+  <section class="slide">
+    <div class="eyebrow">Unidade 1.3</div>
+    <h2>Três coisas que se confundem</h2>
+    <div class="grid2">
+      <div class="box"><h3>Sentença</h3><p>A cadeia de símbolos de uma língua. &ldquo;Está chovendo&rdquo; e &ldquo;It is raining&rdquo; são sentenças distintas.</p></div>
+      <div class="box"><h3>Proposição</h3><p>O que a sentença exprime. As duas sentenças acima exprimem a mesma proposição, e é ela que é verdadeira ou falsa.</p></div>
+      <div class="box"><h3>Enunciado</h3><p>O ato de proferir a sentença numa ocasião. Duas pessoas dizendo &ldquo;eu tenho fome&rdquo; produzem enunciados diferentes.</p></div>
+    </div>
+    <p>A distinção não é preciosismo. Quando, no módulo 3, uma letra sentencial <span class="m">P</span> for introduzida, ela representará <strong>a proposição</strong>, e é por isso que a mesma letra pode traduzir sentenças diferentes.</p>
+    <p class="note"><b>Nota do professor</b>Mortari (2016, §1.4) adota &ldquo;proposição&rdquo; sem compromisso ontológico forte. Não vale gastar aula com o debate metafísico neste ponto; ele reaparece com proveito no módulo 6.</p>
+  </section>
+
+  <section class="slide">
+    <div class="eyebrow">Unidade 1.4</div>
+    <h2>A validade está na forma</h2>
+    <p class="deck">Dois argumentos com a mesma forma têm o mesmo destino, quaisquer que sejam os assuntos.</p>
+    <div class="arg">
+      <p class="pr">Todo mamífero é vertebrado.</p>
+      <p class="pr">Toda baleia é mamífero.</p>
+      <p class="cc">Toda baleia é vertebrado.</p>
+    </div>
+    <div class="fx"><span class="lbl">forma</span>Todo A é B · Todo C é A &nbsp;∴&nbsp; Todo C é B</div>
+    <div class="arg">
+      <p class="pr">Todo síndico é condômino.</p>
+      <p class="pr">Todo inquilino é síndico.</p>
+      <p class="cc">Todo inquilino é condômino.</p>
+    </div>
+    <p>O segundo argumento tem premissa falsa e conclusão falsa, e ainda assim é <strong>tão válido quanto</strong> o primeiro. A validade não inspeciona o mundo; inspeciona o arranjo.</p>
+  </section>
+
+  <section class="slide">
+    <div class="eyebrow">Unidade 1.4 · exercício</div>
+    <h2>Validade e verdade não se implicam</h2>
+    <p class="deck">Clique em uma célula: cada uma pergunta se um argumento <em>válido</em> pode ter aquele perfil de verdade.</p>
+    <div class="tw"><div class="matrix" id="matrix">
+      <div class="hd"></div>
+      <div class="hd">Conclusão verdadeira</div>
+      <div class="hd">Conclusão falsa</div>
+      <div class="hd">Premissas<br>todas verdadeiras</div>
+      <button class="cell ok" data-c="vv" aria-pressed="false"><span class="verdict">Possível</span>O caso do argumento sólido.</button>
+      <button class="cell no" data-c="vf" aria-pressed="false"><span class="verdict">Impossível</span>É exatamente isto que a validade proíbe.</button>
+      <div class="hd">Alguma premissa<br>falsa</div>
+      <button class="cell ok" data-c="fv" aria-pressed="false"><span class="verdict">Possível</span>Válido, mas nada garante a conclusão.</button>
+      <button class="cell ok" data-c="ff" aria-pressed="false"><span class="verdict">Possível</span>Válido e inteiramente errado sobre o mundo.</button>
+    </div></div>
+    <div class="readout" id="matOut"><div class="rk">Exemplo</div><p>Das quatro combinações, a validade exclui uma só. Descobrir qual é o conteúdo desta unidade.</p></div>
+    <p class="note"><b>Nota do professor</b>Um argumento válido com premissas todas verdadeiras é dito <em>correto</em> ou <em>sólido</em>. Mortari (2016, §2.2) trata a correção como conjunção de validade e verdade das premissas: são dois julgamentos, feitos por métodos diferentes.</p>
+  </section>
+
+  <section class="slide">
+    <div class="eyebrow">Unidade 1.4</div>
+    <h2>O contraexemplo</h2>
+    <p class="deck">Como se demonstra que um argumento é inválido, sem nenhuma técnica formal.</p>
+    <div class="arg">
+      <p class="pr">Se choveu, a rua está molhada.</p>
+      <p class="pr">A rua está molhada.</p>
+      <p class="cc">Choveu.</p>
+    </div>
+    <p>Premissas plausíveis, conclusão plausível — e mesmo assim inválido. Para mostrá-lo, preserve a forma e troque o conteúdo até que as premissas fiquem verdadeiras e a conclusão, falsa:</p>
+    <div class="arg">
+      <p class="pr">Se é uma baleia, é um vertebrado.</p>
+      <p class="pr">É um vertebrado.</p>
+      <p class="cc">É uma baleia.</p>
+    </div>
+    <p>Encontrado um só caso assim, a forma está condenada. Este é o método que o módulo 3 automatiza com tabelas de verdade e o módulo 4, com o ramo aberto de um tablô.</p>
+  </section>
+
+  <section class="slide">
+    <div class="eyebrow">Unidade 1.5</div>
+    <h2>Dedução, indução, analogia</h2>
+    <div class="tw"><table>
+      <tr><th></th><th>Dedução</th><th>Indução</th></tr>
+      <tr><td class="m">Pretensão</td><td>A verdade das premissas garante a da conclusão.</td><td>A verdade das premissas torna a conclusão provável.</td></tr>
+      <tr><td class="m">Conteúdo</td><td>A conclusão não diz mais do que as premissas.</td><td>A conclusão vai além das premissas.</td></tr>
+      <tr><td class="m">Avaliação</td><td>Válido ou inválido, sem graus.</td><td>Forte ou fraca, com graus.</td></tr>
+      <tr><td class="m">Nova evidência</td><td>Não afeta a validade.</td><td>Pode enfraquecer ou reforçar.</td></tr>
+    </table></div>
+    <p>O curso trata de dedução. Isso não desqualifica a indução: significa apenas que aplicar a ela o critério de validade seria um erro de categoria, e que chamar um argumento indutivo de inválido não o critica.</p>
+  </section>
+
+  <section class="slide">
+    <div class="eyebrow">Unidade 1.6 · exercício</div>
+    <h2>Oito falácias informais</h2>
+    <p class="deck">Clique para ver a definição e um exemplo de circulação corrente.</p>
+    <div class="cards" id="fcards"></div>
+    <div class="readout" id="falOut"><div class="rk">Falácia</div><p>Falácias informais não têm forma defeituosa: o defeito está na relação entre o conteúdo das premissas e o da conclusão. Por isso nenhum cálculo as detecta, e a única defesa é o reconhecimento treinado.</p></div>
+  </section>
+
+  <section class="slide">
+    <div class="eyebrow">Verificação</div>
+    <h2>Três perguntas antes de seguir</h2>
+    <p class="deck">Resposta imediata, com o motivo. O banco completo do marco A1 tem quatro itens.</p>
+    <div id="quiz"></div>
+    <p class="note"><b>Nota do professor</b>Erro no item 2 é o mais comum e o mais informativo: indica que a validade ainda está sendo lida como &ldquo;as premissas são verdadeiras&rdquo;. Nesse caso, volte ao quadro de validade e verdade antes de avançar.</p>
+  </section>
+
+  <section class="slide">
+    <div class="eyebrow">Fechamento</div>
+    <h2>O que vem a seguir</h2>
+    <p>O módulo 2 fornece as duas ferramentas de que a formalização dependerá: o controle metalinguístico, isto é, saber quando uma expressão está sendo usada e quando está sendo mencionada, e a teoria elementar de conjuntos. Em paralelo, situa a disciplina em sua história, de Heráclito ao silogismo aristotélico.</p>
+    <p>Só no módulo 3 aparece a primeira letra sentencial. Quando ela aparecer, o aluno já saberá o que ela representa e por que a substituição de conteúdo preserva a forma.</p>
+    <div class="tw"><table>
+      <tr><th>Fonte</th><th>Uso neste módulo</th></tr>
+      <tr><td>Mortari (2016)</td><td>Capítulos 1 e 2, texto-base de todas as unidades.</td></tr>
+      <tr><td>Neves Filho e Rui (2016)</td><td>Capítulo I para argumento e validade; capítulo IV para as falácias.</td></tr>
+      <tr><td>Pagani (s.d.)</td><td>Gabarito comentado dos exercícios 1.1 do livro-texto.</td></tr>
+      <tr><td>Mortari (2023)</td><td>Tópico 1 do plano de ensino, referência de sequência.</td></tr>
+    </table></div>
+  </section>
+
+  </main>
+</div>
+<script>
+(function(){
+  /* ---------- navegação ---------- */
+  const slides = Array.from(document.querySelectorAll(".slide"));
+  const ticks = document.getElementById("ticks");
+  const count = document.getElementById("count");
+  let i = 0;
+  slides.forEach((s, k) => {
+    const b = document.createElement("button");
+    b.className = "tick"; b.type = "button";
+    b.setAttribute("aria-label", "Ir para o slide " + (k+1));
+    b.addEventListener("click", () => go(k));
+    ticks.appendChild(b);
+  });
+  function go(k){
+    i = Math.max(0, Math.min(slides.length-1, k));
+    slides.forEach((s, n) => s.classList.toggle("on", n === i));
+    Array.from(ticks.children).forEach((t, n) => {
+      t.classList.toggle("now", n === i);
+      t.classList.toggle("done", n < i);
+    });
+    count.textContent = (i+1) + " / " + slides.length;
+    window.scrollTo({top:0, behavior:"instant"});
+  }
+  document.getElementById("prev").onclick = () => go(i-1);
+  document.getElementById("next").onclick = () => go(i+1);
+  document.addEventListener("keydown", e => {
+    if(e.target.closest("button") && (e.key === " " || e.key === "Enter")) return;
+    if(e.key === "ArrowRight" || e.key === "PageDown" || e.key === " ") { e.preventDefault(); go(i+1); }
+    if(e.key === "ArrowLeft" || e.key === "PageUp") { e.preventDefault(); go(i-1); }
+  });
+  const nb = document.getElementById("notes");
+  nb.onclick = () => {
+    const on = nb.getAttribute("aria-pressed") === "true";
+    nb.setAttribute("aria-pressed", String(!on));
+    document.getElementById("app").classList.toggle("notes-off", on);
+  };
+  go(0);
+
+  /* ---------- 1.2 reconstrução ---------- */
+  const ROLE = {
+    conclusao: ["Conclusão", "É o que a passagem quer que você aceite. Tudo o mais ali existe para sustentá-la, e é ela que será julgada quanto à validade da inferência."],
+    premissa: ["Premissa", "Oferecida como razão para aceitar a conclusão. Retirá-la enfraquece o argumento, o que é o teste prático para identificá-la."],
+    ruido: ["Não é premissa", "Uma concessão. Reconhece um ponto do adversário sem oferecer apoio à conclusão; suprimi-la deixa o argumento intacto. Descartar este material é metade do trabalho de reconstrução."]
+  };
+  const paraOut = document.getElementById("paraOut");
+  document.querySelectorAll("#para .sent").forEach(s => {
+    s.setAttribute("role", "button"); s.tabIndex = 0;
+    const act = () => {
+      const r = s.dataset.role;
+      s.classList.add("r-" + r);
+      if(!s.querySelector(".tag")){
+        const t = document.createElement("span");
+        t.className = "tag"; t.textContent = r === "ruido" ? "—" : ROLE[r][0].slice(0,1);
+        s.appendChild(t);
+      }
+      paraOut.innerHTML = '<div class="rk">' + ROLE[r][0] + "</div><p>" + ROLE[r][1] + "</p>";
+    };
+    s.addEventListener("click", act);
+    s.addEventListener("keydown", e => { if(e.key === "Enter" || e.key === " "){ e.preventDefault(); act(); } });
+  });
+
+  /* ---------- 1.4 matriz validade × verdade ---------- */
+  const MAT = {
+    vv: ["Premissas verdadeiras, conclusão verdadeira",
+         "Todo mamífero é vertebrado. Toda baleia é mamífero. ∴ Toda baleia é vertebrado.",
+         "Válido e com premissas verdadeiras: o argumento é correto, ou sólido. É o único perfil que autoriza a aceitar a conclusão com base no argumento."],
+    vf: ["Premissas verdadeiras, conclusão falsa",
+         "Não há exemplo. Nenhum argumento válido tem este perfil.",
+         "A definição de validade é precisamente esta: é impossível que as premissas sejam todas verdadeiras e a conclusão falsa. Encontrar um caso assim é o que refuta uma forma de argumento, e é o que o contraexemplo procura."],
+    fv: ["Alguma premissa falsa, conclusão verdadeira",
+         "Todo cão é réptil. Todo réptil é mamífero. ∴ Todo cão é mamífero.",
+         "As duas premissas são falsas, a conclusão é verdadeira, e o argumento é válido. A conclusão é verdadeira por acidente, não por força do argumento: aqui a validade não dá nenhuma razão para aceitá-la."],
+    ff: ["Alguma premissa falsa, conclusão falsa",
+         "Todo gato é ave. Toda ave tem escamas. ∴ Todo gato tem escamas.",
+         "Válido e falso do começo ao fim. O caso torna vívido que a validade avalia a passagem das premissas à conclusão, e não o conteúdo de nenhuma delas."]
+  };
+  const matOut = document.getElementById("matOut");
+  document.querySelectorAll("#matrix .cell").forEach(c => c.addEventListener("click", () => {
+    document.querySelectorAll("#matrix .cell").forEach(o => o.setAttribute("aria-pressed", String(o === c)));
+    const d = MAT[c.dataset.c];
+    matOut.innerHTML = '<div class="rk">' + d[0] + '</div><p style="font-family:var(--mono);font-size:14px">' + d[1] + "</p><p>" + d[2] + "</p>";
+  }));
+
+  /* ---------- 1.6 falácias ---------- */
+  const FAL = [
+    ["Ad hominem", "Ataca quem sustenta a tese em lugar da tese.", "&ldquo;Não vale discutir a proposta orçamentária dele: já foi reprovado duas vezes em cálculo.&rdquo;"],
+    ["Homem de palha", "Substitui a posição do adversário por uma versão enfraquecida e refuta esta.", "&ldquo;Quem defende revisão da tarifa quer simplesmente que o transporte seja de graça.&rdquo;"],
+    ["Ad verecundiam", "Apela a uma autoridade que não é autoridade no assunto em questão.", "&ldquo;Um ganhador do Nobel de Física declarou que a dieta funciona.&rdquo;"],
+    ["Ad misericordiam", "Substitui razões pela comoção do interlocutor.", "&ldquo;Preciso de nota dez neste trabalho, senão perco a bolsa e a matrícula.&rdquo;"],
+    ["Petição de princípio", "Pressupõe nas premissas aquilo que deveria ser concluído.", "&ldquo;O documento é confiável porque afirma coisas verdadeiras, e sabemos que são verdadeiras porque estão no documento.&rdquo;"],
+    ["Generalização apressada", "Salta de poucos casos, ou de casos não representativos, para uma tese geral.", "&ldquo;Os dois ônibus que peguei esta semana atrasaram; o sistema inteiro é ineficiente.&rdquo;"],
+    ["Falsa dicotomia", "Apresenta como exaustivas duas alternativas que não esgotam o campo.", "&ldquo;Ou aprovamos o corte agora, ou o serviço acaba.&rdquo;"],
+    ["Ladeira escorregadia", "Encadeia consequências cada vez mais graves sem justificar nenhum elo.", "&ldquo;Se permitirmos a exceção, em pouco tempo não haverá regra alguma.&rdquo;"]
+  ];
+  const box = document.getElementById("fcards"), falOut = document.getElementById("falOut");
+  FAL.forEach((f, k) => {
+    const b = document.createElement("button");
+    b.type = "button"; b.className = "fcard"; b.setAttribute("aria-pressed", "false");
+    b.innerHTML = '<span class="n">' + String(k+1).padStart(2,"0") + '</span><span class="t">' + f[0] + "</span>";
+    b.addEventListener("click", () => {
+      box.querySelectorAll(".fcard").forEach(o => o.setAttribute("aria-pressed", String(o === b)));
+      falOut.innerHTML = '<div class="rk">' + f[0] + "</div><p>" + f[1] + '</p><p style="font-style:italic;color:var(--muted)">' + f[2] + "</p>";
+    });
+    box.appendChild(b);
+  });
+
+  /* ---------- verificação ---------- */
+  const QS = [
+    { stem: "Em &ldquo;O concurso será anulado, pois o gabarito vazou na véspera&rdquo;, qual é a conclusão?",
+      opts: ["O concurso será anulado.", "O gabarito vazou na véspera.", "Não há conclusão: é uma explicação, não um argumento."],
+      right: 0,
+      fb: "&ldquo;Pois&rdquo; é indicador de premissa e marca o que vem depois dele. A conclusão é o que a passagem quer que se aceite, e o vazamento é oferecido como razão para aceitá-la." },
+    { stem: "Um argumento tem duas premissas falsas e conclusão verdadeira. O que se pode afirmar?",
+      opts: ["Que é inválido.", "Que é válido.", "Nada: esse perfil é compatível tanto com validade quanto com invalidade."],
+      right: 2,
+      fb: "A validade só exclui um perfil, o de premissas todas verdadeiras com conclusão falsa. Qualquer outra combinação de valores de verdade ocorre tanto em argumentos válidos quanto em inválidos, e por isso não decide nada." },
+    { stem: "&ldquo;Ou o senhor apoia o projeto, ou é contra o desenvolvimento da cidade.&rdquo; O defeito é:",
+      opts: ["Falsa dicotomia.", "Ad hominem.", "Petição de princípio."],
+      right: 0,
+      fb: "As duas alternativas não esgotam o campo: cabe apoiar o desenvolvimento e recusar este projeto em particular. O defeito está no conteúdo da premissa disjuntiva, não na forma da inferência, o que a torna uma falácia informal." }
+  ];
+  const quiz = document.getElementById("quiz");
+  QS.forEach((q, k) => {
+    const d = document.createElement("div");
+    d.className = "q";
+    d.innerHTML = '<p class="stem"><b style="font-family:var(--mono);font-size:12px;color:var(--muted)">' +
+      String(k+1).padStart(2,"0") + "</b> &nbsp;" + q.stem + '</p><div class="opts"></div><p class="fb"></p>';
+    const opts = d.querySelector(".opts"), fb = d.querySelector(".fb");
+    q.opts.forEach((o, n) => {
+      const b = document.createElement("button");
+      b.type = "button"; b.className = "opt"; b.textContent = o;
+      b.addEventListener("click", () => {
+        if(d.dataset.done) return;
+        d.dataset.done = "1";
+        opts.querySelectorAll(".opt").forEach((x, m) => {
+          if(m === q.right) x.classList.add("right");
+          else if(m === n) x.classList.add("wrong");
+          x.disabled = true;
+        });
+        fb.innerHTML = (n === q.right ? "<strong>Correto.</strong> " : "<strong>Não.</strong> ") + q.fb;
+      });
+      opts.appendChild(b);
+    });
+    quiz.appendChild(d);
+  });
+})();
+</script>
+
+</body>
+</html>

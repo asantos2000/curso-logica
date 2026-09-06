@@ -1,0 +1,528 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<style>:root{color-scheme:light dark}body{margin:0;font:14px/1.5 system-ui,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style>
+</head>
+<body>
+<title>Sete Prompts de Correção</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,600&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<style>
+:root{
+  --ground:#EEF1EE; --surface:#FAFBF9; --surface-2:#E2E7E3; --raised:#FFFFFF;
+  --ink:#131A18; --ink-soft:#38443F; --muted:#5F6C66; --line:#CBD4CE; --line-soft:#DDE4DF;
+  --accent:#0C6355; --accent-ink:#08463C; --accent-soft:#D6E7E2;
+  --verum:#0C6355; --falsum:#A33C20; --brass:#8A6D0B;
+  --shadow:0 1px 2px rgba(19,26,24,.06), 0 8px 24px -12px rgba(19,26,24,.18);
+  --serif:"Spectral", Georgia, "Times New Roman", serif;
+  --mono:"IBM Plex Mono", "SFMono-Regular", Consolas, monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --ground:#0E1413; --surface:#151D1B; --surface-2:#1D2926; --raised:#1A2422;
+    --ink:#E4EAE6; --ink-soft:#BCC7C2; --muted:#8D9C96; --line:#2B3835; --line-soft:#222E2B;
+    --accent:#4FBCA6; --accent-ink:#8FD8C8; --accent-soft:#17332E;
+    --verum:#4FBCA6; --falsum:#DE8461; --brass:#CFA93A;
+    --shadow:0 1px 2px rgba(0,0,0,.4), 0 10px 30px -14px rgba(0,0,0,.7);
+  }
+}
+:root[data-theme="dark"]{
+  --ground:#0E1413; --surface:#151D1B; --surface-2:#1D2926; --raised:#1A2422;
+  --ink:#E4EAE6; --ink-soft:#BCC7C2; --muted:#8D9C96; --line:#2B3835; --line-soft:#222E2B;
+  --accent:#4FBCA6; --accent-ink:#8FD8C8; --accent-soft:#17332E;
+  --verum:#4FBCA6; --falsum:#DE8461; --brass:#CFA93A;
+  --shadow:0 1px 2px rgba(0,0,0,.4), 0 10px 30px -14px rgba(0,0,0,.7);
+}
+
+*{box-sizing:border-box}
+body{margin:0;background:var(--ground);color:var(--ink);font-family:var(--serif);
+  font-size:17px;line-height:1.62;-webkit-font-smoothing:antialiased}
+.shell{max-width:1180px;margin:0 auto;padding:0 24px;display:grid;
+  grid-template-columns:220px minmax(0,1fr);gap:52px;align-items:start}
+.hero{grid-column:1/-1;padding:52px 0 32px;border-bottom:1px solid var(--line)}
+.hero .eyebrow{font:600 10.5px/1 var(--mono);letter-spacing:.18em;text-transform:uppercase;color:var(--accent)}
+.hero h1{font-size:clamp(34px,4.8vw,54px);font-weight:600;letter-spacing:-.032em;line-height:1.03;
+  margin:16px 0 12px;max-width:17ch;text-wrap:balance}
+.hero .lede{font-size:19px;color:var(--ink-soft);max-width:62ch;margin:0 0 28px}
+.facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:0;border-top:1px solid var(--line)}
+.facts div{padding:14px 20px 14px 0}
+.facts .k{font:600 10px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.facts .v{font-size:16.5px;margin-top:6px;line-height:1.3}
+nav.toc{position:sticky;top:26px;padding:32px 0 40px;font-size:14px}
+nav.toc .lbl{font:600 10px/1 var(--mono);letter-spacing:.16em;text-transform:uppercase;color:var(--muted);
+  padding-bottom:10px;border-bottom:1px solid var(--line);display:block;margin-bottom:12px}
+nav.toc a{display:block;color:var(--muted);text-decoration:none;padding:5px 0 5px 12px;
+  border-left:2px solid transparent;line-height:1.35}
+nav.toc a:hover{color:var(--ink)}
+nav.toc a.on{color:var(--accent);border-left-color:var(--accent);font-weight:500}
+article{padding:32px 0 90px;max-width:72ch}
+article h2{font-size:26px;font-weight:600;letter-spacing:-.018em;line-height:1.16;
+  margin:52px 0 4px;scroll-margin-top:28px;text-wrap:balance}
+article h2:first-of-type{margin-top:10px}
+article h2 .num{font:600 11px/1 var(--mono);letter-spacing:.14em;color:var(--accent);display:block;margin-bottom:10px}
+article h3{font-size:19px;font-weight:600;margin:32px 0 8px;letter-spacing:-.01em;scroll-margin-top:28px}
+article h4{font-size:16.5px;font-weight:600;margin:24px 0 6px}
+article p{margin:0 0 16px;color:var(--ink-soft)}
+article p strong{color:var(--ink);font-weight:600}
+article .intro{font-size:18.5px;color:var(--ink);margin-bottom:22px}
+.m{font-family:var(--mono);font-size:.92em;background:var(--surface);padding:1px 5px;border-radius:2px;color:var(--ink)}
+.tw{overflow-x:auto;margin:20px 0 24px;border:1px solid var(--line);border-radius:4px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;font-size:14.6px;min-width:440px}
+th,td{text-align:left;padding:10px 13px;border-bottom:1px solid var(--line-soft);vertical-align:top;color:var(--ink-soft)}
+tr:last-child td{border-bottom:0}
+th{font:600 10px/1.4 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--muted);
+  border-bottom:1px solid var(--line);background:var(--ground)}
+td.m2{font-family:var(--mono);font-size:13.5px;white-space:nowrap;color:var(--ink)}
+td.c{text-align:center;font-family:var(--mono)}
+td strong{color:var(--ink)}
+/* blocos formais */
+.fx{font-family:var(--mono);font-size:15px;background:var(--surface);border:1px solid var(--line);
+  border-radius:4px;padding:14px 16px;margin:0 0 18px;overflow-x:auto;color:var(--ink);white-space:pre-wrap}
+.thm{border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:4px;background:var(--surface);
+  padding:18px 20px;margin:22px 0}
+.thm .lb{font:600 10.5px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--accent);
+  display:block;margin-bottom:9px}
+.thm p{margin:0 0 10px;color:var(--ink)}
+.thm p:last-child{margin-bottom:0}
+.thm.lema{border-left-color:var(--brass)}
+.thm.lema .lb{color:var(--brass)}
+.prova{border-left:2px solid var(--line);padding:2px 0 2px 16px;margin:16px 0 22px}
+.prova .lb{font:600 10px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--muted);
+  display:block;margin-bottom:8px}
+.prova p{font-size:16px;margin:0 0 12px}
+.prova p:last-child{margin-bottom:0}
+.qed::after{content:" ▪";color:var(--accent)}
+.marco{border-left:3px solid var(--brass);padding:4px 0 4px 15px;margin:26px 0;font-size:16px;color:var(--ink)}
+.marco b{font:600 10px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--brass);
+  display:block;margin-bottom:6px}
+.note{font-size:14.5px;color:var(--muted);border-left:2px solid var(--line);padding-left:16px;margin:22px 0}
+figure{margin:28px 0 32px}
+figure svg{width:100%;height:auto;display:block;border:1px solid var(--line);border-radius:4px;background:var(--surface)}
+figcaption{font-size:13.5px;color:var(--muted);margin-top:10px;line-height:1.5}
+figcaption b{font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--accent);font-weight:600;margin-right:8px}
+.svg-t{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.06em;fill:var(--muted)}
+.svg-l{font-family:Spectral,Georgia,serif;font-size:14px;fill:var(--ink)}
+.svg-s{font-family:Spectral,Georgia,serif;font-size:12.5px;fill:var(--muted)}
+.svg-bx{fill:var(--ground);stroke:var(--line);stroke-width:1.2}
+.svg-bx-a{fill:var(--accent-soft);stroke:var(--accent);stroke-width:1.4}
+.svg-ar{stroke:var(--muted);stroke-width:1.3;fill:none}
+/* interativos genéricos */
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:9px;margin:18px 0}
+.card{text-align:left;border:1px solid var(--line);border-radius:4px;background:var(--surface);
+  padding:11px 13px;cursor:pointer;font-family:var(--serif);color:var(--ink)}
+.card:hover{border-color:var(--accent)}
+.card[aria-pressed="true"]{border-color:var(--accent);background:var(--accent-soft)}
+.card .n{font:600 10px/1 var(--mono);letter-spacing:.1em;color:var(--muted);display:block;margin-bottom:5px}
+.card .t{font-size:14.5px;font-weight:500;line-height:1.25}
+.readout{border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:4px;
+  background:var(--surface);padding:16px 18px;margin-bottom:8px}
+.readout .rk{font:600 10px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:8px}
+.readout p{font-size:15px;margin:0 0 8px;color:var(--ink-soft)}
+.readout p:last-child{margin-bottom:0}
+.readout ol{margin:6px 0 0;padding-left:20px;font-size:14.5px;color:var(--ink-soft)}
+.readout ol li{margin-bottom:5px}
+.refs{margin-top:12px}
+.refs p{padding-left:34px;text-indent:-34px;font-size:15.5px;margin-bottom:13px}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+@media (max-width:900px){
+  .shell{grid-template-columns:1fr;gap:0}
+  nav.toc{position:static;padding:22px 0 0;columns:2;column-gap:24px}
+  nav.toc .lbl{column-span:all}
+  article{padding-top:22px}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+<style>
+.cbar{display:flex;align-items:center;gap:14px;flex-wrap:wrap;padding:9px 24px;
+  border-bottom:1px solid var(--line);background:var(--surface-2);
+  font:500 12.5px/1 var(--mono);position:sticky;top:0;z-index:20}
+.cbar a{color:var(--accent);text-decoration:none;white-space:nowrap}
+.cbar a:hover{text-decoration:underline}
+.cbar .home{font-weight:600}
+.cbar .where{color:var(--muted);letter-spacing:.06em;text-transform:uppercase;font-size:10.5px}
+.cbar .sp{flex:1}
+.cbar .nx{color:var(--ink-soft)}
+.nextgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px;margin:22px 0 8px}
+.nextgrid .nx{display:block;text-decoration:none;border:1px solid var(--line);border-radius:4px;
+  background:var(--surface);padding:16px 18px;color:var(--ink)}
+.nextgrid .nx:hover{border-color:var(--accent)}
+.nextgrid .k{font:600 10px/1 var(--mono);letter-spacing:.13em;text-transform:uppercase;color:var(--accent);display:block}
+.nextgrid .t{font-size:16.5px;font-weight:600;margin:9px 0 6px;line-height:1.2;display:block}
+.nextgrid .d{font-size:14px;color:var(--muted);line-height:1.45;display:block}
+</style>
+<nav class="cbar"><a class="home" href="index.html">&#9666; Índice do curso</a><span class="where">Instrumento · correção</span><span class="sp"></span></nav>
+<style>
+.picker{display:grid;grid-template-columns:repeat(auto-fill,minmax(158px,1fr));gap:8px;margin:22px 0 20px}
+.pk{text-align:left;border:1px solid var(--line);border-radius:4px;background:var(--surface);padding:11px 12px;
+  cursor:pointer;font-family:var(--serif);color:var(--ink)}
+.pk:hover{border-color:var(--accent)}
+.pk[aria-pressed="true"]{border-color:var(--accent);background:var(--accent-soft)}
+.pk .n{font:600 9.5px/1 var(--mono);letter-spacing:.1em;color:var(--muted);display:block;margin-bottom:5px}
+.pk .t{font-size:14px;font-weight:500;line-height:1.25}
+.pk .m{font:400 10px/1 var(--mono);color:var(--accent);display:block;margin-top:7px;background:none;padding:0}
+.pbox{border:1px solid var(--line);border-radius:5px;background:var(--surface);overflow:hidden;margin-bottom:26px}
+.pbox header{display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap;
+  padding:15px 18px;border-bottom:1px solid var(--line);background:var(--ground)}
+.pbox h3{margin:0;font-size:17px;font-weight:600}
+.pbox .marco{font:600 9.5px/1 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--accent);
+  border:0;padding:0;margin:0}
+.pbox .why{font-size:14.5px;color:var(--ink-soft);padding:14px 18px 0;margin:0}
+pre.prompt{margin:14px 18px;padding:15px 16px;background:var(--ground);border:1px solid var(--line-soft);
+  border-radius:4px;font-family:var(--mono);font-size:12.6px;line-height:1.62;color:var(--ink);
+  white-space:pre-wrap;word-break:break-word;max-height:400px;overflow-y:auto}
+.pbox .tools{display:flex;gap:8px;align-items:center;flex-wrap:wrap;padding:0 18px 16px}
+.pbox textarea{width:calc(100% - 36px);margin:0 18px 12px;min-height:82px;padding:11px 12px;border:1px solid var(--line);
+  border-radius:4px;background:var(--ground);color:var(--ink);font-family:var(--mono);font-size:13px;resize:vertical}
+.pbox button{font:500 12px/1 var(--mono);letter-spacing:.05em;padding:9px 14px;border-radius:3px;cursor:pointer;
+  border:1px solid var(--accent);background:var(--accent);color:var(--surface)}
+.pbox button.ghost{background:var(--ground);color:var(--ink-soft);border-color:var(--line)}
+.pbox button.ghost:hover{background:var(--surface-2);color:var(--ink)}
+.pbox .msg{font:500 12px/1 var(--mono);color:var(--accent)}
+</style>
+<div class="shell">
+  <header class="hero">
+    <div class="eyebrow">Curso de fluência em lógica · instrumento de avaliação</div>
+    <h1>Sete prompts de correção</h1>
+    <p class="lede">A produção escrita é o que evidencia fluência, e é justamente o que nenhum teste autocorrigido alcança. Estes sete prompts permitem ao aluno submeter cada artefato a um modelo de linguagem e obter crítica estruturada, sem receber a solução pronta.</p>
+    <div class="facts">
+      <div><div class="k">Prompts</div><div class="v">Sete</div></div>
+      <div><div class="k">Cobrem</div><div class="v">Marcos A1b a C2</div></div>
+      <div><div class="k">Modelo</div><div class="v">Qualquer, indiferente</div></div>
+      <div><div class="k">Postura</div><div class="v">Crítica, não resolução</div></div>
+      <div><div class="k">Substitui</div><div class="v">Não substitui leitura humana</div></div>
+    </div>
+  </header>
+
+  <nav class="toc" id="toc">
+    <span class="lbl">Seções</span>
+    <a href="#i">Por que prompts e não conversa</a>
+    <a href="#uso">Como usar</a>
+    <a href="#p">Os sete prompts</a>
+    <a href="#desconf">Protocolo de desconfiança</a>
+    <a href="#nao">O que não pedir</a>
+    <a href="#ref">Referências</a>
+  </nav>
+
+  <article>
+    <h2 id="i"><span class="num">Abertura</span>Por que prompts e não conversa</h2>
+    <p class="intro">A seção 6 da proposta registrava uma limitação: os artefatos escritos dos marcos B2, C1 e C2 exigem leitura, e o formato autoinstrucional não a fornece. Um modelo de linguagem pode preencher parte da lacuna, mas apenas sob condições que precisam ser construídas, e é isso que distingue um prompt de uma pergunta.</p>
+    <p>Três problemas explicam a necessidade. O primeiro é que um modelo consultado sem instrução tende a resolver o exercício em vez de avaliar a resolução do aluno, o que destrói o valor pedagógico do artefato. O segundo é que ele tende a concordar: pedir «está certo?» produz confirmação com frequência maior do que o desempenho justifica. O terceiro é que modelos de linguagem cometem erros característicos em manipulação simbólica, sobretudo em cadeias longas de substituição e em verificação de restrições sintáticas, de modo que o veredito precisa vir acompanhado da conta que o sustenta, para que o aluno possa conferi-la.</p>
+    <p>Os prompts abaixo tratam dos três. Cada um fixa a postura, fornece a rubrica específica do artefato, exige que o modelo mostre a verificação linha a linha e proíbe a entrega da solução na primeira passagem. O aluno recebe crítica e perguntas, não respostas, e é assim que o artefato continua sendo dele.</p>
+
+    <h2 id="uso"><span class="num">Instruções</span>Como usar</h2>
+    <p>Escolha o prompt correspondente ao artefato, cole a sua produção no campo indicado e copie o texto montado para a conversa com o modelo. Envie o artefato completo, inclusive as partes de que você desconfia, e não antecipe qual delas suspeita estar errada: a suspeita orienta o corretor e contamina o resultado.</p>
+    <p>Ao receber a resposta, resista ao impulso de pedir a correção. Trabalhe primeiro sobre as perguntas críticas devolvidas, refaça o artefato e submeta a segunda versão ao mesmo prompt. Só depois de duas passagens, e apenas se algo permanecer opaco, peça a solução comentada. Este é o único modo de o instrumento treinar, em vez de apenas informar.</p>
+    <div class="note">Os prompts são independentes de modelo e de fornecedor. Foram redigidos em português e devem ser enviados como primeira mensagem de uma conversa nova, para que nada do contexto anterior interfira na avaliação.</div>
+
+    <h2 id="p"><span class="num">Instrumento</span>Os sete prompts</h2>
+    <p>Cada prompt corresponde a um tipo de artefato e ao marco em que ele é exigido.</p>
+    <div class="picker" id="picker"></div>
+    <div class="pbox" id="pbox"></div>
+
+    <h2 id="desconf"><span class="num">Verificação</span>Protocolo de desconfiança</h2>
+    <p>Nenhum veredito do modelo deve ser aceito sem conferência, e a conferência é barata quando se sabe o que pedir. Quatro procedimentos cobrem quase todos os casos.</p>
+    <p><strong>Exija o contramodelo.</strong> Se o modelo afirma que o seu argumento é inválido, peça a valoração ou a estrutura que o refuta, e verifique-a você mesmo, calculando o valor de cada premissa e da conclusão. Um modelo que erra o veredito raramente consegue produzir um contramodelo que sobreviva à conferência.</p>
+    <p><strong>Exija a linha.</strong> Se o modelo aponta erro em uma derivação, ele deve citar o número da linha, a regra invocada e a razão pela qual as fórmulas citadas não licenciam a aplicação. Crítica sem número de linha é crítica não verificável e deve ser descartada.</p>
+    <p><strong>Refaça a coluna à mão.</strong> Para tabelas de verdade e tablôs, recalcule uma linha ou um ramo por conta própria. É o teste mais rápido disponível e o que mais frequentemente revela erro do corretor.</p>
+    <p><strong>Use o gabarito quando houver.</strong> Para os exercícios dos capítulos 1 a 12 do livro-texto, o gabarito comentado de Pagani (s.d.) é a autoridade, e prevalece sobre o modelo em qualquer divergência. A partir do capítulo 13 essa referência não existe, e é exatamente aí que o protocolo acima passa a ser indispensável.</p>
+
+    <h2 id="nao"><span class="num">Limites</span>O que não pedir</h2>
+    <p>Não peça ao modelo que resolva o exercício antes de você o ter tentado até o fim. O artefato malfeito é o insumo do instrumento; sem ele não há o que corrigir, e o que se obtém é uma solução alheia que não deixa aprendizado.</p>
+    <p>Não peça avaliação de mérito filosófico das teses formalizadas. O corretor está sendo instruído a verificar a formalização, e não a julgar se a tese formalizada é boa. Confundir as duas coisas produz resposta longa e inútil.</p>
+    <p>Não use este instrumento como evidência de que o marco foi vencido. Ele reduz a lacuna descrita na seção 6 da proposta, e não a fecha: a recomendação de leitura humana ao menos para os artefatos dos marcos B2, C1 e C2 permanece válida. O que o instrumento oferece é a possibilidade de chegar à leitura humana com uma versão já depurada.</p>
+
+    <h2 id="ref">Referências</h2>
+    <div class="refs">
+      <p>Mortari, C. A. (2016). <em>Introdução à lógica</em> (2a ed.). Editora Unesp.</p>
+      <p>Neves Filho, E. F. das, &amp; Rui, M. de L. (2016). <em>Elementos de lógica</em> (Série Dissertatio de Filosofia, Vol. 11). NEPFIL Online.</p>
+      <p>Pagani, L. A. (s.d.). <em>Respostas para exercícios do livro Introdução à lógica, de Cezar Mortari</em> [Material didático não publicado].</p>
+      <p>Sell, S. (2014). <em>Lógica II</em> [Livro didático]. UnisulVirtual.</p>
+    </div>
+  </article>
+</div>
+<script>
+(function(){
+const COMUM = `POSTURA
+Você é corretor de exercícios de lógica, não resolvedor. Na primeira passagem
+você NÃO fornece a solução correta, NÃO reescreve o artefato e NÃO indica o
+caminho a seguir. Você aponta o que está errado, mostra a conta que sustenta
+cada apontamento e devolve perguntas que o aluno deve responder sozinho.
+Não elogie. Não amenize. Se o artefato estiver correto, diga apenas isso e
+mostre a verificação que o confirma.
+Se em algum item você não conseguir verificar com segurança, escreva
+"não verificado" e explique o que faltou. Nunca preencha uma lacuna com
+plausibilidade.`;
+
+const SAIDA = `FORMATO DE SAÍDA
+1. Tabela com uma linha por critério da rubrica, e as colunas:
+   critério | atende / não atende / não verificado | evidência exata
+   A evidência deve citar a linha, a célula ou o trecho específico do artefato.
+2. No máximo três perguntas críticas, dirigidas aos pontos que falharam,
+   formuladas de modo que respondê-las corrija o artefato sem que a resposta
+   seja dada.
+3. Uma única frase de veredito: o artefato cumpre ou não cumpre o marco.
+Não escreva mais nada.`;
+
+const P = [
+ { id:"A1b", t:"Reconstrução informal", marco:"Marco A1b",
+   why:"Verifica a padronização de um argumento em língua natural, a premissa suprimida escolhida pela regra de caridade, a estrutura de apoio e o esquema aplicado. Não há gabarito único, e por isso a rubrica incide sobre a justificação e não sobre a resposta.",
+   corpo:`TAREFA
+Corrija a reconstrução informal de um argumento feita por um estudante.
+
+RUBRICA
+R1. A conclusão identificada é de fato aquilo que a passagem quer que se aceite,
+    e não uma premissa nem uma consequência lateral.
+R2. Cada premissa listada de fato apoia a conclusão. Material concessivo,
+    ilustrativo ou meramente contextual foi descartado e não aparece como premissa.
+R3. A premissa implícita acrescentada é a MAIS FRACA que torna o argumento válido
+    ou forte. Se existir uma premissa mais fraca que também bastaria, aponte-a
+    sem enunciá-la por extenso: descreva apenas em que sentido a do aluno é forte
+    demais.
+R4. A estrutura de apoio declarada (convergente, ligada, serial) corresponde ao
+    modo como as premissas efetivamente sustentam a conclusão. Teste: remova
+    mentalmente cada premissa e verifique se o apoio desaparece ou apenas enfraquece.
+R5. O esquema argumentativo atribuído é o correto, e as perguntas críticas
+    aplicadas são as daquele esquema.
+R6. A atribuição do ônus da prova é justificada, e não apenas afirmada.
+R7. Não há confusão entre avaliar a verdade das premissas e avaliar o apoio que
+    elas dão à conclusão.`},
+
+ { id:"B1a", t:"Tradução proposicional", marco:"Marco B1",
+   why:"O erro mais comum do curso está aqui, e quase sempre em condição necessária lida como suficiente. A rubrica força o corretor a testar cada tradução por valoração, e não por impressão de leitura.",
+   corpo:`TAREFA
+Corrija a tradução de sentenças do português para o cálculo proposicional
+clássico feita por um estudante.
+
+RUBRICA
+R1. O dicionário de letras sentenciais está completo e cada letra representa uma
+    proposição declarativa inteira, sem partes soltas.
+R2. Para CADA sentença, verifique a tradução assim, e mostre a verificação:
+    construa uma situação em que a sentença em português é verdadeira e teste se
+    a fórmula é verdadeira nela; depois construa uma em que a sentença é falsa e
+    teste se a fórmula é falsa. Se as duas coincidirem, a tradução passa.
+R3. Condições necessárias e suficientes: "somente se" e "só ... se" introduzem
+    condição NECESSÁRIA e ocupam o consequente; "se" introduz condição
+    SUFICIENTE e ocupa o antecedente. Verifique cada condicional quanto a isso.
+R4. "A menos que" e "ou" foram tratados de modo consistente e a leitura adotada
+    foi declarada, inclusiva ou exclusiva.
+R5. O escopo dos operadores está fixado por parênteses e não depende de convenção
+    tácita. Se alguma fórmula for ambígua sem convenção adicional, aponte.
+R6. Negações incidem sobre o que a sentença efetivamente nega, e não sobre a
+    fórmula inteira por descuido.`},
+
+ { id:"B1b", t:"Tabela de verdade", marco:"Marco B1",
+   why:"Artefato mecânico, e por isso o mais fácil de conferir e o mais fácil de o corretor errar por desatenção. A rubrica exige recomputação célula a célula.",
+   corpo:`TAREFA
+Corrija a tabela de verdade construída por um estudante e o veredito de validade
+que ele extraiu dela.
+
+RUBRICA
+R1. O número de linhas é 2 elevado ao número de letras sentenciais distintas, e
+    as combinações estão todas presentes, sem repetição.
+R2. RECOMPUTE cada coluna intermediária, linha a linha, do operador mais interno
+    ao mais externo. Mostre a recomputação de pelo menos as linhas em que houver
+    divergência, e diga explicitamente quais linhas conferiu.
+R3. A coluna final corresponde ao operador principal da fórmula, e não a um
+    subcomponente.
+R4. A classificação (tautologia, contradição, contingência) decorre da coluna
+    final tal como o aluno a construiu.
+R5. Para o veredito de validade: existe alguma linha com todas as premissas
+    verdadeiras e conclusão falsa? Cite o número dessa linha, se existir. Se não
+    existir, diga quantas linhas têm todas as premissas verdadeiras e confirme
+    que em todas elas a conclusão é verdadeira.
+R6. Se o aluno declarou o argumento inválido, a linha de contraexemplo que ele
+    apontou é de fato uma linha com premissas verdadeiras e conclusão falsa.`},
+
+ { id:"B2a", t:"Tablô semântico", marco:"Marco B2",
+   why:"Verifica a decomposição regra a regra, o fechamento dos ramos e, sobretudo, a leitura do contramodelo a partir do ramo aberto, que é a operação que os alunos mais frequentemente omitem.",
+   corpo:`TAREFA
+Corrija o tablô semântico construído por um estudante.
+
+RUBRICA
+R1. O tablô parte das premissas e da NEGAÇÃO da conclusão. Verifique a raiz.
+R2. Cada decomposição aplica a regra correta e ramifica quando deve ramificar.
+    Verifique em particular: ¬(α→β) NÃO ramifica e produz α e ¬β no mesmo ramo;
+    α→β ramifica; ¬(α∧β) ramifica; α∨β ramifica; ¬(α∨β) não ramifica.
+    Para cada linha do tablô, cite a linha de origem e nomeie a regra aplicada.
+R3. Toda fórmula não atômica foi decomposta em todos os ramos em que ocorre, ou
+    o ramo já estava fechado quando a decomposição seria devida.
+R4. Cada ramo declarado fechado contém de fato uma fórmula e a sua negação.
+    Cite as duas linhas.
+R5. Cada ramo declarado aberto está saturado, isto é, não há decomposição
+    pendente nele.
+R6. Se há ramo aberto, o aluno extraiu dele a valoração e ela de fato torna todas
+    as premissas verdadeiras e a conclusão falsa. VERIFIQUE calculando o valor de
+    cada premissa e da conclusão sob essa valoração, e mostre o cálculo.
+R7. O veredito final corresponde ao estado dos ramos.`},
+
+ { id:"B2b", t:"Dedução natural", marco:"Marco B2",
+   why:"A rubrica mais longa, porque a derivação é o artefato com mais maneiras de falhar: regra mal aplicada, hipótese não descarregada, linha citada fora de escopo.",
+   corpo:`TAREFA
+Corrija a derivação em dedução natural feita por um estudante.
+
+RUBRICA
+Verifique LINHA A LINHA, do início ao fim, e produza o seu relato nessa ordem.
+Para cada linha, indique: número, fórmula, regra alegada, linhas citadas e se a
+aplicação é legítima.
+
+R1. Toda premissa está justificada como premissa e pertence ao conjunto dado.
+R2. Cada aplicação de regra é legítima: as fórmulas citadas têm de fato a forma
+    que a regra exige. Verifique em particular que modus ponens cita um
+    condicional e o seu antecedente, e não o consequente.
+R3. Toda hipótese levantada foi descarregada, e foi descarregada pela regra
+    correta: prova do condicional descarrega o antecedente; redução ao absurdo
+    descarrega a hipótese que conduziu à contradição.
+R4. Nenhuma linha cita uma linha interna a uma subderivação já encerrada.
+    Este é o erro mais frequente; percorra o escopo de cada citação.
+R5. A conclusão da última linha é exatamente a fórmula pedida, e ela não depende
+    de nenhuma hipótese não descarregada.
+R6. Se o aluno usou uma regra derivada, ela é uma das regras derivadas
+    disponíveis no curso, e foi nomeada.
+R7. Se houver notação divergente da adotada no material, isso NÃO é erro; anote
+    a divergência e prossiga.
+
+OBSERVAÇÃO
+Uma derivação mais longa que o necessário não é errada. Não critique extensão.`},
+
+ { id:"C1", t:"Formalização em primeira ordem", marco:"Marco C1",
+   why:"Concentra os erros de escopo, de ordem de quantificadores e de uso indevido da conjunção na universal. Inclui a verificação das restrições sobre variáveis quando há derivação.",
+   corpo:`TAREFA
+Corrija a formalização em linguagem de primeira ordem feita por um estudante,
+e a derivação que a acompanha, se houver.
+
+RUBRICA
+R1. O dicionário declara o domínio, cada constante de predicado com a sua aridade
+    e cada constante individual.
+R2. Universais empregam condicional e existenciais empregam conjunção. Sinalize
+    toda ocorrência de ∀x(Px ∧ Qx) ou de ∃x(Px → Qx) e explique, para cada uma,
+    o que a fórmula passa a afirmar.
+R3. A ordem dos quantificadores corresponde à leitura pretendida. Para cada
+    fórmula com dois quantificadores de tipos diferentes, descreva em português
+    o que a fórmula do aluno diz e o que a fórmula com a ordem invertida diria.
+R4. Não há variável livre onde deveria haver ligada, nem captura de variável.
+R5. Se há identidade, as fórmulas de unicidade e de numeralidade estão corretas.
+    Verifique que "exatamente um" tem a cláusula de unicidade, e não apenas a de
+    existência.
+R6. Se há derivação, verifique as restrições sobre a variável própria: na
+    introdução do universal, a variável não pode ocorrer livre em nenhuma
+    hipótese não descarregada; na eliminação do existencial, a constante ou
+    variável introduzida deve ser nova. Cite a linha de cada violação.
+R7. Se o aluno apresentou uma estrutura para refutar uma fórmula, verifique-a:
+    exiba o domínio, a interpretação e o cálculo do valor da fórmula nela.`},
+
+ { id:"C2", t:"Trabalho integrador", marco:"Marco C2",
+   why:"Artefato final do curso. A rubrica separa três julgamentos que os alunos misturam: a fidelidade da formalização, a correção do método e a discussão do que a formalização perdeu.",
+   corpo:`TAREFA
+Corrija o trabalho integrador de um estudante, que consiste em: um trecho de
+texto escolhido por ele, a reconstrução do argumento ali contido, a formalização
+desse argumento, a decisão sobre a sua validade e uma discussão do que a
+formalização preservou e do que perdeu.
+
+RUBRICA
+R1. A reconstrução é fiel ao trecho: não acrescenta premissas ausentes nem
+    descarta premissas presentes. Cite o trecho para cada premissa.
+R2. A formalização é fiel à reconstrução. Avalie cada fórmula contra a frase
+    correspondente, e não contra a sua própria leitura do texto.
+R3. A escolha do sistema é adequada: se o argumento depende da estrutura interna
+    das proposições, o cálculo proposicional é insuficiente, e isso deveria ter
+    sido notado.
+R4. O método de decisão foi aplicado corretamente. Aplique a rubrica de tablô ou
+    a de dedução natural conforme o caso, e verifique o resultado.
+R5. A discussão final identifica ao menos uma perda REAL da formalização, isto é,
+    algo que o texto afirma ou sugere e que a fórmula não captura. Recuse
+    observações genéricas sobre a lógica ser abstrata: exija que a perda seja
+    localizada em uma frase específica.
+R6. O trabalho não confunde a invalidade do argumento com a falsidade da
+    conclusão, nem a validade com a verdade das premissas.
+
+OBSERVAÇÃO
+Não avalie o mérito filosófico da tese defendida no trecho escolhido. Avalie a
+formalização e o tratamento lógico.`}
+];
+
+const picker = document.getElementById("picker"), box = document.getElementById("pbox");
+let atual = 0;
+function doHash(){
+  const m = (location.hash || "").match(/^#p([1-7])$/i);
+  if(m) atual = +m[1] - 1;
+}
+doHash();
+window.addEventListener("hashchange", () => { doHash(); render(); });
+
+P.forEach((p, k) => {
+  const b = document.createElement("button");
+  b.type = "button"; b.className = "pk"; b.setAttribute("aria-pressed", String(k === 0));
+  b.innerHTML = '<span class="n">PROMPT ' + String(k+1).padStart(2,"0") + '</span><span class="t">' +
+    p.t + '</span><span class="m">' + p.marco + "</span>";
+  b.addEventListener("click", () => { atual = k; render(); });
+  picker.appendChild(b);
+});
+
+function montar(p, artefato){
+  const a = artefato && artefato.trim() ? artefato.trim() : "[cole aqui o seu artefato, integralmente]";
+  return COMUM + "\n\n" + p.corpo + "\n\nARTEFATO DO ESTUDANTE\n---\n" + a + "\n---\n\n" + SAIDA;
+}
+
+function render(){
+  Array.from(picker.children).forEach((c, k) => c.setAttribute("aria-pressed", String(k === atual)));
+  const p = P[atual];
+  box.innerHTML = "";
+  const h = document.createElement("header");
+  h.innerHTML = "<h3>" + p.t + '</h3><span class="marco">' + p.marco + "</span>";
+  const why = document.createElement("p"); why.className = "why"; why.textContent = p.why;
+  const ta = document.createElement("textarea");
+  ta.placeholder = "Cole aqui o seu artefato. O prompt abaixo se monta sozinho.";
+  ta.setAttribute("aria-label", "Seu artefato");
+  const pre = document.createElement("pre"); pre.className = "prompt";
+  const tools = document.createElement("div"); tools.className = "tools";
+  const bcopy = document.createElement("button"); bcopy.type = "button"; bcopy.textContent = "Copiar prompt";
+  const bsel = document.createElement("button"); bsel.type = "button"; bsel.className = "ghost"; bsel.textContent = "Selecionar tudo";
+  const msg = document.createElement("span"); msg.className = "msg";
+  tools.append(bcopy, bsel, msg);
+  box.append(h, why, ta, pre, tools);
+
+  function atualiza(){ pre.textContent = montar(p, ta.value); }
+  ta.addEventListener("input", atualiza); atualiza();
+
+  function selecionar(){
+    const r = document.createRange(); r.selectNodeContents(pre);
+    const s = window.getSelection(); s.removeAllRanges(); s.addRange(r);
+  }
+  bsel.addEventListener("click", () => { selecionar(); msg.textContent = "selecionado; use Ctrl+C"; });
+  bcopy.addEventListener("click", async () => {
+    const txt = pre.textContent;
+    try {
+      await navigator.clipboard.writeText(txt);
+      msg.textContent = "copiado"; return;
+    } catch(e){}
+    try {
+      const t = document.createElement("textarea");
+      t.value = txt; t.style.position = "fixed"; t.style.opacity = "0";
+      document.body.appendChild(t); t.select();
+      const ok = document.execCommand("copy");
+      document.body.removeChild(t);
+      if(ok){ msg.textContent = "copiado"; return; }
+    } catch(e){}
+    selecionar(); msg.textContent = "selecionado; use Ctrl+C";
+  });
+}
+render();
+})();
+</script>
+<script>
+(function(){
+  const links = Array.from(document.querySelectorAll("nav.toc a"));
+  const alvos = links.map(a => document.getElementById(a.getAttribute("href").slice(1))).filter(Boolean);
+  function spy(){
+    let atual = alvos[0];
+    alvos.forEach(t => { if(t.getBoundingClientRect().top <= 120) atual = t; });
+    links.forEach(a => a.classList.toggle("on", a.getAttribute("href") === "#" + (atual ? atual.id : "")));
+  }
+  window.addEventListener("scroll", spy, {passive:true}); spy();
+})();
+</script>
+
+</body>
+</html>

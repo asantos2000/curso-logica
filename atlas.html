@@ -1,0 +1,431 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<style>:root{color-scheme:light dark}body{margin:0;font:14px/1.5 system-ui,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style>
+</head>
+<body>
+<title>Atlas da Lógica</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<style>
+:root{
+  --ground:#EEF1EE; --surface:#FAFBF9; --surface-2:#E2E7E3; --raised:#FFFFFF;
+  --ink:#131A18; --ink-soft:#38443F; --muted:#5F6C66; --line:#CBD4CE; --line-soft:#DDE4DF;
+  --accent:#0C6355; --accent-ink:#08463C; --accent-soft:#D6E7E2;
+  --verum:#0C6355; --falsum:#A33C20; --brass:#8A6D0B;
+  --shadow:0 1px 2px rgba(19,26,24,.06), 0 8px 24px -12px rgba(19,26,24,.18);
+  --serif:"Spectral", Georgia, "Times New Roman", serif;
+  --mono:"IBM Plex Mono", "SFMono-Regular", Consolas, monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --ground:#0E1413; --surface:#151D1B; --surface-2:#1D2926; --raised:#1A2422;
+    --ink:#E4EAE6; --ink-soft:#BCC7C2; --muted:#8D9C96; --line:#2B3835; --line-soft:#222E2B;
+    --accent:#4FBCA6; --accent-ink:#8FD8C8; --accent-soft:#17332E;
+    --verum:#4FBCA6; --falsum:#DE8461; --brass:#CFA93A;
+    --shadow:0 1px 2px rgba(0,0,0,.4), 0 10px 30px -14px rgba(0,0,0,.7);
+  }
+}
+:root[data-theme="dark"]{
+  --ground:#0E1413; --surface:#151D1B; --surface-2:#1D2926; --raised:#1A2422;
+  --ink:#E4EAE6; --ink-soft:#BCC7C2; --muted:#8D9C96; --line:#2B3835; --line-soft:#222E2B;
+  --accent:#4FBCA6; --accent-ink:#8FD8C8; --accent-soft:#17332E;
+  --verum:#4FBCA6; --falsum:#DE8461; --brass:#CFA93A;
+  --shadow:0 1px 2px rgba(0,0,0,.4), 0 10px 30px -14px rgba(0,0,0,.7);
+}
+
+*{box-sizing:border-box}
+body{margin:0;background:var(--ground);color:var(--ink);font-family:var(--serif);
+  font-size:16px;line-height:1.55;-webkit-font-smoothing:antialiased}
+.wrap{display:flex;flex-direction:column;height:100vh;min-height:560px}
+
+/* ---- topbar ---- */
+.top{display:flex;flex-wrap:wrap;align-items:flex-end;gap:18px 26px;
+  padding:18px 24px 14px;border-bottom:1px solid var(--line);background:var(--surface)}
+.brand h1{margin:0;font-size:23px;font-weight:600;letter-spacing:-.015em;line-height:1.1}
+.brand p{margin:4px 0 0;font-size:13px;color:var(--muted);max-width:52ch}
+.brand .sig{font-family:var(--mono);font-size:12px;color:var(--accent);letter-spacing:.04em}
+.controls{display:flex;gap:8px;margin-left:auto;align-items:center;flex-wrap:wrap}
+.seg{display:flex;border:1px solid var(--line);border-radius:3px;overflow:hidden;background:var(--ground)}
+.seg button{font:500 11px/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;
+  padding:8px 11px;background:none;border:0;border-right:1px solid var(--line);color:var(--muted);cursor:pointer}
+.seg button:last-child{border-right:0}
+.seg button[aria-pressed="true"]{background:var(--accent);color:var(--surface)}
+.seg button:hover:not([aria-pressed="true"]){color:var(--ink);background:var(--surface-2)}
+.icbtn{font:500 13px/1 var(--mono);width:32px;height:32px;border:1px solid var(--line);
+  background:var(--ground);color:var(--ink-soft);border-radius:3px;cursor:pointer}
+.icbtn:hover{background:var(--surface-2)}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+
+/* ---- stage ---- */
+.stage{flex:1;display:flex;min-height:0}
+.canvas{position:relative;flex:1;overflow:hidden;cursor:grab;
+  background-image:radial-gradient(var(--line-soft) 1px, transparent 1px);background-size:22px 22px}
+.canvas.dragging{cursor:grabbing}
+.plane{position:absolute;top:0;left:0;transform-origin:0 0;will-change:transform}
+.edges{position:absolute;top:0;left:0;overflow:visible;pointer-events:none}
+.edges path{fill:none;stroke:var(--line);stroke-width:1.4}
+.edges path.hot{stroke:var(--accent);stroke-width:2}
+
+.node{position:absolute;transform:translateY(-50%);width:250px;text-align:left;
+  font-family:var(--serif);background:var(--surface);border:1px solid var(--line);
+  border-radius:4px;padding:9px 12px;cursor:pointer;color:var(--ink);box-shadow:var(--shadow)}
+.node:hover{border-color:var(--accent)}
+.node[aria-current="true"]{border-color:var(--accent);box-shadow:0 0 0 2px var(--accent-soft),var(--shadow)}
+.node .lab{font-size:14px;line-height:1.3;display:block}
+.node .code{font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;color:var(--muted);display:block;margin-bottom:3px}
+.node .axes{font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;color:var(--accent);margin-top:5px;display:block}
+.node.root{width:210px;background:var(--ink);color:var(--ground);border-color:var(--ink)}
+.node.root .lab{font-size:17px;font-weight:600}
+.node.root .code{color:var(--surface-2);opacity:.75}
+.node.nivel{width:230px;background:var(--surface-2);border-left:4px solid var(--accent)}
+.node.nivel .lab{font-weight:600;font-size:15px}
+.node.mod{width:262px;border-left:4px solid var(--brass)}
+.node.mod .lab{font-weight:600}
+.node .kids{font-family:var(--mono);font-size:10px;color:var(--muted);
+  border:1px solid var(--line);border-radius:2px;padding:1px 5px;margin-left:6px;white-space:nowrap}
+.node.dim{opacity:.28}
+.node.dim:hover{opacity:.6}
+
+/* ---- panel ---- */
+.panel{width:340px;flex:none;border-left:1px solid var(--line);background:var(--surface);
+  padding:22px 22px 30px;overflow-y:auto}
+.panel .kicker{font:600 10.5px/1 var(--mono);letter-spacing:.16em;text-transform:uppercase;color:var(--accent)}
+.panel h2{margin:10px 0 2px;font-size:20px;font-weight:600;line-height:1.2;text-wrap:balance}
+.panel .sub{font-size:13px;color:var(--muted);margin:0 0 18px}
+.panel h3{font:600 10.5px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;
+  color:var(--muted);margin:22px 0 7px;padding-bottom:6px;border-bottom:1px solid var(--line-soft)}
+.panel p{margin:0 0 10px;font-size:14.5px;color:var(--ink-soft)}
+.panel .cite{font-size:13px;color:var(--ink-soft);font-style:italic}
+.axgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-top:4px}
+.ax{border:1px solid var(--line);border-radius:3px;padding:8px 6px;text-align:center;background:var(--ground)}
+.ax .k{font:600 10px/1 var(--mono);letter-spacing:.1em;color:var(--muted)}
+.ax .v{font-size:19px;margin-top:5px;color:var(--line)}
+.ax.on{border-color:var(--accent);background:var(--accent-soft)}
+.ax.on .k{color:var(--accent-ink)}
+.ax.on .v{color:var(--accent)}
+.fx{font-family:var(--mono);font-size:14px;background:var(--ground);border:1px solid var(--line-soft);
+  border-radius:3px;padding:9px 11px;margin:0 0 10px;overflow-x:auto;white-space:nowrap;color:var(--ink)}
+.legend{display:flex;gap:14px;flex-wrap:wrap;font-family:var(--mono);font-size:10.5px;
+  letter-spacing:.05em;color:var(--muted);padding:8px 24px;border-top:1px solid var(--line);background:var(--surface)}
+.legend b{font-weight:500;color:var(--ink-soft)}
+.swatch{display:inline-block;width:9px;height:9px;border-radius:2px;margin-right:5px;vertical-align:baseline}
+@media (max-width:900px){
+  .wrap{height:auto}
+  .stage{flex-direction:column}
+  .canvas{height:66vh;min-height:420px}
+  .panel{width:auto;border-left:0;border-top:1px solid var(--line)}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+<style>
+.cbar{display:flex;align-items:center;gap:14px;flex-wrap:wrap;padding:9px 24px;
+  border-bottom:1px solid var(--line);background:var(--surface-2);
+  font:500 12.5px/1 var(--mono);position:sticky;top:0;z-index:20}
+.cbar a{color:var(--accent);text-decoration:none;white-space:nowrap}
+.cbar a:hover{text-decoration:underline}
+.cbar .home{font-weight:600}
+.cbar .where{color:var(--muted);letter-spacing:.06em;text-transform:uppercase;font-size:10.5px}
+.cbar .sp{flex:1}
+.cbar .nx{color:var(--ink-soft)}
+.nextgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px;margin:22px 0 8px}
+.nextgrid .nx{display:block;text-decoration:none;border:1px solid var(--line);border-radius:4px;
+  background:var(--surface);padding:16px 18px;color:var(--ink)}
+.nextgrid .nx:hover{border-color:var(--accent)}
+.nextgrid .k{font:600 10px/1 var(--mono);letter-spacing:.13em;text-transform:uppercase;color:var(--accent);display:block}
+.nextgrid .t{font-size:16.5px;font-weight:600;margin:9px 0 6px;line-height:1.2;display:block}
+.nextgrid .d{font-size:14px;color:var(--muted);line-height:1.45;display:block}
+</style>
+<nav class="cbar"><a class="home" href="index.html">&#9666; Índice do curso</a><span class="where">Instrumento · mapa</span><span class="sp"></span></nav>
+<div class="wrap">
+  <header class="top">
+    <div class="brand">
+      <div class="sig">&#8872; &nbsp;curr&iacute;culo autoinstrucional</div>
+      <h1>Atlas da L&oacute;gica</h1>
+      <p>Arquitetura conceitual do curso, do argumento em l&iacute;ngua natural at&eacute; a metateoria e as l&oacute;gicas n&atilde;o cl&aacute;ssicas. Clique em um n&oacute; para ler a ficha; clique no contador para abrir ou fechar ramos.</p>
+    </div>
+    <div class="controls">
+      <div class="seg" role="group" aria-label="Filtrar por eixo de fluência">
+        <button data-eixo="todos" aria-pressed="true">Todos</button>
+        <button data-eixo="C" aria-pressed="false">Compreender</button>
+        <button data-eixo="L" aria-pressed="false">Ler</button>
+        <button data-eixo="E" aria-pressed="false">Escrever</button>
+      </div>
+      <div class="seg" role="group" aria-label="Profundidade visível">
+        <button data-lvl="2" aria-pressed="true">M&oacute;dulos</button>
+        <button data-lvl="3" aria-pressed="false">Unidades</button>
+      </div>
+      <button class="icbtn" id="zin" title="Aproximar" aria-label="Aproximar">+</button>
+      <button class="icbtn" id="zout" title="Afastar" aria-label="Afastar">&minus;</button>
+      <button class="icbtn" id="zfit" title="Enquadrar" aria-label="Enquadrar">&#9635;</button>
+    </div>
+  </header>
+
+  <div class="stage">
+    <div class="canvas" id="canvas">
+      <div class="plane" id="plane">
+        <svg class="edges" id="edges" aria-hidden="true"></svg>
+      </div>
+    </div>
+    <aside class="panel" id="panel" aria-live="polite"></aside>
+  </div>
+
+  <div class="legend">
+    <span><span class="swatch" style="background:var(--ink)"></span><b>Curso</b></span>
+    <span><span class="swatch" style="background:var(--accent)"></span><b>N&iacute;vel</b></span>
+    <span><span class="swatch" style="background:var(--brass)"></span><b>M&oacute;dulo</b></span>
+    <span><span class="swatch" style="background:var(--line)"></span><b>Unidade</b></span>
+    <span>Eixos: <b>C</b> compreender &middot; <b>L</b> ler &middot; <b>E</b> escrever</span>
+    <span>6 m&oacute;dulos &middot; 33 unidades &middot; 6 fontes</span>
+  </div>
+</div>
+<script>
+const U = (code,label,axes,nota,fonte,fx) => ({code,label,axes,nota,fonte,fx});
+
+const TREE = {
+  code:"⊨", label:"Fluência em Lógica", kind:"root",
+  nota:"Percurso autoinstrucional organizado por marcos de domínio, não por semanas. O aluno avança quando demonstra a competência, e cada marco é verificável por um teste autocorrigido e por uma produção escrita (uma tradução, um tablô ou uma derivação).",
+  fonte:"Síntese das seis fontes reunidas na pasta de trabalho.",
+  children:[
+  { code:"NÍVEL A", label:"Iniciante absoluto", kind:"nivel",
+    nota:"Nenhum pré-requisito. O aluno chega sem notação e sai capaz de identificar a estrutura de um argumento em texto corrido, distinguir validade de verdade e reconhecer as falácias informais mais frequentes. Nada de símbolos antes da unidade 3.1.",
+    fonte:"Mortari (2016, caps. 1–4); Neves Filho e Rui (2016); Morais et al. (2019).",
+    children:[
+    { code:"MÓDULO 1", label:"Argumento, inferência e validade", kind:"mod",
+      nota:"O módulo de entrada. Trabalha exclusivamente em português, sobre argumentos reais, e instala a distinção que sustenta todo o resto do curso: a de que a validade é uma propriedade da forma, não do conteúdo.",
+      fonte:"Mortari (2016, caps. 1–2); Neves Filho e Rui (2016, caps. I e IV).",
+      marco:"Marco A1 — extrair premissas e conclusão de um parágrafo argumentativo, julgar validade e correção separadamente e nomear oito falácias informais em exemplos inéditos.",
+      children:[
+      U("1.1","O que é lógica; raciocínio e inferência",["C"],"Delimita o objeto: a lógica não estuda como as pessoas de fato pensam, e sim quais passos de um pensamento a outro preservam verdade. Separa inferência de raciocínio psicológico.","Mortari (2016, §§1.1–1.2)."),
+      U("1.2","Anatomia do argumento",["C","L"],"Premissas, conclusão e indicadores linguísticos (logo, portanto, pois, já que). Reconstrução de argumentos com premissas implícitas.","Mortari (2016, §1.3); Neves Filho e Rui (2016, cap. I, §1)."),
+      U("1.3","Sentenças, proposições, enunciados",["C"],"Distingue o veículo linguístico daquilo que ele exprime. Necessário para que, mais adiante, uma letra sentencial possa representar aquilo que recebe valor de verdade.","Mortari (2016, §1.4)."),
+      U("1.4","Validade e forma; validade e correção",["C","L"],"Um argumento válido pode ter premissas falsas, e um argumento com premissas e conclusão verdadeiras pode ser inválido. Introduz o método do contraexemplo por substituição de conteúdo em forma fixa.","Mortari (2016, §§2.1–2.2); Neves Filho e Rui (2016, cap. I, §§2–3).","Todo A é B; todo B é C ∴ todo A é C"),
+      U("1.5","Dedução, indução e analogia",["C"],"Critério de demarcação: na dedução, a verdade das premissas garante a da conclusão; na indução, apenas a torna provável. Prepara a recusa de avaliar argumentos indutivos pelos critérios do cálculo.","Mortari (2016, §2.3); Neves Filho e Rui (2016, cap. I, §4)."),
+      U("1.6","Falácias informais",["C","L"],"Ad hominem, homem de palha, ad verecundiam, ad misericordiam, petitio principii, generalização apressada, falsa dicotomia e ladeira escorregadia, cada uma com exemplos de circulação pública.","Neves Filho e Rui (2016, cap. IV).")
+      ]},
+    { code:"MÓDULO 2", label:"Linguagem, conjuntos e origem histórica", kind:"mod",
+      nota:"Módulo de instrumentação. Fornece as duas ferramentas de que a parte formal dependerá — o controle metalinguístico e a teoria elementar de conjuntos — e situa a disciplina em sua história, de Heráclito aos medievais.",
+      fonte:"Mortari (2016, caps. 3–4, §2.5, Apêndice A); Morais et al. (2019); Neves Filho e Rui (2016, cap. II).",
+      marco:"Marco A2 — empregar corretamente aspas de menção, operar com união, intersecção e complemento, e decidir a validade de um silogismo categórico por diagramas de Venn-Euler.",
+      children:[
+      U("2.1","Linguagens, uso e menção, metalinguagem",["C","E"],"Linguagens naturais e artificiais; a diferença entre usar uma expressão e mencioná-la; linguagem-objeto e metalinguagem; o uso de variáveis metalinguísticas.","Mortari (2016, cap. 3).","'Brasília' tem oito letras; Brasília tem três milhões de habitantes"),
+      U("2.2","Teoria elementar de conjuntos",["C","E"],"Pertinência e inclusão, conjuntos especiais, relações entre conjuntos, operações, relações e propriedades, funções injetivas, sobrejetivas e bijetivas, conjuntos infinitos.","Mortari (2016, cap. 4).","f : A → B, A ⊆ B, A ∩ B, ℘(A)"),
+      U("2.3","Origens: Heráclito, Parmênides, Zenão, Platão",["C","L"],"O devir e o uno como problema do princípio de não contradição; os paradoxos de Zenão como primeiro uso sistemático da reductio ad absurdum; a dialética platônica.","Morais et al. (2019, caps. 1–5)."),
+      U("2.4","Aristóteles: termos, quadrado e silogismo",["C","L","E"],"Proposições categóricas A, E, I e O; o quadrado tradicional das oposições; figuras e modos do silogismo; validade silogística e o problema do compromisso existencial.","Neves Filho e Rui (2016, cap. II); Mortari (2016, Apêndice A); Morais et al. (2019, cap. 6).","Todo S é P (A) · Nenhum S é P (E) · Algum S é P (I) · Algum S não é P (O)"),
+      U("2.5","Estoicos, medievais e a virada contemporânea",["C","L"],"A lógica proposicional estoica em contraste com a lógica de termos aristotélica; universais e particulares nos medievais; a reconstrução da disciplina a partir de Frege e Boole.","Morais et al. (2019, caps. 7–8); Mortari (2016, §2.5).")
+      ]}
+    ]},
+  { code:"NÍVEL B", label:"Intermediário", kind:"nivel",
+    nota:"Entrada na notação. O aluno passa a traduzir, calcular e provar no cálculo proposicional clássico. O curso adota aqui a ordem de Mortari: primeiro a semântica, depois os métodos de prova, e entre estes os tablôs antes da dedução natural.",
+    fonte:"Mortari (2016, caps. 5–7, 12–15); Sell (2014, unidades 1–2).",
+    children:[
+    { code:"MÓDULO 3", label:"Cálculo proposicional: sintaxe e semântica", kind:"mod",
+      nota:"O primeiro contato com uma linguagem formal. A sintaxe é apresentada como definição recursiva de fórmula, e a semântica como função de verdade, de modo que a tabela de verdade apareça como consequência e não como receita.",
+      fonte:"Mortari (2016, caps. 5–7); Sell (2014, unidade 1, seções 1–2); Neves Filho e Rui (2016, cap. III).",
+      marco:"Marco B1 — traduzir sem ambiguidade um período composto do português e decidir por tabela de verdade a validade de um argumento com até quatro letras sentenciais.",
+      children:[
+      U("3.1","Sintaxe do CPC",["C","E"],"Letras sentenciais, fórmulas atômicas, operadores, fórmulas moleculares e sinais de pontuação. Definição recursiva de fórmula bem formada e teste de boa formação.","Mortari (2016, cap. 5); Sell (2014, unidade 1, seção 2).","¬(P ∧ Q) → (R ∨ ¬S)"),
+      U("3.2","Tradução do português para o CPC",["L","E"],"Vocabulário do cálculo e leitura dos conectivos; os casos difíceis: 'a menos que', 'somente se', 'nem…nem', condicionais em ordem invertida; ambiguidade de escopo resolvida por parênteses.","Neves Filho e Rui (2016, cap. III, §§3–4); Mortari (2016, §5.4).","Só irei se ele vier ⇝ I → V"),
+      U("3.3","Interpretações e valorações",["C"],"Significado e verdade; ideias básicas de interpretação; funções de verdade; valorações como atribuição a todas as letras. A distinção entre valoração e tabela.","Mortari (2016, cap. 6).","v(¬α) = V sse v(α) = F"),
+      U("3.4","Tabelas de verdade e consequência tautológica",["C","E"],"Construção sistemática; tautologias, contradições e contingências; implicação e equivalência tautológicas; teste de validade por tabela e leitura da linha de contraexemplo.","Mortari (2016, cap. 7).","P → Q, ¬Q ⊨ ¬P")
+      ]},
+    { code:"MÓDULO 4", label:"Prova proposicional: tablôs e dedução natural", kind:"mod",
+      nota:"O módulo em que a escrita de provas começa. Os tablôs vêm primeiro por serem um procedimento de decisão que também produz o contramodelo; a dedução natural vem depois, quando o aluno já sabe por que uma prova deve existir.",
+      fonte:"Mortari (2016, caps. 12–15); Sell (2014, unidades 1–2).",
+      marco:"Marco B2 — fechar um tablô para um argumento válido de três premissas, extrair de um ramo aberto a valoração que refuta um inválido e produzir a derivação correspondente em dedução natural.",
+      children:[
+      U("4.1","Tablôs semânticos proposicionais",["C","E"],"Procedimentos de prova; regras para fórmulas moleculares; ramo fechado e ramo saturado; consequência lógica por tablô; leitura da invalidade a partir do ramo aberto.","Mortari (2016, §§12.1–12.4, 12.6).","¬(P → Q) ⇝ P , ¬Q"),
+      U("4.2","Sistemas axiomáticos e sistemas formais",["C","L"],"O que caracteriza um sistema formal; o modelo geométrico; axiomas, regras e teoremas; os doublets de Lewis Carroll como exercício de cadeia dedutiva.","Mortari (2016, cap. 13)."),
+      U("4.3","Dedução natural: regras diretas e hipotéticas",["E"],"As regras de introdução e eliminação; a mecânica de uma derivação linha a linha; prova condicional e redução ao absurdo; estratégias de derivação a partir da forma da conclusão.","Mortari (2016, cap. 14); Sell (2014, unidade 1, seções 3–4).","[α] ⋮ β ∴ α → β  (→I)"),
+      U("4.4","Regras derivadas e teoremas",["E"],"Como uma regra derivada é construída e por que ela não amplia o sistema; modus tollens, silogismo disjuntivo, De Morgan, contraposição; teoremas e equivalências notáveis.","Mortari (2016, §§15.1, 15.4); Sell (2014, unidade 2).","α → β, ¬β ⊢ ¬α  (MT)"),
+      U("4.5","Consequência sintática e consequência semântica",["C"],"A distinção entre ⊢ e ⊨ e a pergunta que ela abre: por que os dois conceitos coincidem no cálculo clássico. Antecipa o módulo 6 sem ainda demonstrar nada.","Mortari (2016, §15.5).","Γ ⊢ α  vs.  Γ ⊨ α")
+      ]}
+    ]},
+  { code:"NÍVEL C", label:"Avançado", kind:"nivel",
+    nota:"Primeira ordem e reflexão sobre o próprio sistema. Ao fim do nível o aluno lê um texto técnico de lógica filosófica sem intermediação e escreve provas com restrições de variável.",
+    fonte:"Mortari (2016, caps. 8–11, 15–18); Sell (2014, unidades 3–4); Mortari (2023).",
+    children:[
+    { code:"MÓDULO 5", label:"Lógica de primeira ordem", kind:"mod",
+      nota:"O salto de expressividade. Predicados, constantes, variáveis e quantificadores permitem representar a estrutura interna das proposições e, com ela, os argumentos que o cálculo proposicional não alcança.",
+      fonte:"Mortari (2016, caps. 8–11, §§12.5, 12.7, 15.2–15.3, 16); Sell (2014, unidades 3–4).",
+      marco:"Marco C1 — formalizar um enunciado com quantificação múltipla e identidade, refutá-lo por estrutura finita quando falso e prová-lo em dedução natural respeitando as restrições sobre variáveis.",
+      children:[
+      U("5.1","Sintaxe do CQC",["C","E"],"Símbolos individuais, constantes de predicado, fórmulas atômicas, operadores, quantificadores e fórmulas gerais. Variáveis livres e ligadas.","Mortari (2016, cap. 8); Sell (2014, unidade 3).","∀x(Hx → Mx)"),
+      U("5.2","Primeira ordem, categóricas e quantificação múltipla",["L","E"],"Linguagens de primeira ordem; as quatro proposições categóricas reescritas com quantificadores; a ordem dos quantificadores e a diferença que ela produz.","Mortari (2016, cap. 9); Sell (2014, unidade 3, seções 4–5).","∀x∃yAxy  ≠  ∃y∀xAxy"),
+      U("5.3","Estruturas e definição de verdade",["C","L"],"Valor semântico das expressões; estrutura como domínio mais interpretação; verdade em uma estrutura e a definição de verdade em estilo tarskiano.","Mortari (2016, cap. 10).","𝔄 ⊨ α[s]"),
+      U("5.4","Validade e consequência lógica",["C"],"Validade como verdade em toda estrutura; consequência lógica semântica e suas propriedades; aplicação à avaliação de argumentos.","Mortari (2016, cap. 11)."),
+      U("5.5","Tablôs quantificacionais e indecidibilidade",["E","C"],"Regras para os quantificadores em tablô; tablôs que não terminam; a indecidibilidade do CQC e o que ela significa na prática do aluno.","Mortari (2016, §§12.5, 12.7)."),
+      U("5.6","Dedução natural com quantificadores; escopo",["E"],"Regras de introdução e eliminação para ∀ e ∃; restrições sobre variáveis próprias; escopo; intercâmbio de quantificadores.","Mortari (2016, §§15.2–15.3); Sell (2014, unidade 4).","¬∀xαx ⊣⊢ ∃x¬αx"),
+      U("5.7","Identidade e símbolos funcionais",["C","E"],"O predicado de identidade e seus axiomas; descrições definidas e numéricas; símbolos funcionais; consequência, tablôs e dedução natural no CQC com identidade.","Mortari (2016, cap. 16).","∃x(Rx ∧ ∀y(Ry → y = x))")
+      ]},
+    { code:"MÓDULO 6", label:"Metateoria e pluralidade lógica", kind:"mod",
+      nota:"O módulo de fechamento desloca o olhar: o sistema deixa de ser instrumento e passa a ser objeto. Discute o que se prova sobre o cálculo e, em seguida, o que acontece quando seus pressupostos são recusados.",
+      fonte:"Mortari (2016, caps. 17–18, §§11.3, 12.7, 15.5); Mortari (2023, tópicos 5–6).",
+      marco:"Marco C2 — enunciar com precisão os teoremas de correção e completude, explicar a consequência da indecidibilidade e avaliar um mesmo argumento em lógica clássica e em uma lógica polivalente.",
+      children:[
+      U("6.1","Teorias formalizadas",["L","E"],"Conceitualizações; uma teoria sobre blocos como exercício de axiomatização de um domínio; aritmética formalizada e o alcance da formalização.","Mortari (2016, cap. 17)."),
+      U("6.2","Correção, completude e decidibilidade",["C","L"],"O que os teoremas de correção e completude afirmam e o que não afirmam; propriedades da relação de consequência; decidibilidade do CPC e indecidibilidade do CQC.","Mortari (2016, §§11.3, 15.5, 12.7); Mortari (2023, tópico 5).","Γ ⊢ α  sse  Γ ⊨ α"),
+      U("6.3","O que é a lógica clássica",["C","L"],"Os pressupostos que definem a classicidade — bivalência, extensionalidade, terceiro excluído — e o mapa das lógicas que resultam de negar cada um deles.","Mortari (2016, §§18.1–18.2)."),
+      U("6.4","Lógicas modais e temporais",["C","E"],"Modalidade alética; necessidade e possibilidade; sistemas modais e semântica de mundos possíveis; noções de lógica do tempo.","Mortari (2016, §§18.3–18.4); Mortari (2023, tópico 6).","□α → α ; α → ◇α"),
+      U("6.5","Polivalentes, intuicionista e da relevância",["C","L"],"Łukasiewicz e a motivação dos futuros contingentes; Kleene, Bochvar, Post e Priest; a recusa intuicionista do terceiro excluído; relevância e paraconsistência.","Mortari (2016, §18.5); Mortari (2023, tópico 6)."),
+      U("6.6","História recente da lógica",["L"],"O desenvolvimento da disciplina no século XX e a situação contemporânea, como fechamento do arco histórico aberto no módulo 2.","Mortari (2016, §18.6).")
+      ]}
+    ]}
+  ]
+};
+</script>
+<script>
+(function(){
+  const COLX = [0, 250, 520, 820];
+  const KIND = ["root","nivel","mod","unit"];
+  const AXNAME = {C:"Compreender", L:"Ler", E:"Escrever"};
+  const plane = document.getElementById("plane");
+  const svg = document.getElementById("edges");
+  const canvas = document.getElementById("canvas");
+  const panel = document.getElementById("panel");
+
+  let nodes = [], selected = null, eixo = "todos";
+  let scale = 1, tx = 40, ty = 40;
+
+  function esc(s){ return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
+
+  /* --- build DOM once --- */
+  (function build(n, depth, parent){
+    n.depth = depth; n.parent = parent; n.kind = n.kind || KIND[depth] || "unit";
+    n.collapsed = depth >= 2;
+    const el = document.createElement("button");
+    el.type = "button";
+    el.className = "node " + (n.kind === "unit" ? "" : n.kind);
+    const kids = n.children ? '<span class="kids">'+n.children.length+'</span>' : "";
+    const ax = n.axes ? '<span class="axes">'+n.axes.join(" · ")+'</span>' : "";
+    el.innerHTML = '<span class="code">'+esc(n.code)+kids+'</span><span class="lab">'+esc(n.label)+'</span>'+ax;
+    el.addEventListener("click", function(ev){
+      if(ev.target.classList.contains("kids")){ n.collapsed = !n.collapsed; render(); return; }
+      select(n);
+    });
+    n.el = el; plane.appendChild(el); nodes.push(n);
+    if(n.children) n.children.forEach(c => build(c, depth+1, n));
+  })(TREE, 0, null);
+
+  /* --- layout --- */
+  function visible(n){ return !n.parent || (!n.parent.collapsed && visible(n.parent)); }
+
+  function layout(){
+    let cursor = 0;
+    (function walk(n){
+      n.h = n.el.offsetHeight;
+      const open = n.children && !n.collapsed;
+      if(!open){ n.y = cursor + n.h/2; cursor += n.h + 14; return; }
+      n.children.forEach(walk);
+      const k = n.children;
+      n.y = (k[0].y + k[k.length-1].y)/2;
+      if(n.kind === "mod") cursor += 12;
+      if(n.kind === "nivel") cursor += 18;
+    })(TREE);
+    nodes.forEach(n => { n.x = COLX[Math.min(n.depth, 3)]; });
+  }
+
+  function render(){
+    nodes.forEach(n => { n.el.style.display = visible(n) ? "" : "none"; });
+    layout();
+    let maxX = 0, maxY = 0;
+    nodes.forEach(n => {
+      if(!visible(n)) return;
+      n.el.style.left = n.x + "px";
+      n.el.style.top = n.y + "px";
+      n.el.setAttribute("aria-current", n === selected ? "true" : "false");
+      const dim = eixo !== "todos" && n.kind === "unit" && !(n.axes||[]).includes(eixo);
+      n.el.classList.toggle("dim", dim);
+      maxX = Math.max(maxX, n.x + n.el.offsetWidth);
+      maxY = Math.max(maxY, n.y + n.h/2);
+    });
+    let d = "";
+    nodes.forEach(n => {
+      if(!n.parent || !visible(n)) return;
+      const p = n.parent, x1 = p.x + p.el.offsetWidth, y1 = p.y, x2 = n.x, y2 = n.y, mid = (x1+x2)/2;
+      const hot = (n === selected || p === selected) ? " hot" : "";
+      d += '<path class="e'+hot+'" d="M'+x1+' '+y1+' C'+mid+' '+y1+' '+mid+' '+y2+' '+x2+' '+y2+'"/>';
+    });
+    svg.innerHTML = d;
+    svg.setAttribute("width", maxX + 20); svg.setAttribute("height", maxY + 20);
+    plane.style.width = (maxX + 20) + "px"; plane.style.height = (maxY + 20) + "px";
+    applyTransform();
+  }
+
+  function applyTransform(){
+    plane.style.transform = "translate("+tx+"px,"+ty+"px) scale("+scale+")";
+  }
+
+  /* --- panel --- */
+  function select(n){
+    selected = n;
+    const kindLabel = {root:"Curso", nivel:"Nível", mod:"Módulo", unit:"Unidade"}[n.kind];
+    let h = '<div class="kicker">'+kindLabel+"</div>";
+    h += "<h2>"+esc(n.label)+"</h2>";
+    h += '<p class="sub">'+esc(n.code)+(n.children ? " · "+n.children.length+" ramos" : "")+"</p>";
+    if(n.axes){
+      h += "<h3>Eixos de fluência</h3><div class='axgrid'>";
+      ["C","L","E"].forEach(a => {
+        const on = n.axes.includes(a) ? " on" : "";
+        h += "<div class='ax"+on+"'><div class='k'>"+AXNAME[a]+"</div><div class='v'>"+(n.axes.includes(a)?"●":"○")+"</div></div>";
+      });
+      h += "</div>";
+    }
+    h += "<h3>Descrição</h3><p>"+esc(n.nota)+"</p>";
+    if(n.fx) h += '<div class="fx">'+esc(n.fx)+"</div>";
+    if(n.marco) h += "<h3>Marco de domínio</h3><p>"+esc(n.marco)+"</p>";
+    h += "<h3>Fonte</h3><p class='cite'>"+esc(n.fonte)+"</p>";
+    panel.innerHTML = h;
+    render();
+  }
+
+  /* --- controls --- */
+  document.querySelectorAll("[data-eixo]").forEach(b => b.addEventListener("click", () => {
+    eixo = b.dataset.eixo;
+    document.querySelectorAll("[data-eixo]").forEach(o => o.setAttribute("aria-pressed", String(o === b)));
+    render();
+  }));
+  document.querySelectorAll("[data-lvl]").forEach(b => b.addEventListener("click", () => {
+    const lvl = +b.dataset.lvl;
+    document.querySelectorAll("[data-lvl]").forEach(o => o.setAttribute("aria-pressed", String(o === b)));
+    nodes.forEach(n => { if(n.children) n.collapsed = n.depth >= lvl; });
+    render(); fit();
+  }));
+  function zoom(f){ scale = Math.min(1.8, Math.max(0.3, scale*f)); applyTransform(); }
+  document.getElementById("zin").onclick = () => zoom(1.18);
+  document.getElementById("zout").onclick = () => zoom(1/1.18);
+  document.getElementById("zfit").onclick = fit;
+
+  function fit(){
+    const w = plane.offsetWidth, h = plane.offsetHeight;
+    const cw = canvas.clientWidth - 48, ch = canvas.clientHeight - 48;
+    scale = Math.min(1.1, Math.max(0.52, Math.min(cw/w, ch/h)));
+    tx = 24 + Math.max(0, (cw - w*scale)/2);
+    ty = 24 + Math.max(0, (ch - h*scale)/2);
+    applyTransform();
+  }
+
+  let drag = null;
+  canvas.addEventListener("pointerdown", e => {
+    if(e.target.closest(".node")) return;
+    drag = {x:e.clientX - tx, y:e.clientY - ty};
+    canvas.classList.add("dragging"); canvas.setPointerCapture(e.pointerId);
+  });
+  canvas.addEventListener("pointermove", e => {
+    if(!drag) return; tx = e.clientX - drag.x; ty = e.clientY - drag.y; applyTransform();
+  });
+  canvas.addEventListener("pointerup", () => { drag = null; canvas.classList.remove("dragging"); });
+  canvas.addEventListener("wheel", e => {
+    if(!e.ctrlKey && !e.metaKey) return;
+    e.preventDefault(); zoom(e.deltaY < 0 ? 1.1 : 1/1.1);
+  }, {passive:false});
+
+  select(TREE);
+  requestAnimationFrame(() => { render(); fit(); });
+  window.addEventListener("resize", fit);
+})();
+</script>
+
+</body>
+</html>

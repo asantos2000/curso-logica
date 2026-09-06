@@ -1,0 +1,676 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<style>:root{color-scheme:light dark}body{margin:0;font:14px/1.5 system-ui,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style>
+</head>
+<body>
+<title>Dentro da Proposição</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,600&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<style>
+:root{
+  --ground:#EEF1EE; --surface:#FAFBF9; --surface-2:#E2E7E3; --raised:#FFFFFF;
+  --ink:#131A18; --ink-soft:#38443F; --muted:#5F6C66; --line:#CBD4CE; --line-soft:#DDE4DF;
+  --accent:#0C6355; --accent-ink:#08463C; --accent-soft:#D6E7E2;
+  --verum:#0C6355; --falsum:#A33C20; --brass:#8A6D0B;
+  --shadow:0 1px 2px rgba(19,26,24,.06), 0 8px 24px -12px rgba(19,26,24,.18);
+  --serif:"Spectral", Georgia, "Times New Roman", serif;
+  --mono:"IBM Plex Mono", "SFMono-Regular", Consolas, monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --ground:#0E1413; --surface:#151D1B; --surface-2:#1D2926; --raised:#1A2422;
+    --ink:#E4EAE6; --ink-soft:#BCC7C2; --muted:#8D9C96; --line:#2B3835; --line-soft:#222E2B;
+    --accent:#4FBCA6; --accent-ink:#8FD8C8; --accent-soft:#17332E;
+    --verum:#4FBCA6; --falsum:#DE8461; --brass:#CFA93A;
+    --shadow:0 1px 2px rgba(0,0,0,.4), 0 10px 30px -14px rgba(0,0,0,.7);
+  }
+}
+:root[data-theme="dark"]{
+  --ground:#0E1413; --surface:#151D1B; --surface-2:#1D2926; --raised:#1A2422;
+  --ink:#E4EAE6; --ink-soft:#BCC7C2; --muted:#8D9C96; --line:#2B3835; --line-soft:#222E2B;
+  --accent:#4FBCA6; --accent-ink:#8FD8C8; --accent-soft:#17332E;
+  --verum:#4FBCA6; --falsum:#DE8461; --brass:#CFA93A;
+  --shadow:0 1px 2px rgba(0,0,0,.4), 0 10px 30px -14px rgba(0,0,0,.7);
+}
+
+*{box-sizing:border-box}
+body{margin:0;background:var(--ground);color:var(--ink);font-family:var(--serif);
+  font-size:17px;line-height:1.62;-webkit-font-smoothing:antialiased}
+.shell{max-width:1180px;margin:0 auto;padding:0 24px;display:grid;
+  grid-template-columns:220px minmax(0,1fr);gap:52px;align-items:start}
+.hero{grid-column:1/-1;padding:52px 0 32px;border-bottom:1px solid var(--line)}
+.hero .eyebrow{font:600 10.5px/1 var(--mono);letter-spacing:.18em;text-transform:uppercase;color:var(--accent)}
+.hero h1{font-size:clamp(34px,4.8vw,54px);font-weight:600;letter-spacing:-.032em;line-height:1.03;
+  margin:16px 0 12px;max-width:17ch;text-wrap:balance}
+.hero .lede{font-size:19px;color:var(--ink-soft);max-width:62ch;margin:0 0 28px}
+.facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:0;border-top:1px solid var(--line)}
+.facts div{padding:14px 20px 14px 0}
+.facts .k{font:600 10px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.facts .v{font-size:16.5px;margin-top:6px;line-height:1.3}
+nav.toc{position:sticky;top:26px;padding:32px 0 40px;font-size:14px}
+nav.toc .lbl{font:600 10px/1 var(--mono);letter-spacing:.16em;text-transform:uppercase;color:var(--muted);
+  padding-bottom:10px;border-bottom:1px solid var(--line);display:block;margin-bottom:12px}
+nav.toc a{display:block;color:var(--muted);text-decoration:none;padding:5px 0 5px 12px;
+  border-left:2px solid transparent;line-height:1.35}
+nav.toc a:hover{color:var(--ink)}
+nav.toc a.on{color:var(--accent);border-left-color:var(--accent);font-weight:500}
+article{padding:32px 0 90px;max-width:72ch}
+article h2{font-size:26px;font-weight:600;letter-spacing:-.018em;line-height:1.16;
+  margin:52px 0 4px;scroll-margin-top:28px;text-wrap:balance}
+article h2:first-of-type{margin-top:10px}
+article h2 .num{font:600 11px/1 var(--mono);letter-spacing:.14em;color:var(--accent);display:block;margin-bottom:10px}
+article h3{font-size:19px;font-weight:600;margin:32px 0 8px;letter-spacing:-.01em;scroll-margin-top:28px}
+article h4{font-size:16.5px;font-weight:600;margin:24px 0 6px}
+article p{margin:0 0 16px;color:var(--ink-soft)}
+article p strong{color:var(--ink);font-weight:600}
+article .intro{font-size:18.5px;color:var(--ink);margin-bottom:22px}
+.m{font-family:var(--mono);font-size:.92em;background:var(--surface);padding:1px 5px;border-radius:2px;color:var(--ink)}
+.tw{overflow-x:auto;margin:20px 0 24px;border:1px solid var(--line);border-radius:4px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;font-size:14.6px;min-width:440px}
+th,td{text-align:left;padding:10px 13px;border-bottom:1px solid var(--line-soft);vertical-align:top;color:var(--ink-soft)}
+tr:last-child td{border-bottom:0}
+th{font:600 10px/1.4 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--muted);
+  border-bottom:1px solid var(--line);background:var(--ground)}
+td.m2{font-family:var(--mono);font-size:13.5px;white-space:nowrap;color:var(--ink)}
+td.c{text-align:center;font-family:var(--mono)}
+td strong{color:var(--ink)}
+/* blocos formais */
+.fx{font-family:var(--mono);font-size:15px;background:var(--surface);border:1px solid var(--line);
+  border-radius:4px;padding:14px 16px;margin:0 0 18px;overflow-x:auto;color:var(--ink);white-space:pre-wrap}
+.thm{border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:4px;background:var(--surface);
+  padding:18px 20px;margin:22px 0}
+.thm .lb{font:600 10.5px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--accent);
+  display:block;margin-bottom:9px}
+.thm p{margin:0 0 10px;color:var(--ink)}
+.thm p:last-child{margin-bottom:0}
+.thm.lema{border-left-color:var(--brass)}
+.thm.lema .lb{color:var(--brass)}
+.prova{border-left:2px solid var(--line);padding:2px 0 2px 16px;margin:16px 0 22px}
+.prova .lb{font:600 10px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--muted);
+  display:block;margin-bottom:8px}
+.prova p{font-size:16px;margin:0 0 12px}
+.prova p:last-child{margin-bottom:0}
+.qed::after{content:" ▪";color:var(--accent)}
+.marco{border-left:3px solid var(--brass);padding:4px 0 4px 15px;margin:26px 0;font-size:16px;color:var(--ink)}
+.marco b{font:600 10px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--brass);
+  display:block;margin-bottom:6px}
+.note{font-size:14.5px;color:var(--muted);border-left:2px solid var(--line);padding-left:16px;margin:22px 0}
+figure{margin:28px 0 32px}
+figure svg{width:100%;height:auto;display:block;border:1px solid var(--line);border-radius:4px;background:var(--surface)}
+figcaption{font-size:13.5px;color:var(--muted);margin-top:10px;line-height:1.5}
+figcaption b{font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--accent);font-weight:600;margin-right:8px}
+.svg-t{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.06em;fill:var(--muted)}
+.svg-l{font-family:Spectral,Georgia,serif;font-size:14px;fill:var(--ink)}
+.svg-s{font-family:Spectral,Georgia,serif;font-size:12.5px;fill:var(--muted)}
+.svg-bx{fill:var(--ground);stroke:var(--line);stroke-width:1.2}
+.svg-bx-a{fill:var(--accent-soft);stroke:var(--accent);stroke-width:1.4}
+.svg-ar{stroke:var(--muted);stroke-width:1.3;fill:none}
+/* interativos genéricos */
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:9px;margin:18px 0}
+.card{text-align:left;border:1px solid var(--line);border-radius:4px;background:var(--surface);
+  padding:11px 13px;cursor:pointer;font-family:var(--serif);color:var(--ink)}
+.card:hover{border-color:var(--accent)}
+.card[aria-pressed="true"]{border-color:var(--accent);background:var(--accent-soft)}
+.card .n{font:600 10px/1 var(--mono);letter-spacing:.1em;color:var(--muted);display:block;margin-bottom:5px}
+.card .t{font-size:14.5px;font-weight:500;line-height:1.25}
+.readout{border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:4px;
+  background:var(--surface);padding:16px 18px;margin-bottom:8px}
+.readout .rk{font:600 10px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:8px}
+.readout p{font-size:15px;margin:0 0 8px;color:var(--ink-soft)}
+.readout p:last-child{margin-bottom:0}
+.readout ol{margin:6px 0 0;padding-left:20px;font-size:14.5px;color:var(--ink-soft)}
+.readout ol li{margin-bottom:5px}
+.refs{margin-top:12px}
+.refs p{padding-left:34px;text-indent:-34px;font-size:15.5px;margin-bottom:13px}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+@media (max-width:900px){
+  .shell{grid-template-columns:1fr;gap:0}
+  nav.toc{position:static;padding:22px 0 0;columns:2;column-gap:24px}
+  nav.toc .lbl{column-span:all}
+  article{padding-top:22px}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+<style>
+.cbar{display:flex;align-items:center;gap:14px;flex-wrap:wrap;padding:9px 24px;
+  border-bottom:1px solid var(--line);background:var(--surface-2);
+  font:500 12.5px/1 var(--mono);position:sticky;top:0;z-index:20}
+.cbar a{color:var(--accent);text-decoration:none;white-space:nowrap}
+.cbar a:hover{text-decoration:underline}
+.cbar .home{font-weight:600}
+.cbar .where{color:var(--muted);letter-spacing:.06em;text-transform:uppercase;font-size:10.5px}
+.cbar .sp{flex:1}
+.cbar .nx{color:var(--ink-soft)}
+.nextgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px;margin:22px 0 8px}
+.nextgrid .nx{display:block;text-decoration:none;border:1px solid var(--line);border-radius:4px;
+  background:var(--surface);padding:16px 18px;color:var(--ink)}
+.nextgrid .nx:hover{border-color:var(--accent)}
+.nextgrid .k{font:600 10px/1 var(--mono);letter-spacing:.13em;text-transform:uppercase;color:var(--accent);display:block}
+.nextgrid .t{font-size:16.5px;font-weight:600;margin:9px 0 6px;line-height:1.2;display:block}
+.nextgrid .d{font-size:14px;color:var(--muted);line-height:1.45;display:block}
+</style>
+<nav class="cbar"><a class="home" href="index.html">&#9666; Índice do curso</a><span class="where">Nível C · módulo 5</span><span class="sp"></span><a class="nx" href="04-modulo-4.html">&larr; Módulo 4 · Tablôs e dedução natural</a><a class="nx" href="06-modulo-6.html">Módulo 6 · Metateoria &rarr;</a></nav>
+<style>
+.lab{border:1px solid var(--line);border-radius:5px;background:var(--surface);padding:20px 22px;margin:24px 0}
+.lab h4{margin:0 0 4px;font-size:17px}
+.lab .sub{font-size:14px;color:var(--muted);margin:0 0 16px}
+.ctl{font:600 9.5px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--muted);display:block;margin:0 0 9px}
+.estr{display:grid;grid-template-columns:minmax(230px,1fr) minmax(250px,1fr);gap:22px;align-items:start;margin-bottom:18px}
+@media (max-width:760px){.estr{grid-template-columns:1fr}}
+.kg{border:1px solid var(--line-soft);border-radius:4px;background:var(--ground);padding:6px}
+.kg svg{width:100%;height:auto;display:block}
+.mx{border-collapse:collapse;font-family:var(--mono);font-size:12.5px;margin-bottom:14px;width:auto;min-width:0}
+.mx th,.mx td{border:1px solid var(--line);padding:0;text-align:center}
+.mx th{background:var(--ground);color:var(--muted);font-size:11px;padding:5px 9px}
+.tg{width:38px;height:29px;border:0;background:none;cursor:pointer;font:600 13px/1 var(--mono);color:var(--line)}
+.tg.on{background:var(--accent);color:var(--surface)}
+.tg:hover:not(.on){background:var(--surface-2);color:var(--ink)}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:12px}
+.seg{display:flex;border:1px solid var(--line);border-radius:3px;overflow:hidden}
+.seg button{font:500 12px/1 var(--mono);padding:8px 12px;background:var(--ground);border:0;
+  border-right:1px solid var(--line);color:var(--muted);cursor:pointer}
+.seg button:last-child{border-right:0}
+.seg button[aria-pressed="true"]{background:var(--accent);color:var(--surface)}
+.seg button:hover:not([aria-pressed="true"]){background:var(--surface-2);color:var(--ink)}
+.seg .lbl{font:600 9.5px/1 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--muted);
+  padding:9px 10px;background:var(--surface-2);border-right:1px solid var(--line)}
+#entrada{width:100%;padding:12px 14px;border:1px solid var(--line);border-radius:4px;background:var(--ground);
+  color:var(--ink);font-family:var(--mono);font-size:15px}
+#entrada:focus{outline:2px solid var(--accent);outline-offset:1px}
+.palette{display:flex;gap:5px;flex-wrap:wrap;margin:10px 0 14px}
+.palette button{font:500 14px/1 var(--mono);padding:8px 11px;border:1px solid var(--line);background:var(--ground);
+  color:var(--ink);border-radius:3px;cursor:pointer}
+.palette button:hover{background:var(--accent-soft);border-color:var(--accent)}
+.palette button.txt{font-size:11.5px;letter-spacing:.05em;color:var(--muted)}
+.erro{border:1px solid var(--falsum);border-left:4px solid var(--falsum);border-radius:4px;background:var(--surface);
+  padding:13px 15px;font-size:14.5px;color:var(--ink)}
+.erro code{font-family:var(--mono);font-size:13px;display:block;margin-top:8px;color:var(--muted);white-space:pre}
+.verdict{border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:4px;background:var(--ground);
+  padding:15px 17px}
+.verdict .vv{font:600 20px/1 var(--mono);color:var(--accent);margin-bottom:9px;display:block}
+.verdict.f{border-left-color:var(--falsum)}
+.verdict.f .vv{color:var(--falsum)}
+.verdict p{font-size:14.5px;margin:0 0 7px;color:var(--ink-soft)}
+.verdict p:last-child{margin-bottom:0}
+.testemunhas{display:flex;gap:6px;flex-wrap:wrap;margin-top:9px}
+.testemunhas span{font:500 12px/1 var(--mono);border:1px solid var(--line);border-radius:3px;padding:5px 9px;color:var(--muted)}
+.testemunhas span.v{border-color:var(--accent);background:var(--accent-soft);color:var(--accent-ink)}
+.testemunhas span.f{border-color:var(--falsum);color:var(--falsum)}
+</style>
+<div class="shell">
+  <header class="hero">
+    <div class="eyebrow">Curso de fluência em lógica · módulo 5</div>
+    <h1>Dentro da proposição</h1>
+    <p class="lede">O salto de expressividade. Predicados, variáveis e quantificadores permitem representar a estrutura interna das proposições e, com ela, os argumentos que o cálculo proposicional não alcança, a começar pelo silogismo do módulo 2.</p>
+    <div class="facts">
+      <div><div class="k">Nível</div><div class="v">C · avançado</div></div>
+      <div><div class="k">Unidades</div><div class="v">Sete</div></div>
+      <div><div class="k">Pré-requisito</div><div class="v">Marco B2</div></div>
+      <div><div class="k">Marco</div><div class="v">C1</div></div>
+      <div><div class="k">Decidível</div><div class="v">Não</div></div>
+      <div><div class="k">Texto-base</div><div class="v">Mortari (2016, caps. 8–11, 16)</div></div>
+    </div>
+  </header>
+
+  <nav class="toc" id="toc">
+    <span class="lbl">Unidades</span>
+    <a href="#i">O que o módulo 3 não alcança</a>
+    <a href="#u1">5.1 A sintaxe do CQC</a>
+    <a href="#u2">5.2 Categóricas e quantificação múltipla</a>
+    <a href="#u3">5.3 Estruturas e verdade</a>
+    <a href="#lab">Laboratório de estruturas</a>
+    <a href="#u4">5.4 Validade e consequência</a>
+    <a href="#u5">5.5 Tablôs e indecidibilidade</a>
+    <a href="#u6">5.6 Dedução natural e escopo</a>
+    <a href="#u7">5.7 Identidade</a>
+    <a href="#marco">Marco C1</a>
+    <a href="#proximo">Próximo passo</a>
+    <a href="#ref">Referências</a>
+  </nav>
+
+  <article>
+    <h2 id="i"><span class="num">Abertura</span>O que o módulo 3 não alcança</h2>
+    <p class="intro">O argumento mais conhecido da história da lógica é inválido no cálculo proposicional. «Todo homem é mortal; Sócrates é homem; logo Sócrates é mortal» exige três letras sentenciais sem relação entre si, e o tablô que o testa deixa ramo aberto. O defeito não está no argumento nem no método: está na linguagem, que não enxerga o que as três proposições têm em comum.</p>
+    <p>O que elas têm em comum é o vocabulário interno. As duas primeiras falam de homens, a primeira e a terceira falam de mortalidade, a segunda e a terceira falam de Sócrates. Uma linguagem que decomponha a proposição em predicado e argumento tornará essas conexões visíveis, e é isso que este módulo constrói.</p>
+    <p>O ganho é grande e o preço também. O cálculo de predicados não é decidível: não há procedimento que, para toda fórmula, informe em número finito de passos se ela é válida. A propriedade que o módulo 3 tinha de graça, e que o módulo 4 explorou nos tablôs, desaparece aqui. A unidade 5.5 trata do assunto, e o módulo complementar 7 demonstra o resultado.</p>
+
+    <h2 id="u1"><span class="num">Unidade 5.1</span>A sintaxe do cálculo quantificacional</h2>
+    <p>O vocabulário acrescenta quatro espécies de símbolo às do módulo 3.</p>
+    <div class="fx">Constantes individuais   a, b, c, …      nomeiam objetos determinados
+Variáveis individuais   x, y, z, …      ocupam lugar de objeto sem nomear nenhum
+Constantes de predicado P, Q, R, …      com aridade fixa: 1, 2, 3, …
+Quantificadores         ∀  ∃            universal e existencial</div>
+    <p>Uma <strong>fórmula atômica</strong> é uma constante de predicado seguida de tantos termos quanto a sua aridade exige. Escreve-se Pa para «a tem a propriedade P», Rab para «a está na relação R com b», e assim por diante. A ordem dos termos importa: Rab e Rba dizem coisas distintas, e confundi-las é o erro mais comum ao formalizar relações assimétricas como «ama», «é maior que» ou «é pai de».</p>
+    <p>As fórmulas moleculares se formam como no módulo 3, com os mesmos cinco operadores. As <strong>fórmulas gerais</strong> se formam com quantificadores: se α é fórmula e x é variável, então ∀xα e ∃xα são fórmulas.</p>
+    <h4>Variáveis livres e ligadas</h4>
+    <p>Uma ocorrência de variável é <strong>ligada</strong> quando cai no escopo de um quantificador que a governa, e <strong>livre</strong> caso contrário. Em ∀x(Px → Qx), todas as ocorrências de x são ligadas. Em ∀xPx ∧ Qx, a ocorrência final de x é livre, pois o escopo do quantificador termina no primeiro parêntese fechado.</p>
+    <p>A distinção decide o que uma fórmula é. Uma fórmula sem variáveis livres chama-se <strong>sentença</strong>, e só sentenças são verdadeiras ou falsas em uma estrutura. Uma fórmula com variável livre é como uma frase com um pronome sem antecedente: «ele é mortal» não é verdadeira nem falsa até que se diga de quem se fala.</p>
+    <div class="note">A recomendação prática deste módulo é escrever sempre os parênteses do escopo, como em ∀x(Px → Qx), mesmo quando a convenção os dispensaria. A economia de sinais é conveniência de quem já lê com fluência; para quem está aprendendo, ela esconde exatamente a informação que precisa ser vista.</div>
+
+    <h2 id="u2"><span class="num">Unidade 5.2</span>Categóricas e quantificação múltipla</h2>
+    <p>As quatro proposições categóricas do módulo 2 recebem agora forma precisa, e a assimetria entre elas se explica.</p>
+    <div class="tw"><table>
+      <tr><th>Forma</th><th>Português</th><th>Fórmula</th><th>Operador interno</th></tr>
+      <tr><td class="m2">A</td><td>Todo S é P</td><td class="m2">∀x(Sx → Px)</td><td>Condicional</td></tr>
+      <tr><td class="m2">E</td><td>Nenhum S é P</td><td class="m2">∀x(Sx → ¬Px)</td><td>Condicional</td></tr>
+      <tr><td class="m2">I</td><td>Algum S é P</td><td class="m2">∃x(Sx ∧ Px)</td><td>Conjunção</td></tr>
+      <tr><td class="m2">O</td><td>Algum S não é P</td><td class="m2">∃x(Sx ∧ ¬Px)</td><td>Conjunção</td></tr>
+    </table></div>
+    <p>A regra é firme: <strong>universal com condicional, existencial com conjunção</strong>. Trocá-las produz disparate. ∀x(Sx ∧ Px) afirma que tudo o que existe é S e é P, o que é muito mais forte do que «todo S é P». E ∃x(Sx → Px) é satisfeita por qualquer objeto que não seja S, porque o condicional se satisfaz por antecedente falso, de modo que a fórmula quase nada afirma.</p>
+    <p>Daí decorre também a divergência com a tradição aristotélica registrada na unidade 2.4. A universal, escrita com condicional, é verdadeira por vacuidade quando não há nenhum S, e nesse caso a particular correspondente é falsa. A subalternação, portanto, falha, e o quadrado das oposições perde três de suas quatro relações.</p>
+    <h4>Quantificação múltipla</h4>
+    <p>O ganho decisivo aparece quando dois quantificadores se combinam. A ordem em que aparecem altera o que é dito, e a diferença não tem análogo no módulo 3.</p>
+    <div class="fx">∀x∃yAxy     Todos amam alguém.        Cada um pode amar uma pessoa diferente.
+∃y∀xAxy     Alguém é amado por todos.  Existe uma pessoa que todos amam.</div>
+    <p>A segunda implica a primeira; a primeira não implica a segunda. A verificação é imediata no laboratório da unidade seguinte, e é o exercício que mais rende neste módulo.</p>
+    <p>Três outras construções merecem registro. «Todo amigo de alguém tem um amigo» exige quantificadores encaixados e é o exemplo que Frege usou para mostrar o alcance do novo aparato. «Nenhum objeto se relaciona consigo mesmo» é ∀x¬Rxx, e afirma a irreflexividade. «Toda pessoa tem exatamente um pai biológico» exige identidade, e é matéria da unidade 5.7.</p>
+    <h2 id="u3"><span class="num">Unidade 5.3</span>Estruturas e verdade</h2>
+    <p>No módulo 3, uma valoração bastava para determinar o valor de toda fórmula. Aqui não basta, porque as fórmulas falam de objetos, e é preciso dizer de quais objetos se fala.</p>
+    <div class="thm"><span class="lb">Definição · estrutura</span>
+      <p>Uma <strong>estrutura</strong> para uma linguagem de primeira ordem é um par formado por um <strong>domínio</strong> D, que é um conjunto não vazio, e uma <strong>interpretação</strong> que atribui: a cada constante individual, um elemento de D; a cada constante de predicado unária, um subconjunto de D; a cada binária, um conjunto de pares ordenados de elementos de D; e assim por diante.</p>
+    </div>
+    <p>Cada peça da definição já foi construída na unidade 2.2, e é por isso que aquela unidade existe. O domínio é um conjunto; a interpretação é uma função; a extensão de um predicado binário é um subconjunto do produto cartesiano D × D.</p>
+    <p>A verdade se define então por recursão na complexidade da fórmula, e o caso quantificacional é o que exige cuidado. Uma <strong>atribuição</strong> associa objetos às variáveis, e a cláusula do universal diz que ∀xα é satisfeita quando α é satisfeita por toda atribuição que difere da dada no máximo quanto ao valor de x. Essa formulação, devida a Tarski, é a que Mortari (2016, §10.4) apresenta, e é o primeiro ponto do curso em que a definição de verdade se torna, ela própria, objeto matemático.</p>
+    <p>Sentenças, isto é, fórmulas sem variável livre, são verdadeiras ou falsas em uma estrutura, sem depender de atribuição. É por isso que a distinção da unidade 5.1 importava.</p>
+
+    <div class="lab" id="lab">
+      <h4>Laboratório de estruturas</h4>
+      <p class="sub">Monte uma estrutura pequena e teste fórmulas nela. O domínio tem dois ou três indivíduos; P e Q são predicados unários, R é binário, e a e b são constantes.</p>
+      <div class="row">
+        <div class="seg" role="group" aria-label="Tamanho do domínio">
+          <span class="lbl">Domínio</span>
+          <button type="button" data-dom="2" aria-pressed="false">2 indivíduos</button>
+          <button type="button" data-dom="3" aria-pressed="true">3 indivíduos</button>
+        </div>
+      </div>
+      <div class="estr">
+        <div>
+          <span class="ctl">A estrutura</span>
+          <div class="kg"><svg viewBox="0 0 300 200" id="grafo" role="img" aria-label="Diagrama da estrutura, com os indivíduos, os predicados que satisfazem e as setas da relação."></svg></div>
+        </div>
+        <div>
+          <span class="ctl">Predicados unários</span>
+          <table class="mx" id="tun"></table>
+          <span class="ctl">Relação binária R · linha se relaciona com coluna</span>
+          <table class="mx" id="tbin"></table>
+          <span class="ctl">Constantes</span>
+          <div class="row" id="konst"></div>
+        </div>
+      </div>
+      <label class="ctl" for="entrada">Fórmula</label>
+      <input id="entrada" type="text" spellcheck="false" autocomplete="off" value="∀x∃yRxy">
+      <div class="palette" id="pal">
+        <button type="button" data-ins="∀">∀</button>
+        <button type="button" data-ins="∃">∃</button>
+        <button type="button" data-ins="x">x</button>
+        <button type="button" data-ins="y">y</button>
+        <button type="button" data-ins="¬">¬</button>
+        <button type="button" data-ins="∧">∧</button>
+        <button type="button" data-ins="∨">∨</button>
+        <button type="button" data-ins="→">→</button>
+        <button type="button" data-ins="=">=</button>
+        <button type="button" data-ins="(">(</button>
+        <button type="button" data-ins=")">)</button>
+        <button type="button" class="txt" data-ex="∀x∃yRxy">∀∃</button>
+        <button type="button" class="txt" data-ex="∃y∀xRxy">∃∀</button>
+        <button type="button" class="txt" data-ex="∀x(Px → Qx)">todo P é Q</button>
+        <button type="button" class="txt" data-ex="∃x(Px ∧ Qx)">algum P é Q</button>
+        <button type="button" class="txt" data-ex="∀x(Px ∧ Qx)">o erro comum</button>
+        <button type="button" class="txt" data-ex="∀x¬Rxx">irreflexiva</button>
+        <button type="button" class="txt" data-ex="∃x(Px ∧ ∀y(Py → y = x))">exatamente um P</button>
+      </div>
+      <div id="saida"></div>
+    </div>
+    <p>Duas experiências fixam o conteúdo desta unidade. A primeira é montar uma estrutura em que ∀x∃yRxy seja verdadeira e ∃y∀xRxy seja falsa, o que demonstra que a ordem dos quantificadores não é indiferente. A segunda é esvaziar o predicado P, deixando-o sem nenhum indivíduo, e verificar que ∀x(Px → Qx) fica verdadeira ao passo que ∃x(Px ∧ Qx) fica falsa: é a falha da subalternação, agora exibida em um modelo concreto.</p>
+
+    <h2 id="u4"><span class="num">Unidade 5.4</span>Validade e consequência lógica</h2>
+    <p>Com a noção de verdade em uma estrutura, as definições semânticas do módulo 3 se generalizam de imediato, trocando-se valorações por estruturas.</p>
+    <div class="thm"><span class="lb">Definições</span>
+      <p>Uma sentença é <strong>válida</strong> quando é verdadeira em toda estrutura. Escreve-se ⊨ α.</p>
+      <p>α é <strong>consequência lógica</strong> de Γ quando toda estrutura que torna verdadeiros os membros de Γ torna verdadeira α. Escreve-se Γ ⊨ α.</p>
+      <p>Um conjunto é <strong>satisfazível</strong> quando alguma estrutura o torna verdadeiro.</p>
+    </div>
+    <p>A diferença em relação ao módulo 3 parece pequena e é enorme. Lá, as valorações de uma fórmula com n letras eram 2ⁿ, um número finito que se podia percorrer. Aqui, as estruturas possíveis são infinitas em número e ilimitadas em tamanho: há estruturas com um indivíduo, com dez, com infinitos. Não há como percorrê-las.</p>
+    <p>Daí a assimetria prática que o aluno sentirá. Para mostrar que um argumento é <strong>inválido</strong>, basta exibir uma estrutura, e frequentemente uma bem pequena serve, como as do laboratório acima. Para mostrar que é <strong>válido</strong>, exibir estruturas não adianta: é preciso uma prova, e é para isso que servem as unidades 5.5 e 5.6.</p>
+    <p>Vale registrar a propriedade que Mortari (2016, §11.3) demonstra e que será usada adiante: Γ ⊨ α se e somente se Γ ∪ {¬α} é insatisfazível. É essa equivalência que faz o método dos tablôs funcionar também aqui.</p>
+    <h2 id="u5"><span class="num">Unidade 5.5</span>Tablôs quantificacionais e indecidibilidade</h2>
+    <p>O método do módulo 4 se estende, com duas regras novas para cada quantificador, conforme ele apareça afirmado ou negado.</p>
+    <div class="tw"><table>
+      <tr><th>Fórmula</th><th>Produz</th><th>Condição sobre o termo</th></tr>
+      <tr><td class="m2">∃xα</td><td class="m2">α(x/c)</td><td>c deve ser uma constante <strong>nova</strong> no ramo</td></tr>
+      <tr><td class="m2">¬∀xα</td><td class="m2">¬α(x/c)</td><td>c deve ser uma constante <strong>nova</strong> no ramo</td></tr>
+      <tr><td class="m2">∀xα</td><td class="m2">α(x/t)</td><td>t pode ser <strong>qualquer</strong> termo já presente</td></tr>
+      <tr><td class="m2">¬∃xα</td><td class="m2">¬α(x/t)</td><td>t pode ser <strong>qualquer</strong> termo já presente</td></tr>
+    </table></div>
+    <p>A assimetria entre as duas primeiras regras e as duas últimas é a fonte de toda a dificuldade, e a razão dela é semântica. Afirmar que existe um objeto com certa propriedade não diz qual é, e por isso o objeto recebe um nome novo, que não pode carregar informação alguma vinda de outro lugar. Afirmar que todos os objetos têm a propriedade permite aplicá-la a qualquer objeto já mencionado, e nada impede que se volte a aplicá-la a um objeto que apareça depois.</p>
+    <p>É esta última cláusula que quebra a garantia de terminação. Uma fórmula universal nunca se esgota: sempre que uma constante nova entra no ramo, ela pode ser instanciada de novo. Se as constantes novas continuarem aparecendo, o processo não para.</p>
+    <div class="fx">∀x∃yRxy , ∀x¬Rxx , ∀x∀y∀z((Rxy ∧ Ryz) → Rxz)
+
+Este conjunto é satisfazível, mas apenas em domínios infinitos.
+O tablô gera a₁, a₂, a₃, … indefinidamente, e nunca fecha nem satura.</div>
+    <p>Não se trata de defeito do método. Church (1936) e Turing (1936) demonstraram que nenhum procedimento pode decidir a validade de toda fórmula de primeira ordem. O que existe é um procedimento que confirma as válidas, terminando sempre que a fórmula é válida, e que pode não parar quando ela não é. Diz-se por isso que a validade em primeira ordem é <strong>semidecidível</strong>. O módulo complementar 7 demonstra o resultado e o situa entre os demais teoremas metateóricos.</p>
+    <p>Na prática, o aluno deve reter a orientação seguinte. Se o tablô fecha, o argumento é válido, e a resposta é definitiva. Se um ramo satura sem fechar, o argumento é inválido, e o ramo entrega o contramodelo. Se o tablô cresce sem sinal de parar, nenhuma conclusão foi obtida, e a estratégia recomendada passa a ser procurar diretamente um contramodelo pequeno, como no laboratório da unidade 5.3.</p>
+
+    <h2 id="u6"><span class="num">Unidade 5.6</span>Dedução natural com quantificadores</h2>
+    <p>As dez regras do módulo 4 permanecem válidas e continuam a ser usadas. Acrescentam-se quatro, uma de introdução e uma de eliminação para cada quantificador, e duas delas trazem restrições que são a matéria desta unidade.</p>
+    <div class="tw"><table>
+      <tr><th>Regra</th><th>De</th><th>Infere</th><th>Restrição</th></tr>
+      <tr><td class="m2">E∀</td><td class="m2">∀xα</td><td class="m2">α(x/t)</td><td>Nenhuma</td></tr>
+      <tr><td class="m2">I∃</td><td class="m2">α(x/t)</td><td class="m2">∃xα</td><td>Nenhuma</td></tr>
+      <tr><td class="m2">I∀</td><td class="m2">α(x/a)</td><td class="m2">∀xα</td><td>a não ocorre em premissa nem em hipótese não descarregada</td></tr>
+      <tr><td class="m2">E∃</td><td class="m2">∃xα e uma derivação de γ a partir de α(x/a)</td><td class="m2">γ</td><td>a é nova e não ocorre em γ nem nas premissas</td></tr>
+    </table></div>
+    <p>As duas primeiras regras são inócuas e correspondem ao raciocínio comum: do que vale para todos, vale para este; do que vale para este, segue-se que vale para algum. As duas últimas exigem cuidado, e vale entender por quê.</p>
+    <h4>A restrição sobre a variável própria</h4>
+    <p>A introdução do universal formaliza o raciocínio «tome um objeto arbitrário; mostrei que ele tem a propriedade; logo todos a têm». A palavra que carrega todo o peso é <em>arbitrário</em>. Se algo particular foi suposto a respeito daquele objeto, a generalização não se sustenta.</p>
+    <div class="deriv" style="font-family:var(--mono);font-size:14px;background:var(--ground);border:1px solid var(--line-soft);border-radius:4px;padding:14px 16px;white-space:pre;overflow-x:auto;color:var(--ink);line-height:1.75">  1.  Pa             premissa
+  2.  ∀xPx          <span style="color:var(--falsum)">1, I∀   ← ilegítimo: a ocorre na premissa 1</span></div>
+    <p>Sem a restrição, de «Sócrates é mortal» seguir-se-ia «tudo é mortal», o que é absurdo. Com ela, o passo é bloqueado, porque a constante a ocorre em uma premissa e portanto não designa objeto arbitrário: designa aquele de que a premissa fala. O módulo complementar 7 mostra que é exatamente esta restrição que faz a demonstração da correção funcionar; sem ela, o sistema provaria coisas falsas.</p>
+    <p>A eliminação do existencial tem estrutura análoga à eliminação da disjunção do módulo 4. De ∃xPx não se pode extrair um nome: sabe-se que algo é P, não qual. O procedimento consiste em batizar esse algo com uma constante nova, derivar dela a conclusão pretendida, e observar que a conclusão não menciona o nome inventado. Se mencionasse, a derivação teria contrabandeado informação que não estava disponível.</p>
+    <h4>Intercâmbio de quantificadores</h4>
+    <p>As quatro equivalências seguintes são deriváveis e usadas o tempo todo. Elas são o análogo quantificacional das leis de De Morgan.</p>
+    <div class="fx">¬∀xα   ⊣⊢   ∃x¬α        Nem tudo é α  =  algo não é α
+¬∃xα   ⊣⊢   ∀x¬α        Nada é α      =  tudo não é α
+∀xα    ⊣⊢   ¬∃x¬α
+∃xα    ⊣⊢   ¬∀x¬α</div>
+    <p>Sell (2014, unidade 4) apresenta o intercâmbio como regra derivada única, o que economiza linhas em derivações longas. Mortari (2016, §15.3) faz o mesmo. Convém, ainda assim, derivar ao menos uma das quatro a partir das regras básicas, para ver de onde ela vem.</p>
+
+    <h2 id="u7"><span class="num">Unidade 5.7</span>Identidade e símbolos funcionais</h2>
+    <p>A linguagem ganha um último recurso: um predicado binário fixo, escrito t = u, cuja interpretação não é livre. Em toda estrutura, ele denota a relação de identidade, isto é, vale entre um objeto e ele mesmo e entre nenhum outro par.</p>
+    <p>O seu comportamento dedutivo é dado por duas regras: <strong>reflexividade</strong>, que permite escrever t = t em qualquer ponto, e <strong>substituição</strong>, que permite trocar t por u em qualquer fórmula quando se dispõe de t = u. Delas decorrem a simetria e a transitividade, que por isso não precisam ser postuladas.</p>
+    <h4>O que a identidade permite dizer</h4>
+    <p>O acréscimo é pequeno e o ganho expressivo é considerável, porque só com identidade se exprime numeralidade.</p>
+    <div class="fx">Ao menos um P      ∃xPx
+Ao menos dois P    ∃x∃y(Px ∧ Py ∧ ¬(x = y))
+No máximo um P     ∀x∀y((Px ∧ Py) → x = y)
+Exatamente um P    ∃x(Px ∧ ∀y(Py → y = x))
+Todos, salvo a     ∀x(¬(x = a) → Px)</div>
+    <p>A fórmula de «exatamente um» merece leitura atenta, porque é a que mais aparece. Ela afirma duas coisas: que existe um objeto com a propriedade, e que qualquer objeto com a propriedade coincide com ele. A segunda cláusula é a de unicidade, e omiti-la é o erro característico. É também a estrutura das descrições definidas, isto é, das expressões da forma «o tal», cuja análise por Russell é um dos textos fundadores da filosofia analítica.</p>
+    <h4>Símbolos funcionais</h4>
+    <p>Um <strong>símbolo funcional</strong> designa uma operação sobre o domínio, e permite formar termos compostos: se f é unário e a é constante, então f(a) é termo, e pode ocupar o lugar de qualquer termo. Escreve-se «o pai de a» como p(a), e «o pai do pai de a» como p(p(a)).</p>
+    <p>Símbolos funcionais não aumentam o poder expressivo, pois toda função pode ser representada por uma relação mais o axioma de que ela é funcional. Aumentam a legibilidade, e é por isso que a aritmética formalizada, tratada na unidade 6.1, os emprega para a soma e o produto.</p>
+    <h2 id="marco"><span class="num">Verificação</span>Marco C1 e exercícios</h2>
+    <div class="marco"><b>Marco C1</b>Formalizar um enunciado com quantificação múltipla e identidade, declarando o domínio e o dicionário; refutá-lo por estrutura finita quando falso, exibindo a estrutura e o cálculo do valor da fórmula nela; e prová-lo em dedução natural respeitando as restrições sobre a variável própria.</div>
+    <h4>Exercícios</h4>
+    <p><strong>1.</strong> Formalize, declarando o dicionário: (a) todo estudante lê algum livro; (b) há um livro que todo estudante lê; (c) nenhum estudante lê todos os livros; (d) exatamente um estudante não lê livro algum.</p>
+    <p><strong>2.</strong> Use o laboratório para construir uma estrutura em que (a) do exercício anterior seja verdadeira e (b) seja falsa. Descreva em português o que a estrutura representa.</p>
+    <p><strong>3.</strong> Explique por que ∃x(Px → Qx) é verdadeira em toda estrutura em que exista ao menos um objeto que não seja P. Verifique no laboratório e conclua por que essa fórmula não traduz «algum P é Q».</p>
+    <p><strong>4.</strong> Mostre, exibindo uma estrutura, que ∀x(Px → Qx) não implica ∃x(Px ∧ Qx). Relacione o resultado com a falha da subalternação discutida na unidade 2.4.</p>
+    <p><strong>5.</strong> Derive ∀x¬Px a partir de ¬∃xPx usando apenas as regras básicas e as quantificacionais, sem invocar o intercâmbio como regra derivada.</p>
+    <p><strong>6.</strong> Exiba uma tentativa de derivação que viole a restrição sobre a variável própria e mostre, com uma estrutura, que a conclusão obtida seria falsa. Este exercício é o núcleo do marco.</p>
+    <p><strong>7.</strong> Escreva a fórmula de «há exatamente dois P» e verifique-a no laboratório em uma estrutura com três indivíduos, ajustando P até que ela fique verdadeira.</p>
+    <p><strong>8.</strong> O conjunto {∀x∃yRxy, ∀x¬Rxx, ∀x∀y∀z((Rxy ∧ Ryz) → Rxz)} é satisfazível apenas em domínios infinitos. Verifique no laboratório que nenhuma estrutura com dois ou três indivíduos o satisfaz, e explique por quê.</p>
+    <p><strong>9.</strong> Os exercícios 9.1 a 9.6, 10.1 a 10.5 e 11.1 a 11.5 do livro-texto cobrem estas unidades e têm resolução comentada em Pagani (s.d.). Os de dedução natural quantificacional estão na unidade 4 de Sell (2014).</p>
+
+    <h2 id="proximo"><span class="num">Encerramento</span>Próximo passo</h2><p>O ciclo de cada módulo se fecha em três movimentos: resolver os exercícios, verificar o marco no banco de itens e submeter o artefato escrito à rubrica correspondente.</p><div class="nextgrid"><a class="nx" href="provas.html#C1"><span class="k">Verificar o marco</span><span class="t">Provas de Domínio · marco C1</span><span class="d">Itens autocorrigidos com justificativa e fonte. O marco é vencido a partir de 75% de acerto.</span></a><a class="nx" href="prompts.html#p6"><span class="k">Corrigir o artefato</span><span class="t">Prompt 6 · Formalização em primeira ordem</span><span class="d">Cobre escopo, ordem de quantificadores, identidade e restrições sobre variáveis.</span></a><a class="nx" href="06-modulo-6.html"><span class="k">Seguir</span><span class="t">Módulo 6 · Metateoria</span><span class="d">Nível C · módulo 6 no percurso.</span></a></div>
+
+    <h2 id="ref">Referências</h2>
+    <div class="refs">
+      <p>Church, A. (1936). A note on the Entscheidungsproblem. <em>The Journal of Symbolic Logic</em>, <em>1</em>(1), 40–41.</p>
+      <p>Mortari, C. A. (2016). <em>Introdução à lógica</em> (2a ed.). Editora Unesp.</p>
+      <p>Pagani, L. A. (s.d.). <em>Respostas para exercícios do livro Introdução à lógica, de Cezar Mortari</em> [Material didático não publicado].</p>
+      <p>Sell, S. (2014). <em>Lógica II</em> [Livro didático]. UnisulVirtual.</p>
+      <p>Turing, A. M. (1936). On computable numbers, with an application to the Entscheidungsproblem. <em>Proceedings of the London Mathematical Society</em>, <em>42</em>, 230–265.</p>
+    </div>
+  </article>
+</div>
+<script>
+function tokFO(src){
+  const t=[]; let i=0;
+  while(i<src.length){
+    const c=src[i];
+    if(/\s/.test(c)){i++;continue;}
+    if(src.startsWith('<->',i)){t.push({k:'↔',i});i+=3;continue;}
+    if(src.startsWith('->',i)){t.push({k:'→',i});i+=2;continue;}
+    if(c==='↔'||c==='≡'){t.push({k:'↔',i});i++;continue;}
+    if(c==='→'||c==='⊃'){t.push({k:'→',i});i++;continue;}
+    if(c==='∧'||c==='&'||c==='^'){t.push({k:'∧',i});i++;continue;}
+    if(c==='∨'||c==='|'){t.push({k:'∨',i});i++;continue;}
+    if(c==='¬'||c==='~'||c==='!'){t.push({k:'¬',i});i++;continue;}
+    if(c==='∀'){t.push({k:'∀',i});i++;continue;}
+    if(c==='∃'){t.push({k:'∃',i});i++;continue;}
+    if(c==='='){t.push({k:'=',i});i++;continue;}
+    if(c==='≠'){t.push({k:'≠',i});i++;continue;}
+    if(c==='('||c===')'||c===','){t.push({k:c,i});i++;continue;}
+    if(/[A-Z]/.test(c)){t.push({k:'pred',nome:c,i});i++;continue;}
+    if(/[a-z]/.test(c)){t.push({k:'termo',nome:c,i});i++;continue;}
+    throw {msg:'símbolo não reconhecido: «'+c+'»',pos:i};
+  }
+  return t;
+}
+function parseFO(src){
+  const t=tokFO(src); let p=0;
+  const peek=()=>t[p]?t[p].k:null;
+  function esperar(k){ if(peek()!==k) throw {msg:'esperava «'+k+'»',pos:t[p]?t[p].i:src.length}; p++; }
+  function bic(){ let l=imp(); while(peek()==='↔'){p++; l={op:'↔',l,r:imp()};} return l; }
+  function imp(){ const l=disj(); if(peek()==='→'){p++; return {op:'→',l,r:imp()};} return l; }
+  function disj(){ let l=conj(); while(peek()==='∨'){p++; l={op:'∨',l,r:conj()};} return l; }
+  function conj(){ let l=un(); while(peek()==='∧'){p++; l={op:'∧',l,r:un()};} return l; }
+  function termos(){
+    // Px, Rxy  ou  P(x), R(x,y)
+    const ts=[];
+    if(peek()==='('){ p++; ts.push(termo()); while(peek()===','){p++; ts.push(termo());} esperar(')'); return ts; }
+    while(peek()==='termo'){ ts.push(termo()); }
+    return ts;
+  }
+  function termo(){ if(peek()!=='termo') throw {msg:'esperava um termo',pos:t[p]?t[p].i:src.length}; const n=t[p].nome; p++; return n; }
+  function un(){
+    if(peek()==='¬'){p++; return {op:'¬',a:un()};}
+    if(peek()==='∀'||peek()==='∃'){ const q=peek(); p++; const v=termo(); return {op:q, v, a:un()}; }
+    if(peek()==='('){p++; const e=bic(); esperar(')'); return e;}
+    if(peek()==='pred'){ const nome=t[p].nome; p++; const ts=termos();
+      if(!ts.length) throw {msg:'o predicado '+nome+' precisa de ao menos um termo',pos:t[p-1].i};
+      return {op:'at',pred:nome,ts}; }
+    if(peek()==='termo'){ const a=termo();
+      if(peek()==='='){p++; return {op:'=',l:a,r:termo()};}
+      if(peek()==='≠'){p++; return {op:'¬',a:{op:'=',l:a,r:termo()}};}
+      throw {msg:'termo solto: use = para identidade',pos:t[p-1]?t[p-1].i:0}; }
+    throw {msg: peek()===null?'fórmula incompleta':'não se esperava «'+peek()+'» aqui', pos:t[p]?t[p].i:src.length};
+  }
+  const r=bic();
+  if(p<t.length) throw {msg:'sobrou «'+(t[p].nome||t[p].k)+'» após o fim da fórmula',pos:t[p].i};
+  return r;
+}
+const PR={'at':6,'=':6,'¬':5,'∀':5,'∃':5,'∧':4,'∨':3,'→':2,'↔':1};
+function showFO(n,pai){
+  pai=pai||0; const pr=PR[n.op]; let s;
+  if(n.op==='at') return n.pred+n.ts.join('');
+  if(n.op==='=') return n.l+' = '+n.r;
+  if(n.op==='¬') s = (n.a.op==='=') ? '¬('+showFO(n.a)+')' : '¬'+showFO(n.a,PR['¬']);
+  else if(n.op==='∀'||n.op==='∃') s=n.op+n.v+showFO(n.a,PR['∀']);
+  else s=showFO(n.l,n.op==='→'?pr+1:pr)+' '+n.op+' '+showFO(n.r,pr);
+  return pr<pai?'('+s+')':s;
+}
+function evalFO(n,M,g){
+  const val=t=> (t in M.konst)?M.konst[t]:(t in g?g[t]:null);
+  switch(n.op){
+    case 'at': {
+      const vs=n.ts.map(val);
+      if(vs.some(v=>v===null)) throw {msg:'variável livre sem valor: '+n.ts.join(''),pos:0};
+      if(vs.length===1) return (M.un[n.pred]||new Set()).has(vs[0]);
+      return (M.bin[n.pred]||new Set()).has(vs[0]+','+vs[1]);
+    }
+    case '=': { const a=val(n.l),b=val(n.r);
+      if(a===null||b===null) throw {msg:'variável livre sem valor',pos:0}; return a===b; }
+    case '¬': return !evalFO(n.a,M,g);
+    case '∧': return evalFO(n.l,M,g)&&evalFO(n.r,M,g);
+    case '∨': return evalFO(n.l,M,g)||evalFO(n.r,M,g);
+    case '→': return !evalFO(n.l,M,g)||evalFO(n.r,M,g);
+    case '↔': return evalFO(n.l,M,g)===evalFO(n.r,M,g);
+    case '∀': return M.dom.every(d=>evalFO(n.a,M,Object.assign({},g,{[n.v]:d})));
+    case '∃': return M.dom.some(d=>evalFO(n.a,M,Object.assign({},g,{[n.v]:d})));
+  }
+}
+function livres(n,lig,acc){ lig=lig||new Set(); acc=acc||new Set();
+  if(n.op==='at'){ n.ts.forEach(t=>{ if(/[x-z]/.test(t)&&!lig.has(t)) acc.add(t); }); return acc; }
+  if(n.op==='='){ [n.l,n.r].forEach(t=>{ if(/[x-z]/.test(t)&&!lig.has(t)) acc.add(t); }); return acc; }
+  if(n.op==='¬') return livres(n.a,lig,acc);
+  if(n.op==='∀'||n.op==='∃'){ const l2=new Set(lig); l2.add(n.v); return livres(n.a,l2,acc); }
+  livres(n.l,lig,acc); livres(n.r,lig,acc); return acc;
+}
+
+
+(function(){
+  const NOMES = ["1","2","3"];
+  let n = 3;
+  let M = {dom:[0,1,2], un:{P:new Set([0,1]), Q:new Set([2])}, bin:{R:new Set(["0,1","1,2"])}, konst:{a:0,b:2}};
+  const ent = document.getElementById("entrada"), saida = document.getElementById("saida");
+  function esc(s){ return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
+
+  function grid(el, linhas, get, set){
+    let h = "<tr><th></th>" + M.dom.map(d => "<th>" + NOMES[d] + "</th>").join("") + "</tr>";
+    linhas.forEach(r => {
+      h += "<tr><th>" + r + "</th>";
+      M.dom.forEach(d => h += '<td><button type="button" class="tg" data-r="' + r + '" data-d="' + d + '"></button></td>');
+      h += "</tr>";
+    });
+    el.innerHTML = h;
+    el.querySelectorAll(".tg").forEach(b => {
+      b.addEventListener("click", () => { set(b.dataset.r, +b.dataset.d); pintar(); });
+    });
+  }
+  function montar(){
+    M.dom = []; for(let i = 0; i < n; i++) M.dom.push(i);
+    ["P","Q"].forEach(p => M.un[p] = new Set([...M.un[p]].filter(d => d < n)));
+    M.bin.R = new Set([...M.bin.R].filter(k => k.split(",").every(x => +x < n)));
+    Object.keys(M.konst).forEach(c => { if(M.konst[c] >= n) M.konst[c] = 0; });
+    grid(document.getElementById("tun"), ["P","Q"], null, (p, d) => {
+      M.un[p].has(d) ? M.un[p].delete(d) : M.un[p].add(d);
+    });
+    let h = "<tr><th>R</th>" + M.dom.map(d => "<th>" + NOMES[d] + "</th>").join("") + "</tr>";
+    M.dom.forEach(i => {
+      h += "<tr><th>" + NOMES[i] + "</th>";
+      M.dom.forEach(j => h += '<td><button type="button" class="tg" data-i="' + i + '" data-j="' + j + '"></button></td>');
+      h += "</tr>";
+    });
+    const tb = document.getElementById("tbin"); tb.innerHTML = h;
+    tb.querySelectorAll(".tg").forEach(b => b.addEventListener("click", () => {
+      const k = b.dataset.i + "," + b.dataset.j;
+      M.bin.R.has(k) ? M.bin.R.delete(k) : M.bin.R.add(k);
+      pintar();
+    }));
+    const kb = document.getElementById("konst");
+    kb.innerHTML = ["a","b"].map(c =>
+      '<div class="seg" role="group" aria-label="Constante ' + c + '"><span class="lbl">' + c + ' =</span>' +
+      M.dom.map(d => '<button type="button" data-k="' + c + '" data-d="' + d + '">' + NOMES[d] + "</button>").join("") +
+      "</div>").join("");
+    kb.querySelectorAll("[data-k]").forEach(b => b.addEventListener("click", () => {
+      M.konst[b.dataset.k] = +b.dataset.d; pintar();
+    }));
+    pintar();
+  }
+
+  function grafo(){
+    const POS = n === 2 ? [[80,100],[220,100]] : [[70,62],[230,62],[150,158]];
+    const Rd = 26;
+    let s = '<defs><marker id="mk" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="var(--accent)"/></marker></defs>';
+    M.dom.forEach(i => M.dom.forEach(j => {
+      if(!M.bin.R.has(i + "," + j)) return;
+      const A = POS[i], B = POS[j];
+      if(i === j){
+        s += '<path d="M' + (A[0]-10) + " " + (A[1]-Rd+4) + " C" + (A[0]-28) + " " + (A[1]-Rd-30) +
+             " " + (A[0]+28) + " " + (A[1]-Rd-30) + " " + (A[0]+9) + " " + (A[1]-Rd+3) +
+             '" fill="none" stroke="var(--accent)" stroke-width="1.5" marker-end="url(#mk)"/>';
+      } else {
+        const dx = B[0]-A[0], dy = B[1]-A[1], L = Math.hypot(dx,dy);
+        const x1 = A[0]+dx/L*Rd, y1 = A[1]+dy/L*Rd, x2 = B[0]-dx/L*(Rd+7), y2 = B[1]-dy/L*(Rd+7);
+        const mx = (x1+x2)/2, my = (y1+y2)/2, nx = -(y2-y1), ny = (x2-x1), NL = Math.hypot(nx,ny);
+        s += '<path d="M' + x1 + " " + y1 + " Q" + (mx+nx/NL*16) + " " + (my+ny/NL*16) + " " + x2 + " " + y2 +
+             '" fill="none" stroke="var(--accent)" stroke-width="1.5" marker-end="url(#mk)"/>';
+      }
+    }));
+    M.dom.forEach(i => {
+      const [x,y] = POS[i];
+      const ps = ["P","Q"].filter(p => M.un[p].has(i)).join(" ") || "—";
+      const cs = Object.keys(M.konst).filter(c => M.konst[c] === i).join(" ");
+      s += '<circle cx="' + x + '" cy="' + y + '" r="' + Rd + '" fill="var(--surface)" stroke="var(--line)" stroke-width="1.4"/>';
+      s += '<text x="' + x + '" y="' + (y-2) + '" text-anchor="middle" style="font-family:Spectral,serif;font-size:14px;fill:var(--ink)">' + NOMES[i] + "</text>";
+      s += '<text x="' + x + '" y="' + (y+13) + '" text-anchor="middle" style="font-family:\'IBM Plex Mono\',monospace;font-size:10px;fill:var(--accent)">' + ps + "</text>";
+      if(cs) s += '<text x="' + x + '" y="' + (y+Rd+15) + '" text-anchor="middle" style="font-family:\'IBM Plex Mono\',monospace;font-size:11px;fill:var(--brass)">' + cs + "</text>";
+    });
+    document.getElementById("grafo").innerHTML = s;
+  }
+
+  function avaliar(){
+    const src = ent.value.trim();
+    if(!src){ saida.innerHTML = '<div class="erro">Escreva uma fórmula.</div>'; return; }
+    let no;
+    try { no = parseFO(src); }
+    catch(e){
+      saida.innerHTML = '<div class="erro"><strong>Não é fórmula bem formada.</strong> ' + esc(e.msg) +
+        "<code>" + esc(src) + "\n" + " ".repeat(Math.max(0, e.pos || 0)) + "^</code></div>";
+      return;
+    }
+    const lv = [...livres(no)];
+    if(lv.length){
+      saida.innerHTML = '<div class="erro"><strong>A fórmula tem variável livre:</strong> ' + esc(lv.join(", ")) +
+        ". Só sentenças, isto é, fórmulas sem variável livre, são verdadeiras ou falsas em uma estrutura.</div>";
+      return;
+    }
+    let v;
+    try { v = evalFO(no, M, {}); }
+    catch(e){ saida.innerHTML = '<div class="erro">' + esc(e.msg) + "</div>"; return; }
+    let h = '<div class="verdict' + (v ? "" : " f") + '"><span class="vv">' + (v ? "Verdadeira" : "Falsa") +
+      "</span><p>A sentença " + esc(showFO(no)) + " é " + (v ? "verdadeira" : "falsa") + " nesta estrutura.</p>";
+    if(no.op === "∀" || no.op === "∃"){
+      const marcas = M.dom.map(d => {
+        let sat = false;
+        try { sat = evalFO(no.a, M, {[no.v]: d}); } catch(e){}
+        return '<span class="' + (sat ? "v" : "f") + '">' + no.v + " = " + NOMES[d] + " : " + (sat ? "V" : "F") + "</span>";
+      }).join("");
+      h += "<p>" + (no.op === "∀"
+        ? "Como o quantificador é universal, a sentença é verdadeira quando todos os indivíduos satisfazem a matriz."
+        : "Como o quantificador é existencial, basta que um indivíduo satisfaça a matriz.") + "</p>";
+      h += '<div class="testemunhas">' + marcas + "</div>";
+    }
+    h += "</div>";
+    saida.innerHTML = h;
+  }
+  function pintar(){
+    document.querySelectorAll("#tun .tg").forEach(b => {
+      const on = M.un[b.dataset.r].has(+b.dataset.d);
+      b.classList.toggle("on", on); b.textContent = on ? "V" : "F";
+    });
+    document.querySelectorAll("#tbin .tg").forEach(b => {
+      const on = M.bin.R.has(b.dataset.i + "," + b.dataset.j);
+      b.classList.toggle("on", on); b.textContent = on ? "●" : "○";
+    });
+    document.querySelectorAll("#konst [data-k]").forEach(b => {
+      b.setAttribute("aria-pressed", String(M.konst[b.dataset.k] === +b.dataset.d));
+    });
+    grafo(); avaliar();
+  }
+  document.querySelectorAll("[data-dom]").forEach(b => b.addEventListener("click", () => {
+    n = +b.dataset.dom;
+    document.querySelectorAll("[data-dom]").forEach(o => o.setAttribute("aria-pressed", String(o === b)));
+    montar();
+  }));
+  document.querySelectorAll("[data-ins]").forEach(b => b.addEventListener("click", () => {
+    const p = ent.selectionStart || ent.value.length;
+    ent.value = ent.value.slice(0, p) + b.dataset.ins + ent.value.slice(ent.selectionEnd || p);
+    ent.focus(); ent.selectionStart = ent.selectionEnd = p + b.dataset.ins.length;
+    avaliar();
+  }));
+  document.querySelectorAll("[data-ex]").forEach(b => b.addEventListener("click", () => { ent.value = b.dataset.ex; avaliar(); }));
+  ent.addEventListener("input", avaliar);
+  montar();
+})();
+</script>
+<script>
+(function(){
+  const links = Array.from(document.querySelectorAll("nav.toc a"));
+  const alvos = links.map(a => document.getElementById(a.getAttribute("href").slice(1))).filter(Boolean);
+  function spy(){
+    let atual = alvos[0];
+    alvos.forEach(t => { if(t.getBoundingClientRect().top <= 120) atual = t; });
+    links.forEach(a => a.classList.toggle("on", a.getAttribute("href") === "#" + (atual ? atual.id : "")));
+  }
+  window.addEventListener("scroll", spy, {passive:true}); spy();
+})();
+</script>
+
+</body>
+</html>

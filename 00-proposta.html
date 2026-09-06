@@ -1,0 +1,508 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<style>:root{color-scheme:light dark}body{margin:0;font:14px/1.5 system-ui,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style>
+</head>
+<body>
+<title>Fluência em Lógica Formal</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,600&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<style>
+:root{
+  --ground:#EEF1EE; --surface:#FAFBF9; --surface-2:#E2E7E3; --raised:#FFFFFF;
+  --ink:#131A18; --ink-soft:#38443F; --muted:#5F6C66; --line:#CBD4CE; --line-soft:#DDE4DF;
+  --accent:#0C6355; --accent-ink:#08463C; --accent-soft:#D6E7E2;
+  --verum:#0C6355; --falsum:#A33C20; --brass:#8A6D0B;
+  --shadow:0 1px 2px rgba(19,26,24,.06), 0 8px 24px -12px rgba(19,26,24,.18);
+  --serif:"Spectral", Georgia, "Times New Roman", serif;
+  --mono:"IBM Plex Mono", "SFMono-Regular", Consolas, monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --ground:#0E1413; --surface:#151D1B; --surface-2:#1D2926; --raised:#1A2422;
+    --ink:#E4EAE6; --ink-soft:#BCC7C2; --muted:#8D9C96; --line:#2B3835; --line-soft:#222E2B;
+    --accent:#4FBCA6; --accent-ink:#8FD8C8; --accent-soft:#17332E;
+    --verum:#4FBCA6; --falsum:#DE8461; --brass:#CFA93A;
+    --shadow:0 1px 2px rgba(0,0,0,.4), 0 10px 30px -14px rgba(0,0,0,.7);
+  }
+}
+:root[data-theme="dark"]{
+  --ground:#0E1413; --surface:#151D1B; --surface-2:#1D2926; --raised:#1A2422;
+  --ink:#E4EAE6; --ink-soft:#BCC7C2; --muted:#8D9C96; --line:#2B3835; --line-soft:#222E2B;
+  --accent:#4FBCA6; --accent-ink:#8FD8C8; --accent-soft:#17332E;
+  --verum:#4FBCA6; --falsum:#DE8461; --brass:#CFA93A;
+  --shadow:0 1px 2px rgba(0,0,0,.4), 0 10px 30px -14px rgba(0,0,0,.7);
+}
+
+*{box-sizing:border-box}
+body{margin:0;background:var(--ground);color:var(--ink);font-family:var(--serif);
+  font-size:17px;line-height:1.62;-webkit-font-smoothing:antialiased}
+.shell{max-width:1180px;margin:0 auto;padding:0 24px;display:grid;
+  grid-template-columns:220px minmax(0,1fr);gap:52px;align-items:start}
+
+/* capa */
+.hero{grid-column:1/-1;padding:56px 0 34px;border-bottom:1px solid var(--line)}
+.hero .eyebrow{font:600 10.5px/1 var(--mono);letter-spacing:.18em;text-transform:uppercase;color:var(--accent)}
+.hero h1{font-size:clamp(36px,5.2vw,58px);font-weight:600;letter-spacing:-.032em;line-height:1.02;
+  margin:16px 0 12px;max-width:16ch;text-wrap:balance}
+.hero .lede{font-size:19.5px;color:var(--ink-soft);max-width:60ch;margin:0 0 30px}
+.facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(146px,1fr));gap:0;border-top:1px solid var(--line)}
+.facts div{padding:14px 20px 14px 0}
+.facts .k{font:600 10px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.facts .v{font-size:17px;margin-top:6px;line-height:1.3}
+
+/* sumário */
+nav.toc{position:sticky;top:26px;padding:34px 0 40px;font-size:14px}
+nav.toc .lbl{font:600 10px/1 var(--mono);letter-spacing:.16em;text-transform:uppercase;color:var(--muted);
+  padding-bottom:10px;border-bottom:1px solid var(--line);display:block;margin-bottom:12px}
+nav.toc a{display:block;color:var(--muted);text-decoration:none;padding:5px 0 5px 12px;
+  border-left:2px solid transparent;line-height:1.35}
+nav.toc a:hover{color:var(--ink)}
+nav.toc a.on{color:var(--accent);border-left-color:var(--accent);font-weight:500}
+nav.toc a.sub{font-size:13px;padding-left:24px;color:var(--muted);opacity:.85}
+
+article{padding:34px 0 90px;max-width:70ch}
+article h2{font-size:27px;font-weight:600;letter-spacing:-.018em;line-height:1.15;
+  margin:56px 0 4px;scroll-margin-top:28px;text-wrap:balance}
+article h2:first-of-type{margin-top:12px}
+article h2 .num{font:600 11px/1 var(--mono);letter-spacing:.14em;color:var(--accent);display:block;margin-bottom:10px}
+article h3{font-size:19.5px;font-weight:600;margin:34px 0 8px;letter-spacing:-.01em;scroll-margin-top:28px}
+article p{margin:0 0 16px;color:var(--ink-soft)}
+article p strong{color:var(--ink);font-weight:600}
+article .intro{font-size:18.5px;color:var(--ink);margin-bottom:22px}
+em{font-style:italic}
+.m{font-family:var(--mono);font-size:.92em;background:var(--surface);padding:1px 5px;border-radius:2px}
+
+.tw{overflow-x:auto;margin:22px 0 26px;border:1px solid var(--line);border-radius:4px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;font-size:14.8px;min-width:520px}
+th,td{text-align:left;padding:11px 14px;border-bottom:1px solid var(--line-soft);vertical-align:top;color:var(--ink-soft)}
+tr:last-child td{border-bottom:0}
+th{font:600 10px/1.4 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--muted);
+  border-bottom:1px solid var(--line);background:var(--ground)}
+td.m2{font-family:var(--mono);font-size:13px;white-space:nowrap;color:var(--ink)}
+td strong{color:var(--ink)}
+
+/* módulo */
+.mod{border:1px solid var(--line);border-radius:5px;background:var(--surface);padding:24px 26px;margin:26px 0 30px}
+.mod .top{display:flex;justify-content:space-between;gap:16px;align-items:baseline;flex-wrap:wrap;
+  border-bottom:1px solid var(--line);padding-bottom:12px;margin-bottom:16px}
+.mod .top .id{font:600 10.5px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--accent)}
+.mod .top .lvl{font:500 10.5px/1 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.mod h3{margin:0 0 12px;font-size:21px}
+.mod p{font-size:16px;margin:0 0 14px}
+.mod .marco{border-left:3px solid var(--brass);padding:4px 0 4px 15px;margin:18px 0 4px;font-size:15.5px;color:var(--ink)}
+.mod .marco b{font:600 10px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--brass);
+  display:block;margin-bottom:6px;font-weight:600}
+.mod .tw{margin:16px 0 8px}
+.mod table{font-size:14px;min-width:440px}
+
+/* figuras */
+figure{margin:30px 0 34px}
+figure svg{width:100%;height:auto;display:block;border:1px solid var(--line);border-radius:4px;background:var(--surface)}
+figcaption{font-size:13.5px;color:var(--muted);margin-top:10px;line-height:1.5}
+figcaption b{font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--accent);font-weight:600;margin-right:8px}
+.svg-t{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.06em;fill:var(--muted)}
+.svg-l{font-family:Spectral,Georgia,serif;font-size:14px;fill:var(--ink)}
+.svg-s{font-family:Spectral,Georgia,serif;font-size:12.5px;fill:var(--muted)}
+.svg-bx{fill:var(--ground);stroke:var(--line);stroke-width:1.2}
+.svg-bx-a{fill:var(--accent-soft);stroke:var(--accent);stroke-width:1.4}
+.svg-ar{stroke:var(--muted);stroke-width:1.3;fill:none}
+.svg-ar-a{stroke:var(--accent);stroke-width:1.6;fill:none}
+
+/* recursos */
+.res{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px;margin:24px 0 8px}
+.rc{display:block;text-decoration:none;border:1px solid var(--line);border-radius:4px;background:var(--surface);
+  padding:16px 18px;color:var(--ink)}
+.rc:hover{border-color:var(--accent)}
+.rc .k{font:600 10px/1 var(--mono);letter-spacing:.13em;text-transform:uppercase;color:var(--accent)}
+.rc .t{font-size:17px;font-weight:600;margin:9px 0 6px;line-height:1.2}
+.rc .d{font-size:14px;color:var(--muted);line-height:1.45}
+
+.refs{margin-top:12px}
+.refs p{padding-left:34px;text-indent:-34px;font-size:15.5px;margin-bottom:13px}
+.note{font-size:14.5px;color:var(--muted);border-left:2px solid var(--line);padding-left:16px;margin:22px 0}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+@media (max-width:900px){
+  .shell{grid-template-columns:1fr;gap:0}
+  nav.toc{position:static;padding:24px 0 0;columns:2;column-gap:24px}
+  nav.toc .lbl{column-span:all}
+  article{padding-top:24px}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+<style>
+.cbar{display:flex;align-items:center;gap:14px;flex-wrap:wrap;padding:9px 24px;
+  border-bottom:1px solid var(--line);background:var(--surface-2);
+  font:500 12.5px/1 var(--mono);position:sticky;top:0;z-index:20}
+.cbar a{color:var(--accent);text-decoration:none;white-space:nowrap}
+.cbar a:hover{text-decoration:underline}
+.cbar .home{font-weight:600}
+.cbar .where{color:var(--muted);letter-spacing:.06em;text-transform:uppercase;font-size:10.5px}
+.cbar .sp{flex:1}
+.cbar .nx{color:var(--ink-soft)}
+.nextgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px;margin:22px 0 8px}
+.nextgrid .nx{display:block;text-decoration:none;border:1px solid var(--line);border-radius:4px;
+  background:var(--surface);padding:16px 18px;color:var(--ink)}
+.nextgrid .nx:hover{border-color:var(--accent)}
+.nextgrid .k{font:600 10px/1 var(--mono);letter-spacing:.13em;text-transform:uppercase;color:var(--accent);display:block}
+.nextgrid .t{font-size:16.5px;font-weight:600;margin:9px 0 6px;line-height:1.2;display:block}
+.nextgrid .d{font-size:14px;color:var(--muted);line-height:1.45;display:block}
+</style>
+<nav class="cbar"><a class="home" href="index.html">&#9666; Índice do curso</a><span class="where">Documento de referência</span><span class="sp"></span><a class="nx" href="01-modulo-1.html">Módulo 1 · Argumento e validade &rarr;</a></nav>
+<div class="shell">
+  <header class="hero">
+    <div class="eyebrow">Proposta curricular · setembro de 2026</div>
+    <h1>Fluência em lógica formal</h1>
+    <p class="lede">Percurso autoinstrucional do iniciante absoluto ao domínio da metateoria e das lógicas não clássicas, construído sobre as seis fontes reunidas pelo proponente e organizado por marcos de domínio verificáveis.</p>
+    <div class="facts">
+      <div><div class="k">Níveis</div><div class="v">Três</div></div>
+      <div><div class="k">Módulos</div><div class="v">Seis</div></div>
+      <div><div class="k">Unidades</div><div class="v">Trinta e três</div></div>
+      <div><div class="k">Marcos</div><div class="v">Seis</div></div>
+      <div><div class="k">Método de prova</div><div class="v">Tablôs e dedução natural</div></div>
+      <div><div class="k">Fontes</div><div class="v">Seis, todas em português</div></div>
+      <div><div class="k">Complementares</div><div class="v">Três módulos</div></div>
+      <div><div class="k">Materiais</div><div class="v">Doze</div></div>
+    </div>
+  </header>
+
+  <nav class="toc" id="toc">
+    <span class="lbl">Sumário</span>
+    <a href="#s1">1. Objeto da proposta</a>
+    <a href="#s2">2. Diagnóstico das fontes</a>
+    <a href="#s3">3. Princípios de desenho</a>
+    <a href="#s4">4. Arquitetura do curso</a>
+    <a href="#s5">5. Os seis módulos</a>
+    <a href="#m1" class="sub">Módulo 1</a>
+    <a href="#m2" class="sub">Módulo 2</a>
+    <a href="#m3" class="sub">Módulo 3</a>
+    <a href="#m4" class="sub">Módulo 4</a>
+    <a href="#m5" class="sub">Módulo 5</a>
+    <a href="#m6" class="sub">Módulo 6</a>
+    <a href="#s6">6. Avaliação</a>
+    <a href="#s7">7. Recursos interativos</a>
+    <a href="#s8">8. Decisões revistas</a>
+    <a href="#proximo">Próximo passo</a>
+    <a href="#ref">Referências</a>
+  </nav>
+
+  <article>
+    <h2 id="s1"><span class="num">Seção 1</span>Objeto da proposta</h2>
+    <p class="intro">Propõe-se um curso de lógica que conduza um aluno sem qualquer formação prévia até a leitura autônoma de literatura técnica em lógica filosófica. O objetivo declarado pelo proponente reúne três competências que a proposta trata como eixos distintos e mensuráveis: compreender, ler e escrever a linguagem lógica.</p>
+    <p>A distinção não é retórica. Compreender significa reconhecer, em português corrente, o que é um argumento, o que a validade exige e o que ela não exige. Ler significa decodificar uma fórmula, uma tabela, um tablô ou uma derivação escritos por outrem, incluindo a notação variada que a literatura emprega. Escrever significa produzir esses mesmos objetos a partir de um problema enunciado em língua natural. Cursos de lógica costumam avaliar apenas o terceiro eixo, e é comum que o aluno aprenda a manipular fórmulas sem reconhecer o argumento que elas representam, ou que decore regras de derivação sem saber por que uma prova deveria existir.</p>
+    <p>A proposta atribui, por isso, a cada uma das trinta e três unidades os eixos que ela desenvolve, e organiza a avaliação de modo que nenhum marco possa ser vencido apenas por desempenho em um deles. O formato é autoinstrucional, sem calendário: o aluno avança quando demonstra a competência, e não quando decorre um número de semanas. Essa escolha, solicitada pelo proponente, tem uma consequência de desenho que percorre todo o documento, a de que cada módulo precisa terminar em um critério de saída observável, e não em uma lista de conteúdos cobertos.</p>
+
+    <h2 id="s2"><span class="num">Seção 2</span>Diagnóstico das fontes</h2>
+    <p>As seis fontes disponíveis não são equivalentes em alcance nem em função, e a proposta as emprega em papéis deliberadamente distintos. O quadro a seguir registra o que cada uma cobre e o uso que dela se faz.</p>
+    <div class="tw"><table>
+      <tr><th>Fonte</th><th>Natureza</th><th>Cobertura</th><th>Papel no curso</th></tr>
+      <tr><td><strong>Mortari (2016)</strong></td><td>Livro-texto, 527 páginas, 18 capítulos e um apêndice</td><td>Da noção de argumento à aritmética formalizada e às lógicas não clássicas</td><td>Espinha dorsal. Fornece a sequência, o rigor e os exercícios de todos os seis módulos</td></tr>
+      <tr><td><strong>Neves Filho e Rui (2016)</strong></td><td>Livro didático de introdução, 94 páginas</td><td>Noções introdutórias, lógica aristotélica, cálculo proposicional preliminar, falácias informais</td><td>Porta de entrada. Texto de primeira leitura no nível A, e única fonte para as falácias</td></tr>
+      <tr><td><strong>Sell (2014)</strong></td><td>Livro didático a distância, quatro unidades, 60 horas-aula</td><td>Dedução natural proposicional e quantificacional, na notação de Nolt e Rohatyn</td><td>Fonte de exercícios de derivação. Trata a dedução natural com mais vagar do que o livro-texto</td></tr>
+      <tr><td><strong>Morais et al. (2019)</strong></td><td>Coletânea de história da filosofia, oito capítulos</td><td>De Heráclito aos medievais</td><td>Contextualização histórica do módulo 2 e da discussão sobre futuros contingentes no módulo 6</td></tr>
+      <tr><td><strong>Mortari (2023)</strong></td><td>Plano de ensino de disciplina obrigatória</td><td>Programa de 90 horas-aula em seis tópicos</td><td>Referência de sequência e de proporção entre tópicos, validada em uso institucional</td></tr>
+      <tr><td><strong>Pagani (s.d.)</strong></td><td>Gabarito comentado, 93 páginas</td><td>Exercícios 1.1 a 12.6 do livro-texto</td><td>Viabiliza o formato autoinstrucional: sem ele, o aluno sozinho não teria como conferir a própria resolução</td></tr>
+    </table></div>
+    <p>Três observações resultam do diagnóstico. A primeira é que o conjunto é autossuficiente para o objetivo declarado: não há lacuna de conteúdo entre o iniciante absoluto e a metateoria, e todas as fontes estão em português, o que remove a barreira linguística que costuma acompanhar a bibliografia de lógica.</p>
+    <p>A segunda é que o gabarito de Pagani (s.d.) cobre os capítulos 1 a 12 do livro-texto, isto é, até os tablôs semânticos, e não alcança os capítulos de dedução natural, identidade, teorias formalizadas e lógicas não clássicas. A partir da unidade 4.2, que trata dos sistemas axiomáticos do capítulo 13, a correção automática precisa vir de outro lugar, o que justifica o banco de itens autocorrigidos descrito na seção 6.</p>
+    <p>A terceira é que há divergência de notação entre as fontes. Mortari (2016) e Sell (2014) usam convenções distintas para as regras de derivação, e Sell trabalha na notação de Nolt e Rohatyn (1991, como citado em Sell, 2014). Longe de ser um defeito, a divergência é oportunidade pedagógica: ler notação alheia é parte do eixo da leitura, e a proposta a explora deliberadamente no módulo 4.</p>
+    <h2 id="s3"><span class="num">Seção 3</span>Princípios de desenho</h2>
+    <p>Cinco decisões estruturam o curso e merecem justificação explícita, uma vez que cada uma exclui alternativas defensáveis.</p>
+
+    <h3>Nenhum símbolo lógico antes do terceiro módulo</h3>
+    <p>Os dois primeiros módulos não empregam notação lógico-simbólica, à exceção da notação conjuntista da unidade 2.2. A primeira letra sentencial aparece na unidade 3.1, depois que o aluno já sabe distinguir premissa de conclusão, validade de correção e dedução de indução. A ordem contraria o hábito de abrir cursos de lógica pela tabela de verdade, e segue a de Mortari (2016), cujos dois primeiros capítulos não contêm notação alguma. O custo é uma entrada mais lenta; o benefício é que a simbolização chega como abreviação de algo já compreendido, e não como um cálculo a ser decorado.</p>
+
+    <h3>A semântica precede a sintaxe</h3>
+    <p>O curso apresenta valorações, funções de verdade e tabelas antes de qualquer regra de inferência, e apresenta os tablôs semânticos antes da dedução natural. A razão é que o aluno precisa saber <em>o que</em> uma prova estabelece antes de aprender a construí-la. Quem encontra a dedução natural sem ter antes compreendido a relação de consequência semântica tende a lê-la como um jogo de manipulação de linhas, e a não perceber que a existência de uma derivação é um fato a respeito da preservação de verdade.</p>
+    <p>Essa opção também determina a escolha, feita pelo proponente, de adotar os dois métodos de prova com os tablôs em primeiro lugar. O tablô é um procedimento de decisão para o cálculo proposicional: aplicado mecanicamente, ele termina, e termina informando qual dos dois casos ocorre. Quando fecha, atesta a validade; quando permanece aberto, o ramo saturado entrega diretamente a valoração que refuta o argumento. O aluno obtém, portanto, refutação e prova pelo mesmo instrumento, o que consolida a compreensão antes que a dedução natural lhe exija criatividade.</p>
+
+    <figure>
+      <svg viewBox="0 0 940 300" role="img" aria-label="Diagrama do circuito de prova, ligando o argumento em língua natural à formalização e, desta, às rotas semântica e sintática, reunidas pelos teoremas de correção e completude.">
+        <defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+          <path d="M0 0 L10 5 L0 10 z" fill="currentColor"/></marker></defs>
+        <g color="var(--muted)">
+        <rect class="svg-bx" x="16" y="118" width="180" height="66" rx="4"/>
+        <text class="svg-l" x="106" y="145" text-anchor="middle">Argumento em</text>
+        <text class="svg-l" x="106" y="164" text-anchor="middle">língua natural</text>
+        <rect class="svg-bx-a" x="236" y="118" width="190" height="66" rx="4"/>
+        <text class="svg-l" x="331" y="145" text-anchor="middle">Argumento</text>
+        <text class="svg-l" x="331" y="164" text-anchor="middle">formalizado</text>
+        <path class="svg-ar" d="M198 151 H232" marker-end="url(#ah)"/>
+        <text class="svg-t" x="215" y="138" text-anchor="middle">3.2</text>
+        <path class="svg-ar" d="M428 145 C470 145 476 78 512 74" marker-end="url(#ah)"/>
+        <path class="svg-ar" d="M428 157 C470 157 476 226 512 230" marker-end="url(#ah)"/>
+        <rect class="svg-bx" x="516" y="42" width="200" height="64" rx="4"/>
+        <text class="svg-l" x="616" y="68" text-anchor="middle">Valorações, tabelas</text>
+        <text class="svg-l" x="616" y="87" text-anchor="middle">e tablôs semânticos</text>
+        <text class="svg-s" x="616" y="26" text-anchor="middle">rota semântica</text>
+        <rect class="svg-bx" x="516" y="198" width="200" height="64" rx="4"/>
+        <text class="svg-l" x="616" y="224" text-anchor="middle">Regras de inferência</text>
+        <text class="svg-l" x="616" y="243" text-anchor="middle">e derivações</text>
+        <text class="svg-s" x="616" y="282" text-anchor="middle">rota sintática</text>
+        <text class="svg-t" x="470" y="104" text-anchor="middle">MÓD. 3–4</text>
+        <text class="svg-t" x="470" y="200" text-anchor="middle">MÓD. 4</text>
+        <path class="svg-ar" d="M718 74 H754" marker-end="url(#ah)"/>
+        <path class="svg-ar" d="M718 230 H754" marker-end="url(#ah)"/>
+        <text class="svg-l" x="762" y="80" style="font-family:'IBM Plex Mono',monospace;font-size:16px;fill:var(--accent)">Γ ⊨ α</text>
+        <text class="svg-l" x="762" y="236" style="font-family:'IBM Plex Mono',monospace;font-size:16px;fill:var(--accent)">Γ ⊢ α</text>
+        <path class="svg-ar-a" stroke-dasharray="5 4" d="M866 92 V212" marker-end="url(#ah)" marker-start="url(#ah)" color="var(--accent)"/>
+        <text class="svg-t" transform="rotate(-90 902 152)" x="902" y="152" text-anchor="middle" style="fill:var(--accent)">CORREÇÃO E COMPLETUDE · MÓD. 6</text>
+        </g>
+      </svg>
+      <figcaption><b>Figura 1</b>O circuito que a sequência do curso percorre. A formalização abre duas rotas independentes, e o módulo final estabelece o resultado de que, na lógica clássica, elas coincidem. A figura explica por que a metateoria não pode vir antes: ela é uma afirmação sobre dois procedimentos que o aluno precisa antes dominar separadamente.</figcaption>
+    </figure>
+
+    <h3>A história é conteúdo, não ornamento</h3>
+    <p>O módulo 2 dedica três de suas cinco unidades à história da disciplina, apoiadas em Morais et al. (2019) e no apêndice de Mortari (2016). A escolha não é decorativa. Os paradoxos de Zenão são o primeiro emprego sistemático da redução ao absurdo, que reaparece como regra no módulo 4; o quadrado aristotélico das oposições é o exercício natural de leitura de relações lógicas antes que exista notação para elas; e a discussão dos futuros contingentes é a motivação histórica das lógicas polivalentes do módulo 6. Cada bloco histórico prepara um bloco técnico posterior.</p>
+
+    <h3>A divergência de notação é exercitada</h3>
+    <p>Como observado na seção 2, as fontes não convergem em notação. A proposta trata isso como matéria de ensino: no módulo 4, o mesmo argumento é derivado uma vez na apresentação de Mortari (2016) e uma vez na de Sell (2014). O aluno constata que a diferença é de convenção e não de substância, o que é precisamente a habilidade exigida de quem lê literatura de várias procedências.</p>
+
+    <h3>Cada módulo termina em um critério observável</h3>
+    <p>Por ser autoinstrucional, o curso não dispõe do calendário como mecanismo de progressão. Em seu lugar, cada módulo se encerra em um marco de domínio, isto é, uma descrição de desempenho que o próprio aluno pode verificar, combinada a um teste autocorrigido com limiar de setenta e cinco por cento. O marco é redigido em termos de execução e não de familiaridade: não se pede que o aluno conheça os tablôs, e sim que feche um tablô para um argumento válido de três premissas e extraia de um ramo aberto a valoração que refuta um inválido.</p>
+
+    <h2 id="s4"><span class="num">Seção 4</span>Arquitetura do curso</h2>
+    <p>O curso se organiza em três níveis, seis módulos e trinta e três unidades. Os níveis marcam mudanças de natureza, e não de dificuldade apenas: o nível A não emprega notação lógico-simbólica, o nível B trabalha no cálculo proposicional e o nível C estende o tratamento à primeira ordem e à reflexão sobre o próprio sistema.</p>
+    <div class="tw"><table>
+      <tr><th>Nível</th><th>Módulos</th><th>Unidades</th><th>Ponto de chegada</th></tr>
+      <tr><td class="m2">A</td><td><strong>1</strong> Argumento, inferência e validade<br><strong>2</strong> Linguagem, conjuntos e origem histórica</td><td>11</td><td>Reconstrução de argumentos em texto corrido e avaliação de silogismos categóricos</td></tr>
+      <tr><td class="m2">B</td><td><strong>3</strong> Cálculo proposicional: sintaxe e semântica<br><strong>4</strong> Prova proposicional: tablôs e dedução natural</td><td>9</td><td>Decisão de validade por tabela e por tablô, e produção de derivações em dedução natural</td></tr>
+      <tr><td class="m2">C</td><td><strong>5</strong> Lógica de primeira ordem<br><strong>6</strong> Metateoria e pluralidade lógica</td><td>13</td><td>Formalização com quantificação múltipla e identidade, e leitura autônoma de literatura técnica</td></tr>
+    </table></div>
+    <p>A distribuição dos eixos de fluência ao longo dos módulos não é uniforme, e a figura 2 registra a proporção pretendida. O eixo da escrita concentra-se nos módulos 3, 4 e 5, onde o aluno produz traduções, tablôs e derivações; o eixo da leitura tem seu pico no módulo 6, quando o objeto de estudo passa a ser o texto técnico; o eixo da compreensão é dominante nas extremidades, na entrada conceitual e no fechamento reflexivo.</p>
+
+    <figure>
+      <svg viewBox="0 0 880 268" role="img" aria-label="Gráfico de barras em três faixas mostrando a ênfase de cada eixo de fluência, compreender, ler e escrever, ao longo dos seis módulos do curso.">
+        <g id="lanes"></g>
+      </svg>
+      <figcaption><b>Figura 2</b>Ênfase relativa de cada eixo por módulo, em três graus. A leitura horizontal de uma faixa mostra a trajetória de um eixo; a leitura vertical de uma coluna mostra o perfil de trabalho de um módulo. Nenhum módulo desenvolve um eixo isoladamente, e nenhum marco é vencido por desempenho em um só deles.</figcaption>
+    </figure>
+    <h2 id="s5"><span class="num">Seção 5</span>Os seis módulos</h2>
+    <p>Cada módulo é descrito por sua função no percurso, pelas unidades que o compõem, pelos eixos que cada unidade desenvolve e pelo marco que autoriza a passagem ao módulo seguinte. A coluna de eixos emprega as iniciais C, L e E.</p>
+
+    <section class="mod" id="m1">
+      <div class="top"><span class="id">Módulo 1</span><span class="lvl">Nível A · iniciante absoluto</span></div>
+      <h3>Argumento, inferência e validade</h3>
+      <p>O módulo de entrada trabalha exclusivamente em português, sobre argumentos de circulação corrente, e instala a distinção que sustenta todo o restante do curso, a de que a validade é propriedade do arranjo e não do conteúdo. Segue os dois primeiros capítulos de Mortari (2016), com o capítulo I de Neves Filho e Rui (2016) como primeira leitura, mais acessível.</p>
+      <p>A unidade sobre falácias informais encerra o módulo por uma razão de método: ela mostra que existem defeitos argumentativos que nenhum cálculo detecta, o que delimita desde o início o alcance do instrumento formal que o aluno passará os módulos seguintes construindo.</p>
+      <div class="tw"><table>
+        <tr><th>Unidade</th><th>Assunto</th><th>Eixos</th><th>Fonte</th></tr>
+        <tr><td class="m2">1.1</td><td>O que é lógica; raciocínio e inferência</td><td class="m2">C</td><td>Mortari (2016, §§1.1–1.2)</td></tr>
+        <tr><td class="m2">1.2</td><td>Anatomia do argumento e indicadores</td><td class="m2">C · L</td><td>Mortari (2016, §1.3)</td></tr>
+        <tr><td class="m2">1.3</td><td>Sentenças, proposições, enunciados</td><td class="m2">C</td><td>Mortari (2016, §1.4)</td></tr>
+        <tr><td class="m2">1.4</td><td>Validade e forma; validade e correção</td><td class="m2">C · L</td><td>Mortari (2016, §§2.1–2.2)</td></tr>
+        <tr><td class="m2">1.5</td><td>Dedução, indução e analogia</td><td class="m2">C</td><td>Mortari (2016, §2.3)</td></tr>
+        <tr><td class="m2">1.6</td><td>Falácias informais</td><td class="m2">C · L</td><td>Neves Filho e Rui (2016, cap. IV)</td></tr>
+      </table></div>
+      <div class="marco"><b>Marco A1</b>Extrair premissas e conclusão de um parágrafo argumentativo com material concessivo, julgar validade e correção separadamente e nomear oito falácias informais em exemplos inéditos.</div>
+    </section>
+
+    <section class="mod" id="m2">
+      <div class="top"><span class="id">Módulo 2</span><span class="lvl">Nível A · iniciante</span></div>
+      <h3>Linguagem, conjuntos e origem histórica</h3>
+      <p>Módulo de instrumentação. Fornece as duas ferramentas de que a formalização dependerá, o controle metalinguístico e a teoria elementar de conjuntos, e situa a disciplina em sua história. O aluno que salta o capítulo de conjuntos costuma tropeçar mais tarde na definição de estrutura, no módulo 5, quando domínio e interpretação exigem exatamente essa linguagem.</p>
+      <p>O tratamento do silogismo aristotélico cumpre função dupla. Historicamente, encerra o arco aberto nas unidades anteriores; tecnicamente, oferece um primeiro sistema completo de avaliação de validade, com diagramas de Venn-Euler, antes que exista qualquer notação simbólica moderna.</p>
+      <div class="tw"><table>
+        <tr><th>Unidade</th><th>Assunto</th><th>Eixos</th><th>Fonte</th></tr>
+        <tr><td class="m2">2.1</td><td>Linguagens, uso e menção, metalinguagem</td><td class="m2">C · E</td><td>Mortari (2016, cap. 3)</td></tr>
+        <tr><td class="m2">2.2</td><td>Teoria elementar de conjuntos</td><td class="m2">C · E</td><td>Mortari (2016, cap. 4)</td></tr>
+        <tr><td class="m2">2.3</td><td>Origens: Heráclito, Parmênides, Zenão, Platão</td><td class="m2">C · L</td><td>Morais et al. (2019, caps. 1–5)</td></tr>
+        <tr><td class="m2">2.4</td><td>Aristóteles: termos, quadrado e silogismo</td><td class="m2">C · L · E</td><td>Mortari (2016, ap. A); Neves Filho e Rui (2016, cap. II)</td></tr>
+        <tr><td class="m2">2.5</td><td>Estoicos, medievais e a virada contemporânea</td><td class="m2">C · L</td><td>Morais et al. (2019, caps. 7–8); Mortari (2016, §2.5)</td></tr>
+      </table></div>
+      <div class="marco"><b>Marco A2</b>Empregar corretamente aspas de menção, operar com união, intersecção e complemento e decidir a validade de um silogismo categórico por diagramas de Venn-Euler.</div>
+    </section>
+
+    <section class="mod" id="m3">
+      <div class="top"><span class="id">Módulo 3</span><span class="lvl">Nível B · intermediário</span></div>
+      <h3>Cálculo proposicional: sintaxe e semântica</h3>
+      <p>O primeiro contato com uma linguagem formal. A sintaxe é apresentada como definição recursiva de fórmula, e não como lista de símbolos, de modo que o teste de boa formação seja um procedimento e não um reconhecimento visual. A semântica chega em seguida, pela noção de função de verdade, e só então a tabela aparece, como forma tabular de exibir todas as valorações.</p>
+      <p>A unidade de tradução é a de maior densidade de erro em cursos introdutórios, e recebe tratamento proporcional. Os casos difíceis são explicitados: a condição necessária introduzida por «somente se», a distinção entre «a menos que» e a disjunção exclusiva, a ordem invertida do condicional e a ambiguidade de escopo que só os parênteses resolvem.</p>
+      <div class="tw"><table>
+        <tr><th>Unidade</th><th>Assunto</th><th>Eixos</th><th>Fonte</th></tr>
+        <tr><td class="m2">3.1</td><td>Sintaxe do cálculo proposicional clássico</td><td class="m2">C · E</td><td>Mortari (2016, cap. 5); Sell (2014, un. 1)</td></tr>
+        <tr><td class="m2">3.2</td><td>Tradução do português para o cálculo</td><td class="m2">L · E</td><td>Neves Filho e Rui (2016, cap. III); Mortari (2016, §5.4)</td></tr>
+        <tr><td class="m2">3.3</td><td>Interpretações, funções de verdade e valorações</td><td class="m2">C</td><td>Mortari (2016, cap. 6)</td></tr>
+        <tr><td class="m2">3.4</td><td>Tabelas de verdade e consequência tautológica</td><td class="m2">C · E</td><td>Mortari (2016, cap. 7)</td></tr>
+      </table></div>
+      <div class="marco"><b>Marco B1</b>Traduzir sem ambiguidade um período composto do português e decidir, por tabela de verdade, a validade de um argumento com até quatro letras sentenciais, identificando a linha que serve de contraexemplo quando ele for inválido.</div>
+    </section>
+
+    <section class="mod" id="m4">
+      <div class="top"><span class="id">Módulo 4</span><span class="lvl">Nível B · intermediário</span></div>
+      <h3>Prova proposicional: tablôs e dedução natural</h3>
+      <p>Módulo em que a escrita de provas começa. Os tablôs vêm primeiro, pelas razões expostas na seção 3, e a dedução natural em seguida, quando o aluno já sabe por que uma prova deve existir. A passagem de um método ao outro é explícita: o mesmo conjunto de argumentos é tratado pelas duas vias, e o aluno compara o esforço e a informação que cada uma produz.</p>
+      <p>O capítulo sobre sistemas axiomáticos e formais, incluindo os <em>doublets</em> de Lewis Carroll, é mantido entre os dois métodos. Ele fornece o vocabulário de axioma, regra e teorema sem o qual a discussão do módulo 6 não se sustenta, e oferece exercícios de encadeamento dedutivo longo que não exigem ainda nenhuma notação nova.</p>
+      <div class="tw"><table>
+        <tr><th>Unidade</th><th>Assunto</th><th>Eixos</th><th>Fonte</th></tr>
+        <tr><td class="m2">4.1</td><td>Tablôs semânticos proposicionais e invalidade</td><td class="m2">C · E</td><td>Mortari (2016, §§12.1–12.4, 12.6)</td></tr>
+        <tr><td class="m2">4.2</td><td>Sistemas axiomáticos e sistemas formais</td><td class="m2">C · L</td><td>Mortari (2016, cap. 13)</td></tr>
+        <tr><td class="m2">4.3</td><td>Dedução natural: regras diretas e hipotéticas</td><td class="m2">E</td><td>Mortari (2016, cap. 14); Sell (2014, un. 1)</td></tr>
+        <tr><td class="m2">4.4</td><td>Regras derivadas e teoremas</td><td class="m2">E</td><td>Mortari (2016, §§15.1, 15.4); Sell (2014, un. 2)</td></tr>
+        <tr><td class="m2">4.5</td><td>Consequência sintática e consequência semântica</td><td class="m2">C</td><td>Mortari (2016, §15.5)</td></tr>
+      </table></div>
+      <div class="marco"><b>Marco B2</b>Fechar um tablô para um argumento válido de três premissas, extrair de um ramo aberto a valoração que refuta um argumento inválido e produzir, para o mesmo argumento válido, a derivação correspondente em dedução natural, lendo-a nas duas notações adotadas pelas fontes.</div>
+    </section>
+
+    <section class="mod" id="m5">
+      <div class="top"><span class="id">Módulo 5</span><span class="lvl">Nível C · avançado</span></div>
+      <h3>Lógica de primeira ordem</h3>
+      <p>O salto de expressividade. Predicados, constantes, variáveis e quantificadores permitem representar a estrutura interna das proposições e, com ela, os argumentos que o cálculo proposicional não alcança, a começar pelo próprio silogismo estudado no módulo 2. O aluno reencontra formalizados os enunciados categóricos que já sabia avaliar por diagramas, o que torna verificável o ganho de generalidade.</p>
+      <p>Este é o módulo mais extenso, com sete unidades, e o que mais exige do eixo da escrita. As restrições sobre variáveis próprias na introdução do quantificador universal costumam ser o ponto de maior dificuldade, e a proposta as trata antes do intercâmbio de quantificadores, para que a motivação da restrição seja compreendida e não memorizada.</p>
+      <div class="tw"><table>
+        <tr><th>Unidade</th><th>Assunto</th><th>Eixos</th><th>Fonte</th></tr>
+        <tr><td class="m2">5.1</td><td>Sintaxe do cálculo de predicados</td><td class="m2">C · E</td><td>Mortari (2016, cap. 8); Sell (2014, un. 3)</td></tr>
+        <tr><td class="m2">5.2</td><td>Primeira ordem, categóricas, quantificação múltipla</td><td class="m2">L · E</td><td>Mortari (2016, cap. 9)</td></tr>
+        <tr><td class="m2">5.3</td><td>Estruturas e definição de verdade</td><td class="m2">C · L</td><td>Mortari (2016, cap. 10)</td></tr>
+        <tr><td class="m2">5.4</td><td>Validade e consequência lógica</td><td class="m2">C</td><td>Mortari (2016, cap. 11)</td></tr>
+        <tr><td class="m2">5.5</td><td>Tablôs quantificacionais e indecidibilidade</td><td class="m2">C · E</td><td>Mortari (2016, §§12.5, 12.7)</td></tr>
+        <tr><td class="m2">5.6</td><td>Dedução natural com quantificadores e escopo</td><td class="m2">E</td><td>Mortari (2016, §§15.2–15.3); Sell (2014, un. 4)</td></tr>
+        <tr><td class="m2">5.7</td><td>Identidade e símbolos funcionais</td><td class="m2">C · E</td><td>Mortari (2016, cap. 16)</td></tr>
+      </table></div>
+      <div class="marco"><b>Marco C1</b>Formalizar um enunciado com quantificação múltipla e identidade, refutá-lo por estrutura finita quando falso e prová-lo em dedução natural respeitando as restrições sobre variáveis próprias.</div>
+    </section>
+
+    <section class="mod" id="m6">
+      <div class="top"><span class="id">Módulo 6</span><span class="lvl">Nível C · avançado</span></div>
+      <h3>Metateoria e pluralidade lógica</h3>
+      <p>O módulo de fechamento desloca o olhar: o sistema deixa de ser instrumento e passa a ser objeto. Discute-se o que se demonstra a respeito do cálculo, correção, completude e decidibilidade, e em seguida o que ocorre quando seus pressupostos são recusados. A ordem importa, pois só faz sentido perguntar o que acontece sem bivalência depois de ter visto o que a bivalência sustenta.</p>
+      <p>O tratamento das lógicas não clássicas segue o programa de Mortari (2023), que dedica quatro semanas ao tema, e o capítulo 18 do livro-texto. A discussão dos futuros contingentes retoma explicitamente o material histórico do módulo 2, fechando o arco: o problema que motivou Łukasiewicz é o mesmo que Aristóteles enunciou.</p>
+      <div class="tw"><table>
+        <tr><th>Unidade</th><th>Assunto</th><th>Eixos</th><th>Fonte</th></tr>
+        <tr><td class="m2">6.1</td><td>Teorias formalizadas e aritmética</td><td class="m2">L · E</td><td>Mortari (2016, cap. 17)</td></tr>
+        <tr><td class="m2">6.2</td><td>Correção, completude e decidibilidade</td><td class="m2">C · L</td><td>Mortari (2016, §§11.3, 12.7, 15.5)</td></tr>
+        <tr><td class="m2">6.3</td><td>O que é a lógica clássica</td><td class="m2">C · L</td><td>Mortari (2016, §§18.1–18.2)</td></tr>
+        <tr><td class="m2">6.4</td><td>Lógicas modais e temporais</td><td class="m2">C · E</td><td>Mortari (2016, §§18.3–18.4)</td></tr>
+        <tr><td class="m2">6.5</td><td>Polivalentes, intuicionista e da relevância</td><td class="m2">C · L</td><td>Mortari (2016, §18.5); Mortari (2023, tóp. 6)</td></tr>
+        <tr><td class="m2">6.6</td><td>História recente da lógica</td><td class="m2">L</td><td>Mortari (2016, §18.6)</td></tr>
+      </table></div>
+      <div class="marco"><b>Marco C2</b>Enunciar com precisão os teoremas de correção e completude, explicar o que a indecidibilidade do cálculo de predicados exclui e o que não exclui, e avaliar um mesmo argumento em lógica clássica e em uma lógica polivalente.</div>
+    </section>
+    <h2 id="s6"><span class="num">Seção 6</span>Avaliação e evidência de fluência</h2>
+    <p>A avaliação opera em três camadas, articuladas pela mesma exigência de que nenhuma delas isoladamente autorize a progressão.</p>
+    <p>A primeira camada é a prática dirigida. O aluno resolve os exercícios do livro-texto e confere a própria resolução no gabarito comentado de Pagani (s.d.), que cobre os exercícios 1.1 a 12.6, isto é, do primeiro capítulo aos tablôs semânticos. Trata-se da camada de maior volume e menor formalidade, e é onde o erro deve ocorrer com frequência sem custo.</p>
+    <p>A segunda camada é o teste de marco, autocorrigido, com justificativa e fonte em cada item. São vinte e nove itens distribuídos pelos seis marcos, em três formatos: escolha simples, múltipla seleção e preenchimento de coluna de tabela de verdade. O limiar de setenta e cinco por cento não é arbitrário: com quatro a seis itens por marco, ele exige que no máximo um item seja errado, o que corresponde a admitir descuido mas não lacuna. A partir do módulo 4, quando o gabarito de Pagani deixa de cobrir o conteúdo, esta camada passa a ser a principal fonte de correção automática.</p>
+    <p>A terceira camada é a produção escrita, que a correção automática não alcança. Cada marco do nível B e do nível C exige um artefato: uma tradução comentada, um tablô com a leitura do contramodelo, uma derivação em dedução natural, uma formalização com quantificação múltipla. Estes artefatos são o que efetivamente evidencia fluência, e por isso a proposta recomenda, ainda que o formato seja autoinstrucional, que ao menos os artefatos dos marcos B2, C1 e C2 sejam submetidos a leitura humana, seja de um professor, seja de um par mais adiantado.</p>
+    <p>Um trabalho integrador encerra o percurso, à maneira das três provas do plano de Mortari (2023), mas com formato distinto: o aluno escolhe um trecho de meia página de um texto filosófico ou científico, reconstrói o argumento nele contido, formaliza-o em primeira ordem, decide sua validade pelo método que julgar adequado e discute o que a formalização preservou e o que perdeu. A última pergunta é a que distingue o aluno fluente do aluno treinado.</p>
+
+    <h2 id="s7"><span class="num">Seção 7</span>Materiais produzidos</h2>
+    <p>Os seis módulos do percurso obrigatório e os três complementares foram integralmente redigidos, cada um como documento autônomo com unidades, marco de saída, exercícios e ao menos um recurso interativo. A eles somam-se três instrumentos transversais. O quadro abaixo é o índice do curso.</p>
+    <h3>Percurso obrigatório</h3>
+    <div class="res">
+      <a class="rc" href="https://claude.ai/code/artifact/396634f4-8781-4ff8-bddc-16cc6e0d6757" target="_blank" rel="noopener">
+        <span class="k">Módulo 1 · slides</span><span class="t">Anatomia do Argumento</span>
+        <span class="d">Treze slides com reconstrução de argumento por clique, quadro interativo de validade e verdade, oito falácias e verificação imediata.</span></a>
+      <a class="rc" href="https://claude.ai/code/artifact/4711ada1-0c06-408a-a4a0-74616265fd2d" target="_blank" rel="noopener">
+        <span class="k">Módulo 2</span><span class="t">A Linguagem Antes do Símbolo</span>
+        <span class="d">Uso e menção, teoria elementar de conjuntos, origens gregas e Aristóteles, com quadrado das oposições e verificador de silogismos que compara as duas leituras das categóricas.</span></a>
+      <a class="rc" href="https://claude.ai/code/artifact/d6a66975-4019-4566-9561-a60a24ccac91" target="_blank" rel="noopener">
+        <span class="k">Módulo 3</span><span class="t">A Primeira Linguagem Formal</span>
+        <span class="d">Sintaxe, tradução e semântica do cálculo proposicional, com laboratório que analisa fórmulas, constrói a tabela por subfórmulas e testa argumentos.</span></a>
+      <a class="rc" href="https://claude.ai/code/artifact/450c56fd-5e1e-4bf3-8f47-20d8aee8ab78" target="_blank" rel="noopener">
+        <span class="k">Módulo 4</span><span class="t">Como se Escreve uma Prova</span>
+        <span class="d">Tablôs com construtor automático que exibe ramos, fechamentos e contramodelo; sistemas formais; as dez regras da dedução natural e as derivadas.</span></a>
+      <a class="rc" href="https://claude.ai/code/artifact/79ea0c2e-d094-4995-a151-d041d3ec37f7" target="_blank" rel="noopener">
+        <span class="k">Módulo 5</span><span class="t">Dentro da Proposição</span>
+        <span class="d">Cálculo de predicados, quantificação múltipla e identidade, com laboratório em que o aluno monta estruturas finitas e avalia sentenças nelas.</span></a>
+      <a class="rc" href="https://claude.ai/code/artifact/13d651d6-21b5-4025-b67d-82871c761f04" target="_blank" rel="noopener">
+        <span class="k">Módulo 6</span><span class="t">O Sistema como Objeto</span>
+        <span class="d">Teorias formalizadas, correção e completude enunciadas, o mapa das lógicas não clássicas e calculadora que compara cinco sistemas de valores.</span></a>
+    </div>
+    <h3>Módulos complementares</h3>
+    <div class="res">
+      <a class="rc" href="https://claude.ai/code/artifact/58b46df1-cd00-4503-be36-a70d7fba9dbb" target="_blank" rel="noopener">
+        <span class="k">Módulo 1A</span><span class="t">Bons e Maus Argumentos</span>
+        <span class="d">Argumentação informal entre os módulos 1 e 2: reconstrução caridosa, diagramação da estrutura de apoio, esquemas argumentativos com perguntas críticas e força indutiva.</span></a>
+      <a class="rc" href="https://claude.ai/code/artifact/ef9c2d87-b346-45e0-9c24-d767ad47c62e" target="_blank" rel="noopener">
+        <span class="k">Módulo 7</span><span class="t">Correção e Completude</span>
+        <span class="d">As demonstrações metateóricas, do lema de Lindenbaum ao modelo canônico, com extensão a primeira ordem, indecidibilidade e incompletude.</span></a>
+      <a class="rc" href="https://claude.ai/code/artifact/662812a8-c11b-4be0-922f-1f560374081e" target="_blank" rel="noopener">
+        <span class="k">Módulo 8</span><span class="t">Seis Lógicas Não Clássicas</span>
+        <span class="d">Modais, deônticas e temporais, polivalentes, intuicionista, relevância e paraconsistência, com laboratório de modelos de Kripke.</span></a>
+    </div>
+    <h3>Instrumentos transversais</h3>
+    <div class="res">
+      <a class="rc" href="https://claude.ai/code/artifact/2defcd2b-2280-46d0-a1cf-4c3cb213e473" target="_blank" rel="noopener">
+        <span class="k">Mapa mental</span><span class="t">Atlas da Lógica</span>
+        <span class="d">Árvore navegável dos três níveis, seis módulos e trinta e três unidades, com ficha por nó e filtro por eixo de fluência.</span></a>
+      <a class="rc" href="https://claude.ai/code/artifact/e8da66bb-bdae-464a-bf9b-1b8526b2a0dd" target="_blank" rel="noopener">
+        <span class="k">Banco de testes</span><span class="t">Provas de Domínio</span>
+        <span class="d">Vinte e nove itens autocorrigidos cobrindo os seis marcos, com justificativa e fonte em cada resposta e registro de progresso.</span></a>
+      <a class="rc" href="https://claude.ai/code/artifact/7eae729c-efc1-4b90-a34b-7b67071a17ec" target="_blank" rel="noopener">
+        <span class="k">Instrumento</span><span class="t">Sete Prompts de Correção</span>
+        <span class="d">Rubricas prontas para submeter cada artefato escrito a um modelo de linguagem, com protocolo de conferência do veredito recebido.</span></a>
+    </div>
+    <p class="note">Todos os materiais e este relatório foram gravados também na pasta de trabalho do proponente, em formato HTML autocontido, de modo que possam ser abertos sem conexão e distribuídos a alunos.</p>
+
+    <h2 id="s8"><span class="num">Seção 8</span>Decisões revistas</h2>
+    <p>Quatro pontos haviam sido resolvidos por opção justificada, com a ressalva de que admitiam revisão sem que a arquitetura se desfizesse. O proponente optou por desenvolver os quatro, e o que segue registra o que cada decisão passou a ser.</p>
+    <p><strong>Argumentação informal.</strong> A proposta original limitava o tema à unidade 1.6. Passou a existir um módulo autônomo, numerado 1A para preservar a numeração dos demais, situado entre os módulos 1 e 2 e composto de seis unidades sem notação alguma. Ele trata da reconstrução caridosa e do entimema, da diagramação da estrutura de apoio, dos esquemas argumentativos com as respectivas perguntas críticas, do ônus da prova e da avaliação de força indutiva. Nenhum módulo posterior depende dele, e omiti-lo deixa o percurso intacto.</p>
+    <p><strong>Profundidade metateórica.</strong> A proposta original enunciava correção e completude sem demonstrá-los, seguindo o tratamento do livro-texto. Passou a existir o módulo 7, que as demonstra: correção por indução na estrutura da derivação, lema de Lindenbaum, propriedades dos conjuntos maximais consistentes, lema da verdade, existência de modelo e completude por contraposição, com os corolários de compacidade e decidibilidade. A extensão a primeira ordem é apresentada pelo método de Henkin, e o módulo encerra distinguindo a completude do cálculo da completude de uma teoria, com o primeiro teorema da incompletude. O pré-requisito matemático é a indução e a noção de conjunto enumerável, ambas já fornecidas na unidade 2.2.</p>
+    <p><strong>Extensão das lógicas não clássicas.</strong> As famílias tratadas nas unidades 6.4 e 6.5 passaram a ter módulo próprio, o de número 8, com uma unidade para cada uma e tratamento estendido das modais aléticas. A ênfase se justifica por uma razão que não é apenas de interesse: a semântica de mundos possíveis desenvolvida ali é reutilizada na apresentação das temporais, das epistêmicas e da própria lógica intuicionista, de modo que investir nela reduz o custo das demais. O módulo inclui um laboratório em que o aluno altera a relação de acessibilidade e observa quais esquemas passam a valer, verificando a teoria da correspondência em vez de memorizá-la.</p>
+    <p><strong>Leitura humana dos artefatos escritos.</strong> A lacuna descrita na seção 6 permanece real, e a solução adotada a reduz sem fechá-la. Foram redigidos sete prompts, um para cada tipo de artefato do curso, que instruem um modelo de linguagem a avaliar a produção do aluno em vez de refazê-la: cada um fixa a postura do corretor, fornece a rubrica específica, exige que a verificação seja mostrada linha a linha e proíbe a entrega da solução na primeira passagem. O instrumento vem acompanhado de um protocolo de conferência do próprio veredito recebido, uma vez que modelos de linguagem erram de modo característico em manipulação simbólica. A recomendação de leitura humana ao menos para os marcos B2, C1 e C2 é mantida; o que muda é que o aluno chega a ela com uma versão já depurada.</p>
+    <p>Com isso, o curso passa a ter nove módulos, dos quais seis constituem o percurso obrigatório e três são complementares e dispensáveis sem prejuízo dos demais. Resta em aberto uma questão que este documento não resolve, a da existência de uma turma, que tornaria possível a mediação docente recomendada na seção 6. Quanto ao material, os nove módulos foram redigidos e estão listados na seção 7.</p>
+
+    <h2 id="proximo"><span class="num">Encerramento</span>Próximo passo</h2><p>O ciclo de cada módulo se fecha em três movimentos: resolver os exercícios, verificar o marco no banco de itens e submeter o artefato escrito à rubrica correspondente.</p><div class="nextgrid"><a class="nx" href="01-modulo-1.html"><span class="k">Seguir</span><span class="t">Módulo 1 · Argumento e validade</span><span class="d">Nível A · módulo 1 no percurso.</span></a></div>
+
+    <h2 id="ref">Referências</h2>
+    <div class="refs">
+      <p>Morais, B. R., Figueiró, F. H., Pires, L. T., Veríssimo, L. M., &amp; Sapunaru, R. A. (Orgs.). (2019). <em>Introdução à lógica a partir de sua história filosófica: Vol. 1. De Heráclito aos medievais</em>. Editora Fi.</p>
+      <p>Mortari, C. A. (2016). <em>Introdução à lógica</em> (2a ed.). Editora Unesp.</p>
+      <p>Mortari, C. A. (2023). <em>Plano de ensino: FIL 6021 Lógica I</em> [Plano de ensino]. Universidade Federal de Santa Catarina, Departamento de Filosofia.</p>
+      <p>Neves Filho, E. F. das, &amp; Rui, M. de L. (2016). <em>Elementos de lógica</em> (Série Dissertatio de Filosofia, Vol. 11). NEPFIL Online.</p>
+      <p>Nolt, J., &amp; Rohatyn, D. (1991). <em>Lógica</em>. McGraw-Hill.</p>
+      <p>Pagani, L. A. (s.d.). <em>Respostas para exercícios do livro Introdução à lógica, de Cezar Mortari</em> [Material didático não publicado].</p>
+      <p>Sell, S. (2014). <em>Lógica II</em> [Livro didático]. UnisulVirtual.</p>
+    </div>
+  </article>
+</div>
+<script>
+(function(){
+  /* figura 2: faixas de ênfase por eixo */
+  const LANES = [
+    {nome:"Compreender", vals:[3,3,2,2,2,3]},
+    {nome:"Ler",         vals:[2,2,2,2,2,3]},
+    {nome:"Escrever",    vals:[1,1,3,3,3,1]}
+  ];
+  const H = {1:14, 2:26, 3:40}, OP = {1:.3, 2:.6, 3:1};
+  const g = document.getElementById("lanes");
+  if(g){
+    let s = "";
+    LANES.forEach((ln, i) => {
+      const base = 68 + i*68;
+      s += '<text class="svg-l" x="16" y="' + (base - 6) + '">' + ln.nome + "</text>";
+      s += '<line x1="150" y1="' + base + '" x2="864" y2="' + base + '" stroke="var(--line)" stroke-width="1"/>';
+      ln.vals.forEach((v, k) => {
+        const x = 150 + k*119, w = 96, h = H[v];
+        s += '<rect x="' + x + '" y="' + (base - h) + '" width="' + w + '" height="' + h +
+             '" fill="var(--accent)" opacity="' + OP[v] + '" rx="2"/>';
+      });
+    });
+    for(let k = 0; k < 6; k++){
+      s += '<text class="svg-t" x="' + (150 + k*119 + 48) + '" y="' + (68 + 2*68 + 22) +
+           '" text-anchor="middle">MÓD. ' + (k+1) + "</text>";
+    }
+    [1,2,3].forEach((v,i) => {
+      s += '<rect x="' + (560 + i*22) + '" y="246" width="16" height="10" fill="var(--accent)" opacity="' + OP[v] + '" rx="2"/>';
+    });
+    s += '<text class="svg-t" x="628" y="255">ÊNFASE: BAIXA · MÉDIA · ALTA</text>';
+    g.innerHTML = s;
+  }
+
+  /* sumário ativo */
+  const links = Array.from(document.querySelectorAll("nav.toc a"));
+  const alvos = links.map(a => document.getElementById(a.getAttribute("href").slice(1))).filter(Boolean);
+  function spy(){
+    let atual = alvos[0];
+    alvos.forEach(t => { if(t.getBoundingClientRect().top <= 120) atual = t; });
+    links.forEach(a => a.classList.toggle("on", a.getAttribute("href") === "#" + (atual ? atual.id : "")));
+  }
+  window.addEventListener("scroll", spy, {passive:true});
+  spy();
+})();
+</script>
+
+</body>
+</html>

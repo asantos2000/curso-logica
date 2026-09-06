@@ -1,0 +1,531 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<style>:root{color-scheme:light dark}body{margin:0;font:14px/1.5 system-ui,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style>
+</head>
+<body>
+<title>Provas de Domínio</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<style>
+:root{
+  --ground:#EEF1EE; --surface:#FAFBF9; --surface-2:#E2E7E3; --raised:#FFFFFF;
+  --ink:#131A18; --ink-soft:#38443F; --muted:#5F6C66; --line:#CBD4CE; --line-soft:#DDE4DF;
+  --accent:#0C6355; --accent-ink:#08463C; --accent-soft:#D6E7E2;
+  --verum:#0C6355; --falsum:#A33C20; --brass:#8A6D0B;
+  --shadow:0 1px 2px rgba(19,26,24,.06), 0 8px 24px -12px rgba(19,26,24,.18);
+  --serif:"Spectral", Georgia, "Times New Roman", serif;
+  --mono:"IBM Plex Mono", "SFMono-Regular", Consolas, monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --ground:#0E1413; --surface:#151D1B; --surface-2:#1D2926; --raised:#1A2422;
+    --ink:#E4EAE6; --ink-soft:#BCC7C2; --muted:#8D9C96; --line:#2B3835; --line-soft:#222E2B;
+    --accent:#4FBCA6; --accent-ink:#8FD8C8; --accent-soft:#17332E;
+    --verum:#4FBCA6; --falsum:#DE8461; --brass:#CFA93A;
+    --shadow:0 1px 2px rgba(0,0,0,.4), 0 10px 30px -14px rgba(0,0,0,.7);
+  }
+}
+:root[data-theme="dark"]{
+  --ground:#0E1413; --surface:#151D1B; --surface-2:#1D2926; --raised:#1A2422;
+  --ink:#E4EAE6; --ink-soft:#BCC7C2; --muted:#8D9C96; --line:#2B3835; --line-soft:#222E2B;
+  --accent:#4FBCA6; --accent-ink:#8FD8C8; --accent-soft:#17332E;
+  --verum:#4FBCA6; --falsum:#DE8461; --brass:#CFA93A;
+  --shadow:0 1px 2px rgba(0,0,0,.4), 0 10px 30px -14px rgba(0,0,0,.7);
+}
+
+*{box-sizing:border-box}
+body{margin:0;background:var(--ground);color:var(--ink);font-family:var(--serif);line-height:1.55}
+.page{max-width:860px;margin:0 auto;padding:34px 22px 70px}
+
+header .eyebrow{font:600 10.5px/1 var(--mono);letter-spacing:.16em;text-transform:uppercase;color:var(--accent)}
+header h1{font-size:clamp(30px,4.6vw,44px);font-weight:600;letter-spacing:-.025em;margin:12px 0 8px;line-height:1.05}
+header .lede{font-size:17px;color:var(--muted);max-width:60ch;margin:0 0 26px}
+
+/* painel de marcos */
+.marcos{display:grid;grid-template-columns:repeat(auto-fit,minmax(122px,1fr));gap:1px;background:var(--line);
+  border:1px solid var(--line);border-radius:4px;overflow:hidden;margin-bottom:8px}
+.mc{background:var(--surface);border:0;padding:12px 12px 11px;text-align:left;cursor:pointer;font-family:var(--serif);color:var(--ink)}
+.mc:hover{background:var(--surface-2)}
+.mc[aria-pressed="true"]{background:var(--accent-soft);box-shadow:inset 3px 0 0 var(--accent)}
+.mc .code{font:600 10px/1 var(--mono);letter-spacing:.12em;color:var(--muted);display:block}
+.mc .nm{font-size:13.5px;line-height:1.25;margin-top:5px;display:block}
+.mc .sc{font:500 11px/1 var(--mono);color:var(--muted);margin-top:8px;display:block;font-variant-numeric:tabular-nums}
+.mc.pass .sc{color:var(--verum);font-weight:600}
+.bar{height:3px;background:var(--line);margin-top:7px;border-radius:2px;overflow:hidden}
+.bar i{display:block;height:100%;background:var(--accent);width:0}
+.tools{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;
+  font:500 12px/1.4 var(--mono);color:var(--muted);margin-bottom:30px}
+.tools button{font:500 11px/1 var(--mono);letter-spacing:.06em;padding:7px 11px;border:1px solid var(--line);
+  background:var(--surface);color:var(--ink-soft);border-radius:3px;cursor:pointer}
+.tools button:hover{background:var(--surface-2);color:var(--ink)}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+
+/* cabeçalho do marco */
+.mhead{border-left:4px solid var(--accent);padding:2px 0 2px 16px;margin-bottom:26px}
+.mhead h2{font-size:24px;font-weight:600;margin:0 0 6px;letter-spacing:-.015em}
+.mhead p{margin:0;font-size:15.5px;color:var(--ink-soft);max-width:62ch}
+.mhead .src{font-size:13px;color:var(--muted);font-style:italic;margin-top:8px}
+
+/* item */
+.item{border:1px solid var(--line);border-radius:4px;background:var(--surface);padding:18px 20px;margin-bottom:14px}
+.item.done{border-left:4px solid var(--line)}
+.item.ok{border-left-color:var(--verum)}
+.item.no{border-left-color:var(--falsum)}
+.item .n{font:600 10.5px/1 var(--mono);letter-spacing:.12em;color:var(--muted)}
+.item .kind{font:500 10px/1 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--accent);float:right}
+.stem{font-size:16.5px;margin:11px 0 14px;color:var(--ink)}
+.stem code,.mono{font-family:var(--mono);font-size:15px;background:var(--ground);padding:1px 5px;border-radius:2px}
+.opts{display:flex;flex-direction:column;gap:7px}
+.opt{text-align:left;font-family:var(--serif);font-size:15.5px;padding:10px 13px;border:1px solid var(--line);
+  border-radius:3px;background:var(--ground);color:var(--ink);cursor:pointer;display:flex;gap:10px;align-items:baseline}
+.opt:hover:not(:disabled){border-color:var(--accent)}
+.opt .mk{font:600 11px/1 var(--mono);color:var(--muted);flex:none}
+.opt.sel{border-color:var(--accent)}
+.opt.right{border-color:var(--verum);background:var(--accent-soft)}
+.opt.right .mk{color:var(--verum)}
+.opt.wrong{border-color:var(--falsum)}
+.opt.wrong .mk{color:var(--falsum)}
+.opt:disabled{cursor:default}
+.act{margin-top:12px;display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.act button{font:500 12px/1 var(--mono);letter-spacing:.05em;padding:9px 14px;border:1px solid var(--accent);
+  background:var(--accent);color:var(--surface);border-radius:3px;cursor:pointer}
+.act button:disabled{opacity:.4;cursor:default}
+.act .hint{font:400 12.5px/1.4 var(--mono);color:var(--muted)}
+
+/* tabela de verdade */
+.tt{border-collapse:collapse;font-family:var(--mono);font-size:14px;margin:2px 0 4px}
+.tt th,.tt td{border:1px solid var(--line);padding:7px 14px;text-align:center;min-width:46px}
+.tt th{background:var(--ground);font-weight:600;font-size:12.5px;letter-spacing:.06em;color:var(--muted)}
+.tt th.tgt{color:var(--accent)}
+.tt td.given{color:var(--muted);background:var(--ground)}
+.cellbtn{font:600 14px/1 var(--mono);width:100%;border:0;background:none;color:var(--ink);cursor:pointer;padding:2px 0}
+.cellbtn.empty{color:var(--line)}
+.cellbtn.v{color:var(--verum)}
+.cellbtn.f{color:var(--falsum)}
+td.mark-ok{background:var(--accent-soft)}
+td.mark-no{box-shadow:inset 0 0 0 2px var(--falsum)}
+
+.fb{font-size:15px;color:var(--ink-soft);margin:13px 0 0;padding-top:12px;border-top:1px solid var(--line-soft)}
+.fb strong{color:var(--ink)}
+.fb .cite{display:block;margin-top:7px;font-size:13px;color:var(--muted);font-style:italic}
+.fb:empty{display:none;padding:0;border:0}
+
+.result{border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:4px;background:var(--surface);
+  padding:18px 20px;margin-top:22px}
+.result h3{margin:0 0 8px;font-size:18px;font-weight:600}
+.result p{margin:0;font-size:15px;color:var(--ink-soft);max-width:62ch}
+.result .score{font-family:var(--mono);font-size:30px;font-weight:600;color:var(--accent);
+  font-variant-numeric:tabular-nums;line-height:1;margin-bottom:10px}
+footer{margin-top:38px;padding-top:16px;border-top:1px solid var(--line);font-size:13px;color:var(--muted);max-width:70ch}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+<style>
+.cbar{display:flex;align-items:center;gap:14px;flex-wrap:wrap;padding:9px 24px;
+  border-bottom:1px solid var(--line);background:var(--surface-2);
+  font:500 12.5px/1 var(--mono);position:sticky;top:0;z-index:20}
+.cbar a{color:var(--accent);text-decoration:none;white-space:nowrap}
+.cbar a:hover{text-decoration:underline}
+.cbar .home{font-weight:600}
+.cbar .where{color:var(--muted);letter-spacing:.06em;text-transform:uppercase;font-size:10.5px}
+.cbar .sp{flex:1}
+.cbar .nx{color:var(--ink-soft)}
+.nextgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px;margin:22px 0 8px}
+.nextgrid .nx{display:block;text-decoration:none;border:1px solid var(--line);border-radius:4px;
+  background:var(--surface);padding:16px 18px;color:var(--ink)}
+.nextgrid .nx:hover{border-color:var(--accent)}
+.nextgrid .k{font:600 10px/1 var(--mono);letter-spacing:.13em;text-transform:uppercase;color:var(--accent);display:block}
+.nextgrid .t{font-size:16.5px;font-weight:600;margin:9px 0 6px;line-height:1.2;display:block}
+.nextgrid .d{font-size:14px;color:var(--muted);line-height:1.45;display:block}
+</style>
+<nav class="cbar"><a class="home" href="index.html">&#9666; Índice do curso</a><span class="where">Instrumento · avaliação</span><span class="sp"></span></nav>
+<div class="page">
+  <header>
+    <div class="eyebrow">Curso de fluência em lógica · avaliação formativa</div>
+    <h1>Provas de domínio</h1>
+    <p class="lede">Vinte e nove itens autocorrigidos, distribuídos pelos seis marcos do curso. Cada resposta traz o motivo e a fonte. O marco é considerado vencido a partir de setenta e cinco por cento de acerto.</p>
+    <div class="marcos" id="marcos"></div>
+    <div class="tools">
+      <span id="overall">Progresso geral</span>
+      <button id="reset" type="button">Zerar respostas</button>
+    </div>
+  </header>
+  <main id="main"></main>
+  <footer>
+    Itens redigidos a partir de Mortari (2016), Neves Filho e Rui (2016), Sell (2014), Morais et al. (2019) e do plano de ensino de Mortari (2023). O progresso fica gravado apenas neste navegador.
+  </footer>
+</div>
+<script>
+const MARCOS = [
+ { id:"A1", nome:"Argumento e validade", mod:"Módulo 1 · Nível A",
+   desc:"Extrair premissas e conclusão de um parágrafo argumentativo, julgar validade e correção separadamente e nomear falácias informais em exemplos inéditos.",
+   src:"Mortari (2016, caps. 1–2); Neves Filho e Rui (2016, caps. I e IV).",
+   itens:[
+   { t:"escolha", stem:"Em «Nenhum candidato aprovado deixou de entregar a documentação, de modo que Marina entregou a documentação, já que ela foi aprovada», qual é a conclusão?",
+     opts:["Marina entregou a documentação.","Marina foi aprovada.","Nenhum candidato aprovado deixou de entregar a documentação."], r:0,
+     fb:"«De modo que» é indicador de conclusão e «já que» é indicador de premissa. A passagem oferece a aprovação de Marina e a regra geral como razões para que se aceite que ela entregou a documentação.",
+     cite:"Mortari (2016, §1.3)." },
+   { t:"escolha", stem:"Um argumento tem todas as premissas verdadeiras e a conclusão falsa. Que se conclui a respeito dele?",
+     opts:["É certamente inválido.","É válido, mas incorreto.","Nada se conclui sem examinar a sua forma."], r:0,
+     fb:"Este é o único perfil de valores de verdade que a validade exclui: um argumento válido jamais leva de premissas todas verdadeiras a uma conclusão falsa. Observar esse perfil basta, portanto, para condenar o argumento, sem exame adicional da forma.",
+     cite:"Mortari (2016, §2.1)." },
+   { t:"multi", stem:"Assinale todas as características que pertencem aos argumentos dedutivos, e não aos indutivos.",
+     opts:["A conclusão não acrescenta informação às premissas.","A avaliação é binária: válido ou inválido, sem graus.","Nova evidência pode enfraquecer a inferência.","A verdade das premissas garante a da conclusão."], r:[0,1,3],
+     fb:"A terceira alternativa caracteriza a indução: argumentos indutivos são derrotáveis, e uma evidência adicional pode reduzir a força da inferência sem tocar em nenhuma premissa. As demais são propriedades da dedução.",
+     cite:"Mortari (2016, §2.3); Neves Filho e Rui (2016, cap. I, §4)." },
+   { t:"escolha", stem:"«O senhor não pode criticar o relatório de auditoria: nunca trabalhou um dia sequer em uma auditoria.» Qual é o defeito?",
+     opts:["Ad hominem.","Ad verecundiam.","Generalização apressada."], r:0,
+     fb:"O ataque recai sobre quem faz a crítica, e não sobre a crítica. Note que o ataque poderia ser verdadeiro e mesmo assim nada estabelecer: a inexperiência de quem aponta um erro não faz do erro um acerto.",
+     cite:"Neves Filho e Rui (2016, cap. IV, §3)." }
+ ]},
+ { id:"A2", nome:"Linguagem, conjuntos e silogismo", mod:"Módulo 2 · Nível A",
+   desc:"Empregar corretamente aspas de menção, operar com conjuntos e decidir a validade de um silogismo categórico.",
+   src:"Mortari (2016, caps. 3–4, Apêndice A); Neves Filho e Rui (2016, cap. II); Morais et al. (2019).",
+   itens:[
+   { t:"escolha", stem:"Qual das sentenças abaixo é verdadeira?",
+     opts:["«Gato» tem quatro letras.","Gato tem quatro letras.","«Gato» é um mamífero."], r:0,
+     fb:"A primeira menciona a palavra e afirma algo sobre ela, o que é verdadeiro. A segunda usa a palavra e afirma que o animal tem quatro letras, o que é falso. A terceira atribui a uma palavra uma propriedade do animal, e é igualmente falsa.",
+     cite:"Mortari (2016, §3.3)." },
+   { t:"escolha", stem:"Sendo A = {1, 2, 3} e B = {3, 4}, os conjuntos A ∪ B e A ∩ B são, respectivamente:",
+     opts:["{1, 2, 3, 4} e {3}","{1, 2, 3, 4} e {1, 2, 4}","{3} e {1, 2, 3, 4}"], r:0,
+     fb:"A união reúne os elementos de ambos, sem repetição; a intersecção retém apenas os que pertencem aos dois conjuntos, e o único é o 3.",
+     cite:"Mortari (2016, §4.4)." },
+   { t:"escolha", stem:"No quadrado tradicional das oposições, se «Todo S é P» é verdadeira, então «Algum S não é P» é:",
+     opts:["Falsa.","Verdadeira.","Indeterminada."], r:0,
+     fb:"As duas são contraditórias: não podem ser ambas verdadeiras nem ambas falsas. A verdade da universal afirmativa determina, portanto, a falsidade da particular negativa.",
+     cite:"Mortari (2016, §A.2); Neves Filho e Rui (2016, cap. II, §3)." },
+   { t:"escolha", stem:"«Todo A é B. Algum C é A. Portanto, algum C é B.» O silogismo é:",
+     opts:["Válido.","Inválido, por termo médio não distribuído.","Inválido, por conclusão particular a partir de premissa universal."], r:0,
+     fb:"É o modo Darii, da primeira figura. O diagrama de Venn confirma: o que é C e A está necessariamente dentro de B, uma vez que todo A está contido em B.",
+     cite:"Mortari (2016, §§A.3–A.5)." }
+ ]},
+ { id:"B1", nome:"Cálculo proposicional", mod:"Módulo 3 · Nível B",
+   desc:"Traduzir sem ambiguidade e decidir por tabela de verdade a validade de um argumento com até quatro letras sentenciais.",
+   src:"Mortari (2016, caps. 5–7); Neves Filho e Rui (2016, cap. III); Sell (2014, unidade 1).",
+   itens:[
+   { t:"escolha", stem:"Qual das sequências abaixo é uma fórmula bem formada do cálculo proposicional?",
+     opts:["¬(P ∧ Q) → R","(P → Q","P ∧ ∧ Q"], r:0,
+     fb:"A segunda tem parênteses não balanceados e a terceira repete um operador binário sem fórmula entre eles. Apenas a primeira é obtida pelas regras de formação a partir de fórmulas atômicas.",
+     cite:"Mortari (2016, §§5.4–5.5); Sell (2014, unidade 1, seção 2)." },
+   { t:"escolha", stem:"A tradução correta de «Só irei se ele vier» é:",
+     opts:["I → V","V → I","I ∧ V"], r:0,
+     fb:"«Somente se» introduz uma condição necessária, que ocupa o consequente. Dizer que só irei se ele vier é dizer que, se eu for, então ele veio. A leitura V → I confundiria condição necessária com suficiente e afirmaria que a vinda dele basta para que eu vá.",
+     cite:"Neves Filho e Rui (2016, cap. III, §3); Mortari (2016, §5.4)." },
+   { t:"tabela", stem:"Complete a coluna da fórmula ¬P ∨ Q. Clique em cada célula para alternar entre V e F.",
+     cols:["P","Q"], rows:[["V","V"],["V","F"],["F","V"],["F","F"]], tgt:"¬P ∨ Q", ans:["V","F","V","V"],
+     fb:"A disjunção só é falsa quando ambos os disjuntos o são, e isso ocorre apenas na segunda linha, em que ¬P é falsa por ser P verdadeira, e Q é falsa. A coluna resultante é idêntica à de P → Q, o que exibe a equivalência entre as duas fórmulas.",
+     cite:"Mortari (2016, §§6.3, 7.1)." },
+   { t:"escolha", stem:"Qual das fórmulas abaixo é uma contingência?",
+     opts:["P → ¬P","P ∨ ¬P","P ∧ ¬P"], r:0,
+     fb:"P → ¬P é falsa quando P é verdadeira e verdadeira quando P é falsa: assume os dois valores, e é portanto contingente. A segunda é tautologia e a terceira, contradição.",
+     cite:"Mortari (2016, §7.2)." },
+   { t:"escolha", stem:"Para mostrar que o argumento «P → Q, Q, portanto P» é inválido, que valoração serve de contraexemplo?",
+     opts:["v(P) = F e v(Q) = V","v(P) = V e v(Q) = F","v(P) = F e v(Q) = F"], r:0,
+     fb:"Com P falsa e Q verdadeira, o condicional P → Q é verdadeiro e a segunda premissa também, ao passo que a conclusão P é falsa. Há, então, uma linha da tabela com premissas verdadeiras e conclusão falsa, o que basta para a invalidade. O argumento comete a falácia da afirmação do consequente.",
+     cite:"Mortari (2016, §7.3)." }
+ ]},
+ { id:"B2", nome:"Tablôs e dedução natural", mod:"Módulo 4 · Nível B",
+   desc:"Fechar um tablô, extrair a valoração de um ramo aberto e produzir a derivação correspondente em dedução natural.",
+   src:"Mortari (2016, caps. 12–15); Sell (2014, unidades 1–2).",
+   itens:[
+   { t:"escolha", stem:"No método dos tablôs, a decomposição de ¬(α → β) produz:",
+     opts:["α e ¬β, no mesmo ramo.","¬α e β, em ramos distintos.","α e β, em ramos distintos."], r:0,
+     fb:"Um condicional só é falso quando o antecedente é verdadeiro e o consequente é falso. Não havendo outra maneira de falsificá-lo, a regra não ramifica: as duas fórmulas são acrescentadas ao mesmo ramo.",
+     cite:"Mortari (2016, §12.3)." },
+   { t:"escolha", stem:"Um ramo de um tablô é fechado quando:",
+     opts:["Contém uma fórmula e a sua negação.","Não admite mais nenhuma decomposição.","Contém apenas fórmulas atômicas."], r:0,
+     fb:"O fechamento marca a impossibilidade: aquele ramo descreve uma valoração que teria de atribuir V e F à mesma fórmula. Um ramo sem decomposições pendentes e sem contradição está saturado e aberto, e é dele que se lê o contramodelo.",
+     cite:"Mortari (2016, §§12.1–12.2, 12.6)." },
+   { t:"escolha", stem:"Constrói-se um tablô a partir das premissas e da negação da conclusão, e todos os ramos fecham. Isso mostra que:",
+     opts:["O argumento é válido.","O argumento é inválido.","As premissas são contraditórias entre si."], r:0,
+     fb:"O fechamento de todos os ramos significa que não existe valoração que torne as premissas verdadeiras e a conclusão falsa, e é exatamente esta a definição de consequência lógica. A terceira alternativa descreveria um tablô que fecha só com as premissas, antes de acrescentar a negação da conclusão.",
+     cite:"Mortari (2016, §12.4)." },
+   { t:"escolha", stem:"Na derivação abaixo, qual regra justifica a linha 6?<br><span class='mono'>1. P → Q &nbsp;(P) · 2. ¬Q &nbsp;(P) · 3. P &nbsp;(hipótese) · 4. Q &nbsp;(1, 3 MP) · 5. Q ∧ ¬Q &nbsp;(4, 2 I∧) · 6. ¬P</span>",
+     opts:["Redução ao absurdo, descarregando a hipótese da linha 3.","Modus tollens sobre as linhas 1 e 2.","Eliminação da conjunção sobre a linha 5."], r:0,
+     fb:"A hipótese P foi levantada na linha 3 e conduziu à contradição da linha 5; a redução ao absurdo descarrega a hipótese e conclui a sua negação. Esta derivação é, aliás, a demonstração de que o modus tollens é regra derivada, e não primitiva.",
+     cite:"Mortari (2016, §14.4); Sell (2014, unidade 2, seção 1)." },
+   { t:"multi", stem:"Assinale as regras hipotéticas da dedução natural, isto é, as que exigem levantar e depois descarregar uma hipótese.",
+     opts:["Prova do condicional.","Redução ao absurdo.","Modus ponens.","Introdução da conjunção."], r:[0,1],
+     fb:"Apenas essas duas operam sobre uma subderivação. As demais são regras não hipotéticas: aplicam-se diretamente a fórmulas já disponíveis, sem abrir suposição alguma.",
+     cite:"Sell (2014, unidade 1, seção 4); Mortari (2016, §14.4)." }
+ ]},
+ { id:"C1", nome:"Lógica de primeira ordem", mod:"Módulo 5 · Nível C",
+   desc:"Formalizar quantificação múltipla e identidade, refutar por estrutura finita e provar respeitando as restrições sobre variáveis.",
+   src:"Mortari (2016, caps. 8–11, 15–16); Sell (2014, unidades 3–4).",
+   itens:[
+   { t:"escolha", stem:"A formalização correta de «Todo cão late» é:",
+     opts:["∀x(Cx → Lx)","∀x(Cx ∧ Lx)","∃x(Cx → Lx)"], r:0,
+     fb:"A segunda afirma que tudo o que existe é cão e late. A universal afirmativa exige o condicional: para qualquer objeto, se for cão, então late.",
+     cite:"Mortari (2016, §§8.6, 9.2)." },
+   { t:"escolha", stem:"A formalização correta de «Algum cão late» é:",
+     opts:["∃x(Cx ∧ Lx)","∃x(Cx → Lx)","∀x(Cx ∧ Lx)"], r:0,
+     fb:"A particular afirmativa exige a conjunção. A segunda alternativa é verdadeira em qualquer domínio que contenha um objeto que não seja cão, pois o condicional se satisfaz por antecedente falso, e não diz portanto o que se pretende.",
+     cite:"Mortari (2016, §9.2)." },
+   { t:"escolha", stem:"«Todos amam alguém» formaliza-se, na leitura mais natural, como:",
+     opts:["∀x∃yAxy","∃y∀xAxy","∀x∀yAxy"], r:0,
+     fb:"A primeira permite que cada pessoa ame alguém diferente. A segunda é mais forte e afirma que existe uma pessoa amada por todos. A ordem dos quantificadores altera o que é dito, e a inversão não preserva o sentido.",
+     cite:"Mortari (2016, §9.3); Sell (2014, unidade 3, seção 4)." },
+   { t:"escolha", stem:"A fórmula ¬∀xPx é equivalente a:",
+     opts:["∃x¬Px","¬∃x¬Px","∀x¬Px"], r:0,
+     fb:"Negar que tudo tem a propriedade é afirmar que algo não a tem. A terceira alternativa é mais forte: afirma que nada tem a propriedade, o que não decorre da negação do universal.",
+     cite:"Mortari (2016, §15.3); Sell (2014, unidade 4, seção 4)." },
+   { t:"escolha", stem:"«Exatamente um objeto é R» formaliza-se, no cálculo com identidade, como:",
+     opts:["∃x(Rx ∧ ∀y(Ry → y = x))","∃xRx ∧ ∃yRy","∀x(Rx → ∃y(Ry ∧ y ≠ x))"], r:0,
+     fb:"A fórmula afirma a existência de um objeto com a propriedade e, em seguida, que qualquer objeto com essa propriedade coincide com ele, o que exprime unicidade. A terceira alternativa afirma o contrário: que há sempre outro.",
+     cite:"Mortari (2016, §16.1)." },
+   { t:"escolha", stem:"A regra de introdução do quantificador universal exige que a variável própria:",
+     opts:["Não ocorra livre em nenhuma premissa nem em hipótese ainda não descarregada.","Ocorra livre em pelo menos uma premissa.","Seja distinta de toda constante individual da linguagem."], r:0,
+     fb:"A restrição garante que nada de particular foi suposto a respeito do objeto designado pela variável. Sem ela, provar-se-ia o universal a partir de uma instância arbitrária mas comprometida, e o sistema deixaria de ser correto.",
+     cite:"Mortari (2016, §15.2); Sell (2014, unidade 4, seção 2)." }
+ ]},
+ { id:"C2", nome:"Metateoria e não clássicas", mod:"Módulo 6 · Nível C",
+   desc:"Enunciar correção e completude, explicar a indecidibilidade e avaliar um argumento em lógica clássica e em uma lógica polivalente.",
+   src:"Mortari (2016, caps. 17–18, §§11.3, 12.7, 15.5); Mortari (2023, tópicos 5–6).",
+   itens:[
+   { t:"escolha", stem:"O teorema da correção, para o cálculo proposicional clássico, afirma que:",
+     opts:["Se Γ ⊢ α, então Γ ⊨ α.","Se Γ ⊨ α, então Γ ⊢ α.","Γ ⊢ α se e somente se α é uma tautologia."], r:0,
+     fb:"A correção garante que o sistema dedutivo não prova nada além do que é semanticamente acarretado: tudo o que se deriva é consequência. A recíproca é o teorema da completude, e a conjunção dos dois estabelece a coincidência entre ⊢ e ⊨.",
+     cite:"Mortari (2016, §15.5); Mortari (2023, tópico 5)." },
+   { t:"escolha", stem:"Dizer que o cálculo de predicados clássico é indecidível significa que:",
+     opts:["Não há procedimento que decida, para toda fórmula, em número finito de passos, se ela é válida.","Há fórmulas válidas que não podem ser demonstradas no sistema.","O sistema é incorreto para fórmulas com quantificação múltipla."], r:0,
+     fb:"A segunda alternativa negaria a completude, que vale para o cálculo de predicados. A indecidibilidade é outra coisa: existe procedimento que confirma as fórmulas válidas, mas nenhum que, diante de uma fórmula inválida, sempre pare e o informe. É o que se manifesta nos tablôs que não terminam.",
+     cite:"Mortari (2016, §12.7)." },
+   { t:"escolha", stem:"A motivação de Łukasiewicz para introduzir um terceiro valor de verdade foi:",
+     opts:["O estatuto dos enunciados sobre futuros contingentes.","A existência de paradoxos na teoria dos conjuntos.","A necessidade de formalizar a lógica modal."], r:0,
+     fb:"O problema, herdado da discussão aristotélica da batalha naval, é o de enunciados sobre eventos futuros ainda indeterminados, aos quais atribuir V ou F pareceria comprometer-se com o determinismo. O terceiro valor representa essa indeterminação.",
+     cite:"Mortari (2016, §18.5); Morais et al. (2019, cap. 6)." },
+   { t:"escolha", stem:"A lógica intuicionista se distingue da clássica principalmente por:",
+     opts:["Não validar o terceiro excluído em geral.","Rejeitar o princípio de não contradição.","Admitir mais de dois valores de verdade."], r:0,
+     fb:"Na leitura intuicionista, afirmar α ∨ ¬α exigiria dispor de uma prova de α ou de uma prova de ¬α, o que nem sempre se tem. A não contradição permanece; e a lógica intuicionista não é polivalente, ainda que possa receber semânticas de mundos.",
+     cite:"Mortari (2016, §18.5)." },
+   { t:"multi", stem:"Assinale os pressupostos cuja recusa dá origem a lógicas não clássicas conhecidas.",
+     opts:["A bivalência.","O terceiro excluído.","O princípio da explosão.","A existência de uma relação de consequência."], r:[0,1,2],
+     fb:"A recusa da bivalência produz as lógicas polivalentes; a do terceiro excluído, a intuicionista; a da explosão, as paraconsistentes. A quarta alternativa não descreve um pressuposto substantivo: sem relação de consequência não haveria lógica alguma a discutir.",
+     cite:"Mortari (2016, §§18.1–18.2, 18.5)." }
+ ]}
+];
+</script>
+<script>
+(function(){
+  const KEY = "curso-logica-provas-v1";
+  const LETRA = ["A","B","C","D"];
+  let state = {};
+  try { state = JSON.parse(localStorage.getItem(KEY) || "{}") || {}; } catch(e){ state = {}; }
+  function save(){ try { localStorage.setItem(KEY, JSON.stringify(state)); } catch(e){} }
+  function key(m,i){ return m + ":" + i; }
+
+  const chips = document.getElementById("marcos");
+  const main = document.getElementById("main");
+  let cur = 0;
+  function doHash(){
+    const h = (location.hash || "").replace("#", "").toUpperCase();
+    const i = MARCOS.findIndex(m => m.id === h);
+    if(i >= 0) cur = i;
+  }
+  doHash();
+  window.addEventListener("hashchange", () => { doHash(); render(); });
+
+  function scoreOf(m){
+    let done = 0, ok = 0;
+    m.itens.forEach((it, i) => { const s = state[key(m.id,i)]; if(s){ done++; if(s.ok) ok++; } });
+    return {done, ok, total:m.itens.length, pct: Math.round(100*ok/m.itens.length)};
+  }
+
+  function paintChips(){
+    chips.innerHTML = "";
+    MARCOS.forEach((m, k) => {
+      const s = scoreOf(m);
+      const b = document.createElement("button");
+      b.type = "button"; b.className = "mc" + (s.pct >= 75 ? " pass" : "");
+      b.setAttribute("aria-pressed", String(k === cur));
+      b.innerHTML = '<span class="code">Marco ' + m.id + '</span><span class="nm">' + m.nome +
+        '</span><span class="sc">' + s.ok + "/" + s.total + (s.pct >= 75 ? " · vencido" : "") +
+        '</span><span class="bar"><i style="width:' + (100*s.done/s.total) + '%"></i></span>';
+      b.addEventListener("click", () => { cur = k; render(); });
+      chips.appendChild(b);
+    });
+    const all = MARCOS.reduce((a,m) => { const s = scoreOf(m); a.ok += s.ok; a.t += s.total; a.d += s.done; return a; }, {ok:0,t:0,d:0});
+    document.getElementById("overall").textContent =
+      all.d + " de " + all.t + " itens respondidos · " + all.ok + " corretos" +
+      (all.d ? " · " + Math.round(100*all.ok/all.d) + "% de acerto" : "");
+  }
+
+  function mark(m, i, ok){ state[key(m.id,i)] = {ok:ok}; save(); paintChips(); showResult(m); }
+
+  function showResult(m){
+    const s = scoreOf(m), el = document.getElementById("result");
+    if(!el) return;
+    if(s.done < s.total){
+      el.innerHTML = '<h3>Marco ' + m.id + " em andamento</h3><p>" + s.done + " de " + s.total +
+        " itens respondidos. O marco é considerado vencido a partir de 75% de acerto sobre o total.</p>";
+      return;
+    }
+    const passou = s.pct >= 75;
+    el.innerHTML = '<div class="score">' + s.pct + "%</div><h3>" +
+      (passou ? "Marco " + m.id + " vencido" : "Marco " + m.id + " ainda não vencido") + "</h3><p>" +
+      (passou
+        ? "O aluno pode passar ao módulo seguinte. Convém, ainda assim, refazer os itens errados: no percurso autoinstrucional, o erro registrado indica a unidade a reler."
+        : "Recomenda-se retomar as unidades indicadas nas fontes dos itens errados antes de avançar, uma vez que os módulos seguintes pressupõem esta competência.") + "</p>";
+  }
+
+  function render(){
+    const m = MARCOS[cur];
+    paintChips();
+    let h = '<div class="mhead"><h2>Marco ' + m.id + " · " + m.nome + "</h2><p>" + m.desc +
+      '</p><div class="src">' + m.mod + " · " + m.src + "</div></div>";
+    h += '<div id="itens"></div><div class="result" id="result"></div>';
+    main.innerHTML = h;
+    const box = document.getElementById("itens");
+    m.itens.forEach((it, i) => box.appendChild(build(m, it, i)));
+    showResult(m);
+    window.scrollTo({top:0, behavior:"instant"});
+  }
+
+  function shell(it, i){
+    const d = document.createElement("div");
+    d.className = "item";
+    const kind = {escolha:"escolha simples", multi:"múltipla seleção", tabela:"tabela de verdade"}[it.t];
+    d.innerHTML = '<span class="kind">' + kind + '</span><span class="n">Item ' + String(i+1).padStart(2,"0") +
+      '</span><p class="stem">' + it.stem + "</p>";
+    return d;
+  }
+  function feedback(d, ok, it){
+    d.classList.add("done", ok ? "ok" : "no");
+    const p = document.createElement("p");
+    p.className = "fb";
+    p.innerHTML = "<strong>" + (ok ? "Correto." : "Incorreto.") + "</strong> " + it.fb +
+      '<span class="cite">' + it.cite + "</span>";
+    d.appendChild(p);
+  }
+
+  function build(m, it, i){
+    const d = shell(it, i);
+    const already = state[key(m.id,i)];
+
+    if(it.t === "escolha"){
+      const wrap = document.createElement("div"); wrap.className = "opts";
+      it.opts.forEach((o, n) => {
+        const b = document.createElement("button");
+        b.type = "button"; b.className = "opt";
+        b.innerHTML = '<span class="mk">' + LETRA[n] + '</span><span>' + o + "</span>";
+        b.addEventListener("click", () => {
+          if(d.classList.contains("done")) return;
+          wrap.querySelectorAll(".opt").forEach((x, k) => {
+            x.disabled = true;
+            if(k === it.r) x.classList.add("right");
+            else if(k === n) x.classList.add("wrong");
+          });
+          const ok = n === it.r;
+          feedback(d, ok, it); mark(m, i, ok);
+        });
+        wrap.appendChild(b);
+      });
+      d.appendChild(wrap);
+      if(already){
+        wrap.querySelectorAll(".opt").forEach((x, k) => { x.disabled = true; if(k === it.r) x.classList.add("right"); });
+        replayFb(d, it, already.ok);
+      }
+      return d;
+    }
+
+    if(it.t === "multi"){
+      const wrap = document.createElement("div"); wrap.className = "opts";
+      const chosen = new Set();
+      it.opts.forEach((o, n) => {
+        const b = document.createElement("button");
+        b.type = "button"; b.className = "opt";
+        b.innerHTML = '<span class="mk">' + LETRA[n] + '</span><span>' + o + "</span>";
+        b.addEventListener("click", () => {
+          if(d.classList.contains("done")) return;
+          if(chosen.has(n)){ chosen.delete(n); b.classList.remove("sel"); }
+          else { chosen.add(n); b.classList.add("sel"); }
+        });
+        wrap.appendChild(b);
+      });
+      d.appendChild(wrap);
+      const act = document.createElement("div"); act.className = "act";
+      const btn = document.createElement("button"); btn.type = "button"; btn.textContent = "Verificar";
+      const hint = document.createElement("span"); hint.className = "hint";
+      hint.textContent = "selecione todas as que se aplicam";
+      act.appendChild(btn); act.appendChild(hint); d.appendChild(act);
+      btn.addEventListener("click", () => {
+        if(d.classList.contains("done")) return;
+        const right = new Set(it.r);
+        const ok = chosen.size === right.size && Array.from(chosen).every(x => right.has(x));
+        wrap.querySelectorAll(".opt").forEach((x, k) => {
+          x.disabled = true; x.classList.remove("sel");
+          if(right.has(k)) x.classList.add("right");
+          else if(chosen.has(k)) x.classList.add("wrong");
+        });
+        btn.disabled = true;
+        feedback(d, ok, it); mark(m, i, ok);
+      });
+      if(already) { wrap.querySelectorAll(".opt").forEach((x,k)=>{x.disabled=true; if(it.r.includes(k)) x.classList.add("right");}); btn.disabled = true; replayFb(d, it, already.ok); }
+      return d;
+    }
+
+    /* tabela de verdade */
+    const t = document.createElement("table"); t.className = "tt";
+    let head = "<tr>";
+    it.cols.forEach(c => head += "<th>" + c + "</th>");
+    head += '<th class="tgt">' + it.tgt + "</th></tr>";
+    let body = "";
+    it.rows.forEach((r, n) => {
+      body += "<tr>";
+      r.forEach(v => body += '<td class="given">' + v + "</td>");
+      body += '<td><button type="button" class="cellbtn empty" data-row="' + n + '">·</button></td></tr>';
+    });
+    t.innerHTML = head + body;
+    d.appendChild(t);
+    const act = document.createElement("div"); act.className = "act";
+    const btn = document.createElement("button"); btn.type = "button"; btn.textContent = "Verificar coluna";
+    const hint = document.createElement("span"); hint.className = "hint"; hint.textContent = "quatro linhas a preencher";
+    act.appendChild(btn); act.appendChild(hint); d.appendChild(act);
+    const vals = it.rows.map(() => null);
+    t.querySelectorAll(".cellbtn").forEach(b => b.addEventListener("click", () => {
+      if(d.classList.contains("done")) return;
+      const n = +b.dataset.row;
+      vals[n] = vals[n] === null ? "V" : (vals[n] === "V" ? "F" : null);
+      b.textContent = vals[n] === null ? "·" : vals[n];
+      b.className = "cellbtn " + (vals[n] === null ? "empty" : vals[n].toLowerCase());
+      btn.disabled = vals.some(v => v === null);
+      hint.textContent = vals.some(v => v === null) ? "quatro linhas a preencher" : "pronto para verificar";
+    }));
+    btn.disabled = true;
+    btn.addEventListener("click", () => {
+      if(d.classList.contains("done")) return;
+      let ok = true;
+      t.querySelectorAll(".cellbtn").forEach(b => {
+        const n = +b.dataset.row, cell = b.parentElement;
+        if(vals[n] === it.ans[n]) cell.classList.add("mark-ok");
+        else { cell.classList.add("mark-no"); ok = false; b.textContent = it.ans[n]; b.className = "cellbtn " + it.ans[n].toLowerCase(); }
+      });
+      btn.disabled = true; hint.textContent = ok ? "coluna correta" : "coluna corrigida";
+      feedback(d, ok, it); mark(m, i, ok);
+    });
+    if(already){
+      t.querySelectorAll(".cellbtn").forEach(b => { const n = +b.dataset.row; b.textContent = it.ans[n]; b.className = "cellbtn " + it.ans[n].toLowerCase(); });
+      btn.disabled = true; replayFb(d, it, already.ok);
+    }
+    return d;
+  }
+
+  function replayFb(d, it, ok){
+    d.classList.add("done");
+    if(ok === true) d.classList.add("ok"); else if(ok === false) d.classList.add("no");
+    const p = document.createElement("p"); p.className = "fb";
+    p.innerHTML = "<strong>Já respondido.</strong> " + it.fb + '<span class="cite">' + it.cite + "</span>";
+    d.appendChild(p);
+  }
+
+  document.getElementById("reset").addEventListener("click", () => {
+    state = {}; save(); render();
+  });
+
+  render();
+})();
+</script>
+
+</body>
+</html>

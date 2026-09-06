@@ -1,0 +1,642 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<style>:root{color-scheme:light dark}body{margin:0;font:14px/1.5 system-ui,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style>
+</head>
+<body>
+<title>Como se Escreve uma Prova</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,600&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<style>
+:root{
+  --ground:#EEF1EE; --surface:#FAFBF9; --surface-2:#E2E7E3; --raised:#FFFFFF;
+  --ink:#131A18; --ink-soft:#38443F; --muted:#5F6C66; --line:#CBD4CE; --line-soft:#DDE4DF;
+  --accent:#0C6355; --accent-ink:#08463C; --accent-soft:#D6E7E2;
+  --verum:#0C6355; --falsum:#A33C20; --brass:#8A6D0B;
+  --shadow:0 1px 2px rgba(19,26,24,.06), 0 8px 24px -12px rgba(19,26,24,.18);
+  --serif:"Spectral", Georgia, "Times New Roman", serif;
+  --mono:"IBM Plex Mono", "SFMono-Regular", Consolas, monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --ground:#0E1413; --surface:#151D1B; --surface-2:#1D2926; --raised:#1A2422;
+    --ink:#E4EAE6; --ink-soft:#BCC7C2; --muted:#8D9C96; --line:#2B3835; --line-soft:#222E2B;
+    --accent:#4FBCA6; --accent-ink:#8FD8C8; --accent-soft:#17332E;
+    --verum:#4FBCA6; --falsum:#DE8461; --brass:#CFA93A;
+    --shadow:0 1px 2px rgba(0,0,0,.4), 0 10px 30px -14px rgba(0,0,0,.7);
+  }
+}
+:root[data-theme="dark"]{
+  --ground:#0E1413; --surface:#151D1B; --surface-2:#1D2926; --raised:#1A2422;
+  --ink:#E4EAE6; --ink-soft:#BCC7C2; --muted:#8D9C96; --line:#2B3835; --line-soft:#222E2B;
+  --accent:#4FBCA6; --accent-ink:#8FD8C8; --accent-soft:#17332E;
+  --verum:#4FBCA6; --falsum:#DE8461; --brass:#CFA93A;
+  --shadow:0 1px 2px rgba(0,0,0,.4), 0 10px 30px -14px rgba(0,0,0,.7);
+}
+
+*{box-sizing:border-box}
+body{margin:0;background:var(--ground);color:var(--ink);font-family:var(--serif);
+  font-size:17px;line-height:1.62;-webkit-font-smoothing:antialiased}
+.shell{max-width:1180px;margin:0 auto;padding:0 24px;display:grid;
+  grid-template-columns:220px minmax(0,1fr);gap:52px;align-items:start}
+.hero{grid-column:1/-1;padding:52px 0 32px;border-bottom:1px solid var(--line)}
+.hero .eyebrow{font:600 10.5px/1 var(--mono);letter-spacing:.18em;text-transform:uppercase;color:var(--accent)}
+.hero h1{font-size:clamp(34px,4.8vw,54px);font-weight:600;letter-spacing:-.032em;line-height:1.03;
+  margin:16px 0 12px;max-width:17ch;text-wrap:balance}
+.hero .lede{font-size:19px;color:var(--ink-soft);max-width:62ch;margin:0 0 28px}
+.facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:0;border-top:1px solid var(--line)}
+.facts div{padding:14px 20px 14px 0}
+.facts .k{font:600 10px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.facts .v{font-size:16.5px;margin-top:6px;line-height:1.3}
+nav.toc{position:sticky;top:26px;padding:32px 0 40px;font-size:14px}
+nav.toc .lbl{font:600 10px/1 var(--mono);letter-spacing:.16em;text-transform:uppercase;color:var(--muted);
+  padding-bottom:10px;border-bottom:1px solid var(--line);display:block;margin-bottom:12px}
+nav.toc a{display:block;color:var(--muted);text-decoration:none;padding:5px 0 5px 12px;
+  border-left:2px solid transparent;line-height:1.35}
+nav.toc a:hover{color:var(--ink)}
+nav.toc a.on{color:var(--accent);border-left-color:var(--accent);font-weight:500}
+article{padding:32px 0 90px;max-width:72ch}
+article h2{font-size:26px;font-weight:600;letter-spacing:-.018em;line-height:1.16;
+  margin:52px 0 4px;scroll-margin-top:28px;text-wrap:balance}
+article h2:first-of-type{margin-top:10px}
+article h2 .num{font:600 11px/1 var(--mono);letter-spacing:.14em;color:var(--accent);display:block;margin-bottom:10px}
+article h3{font-size:19px;font-weight:600;margin:32px 0 8px;letter-spacing:-.01em;scroll-margin-top:28px}
+article h4{font-size:16.5px;font-weight:600;margin:24px 0 6px}
+article p{margin:0 0 16px;color:var(--ink-soft)}
+article p strong{color:var(--ink);font-weight:600}
+article .intro{font-size:18.5px;color:var(--ink);margin-bottom:22px}
+.m{font-family:var(--mono);font-size:.92em;background:var(--surface);padding:1px 5px;border-radius:2px;color:var(--ink)}
+.tw{overflow-x:auto;margin:20px 0 24px;border:1px solid var(--line);border-radius:4px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;font-size:14.6px;min-width:440px}
+th,td{text-align:left;padding:10px 13px;border-bottom:1px solid var(--line-soft);vertical-align:top;color:var(--ink-soft)}
+tr:last-child td{border-bottom:0}
+th{font:600 10px/1.4 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--muted);
+  border-bottom:1px solid var(--line);background:var(--ground)}
+td.m2{font-family:var(--mono);font-size:13.5px;white-space:nowrap;color:var(--ink)}
+td.c{text-align:center;font-family:var(--mono)}
+td strong{color:var(--ink)}
+/* blocos formais */
+.fx{font-family:var(--mono);font-size:15px;background:var(--surface);border:1px solid var(--line);
+  border-radius:4px;padding:14px 16px;margin:0 0 18px;overflow-x:auto;color:var(--ink);white-space:pre-wrap}
+.thm{border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:4px;background:var(--surface);
+  padding:18px 20px;margin:22px 0}
+.thm .lb{font:600 10.5px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--accent);
+  display:block;margin-bottom:9px}
+.thm p{margin:0 0 10px;color:var(--ink)}
+.thm p:last-child{margin-bottom:0}
+.thm.lema{border-left-color:var(--brass)}
+.thm.lema .lb{color:var(--brass)}
+.prova{border-left:2px solid var(--line);padding:2px 0 2px 16px;margin:16px 0 22px}
+.prova .lb{font:600 10px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--muted);
+  display:block;margin-bottom:8px}
+.prova p{font-size:16px;margin:0 0 12px}
+.prova p:last-child{margin-bottom:0}
+.qed::after{content:" ▪";color:var(--accent)}
+.marco{border-left:3px solid var(--brass);padding:4px 0 4px 15px;margin:26px 0;font-size:16px;color:var(--ink)}
+.marco b{font:600 10px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--brass);
+  display:block;margin-bottom:6px}
+.note{font-size:14.5px;color:var(--muted);border-left:2px solid var(--line);padding-left:16px;margin:22px 0}
+figure{margin:28px 0 32px}
+figure svg{width:100%;height:auto;display:block;border:1px solid var(--line);border-radius:4px;background:var(--surface)}
+figcaption{font-size:13.5px;color:var(--muted);margin-top:10px;line-height:1.5}
+figcaption b{font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--accent);font-weight:600;margin-right:8px}
+.svg-t{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.06em;fill:var(--muted)}
+.svg-l{font-family:Spectral,Georgia,serif;font-size:14px;fill:var(--ink)}
+.svg-s{font-family:Spectral,Georgia,serif;font-size:12.5px;fill:var(--muted)}
+.svg-bx{fill:var(--ground);stroke:var(--line);stroke-width:1.2}
+.svg-bx-a{fill:var(--accent-soft);stroke:var(--accent);stroke-width:1.4}
+.svg-ar{stroke:var(--muted);stroke-width:1.3;fill:none}
+/* interativos genéricos */
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:9px;margin:18px 0}
+.card{text-align:left;border:1px solid var(--line);border-radius:4px;background:var(--surface);
+  padding:11px 13px;cursor:pointer;font-family:var(--serif);color:var(--ink)}
+.card:hover{border-color:var(--accent)}
+.card[aria-pressed="true"]{border-color:var(--accent);background:var(--accent-soft)}
+.card .n{font:600 10px/1 var(--mono);letter-spacing:.1em;color:var(--muted);display:block;margin-bottom:5px}
+.card .t{font-size:14.5px;font-weight:500;line-height:1.25}
+.readout{border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:4px;
+  background:var(--surface);padding:16px 18px;margin-bottom:8px}
+.readout .rk{font:600 10px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:8px}
+.readout p{font-size:15px;margin:0 0 8px;color:var(--ink-soft)}
+.readout p:last-child{margin-bottom:0}
+.readout ol{margin:6px 0 0;padding-left:20px;font-size:14.5px;color:var(--ink-soft)}
+.readout ol li{margin-bottom:5px}
+.refs{margin-top:12px}
+.refs p{padding-left:34px;text-indent:-34px;font-size:15.5px;margin-bottom:13px}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+@media (max-width:900px){
+  .shell{grid-template-columns:1fr;gap:0}
+  nav.toc{position:static;padding:22px 0 0;columns:2;column-gap:24px}
+  nav.toc .lbl{column-span:all}
+  article{padding-top:22px}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+<style>
+.cbar{display:flex;align-items:center;gap:14px;flex-wrap:wrap;padding:9px 24px;
+  border-bottom:1px solid var(--line);background:var(--surface-2);
+  font:500 12.5px/1 var(--mono);position:sticky;top:0;z-index:20}
+.cbar a{color:var(--accent);text-decoration:none;white-space:nowrap}
+.cbar a:hover{text-decoration:underline}
+.cbar .home{font-weight:600}
+.cbar .where{color:var(--muted);letter-spacing:.06em;text-transform:uppercase;font-size:10.5px}
+.cbar .sp{flex:1}
+.cbar .nx{color:var(--ink-soft)}
+.nextgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px;margin:22px 0 8px}
+.nextgrid .nx{display:block;text-decoration:none;border:1px solid var(--line);border-radius:4px;
+  background:var(--surface);padding:16px 18px;color:var(--ink)}
+.nextgrid .nx:hover{border-color:var(--accent)}
+.nextgrid .k{font:600 10px/1 var(--mono);letter-spacing:.13em;text-transform:uppercase;color:var(--accent);display:block}
+.nextgrid .t{font-size:16.5px;font-weight:600;margin:9px 0 6px;line-height:1.2;display:block}
+.nextgrid .d{font-size:14px;color:var(--muted);line-height:1.45;display:block}
+</style>
+<nav class="cbar"><a class="home" href="index.html">&#9666; Índice do curso</a><span class="where">Nível B · módulo 4</span><span class="sp"></span><a class="nx" href="03-modulo-3.html">&larr; Módulo 3 · Cálculo proposicional</a><a class="nx" href="05-modulo-5.html">Módulo 5 · Primeira ordem &rarr;</a></nav>
+<style>
+.lab{border:1px solid var(--line);border-radius:5px;background:var(--surface);padding:20px 22px;margin:24px 0}
+.lab h4{margin:0 0 4px;font-size:17px}
+.lab .sub{font-size:14px;color:var(--muted);margin:0 0 16px}
+.ctl{font:600 9.5px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--muted);display:block;margin:0 0 9px}
+#entrada{width:100%;padding:12px 14px;border:1px solid var(--line);border-radius:4px;background:var(--ground);
+  color:var(--ink);font-family:var(--mono);font-size:15px}
+#entrada:focus{outline:2px solid var(--accent);outline-offset:1px}
+.palette{display:flex;gap:5px;flex-wrap:wrap;margin:10px 0 14px}
+.palette button{font:500 15px/1 var(--mono);padding:8px 12px;border:1px solid var(--line);background:var(--ground);
+  color:var(--ink);border-radius:3px;cursor:pointer}
+.palette button:hover{background:var(--accent-soft);border-color:var(--accent)}
+.palette button.txt{font-size:11.5px;letter-spacing:.05em;color:var(--muted)}
+.erro{border:1px solid var(--falsum);border-left:4px solid var(--falsum);border-radius:4px;background:var(--surface);
+  padding:13px 15px;font-size:14.5px;color:var(--ink)}
+.erro code{font-family:var(--mono);font-size:13px;display:block;margin-top:8px;color:var(--muted);white-space:pre}
+.tb{font-family:var(--mono);font-size:13.5px;border:1px solid var(--line);border-radius:4px;
+  background:var(--ground);padding:14px 16px;overflow-x:auto}
+.tb .ln{display:flex;gap:12px;padding:2.5px 0;align-items:baseline;white-space:nowrap}
+.tb .num{color:var(--muted);min-width:2.2em;text-align:right;font-size:12px}
+.tb .frm{color:var(--ink)}
+.tb .just{color:var(--muted);font-size:11.5px}
+.tb .branch{border-left:2px solid var(--line);margin:7px 0 2px 8px;padding-left:14px}
+.tb .tag{font:600 9.5px/1 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--muted);
+  display:block;margin:2px 0 5px}
+.tb .fecha{color:var(--falsum);font-weight:600;font-size:12.5px;padding:3px 0}
+.tb .abre{color:var(--accent);font-weight:600;font-size:12.5px;padding:3px 0}
+.tb .mod{color:var(--ink-soft);font-size:12px;padding:1px 0 4px}
+.verdict{margin-top:14px;font-size:15.5px;color:var(--ink)}
+.verdict b{font:600 10px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;display:block;margin-bottom:6px;color:var(--accent)}
+.verdict.bad b{color:var(--falsum)}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(128px,1fr));gap:8px;margin:16px 0}
+.card{text-align:left;border:1px solid var(--line);border-radius:4px;background:var(--surface);
+  padding:10px 12px;cursor:pointer;font-family:var(--serif);color:var(--ink)}
+.card:hover{border-color:var(--accent)}
+.card[aria-pressed="true"]{border-color:var(--accent);background:var(--accent-soft)}
+.card .n{font:600 13px/1 var(--mono);color:var(--accent);display:block;margin-bottom:5px}
+.card .t{font-size:12.5px;line-height:1.25;color:var(--muted)}
+.deriv{font-family:var(--mono);font-size:14px;background:var(--ground);border:1px solid var(--line-soft);
+  border-radius:4px;padding:14px 16px;margin:0 0 16px;white-space:pre;overflow-x:auto;color:var(--ink);line-height:1.75}
+.deriv .h{color:var(--brass)}
+.deriv .r{color:var(--muted);font-size:12.5px}
+</style>
+<div class="shell">
+  <header class="hero">
+    <div class="eyebrow">Curso de fluência em lógica · módulo 4</div>
+    <h1>Como se escreve uma prova</h1>
+    <p class="lede">Módulo em que a escrita começa. Os tablôs vêm primeiro, por serem um procedimento que decide e que produz o contramodelo; a dedução natural vem depois, quando o aluno já sabe por que uma prova deve existir.</p>
+    <div class="facts">
+      <div><div class="k">Nível</div><div class="v">B · intermediário</div></div>
+      <div><div class="k">Unidades</div><div class="v">Cinco</div></div>
+      <div><div class="k">Pré-requisito</div><div class="v">Marco B1</div></div>
+      <div><div class="k">Marco</div><div class="v">B2</div></div>
+      <div><div class="k">Métodos</div><div class="v">Tablôs e dedução natural</div></div>
+      <div><div class="k">Texto-base</div><div class="v">Mortari (2016, caps. 12–15)</div></div>
+    </div>
+  </header>
+
+  <nav class="toc" id="toc">
+    <span class="lbl">Unidades</span>
+    <a href="#i">Por que dois métodos</a>
+    <a href="#u1">4.1 Tablôs semânticos</a>
+    <a href="#lab">Construtor de tablôs</a>
+    <a href="#u2">4.2 Sistemas formais</a>
+    <a href="#u3">4.3 Dedução natural</a>
+    <a href="#regras">As dez regras básicas</a>
+    <a href="#u4">4.4 Regras derivadas</a>
+    <a href="#u5">4.5 ⊢ e ⊨</a>
+    <a href="#marco">Marco B2</a>
+    <a href="#proximo">Próximo passo</a>
+    <a href="#ref">Referências</a>
+  </nav>
+
+  <article>
+    <h2 id="i"><span class="num">Abertura</span>Por que dois métodos</h2>
+    <p class="intro">O módulo 3 entregou um procedimento de decisão completo, a tabela de verdade. Poder-se-ia perguntar por que continuar. A resposta tem duas partes, e a segunda é a que importa.</p>
+    <p>A primeira parte é prática. A tabela cresce exponencialmente: cinco letras exigem trinta e duas linhas, dez exigem mais de mil. Os métodos deste módulo aproveitam a estrutura das fórmulas e frequentemente decidem a questão examinando uma fração das valorações.</p>
+    <p>A segunda parte é conceitual. A tabela verifica; ela não demonstra. Diante de um argumento válido, ela informa que não há contraexemplo, mas não exibe a razão pela qual a conclusão se segue. A dedução natural exibe: ela produz um objeto, a derivação, que mostra passo a passo como a conclusão é extraída das premissas. É essa a diferença entre saber que algo é verdade e saber por quê, e é o que justifica que o curso trate a escrita de provas como um eixo próprio.</p>
+    <p>A ordem adotada é deliberada. O tablô é apresentado primeiro porque é mecânico como a tabela e informativo como uma prova: quando o argumento é válido, o tablô fecha; quando é inválido, o ramo que permanece aberto entrega diretamente a valoração que o refuta. Só depois, quando o aluno já sabe que a prova existe e por quê, a dedução natural lhe pede que a construa.</p>
+
+    <h2 id="u1"><span class="num">Unidade 4.1</span>Tablôs semânticos</h2>
+    <p>O método parte de uma inversão. Em vez de perguntar «este argumento é válido?», pergunta-se «é possível que as premissas sejam verdadeiras e a conclusão falsa?». Toma-se então o conjunto formado pelas premissas e pela <strong>negação da conclusão</strong> e procura-se uma valoração que satisfaça todas essas fórmulas. Se a busca fracassa de modo exaustivo, o argumento é válido; se encontra uma valoração, o argumento é inválido e a valoração é o contraexemplo.</p>
+    <p>A busca é organizada por regras de decomposição. Cada fórmula composta é substituída por aquilo que precisaria ser o caso para que ela fosse verdadeira. Quando há uma única maneira, a decomposição não ramifica; quando há duas, o tablô se divide.</p>
+    <div class="tw"><table>
+      <tr><th>Tipo</th><th>Fórmula</th><th>Produz</th><th>Ramifica</th></tr>
+      <tr><td class="m2">α</td><td class="m2">¬¬α</td><td class="m2">α</td><td>Não</td></tr>
+      <tr><td class="m2">α</td><td class="m2">α ∧ β</td><td class="m2">α , β</td><td>Não</td></tr>
+      <tr><td class="m2">α</td><td class="m2">¬(α ∨ β)</td><td class="m2">¬α , ¬β</td><td>Não</td></tr>
+      <tr><td class="m2">α</td><td class="m2">¬(α → β)</td><td class="m2">α , ¬β</td><td>Não</td></tr>
+      <tr><td class="m2">β</td><td class="m2">α ∨ β</td><td class="m2">α &nbsp;|&nbsp; β</td><td>Sim</td></tr>
+      <tr><td class="m2">β</td><td class="m2">α → β</td><td class="m2">¬α &nbsp;|&nbsp; β</td><td>Sim</td></tr>
+      <tr><td class="m2">β</td><td class="m2">¬(α ∧ β)</td><td class="m2">¬α &nbsp;|&nbsp; ¬β</td><td>Sim</td></tr>
+      <tr><td class="m2">β</td><td class="m2">α ↔ β</td><td class="m2">α , β &nbsp;|&nbsp; ¬α , ¬β</td><td>Sim</td></tr>
+      <tr><td class="m2">β</td><td class="m2">¬(α ↔ β)</td><td class="m2">α , ¬β &nbsp;|&nbsp; ¬α , β</td><td>Sim</td></tr>
+    </table></div>
+    <p>A regra de ¬(α → β) merece atenção porque é a que os alunos mais erram. Um condicional só é falso de uma maneira, com antecedente verdadeiro e consequente falso, e por isso a sua negação não ramifica. Já o condicional afirmado é verdadeiro de duas maneiras, e por isso ramifica.</p>
+    <h4>Fechamento, saturação e contramodelo</h4>
+    <p>Um ramo está <strong>fechado</strong> quando contém uma fórmula e a sua negação, pois nenhuma valoração torna as duas verdadeiras. Um ramo está <strong>saturado</strong> quando não há mais decomposição pendente nele. Um ramo saturado e não fechado está <strong>aberto</strong>, e dele se lê o contramodelo: cada letra que aparece afirmada recebe V, cada letra que aparece negada recebe F, e as demais recebem qualquer valor.</p>
+    <p>Se todos os ramos fecham, não há valoração que satisfaça as premissas e a negação da conclusão, e o argumento é válido. Se algum ramo permanece aberto, o argumento é inválido, e o contramodelo lido dele pode ser conferido diretamente na tabela de verdade do módulo 3.</p>
+    <figure>
+      <svg viewBox="0 0 880 300" role="img" aria-label="Tablô para o modus tollens, com dois ramos que fecham.">
+        <g>
+          <text class="svg-t" x="16" y="20">TABLÔ PARA  P → Q , ¬Q  ∴  ¬P</text>
+          <text class="svg-l" x="360" y="52" style="font-family:'IBM Plex Mono',monospace">1.  P → Q</text>
+          <text class="svg-s" x="470" y="52" style="font-family:'IBM Plex Mono',monospace;font-size:11px">premissa</text>
+          <text class="svg-l" x="360" y="76" style="font-family:'IBM Plex Mono',monospace">2.  ¬Q</text>
+          <text class="svg-s" x="470" y="76" style="font-family:'IBM Plex Mono',monospace;font-size:11px">premissa</text>
+          <text class="svg-l" x="360" y="100" style="font-family:'IBM Plex Mono',monospace">3.  ¬¬P</text>
+          <text class="svg-s" x="470" y="100" style="font-family:'IBM Plex Mono',monospace;font-size:11px">negação da conclusão</text>
+          <text class="svg-l" x="360" y="124" style="font-family:'IBM Plex Mono',monospace">4.  P</text>
+          <text class="svg-s" x="470" y="124" style="font-family:'IBM Plex Mono',monospace;font-size:11px">3, ¬¬</text>
+          <line x1="392" y1="140" x2="250" y2="182" stroke="var(--accent)" stroke-width="1.5"/>
+          <line x1="392" y1="140" x2="560" y2="182" stroke="var(--accent)" stroke-width="1.5"/>
+          <text class="svg-t" x="300" y="162" style="fill:var(--accent)">1, →</text>
+          <text class="svg-l" x="200" y="200" style="font-family:'IBM Plex Mono',monospace">5.  ¬P</text>
+          <text class="svg-l" x="540" y="200" style="font-family:'IBM Plex Mono',monospace">6.  Q</text>
+          <text class="svg-l" x="196" y="240" style="font-family:'IBM Plex Mono',monospace;font-size:22px;fill:var(--falsum)">×</text>
+          <text class="svg-s" x="222" y="240">fecha com 4</text>
+          <text class="svg-l" x="536" y="240" style="font-family:'IBM Plex Mono',monospace;font-size:22px;fill:var(--falsum)">×</text>
+          <text class="svg-s" x="562" y="240">fecha com 2</text>
+          <text class="svg-s" x="16" y="278">Todos os ramos fecham: não há valoração que torne as premissas verdadeiras e a conclusão falsa.</text>
+          <text class="svg-s" x="16" y="294">O argumento é válido, e o método o decidiu examinando seis linhas em vez de quatro linhas de tabela.</text>
+        </g>
+      </svg>
+      <figcaption><b>Figura 1</b>Um tablô fechado. A linha 3 é a negação da conclusão, e não uma premissa: é essa a inversão que caracteriza o método. Note que a decomposição da linha 1 ramifica, e que cada ramo fecha por um motivo diferente.</figcaption>
+    </figure>
+    <div class="lab" id="lab">
+      <h4>Construtor de tablôs</h4>
+      <p class="sub">Escreva o argumento com as premissas separadas por ponto e vírgula e a conclusão por último. O tablô é construído regra a regra, com a justificativa de cada linha e o contramodelo de cada ramo aberto.</p>
+      <label class="ctl" for="entrada">Argumento</label>
+      <input id="entrada" type="text" spellcheck="false" autocomplete="off" value="P → Q ; ¬Q ; ¬P">
+      <div class="palette" id="pal">
+        <button type="button" data-ins="¬">¬</button>
+        <button type="button" data-ins="∧">∧</button>
+        <button type="button" data-ins="∨">∨</button>
+        <button type="button" data-ins="→">→</button>
+        <button type="button" data-ins="↔">↔</button>
+        <button type="button" data-ins="(">(</button>
+        <button type="button" data-ins=")">)</button>
+        <button type="button" data-ins=" ; ">;</button>
+        <button type="button" class="txt" data-ex="P → Q ; ¬Q ; ¬P">modus tollens</button>
+        <button type="button" class="txt" data-ex="P → Q ; Q ; P">afirmação do consequente</button>
+        <button type="button" class="txt" data-ex="P ∨ Q ; ¬P ; Q">silogismo disjuntivo</button>
+        <button type="button" class="txt" data-ex="P → Q ; Q → R ; P → R">silogismo hipotético</button>
+        <button type="button" class="txt" data-ex="(P ∧ Q) → R ; P ; R">um inválido com três letras</button>
+        <button type="button" class="txt" data-ex="¬(P ∧ Q) ; ¬P ∨ ¬Q">De Morgan</button>
+      </div>
+      <div id="saida"></div>
+    </div>
+    <p>Duas observações sobre o uso do construtor. A primeira é que a ordem em que as fórmulas são decompostas não altera o resultado, mas altera bastante o tamanho do tablô: decompor primeiro as regras que não ramificam mantém a árvore estreita, e é a heurística que se recomenda ao fazer o tablô à mão. A segunda é que um ramo aberto fornece um contramodelo que pode ser conferido no laboratório do módulo 3, e conferi-lo é o melhor modo de verificar se o tablô foi construído corretamente.</p>
+
+    <h2 id="u2"><span class="num">Unidade 4.2</span>Sistemas axiomáticos e sistemas formais</h2>
+    <p>Antes de introduzir a dedução natural, convém situar o que ela é. Um <strong>sistema formal</strong> consiste em uma linguagem, definida por regras de formação como as da unidade 3.1, e um aparato dedutivo, que determina quais fórmulas podem ser obtidas de quais.</p>
+    <p>Historicamente, o aparato dedutivo tomou primeiro a forma <strong>axiomática</strong>: fixa-se um pequeno conjunto de fórmulas como axiomas, uma ou duas regras de inferência, e um teorema é qualquer fórmula obtida dos axiomas por aplicação das regras. O modelo é a geometria de Euclides, e a virtude é a economia: com três esquemas de axioma e o modus ponens, obtém-se todo o cálculo proposicional clássico.</p>
+    <p>A virtude é também o defeito. Provas axiomáticas são curtas de enunciar e penosas de encontrar, porque nada na forma da conclusão indica qual axioma instanciar. A <strong>dedução natural</strong> troca a economia pela usabilidade: dispensa axiomas e adota um conjunto maior de regras, escolhidas de modo que cada operador tenha regras que o introduzem e regras que o eliminam. O nome vem daí, de as regras corresponderem a passos que se dão naturalmente ao argumentar.</p>
+    <p>Mortari (2016, §13.4) propõe, como exercício de encadeamento dedutivo longo, os <em>doublets</em> de Lewis Carroll, em que se pede transformar uma palavra em outra por mudanças de uma letra por vez, cada passo produzindo palavra existente. O exercício não é lógica, e é justamente por isso que ilumina: ele exibe, sem notação, o que é seguir regras estritas até chegar a um alvo, e a dificuldade que se sente ali é a mesma que se sentirá na unidade seguinte.</p>
+
+    <h2 id="u3"><span class="num">Unidade 4.3</span>Dedução natural</h2>
+    <p>Uma <strong>derivação</strong> é uma sequência numerada de fórmulas em que cada linha ou é uma premissa, ou é uma hipótese, ou resulta de linhas anteriores pela aplicação de uma regra. Cada linha traz a sua justificativa: as linhas de que depende e o nome da regra. A derivação termina quando a conclusão desejada aparece sem depender de hipótese alguma que não tenha sido descarregada.</p>
+    <p>O sistema adotado aqui é o de Sell (2014), com dez regras básicas, das quais oito são diretas e duas são hipotéticas. A apresentação de Mortari (2016, cap. 14) organiza as mesmas regras em pares de introdução e eliminação, e a correspondência entre as duas é imediata: a prova do condicional é a regra de introdução do condicional.</p>
+    <div class="lab" id="regras">
+      <h4>As dez regras básicas</h4>
+      <p class="sub">Clique em uma regra para ver o esquema, um exemplo de aplicação e a situação em que ela se usa.</p>
+      <div class="cards" id="rcards"></div>
+      <div class="readout" id="rOut"><div class="rk">Regras</div><p>As oito primeiras são diretas: aplicam-se a fórmulas já disponíveis. As duas últimas são hipotéticas: exigem levantar uma suposição e, depois, descarregá-la.</p></div>
+    </div>
+    <h4>Como se escreve uma derivação</h4>
+    <p>O exemplo a seguir prova que, de P → Q e Q → R, segue-se P → R. Como a conclusão é um condicional, a estratégia é supor o antecedente e obter o consequente.</p>
+    <div class="deriv">  1.  P → Q          <span class="r">premissa</span>
+  2.  Q → R          <span class="r">premissa</span>
+  <span class="h">3.  P              hipótese para PC</span>
+  4.  Q              <span class="r">1, 3  MP</span>
+  5.  R              <span class="r">2, 4  MP</span>
+  6.  P → R          <span class="r">3–5  PC, descarrega 3</span></div>
+    <p>Três convenções merecem registro. A hipótese da linha 3 é marcada como tal, e as linhas 4 e 5 dependem dela. A linha 6 <strong>descarrega</strong> a hipótese, e por isso não depende mais dela: é a conclusão que se queria, e ela decorre apenas das premissas 1 e 2. A citação «3–5» indica a subderivação inteira, e não linhas isoladas.</p>
+    <h4>Estratégias</h4>
+    <p>A pergunta prática é sempre a mesma: por onde começar. A forma da conclusão responde na maioria dos casos.</p>
+    <div class="tw"><table>
+      <tr><th>Se a conclusão é</th><th>Estratégia</th></tr>
+      <tr><td class="m2">α → β</td><td>Suponha α e derive β. Encerre com prova do condicional.</td></tr>
+      <tr><td class="m2">¬α</td><td>Suponha α e derive uma contradição. Encerre com redução ao absurdo.</td></tr>
+      <tr><td class="m2">α ∧ β</td><td>Derive α, derive β, e junte com introdução da conjunção.</td></tr>
+      <tr><td class="m2">α ∨ β</td><td>Derive um dos dois e use introdução da disjunção. Se não for possível, suponha ¬(α ∨ β) e vá ao absurdo.</td></tr>
+      <tr><td class="m2">α ↔ β</td><td>Prove os dois condicionais separadamente e junte com introdução do bicondicional.</td></tr>
+      <tr><td>uma letra sentencial</td><td>Trabalhe a partir das premissas, decompondo-as. Se travar, suponha a negação da conclusão.</td></tr>
+    </table></div>
+    <div class="note">Uma derivação mais longa que a necessária não é errada. O aluno que encontra uma prova em doze linhas onde havia uma de seis fez lógica correta, e o único custo foi o tempo. Corrigir por elegância antes de o aluno dominar a correção é o modo mais seguro de fazê-lo parar de tentar.</div>
+    <h2 id="u4"><span class="num">Unidade 4.4</span>Regras derivadas e teoremas</h2>
+    <p>As dez regras básicas bastam: com elas se prova a validade de qualquer forma de argumento válida no cálculo proposicional clássico. Bastar, porém, não é o mesmo que ser cômodo, e a prática produziu um repertório de <strong>regras derivadas</strong>, que são atalhos legitimados por uma derivação feita uma única vez.</p>
+    <p>O procedimento de legitimação é simples e vale a pena executá-lo ao menos uma vez. Deriva-se a regra pretendida usando apenas as básicas, com letras gregas no lugar de letras sentenciais, para que valha para fórmulas de qualquer complexidade. Feito isso, a regra recebe nome e passa a ser citável.</p>
+    <p>O exemplo canônico é o modus tollens, cuja derivação Sell (2014, unidade 2) apresenta assim.</p>
+    <div class="deriv">  1.  α → β          <span class="r">premissa</span>
+  2.  ¬β             <span class="r">premissa</span>
+  <span class="h">3.  α              hipótese para RAA</span>
+  4.  β              <span class="r">1, 3  MP</span>
+  5.  β ∧ ¬β         <span class="r">4, 2  I∧</span>
+  6.  ¬α             <span class="r">3–5  RAA, descarrega 3</span></div>
+    <p>Demonstrada uma vez, a inferência de ¬α a partir de α → β e ¬β passa a ser citável em uma linha, sob o nome MT. Nada foi acrescentado ao sistema: tudo o que se prova com a regra derivada já se provava sem ela, apenas em mais linhas. Esse ponto é o que o módulo complementar 7 formaliza ao demonstrar que a correção do sistema não é afetada.</p>
+    <div class="tw"><table>
+      <tr><th>Regra derivada</th><th>De</th><th>Infere</th></tr>
+      <tr><td>Modus tollens (MT)</td><td class="m2">α → β , ¬β</td><td class="m2">¬α</td></tr>
+      <tr><td>Silogismo disjuntivo (SD)</td><td class="m2">α ∨ β , ¬α</td><td class="m2">β</td></tr>
+      <tr><td>Silogismo hipotético (SH)</td><td class="m2">α → β , β → γ</td><td class="m2">α → γ</td></tr>
+      <tr><td>Contraposição (CP)</td><td class="m2">α → β</td><td class="m2">¬β → ¬α</td></tr>
+      <tr><td>De Morgan (DM)</td><td class="m2">¬(α ∧ β)</td><td class="m2">¬α ∨ ¬β</td></tr>
+      <tr><td>De Morgan (DM)</td><td class="m2">¬(α ∨ β)</td><td class="m2">¬α ∧ ¬β</td></tr>
+      <tr><td>Dilema construtivo (DC)</td><td class="m2">α ∨ β , α → γ , β → γ</td><td class="m2">γ</td></tr>
+    </table></div>
+    <h4>Teoremas</h4>
+    <p>Um <strong>teorema</strong> é uma fórmula derivável sem premissa alguma. Como não depende de nada, ela é verdadeira sob toda valoração, isto é, é uma tautologia. Escreve-se ⊢ α para dizer que α é teorema.</p>
+    <p>A derivação de um teorema começa necessariamente por uma hipótese, já que não há premissas de que partir, e por isso emprega sempre uma das duas regras hipotéticas. O caso mais simples é ⊢ α → α: supõe-se α, tem-se α, e a prova do condicional descarrega a hipótese. Outros teoremas usuais são o terceiro excluído, α ∨ ¬α, a lei de Peirce e as próprias equivalências de De Morgan escritas como bicondicionais.</p>
+
+    <h2 id="u5"><span class="num">Unidade 4.5</span>Consequência sintática e consequência semântica</h2>
+    <p>O curso dispõe agora de duas relações entre um conjunto de fórmulas e uma fórmula, definidas por meios inteiramente distintos.</p>
+    <div class="thm"><span class="lb">As duas relações</span>
+      <p><strong>Γ ⊨ α</strong> foi definida no módulo 3: toda valoração que torna verdadeiros os membros de Γ torna verdadeira α. É uma noção <em>semântica</em>, e fala de verdade e de valorações.</p>
+      <p><strong>Γ ⊢ α</strong> foi definida nesta unidade: existe uma derivação de α cujas hipóteses não descarregadas pertencem a Γ. É uma noção <em>sintática</em>, e fala apenas de manipulação de símbolos segundo regras.</p>
+    </div>
+    <p>Nada na definição de uma menciona a outra. Um marciano que soubesse aplicar as dez regras sem saber o que é verdade poderia produzir derivações corretas; um outro que soubesse construir tabelas sem conhecer regra alguma poderia decidir toda questão de consequência semântica. As duas atividades são independentes.</p>
+    <p>E, no entanto, o aluno terá notado que elas concordam em todos os casos examinados. Sempre que um tablô fechou, foi possível encontrar uma derivação; sempre que um ramo ficou aberto, nenhuma derivação existia. A pergunta que se impõe é se essa concordância é acidental, e ela tem nome:</p>
+    <div class="fx">Correção     Se Γ ⊢ α, então Γ ⊨ α.   O sistema não prova nada falso.
+Completude   Se Γ ⊨ α, então Γ ⊢ α.   O sistema prova tudo o que se segue.</div>
+    <p>Os dois enunciados são teoremas, e o módulo 6 os apresenta com a discussão do que afirmam. Quem quiser vê-los demonstrados encontrará as demonstrações no módulo complementar 7, que exige apenas indução matemática e a noção de conjunto enumerável da unidade 2.2.</p>
+    <p>Por ora, basta reter o que a distinção implica para a prática. Não haver encontrado derivação não é o mesmo que não haver derivação, e por isso a incapacidade de provar algo não estabelece a sua invalidade. Para estabelecer invalidade, é preciso exibir o contramodelo, seja pela tabela do módulo 3, seja pelo ramo aberto de um tablô. Confundir as duas coisas é o erro conceitual mais comum deste nível.</p>
+
+    <h2 id="marco"><span class="num">Verificação</span>Marco B2 e exercícios</h2>
+    <div class="marco"><b>Marco B2</b>Fechar um tablô para um argumento válido de três premissas; extrair de um ramo aberto a valoração que refuta um argumento inválido e conferi-la na tabela de verdade; e produzir, para o mesmo argumento válido, a derivação correspondente em dedução natural, lendo-a nas duas notações adotadas pelas fontes do curso.</div>
+    <h4>Exercícios</h4>
+    <p><strong>1.</strong> Construa à mão o tablô para «P → (Q ∨ R), ¬Q, ¬R ∴ ¬P» e confira no construtor. Depois inverta a ordem de decomposição e compare o tamanho das duas árvores.</p>
+    <p><strong>2.</strong> Explique, sem consultar a tabela da unidade 4.1, por que a regra de ¬(α → β) não ramifica ao passo que a de α → β ramifica. A resposta está na tabela de verdade do condicional.</p>
+    <p><strong>3.</strong> Use o construtor com «P ∨ Q ; ¬P ∨ R ; Q ∨ R». Localize os ramos abertos, se houver, e escreva o contramodelo. Confira-o no laboratório do módulo 3.</p>
+    <p><strong>4.</strong> Derive, usando apenas as dez regras básicas: (a) P ∧ Q ⊢ Q ∧ P; (b) P → Q ⊢ ¬Q → ¬P; (c) ⊢ P → (Q → P).</p>
+    <p><strong>5.</strong> Demonstre o silogismo disjuntivo como regra derivada, isto é, derive β a partir de α ∨ β e ¬α usando somente regras básicas. Compare o número de linhas com o da derivação do modus tollens apresentada na unidade 4.4.</p>
+    <p><strong>6.</strong> Prove que ⊢ ¬(P ∧ ¬P). Identifique qual regra hipotética a prova exige e por quê.</p>
+    <p><strong>7.</strong> Um colega afirma que «não consegui derivar, logo o argumento é inválido». Explique por que o raciocínio é incorreto e descreva o que ele teria de fazer para estabelecer a invalidade.</p>
+    <p><strong>8.</strong> Os exercícios 12.1 a 12.6 do livro-texto cobrem os tablôs e têm resolução comentada em Pagani (s.d.). Os de dedução natural estão nas unidades 1 e 2 de Sell (2014), com respostas ao fim do volume.</p>
+
+    <h2 id="proximo"><span class="num">Encerramento</span>Próximo passo</h2><p>O ciclo de cada módulo se fecha em três movimentos: resolver os exercícios, verificar o marco no banco de itens e submeter o artefato escrito à rubrica correspondente.</p><div class="nextgrid"><a class="nx" href="provas.html#B2"><span class="k">Verificar o marco</span><span class="t">Provas de Domínio · marco B2</span><span class="d">Itens autocorrigidos com justificativa e fonte. O marco é vencido a partir de 75% de acerto.</span></a><a class="nx" href="prompts.html#p4"><span class="k">Corrigir o artefato</span><span class="t">Prompt 4 · Tablô semântico</span><span class="d">Confere a decomposição, o fechamento dos ramos e a leitura do contramodelo.</span></a><a class="nx" href="prompts.html#p5"><span class="k">Corrigir o artefato</span><span class="t">Prompt 5 · Dedução natural</span><span class="d">Percorre a derivação linha a linha, inclusive o escopo das hipóteses.</span></a><a class="nx" href="05-modulo-5.html"><span class="k">Seguir</span><span class="t">Módulo 5 · Primeira ordem</span><span class="d">Nível C · módulo 5 no percurso.</span></a></div>
+
+    <h2 id="ref">Referências</h2>
+    <div class="refs">
+      <p>Mortari, C. A. (2016). <em>Introdução à lógica</em> (2a ed.). Editora Unesp.</p>
+      <p>Nolt, J., &amp; Rohatyn, D. (1991). <em>Lógica</em>. McGraw-Hill.</p>
+      <p>Pagani, L. A. (s.d.). <em>Respostas para exercícios do livro Introdução à lógica, de Cezar Mortari</em> [Material didático não publicado].</p>
+      <p>Sell, S. (2014). <em>Lógica II</em> [Livro didático]. UnisulVirtual.</p>
+    </div>
+  </article>
+</div>
+<script>
+// analisador de fórmulas proposicionais
+function tokenize(src){
+  const t=[]; let i=0;
+  const map={'~':'¬','!':'¬','-':'¬','&':'∧','^':'∧','.':'∧','*':'∧','|':'∨','+':'∨','v':'∨','V':'∨'};
+  while(i<src.length){
+    const c=src[i];
+    if(/\s/.test(c)){i++;continue;}
+    if(src.startsWith('<->',i)||src.startsWith('<=>',i)){t.push({k:'↔',i});i+=3;continue;}
+    if(src.startsWith('->',i)||src.startsWith('=>',i)){t.push({k:'→',i});i+=2;continue;}
+    if(c==='↔'||c==='≡'){t.push({k:'↔',i});i++;continue;}
+    if(c==='→'||c==='⊃'){t.push({k:'→',i});i++;continue;}
+    if(c==='∧'){t.push({k:'∧',i});i++;continue;}
+    if(c==='∨'){t.push({k:'∨',i});i++;continue;}
+    if(c==='¬'){t.push({k:'¬',i});i++;continue;}
+    if(c==='('||c===')'){t.push({k:c,i});i++;continue;}
+    if(/[A-Z]/.test(c)){
+      // 'V' isolado entre fórmulas é disjunção na notação de algumas fontes
+      let j=i+1; while(j<src.length&&/[0-9]/.test(src[j]))j++;
+      const nome=src.slice(i,j);
+      if(nome==='V'&&t.length&&['at',')'].includes(t[t.length-1].k)){t.push({k:'∨',i});i=j;continue;}
+      t.push({k:'at',nome,i}); i=j; continue;
+    }
+    if(c==='v'&&t.length&&['at',')'].includes(t[t.length-1].k)){t.push({k:'∨',i});i++;continue;}
+    if(map[c]){t.push({k:map[c],i});i++;continue;}
+    throw {msg:'símbolo não reconhecido: «'+c+'»', pos:i};
+  }
+  return t;
+}
+function parse(src){
+  const t=tokenize(src); let p=0;
+  const peek=()=>t[p]?t[p].k:null;
+  function esperar(k){ if(peek()!==k) throw {msg:'esperava «'+k+'»', pos:t[p]?t[p].i:src.length}; p++; }
+  function bic(){ let l=imp(); while(peek()==='↔'){p++; l={op:'↔',l,r:imp()};} return l; }
+  function imp(){ const l=disj(); if(peek()==='→'){p++; return {op:'→',l,r:imp()};} return l; }
+  function disj(){ let l=conj(); while(peek()==='∨'){p++; l={op:'∨',l,r:conj()};} return l; }
+  function conj(){ let l=un(); while(peek()==='∧'){p++; l={op:'∧',l,r:un()};} return l; }
+  function un(){
+    if(peek()==='¬'){p++; return {op:'¬',a:un()};}
+    if(peek()==='('){p++; const e=bic(); esperar(')'); return e;}
+    if(peek()==='at'){const n=t[p].nome; p++; return {op:'at',nome:n};}
+    throw {msg: peek()===null?'fórmula incompleta':'não se esperava «'+peek()+'» aqui', pos:t[p]?t[p].i:src.length};
+  }
+  const r=bic();
+  if(p<t.length) throw {msg:'sobrou «'+(t[p].k==='at'?t[p].nome:t[p].k)+'» após o fim da fórmula', pos:t[p].i};
+  return r;
+}
+const PREC={'at':6,'¬':5,'∧':4,'∨':3,'→':2,'↔':1};
+function show(n,pai){
+  pai=pai||0;
+  let s,pr=PREC[n.op];
+  if(n.op==='at') return n.nome;
+  if(n.op==='¬') s='¬'+show(n.a,PREC['¬']);
+  else s=show(n.l, n.op==='→'?pr+1:pr)+' '+n.op+' '+show(n.r,pr);
+  return pr<pai?'('+s+')':s;
+}
+function atomos(n,acc){ acc=acc||new Set(); if(n.op==='at')acc.add(n.nome); else if(n.op==='¬')atomos(n.a,acc); else {atomos(n.l,acc);atomos(n.r,acc);} return acc; }
+function sub(n,acc){ acc=acc||[]; if(n.op!=='at'){ if(n.op==='¬')sub(n.a,acc); else {sub(n.l,acc);sub(n.r,acc);} } const s=show(n); if(!acc.some(x=>x.s===s))acc.push({s,n}); return acc; }
+function evalf(n,v){
+  switch(n.op){
+    case 'at': return v[n.nome];
+    case '¬': return !evalf(n.a,v);
+    case '∧': return evalf(n.l,v)&&evalf(n.r,v);
+    case '∨': return evalf(n.l,v)||evalf(n.r,v);
+    case '→': return !evalf(n.l,v)||evalf(n.r,v);
+    case '↔': return evalf(n.l,v)===evalf(n.r,v);
+  }
+}
+
+
+
+function neg(n){ return {op:'¬',a:n}; }
+function key(n){ return show(n); }
+function literal(n){ return n.op==='at' || (n.op==='¬' && n.a.op==='at'); }
+// devolve {tipo:'a'|'b', partes:[[..],[..]]}
+function regra(n){
+  if(n.op==='¬' && n.a.op==='¬') return {tipo:'a', nome:'¬¬', partes:[[n.a.a]]};
+  if(n.op==='∧') return {tipo:'a', nome:'∧', partes:[[n.l,n.r]]};
+  if(n.op==='¬' && n.a.op==='∨') return {tipo:'a', nome:'¬∨', partes:[[neg(n.a.l),neg(n.a.r)]]};
+  if(n.op==='¬' && n.a.op==='→') return {tipo:'a', nome:'¬→', partes:[[n.a.l,neg(n.a.r)]]};
+  if(n.op==='∨') return {tipo:'b', nome:'∨', partes:[[n.l],[n.r]]};
+  if(n.op==='→') return {tipo:'b', nome:'→', partes:[[neg(n.l)],[n.r]]};
+  if(n.op==='¬' && n.a.op==='∧') return {tipo:'b', nome:'¬∧', partes:[[neg(n.a.l)],[neg(n.a.r)]]};
+  if(n.op==='↔') return {tipo:'b', nome:'↔', partes:[[n.l,n.r],[neg(n.l),neg(n.r)]]};
+  if(n.op==='¬' && n.a.op==='↔') return {tipo:'b', nome:'¬↔', partes:[[n.a.l,neg(n.a.r)],[neg(n.a.l),n.a.r]]};
+  return null;
+}
+function fecha(fs){
+  const s=new Set(fs.map(x=>key(x.f)));
+  for(const x of fs){ if(x.f.op==='¬' && s.has(key(x.f.a))) return [x.id, fs.find(y=>key(y.f)===key(x.f.a)).id]; }
+  return null;
+}
+function construir(iniciais){
+  let cont=iniciais.length;
+  function passo(fs){
+    const f=fecha(fs);
+    if(f) return {fechado:true, por:f, filhos:[]};
+    const alvo=fs.find(x=>!x.usado && !literal(x.f));
+    if(!alvo) return {aberto:true, filhos:[], ramo:fs};
+    alvo.usado=true;
+    const r=regra(alvo.f);
+    if(r.tipo==='a'){
+      const novos=r.partes[0].map(p=>({f:p,id:++cont,usado:false,de:alvo.id,regra:r.nome}));
+      return {tipo:'a', regra:r.nome, de:alvo.id, novos, filhos:[passo(fs.concat(novos))]};
+    }
+    const ramos=r.partes.map(pt=>{
+      const novos=pt.map(p=>({f:p,id:++cont,usado:false,de:alvo.id,regra:r.nome}));
+      return {novos, no:passo(fs.map(x=>({...x})).concat(novos))};
+    });
+    return {tipo:'b', regra:r.nome, de:alvo.id, ramos};
+  }
+  const fs=iniciais.map((f,i)=>({f,id:i+1,usado:false}));
+  return {raiz:fs, arvore:passo(fs)};
+}
+function abertos(no,acc){ acc=acc||[]; if(no.aberto){acc.push(no.ramo);return acc;}
+  if(no.filhos) no.filhos.forEach(f=>abertos(f,acc));
+  if(no.ramos) no.ramos.forEach(r=>abertos(r.no,acc)); return acc; }
+
+
+(function(){
+  /* ---------- 4.3 cartões de regras ---------- */
+  const REGRAS = [
+    ["E¬","Eliminação da dupla negação","De ¬¬α infere-se α.","¬¬(P ∧ Q)  ⊢  P ∧ Q","Aparece quando uma negação dupla se formou dentro de uma derivação, tipicamente após redução ao absurdo."],
+    ["MP","Modus ponens","De α → β e α infere-se β.","P → Q , P  ⊢  Q","A regra de trabalho mais frequente. Exige o condicional e o seu antecedente, jamais o consequente."],
+    ["E∧","Eliminação da conjunção","De α ∧ β infere-se α, e também β.","P ∧ Q  ⊢  P","Use logo no início para desmontar premissas conjuntivas em partes utilizáveis."],
+    ["I∧","Introdução da conjunção","De α e β infere-se α ∧ β.","P , Q  ⊢  P ∧ Q","Serve para montar a conclusão e, sobretudo, para formar a contradição exigida pela redução ao absurdo."],
+    ["E∨","Eliminação da disjunção","De α ∨ β, α → γ e β → γ infere-se γ.","P ∨ Q , P → R , Q → R  ⊢  R","É a análise por casos: mostrando que γ decorre de cada disjunto, γ decorre da disjunção."],
+    ["I∨","Introdução da disjunção","De α infere-se α ∨ β, para β qualquer.","P  ⊢  P ∨ Q","Parece gratuita e não é: enfraquecer a afirmação é exatamente o que a disjunção permite."],
+    ["E↔","Eliminação do bicondicional","De α ↔ β infere-se α → β, e também β → α.","P ↔ Q  ⊢  P → Q","Primeiro passo diante de qualquer premissa bicondicional."],
+    ["I↔","Introdução do bicondicional","De α → β e β → α infere-se α ↔ β.","P → Q , Q → P  ⊢  P ↔ Q","Para concluir um bicondicional, prove os dois condicionais separadamente."],
+    ["PC","Prova do condicional","Se de α se deriva β, infere-se α → β, descarregando α.","hipótese P ⋯ Q  ⊢  P → Q","Regra hipotética. Estratégia padrão sempre que a conclusão é um condicional."],
+    ["RAA","Redução ao absurdo","Se de α se deriva uma contradição, infere-se ¬α, descarregando α.","hipótese P ⋯ Q ∧ ¬Q  ⊢  ¬P","Regra hipotética. Estratégia padrão quando a conclusão é uma negação, ou quando nada mais funciona."]
+  ];
+  const rbox = document.getElementById("rcards"), rout = document.getElementById("rOut");
+  REGRAS.forEach((r, k) => {
+    const b = document.createElement("button");
+    b.type = "button"; b.className = "card"; b.setAttribute("aria-pressed", "false");
+    b.innerHTML = '<span class="n">' + r[0] + '</span><span class="t">' + r[1] + "</span>";
+    b.addEventListener("click", () => {
+      rbox.querySelectorAll(".card").forEach(o => o.setAttribute("aria-pressed", String(o === b)));
+      rout.innerHTML = '<div class="rk">' + r[0] + " · " + r[1] + "</div><p>" + r[2] +
+        '</p><p style="font-family:var(--mono);font-size:14px;color:var(--ink)">' + r[3] + "</p><p>" + r[4] + "</p>" +
+        (k >= 8 ? '<p style="color:var(--brass)">Regra hipotética: exige levantar uma suposição e descarregá-la.</p>' : "");
+    });
+    rbox.appendChild(b);
+  });
+
+  /* ---------- 4.1 construtor de tablôs ---------- */
+  const ent = document.getElementById("entrada"), saida = document.getElementById("saida");
+  function esc(s){ return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
+  function linha(x){
+    const just = x.de ? (x.de + ", " + x.regra) : "inicial";
+    return '<div class="ln"><span class="num">' + x.id + '.</span><span class="frm">' + esc(show(x.f)) +
+      '</span><span class="just">' + just + "</span></div>";
+  }
+  function contramodelo(ramo){
+    const m = {};
+    ramo.forEach(x => {
+      if(x.f.op === "at") m[x.f.nome] = "V";
+      else if(x.f.op === "¬" && x.f.a.op === "at" && !(x.f.a.nome in m)) m[x.f.a.nome] = "F";
+    });
+    const chaves = Object.keys(m).sort();
+    return chaves.length ? chaves.map(k => "v(" + k + ") = " + m[k]).join(" , ") : "qualquer valoração serve";
+  }
+  function desenha(no, iniciais){
+    if(no.fechado) return '<div class="fecha">× ramo fecha pelas linhas ' + no.por[1] + " e " + no.por[0] + "</div>";
+    if(no.aberto) return '<div class="abre">○ ramo aberto e saturado</div><div class="mod">contramodelo: ' +
+      esc(contramodelo(no.ramo)) + "</div>";
+    if(no.tipo === "a") return no.novos.map(linha).join("") + desenha(no.filhos[0]);
+    let h = "";
+    no.ramos.forEach((r, i) => {
+      h += '<div class="branch"><span class="tag">ramo ' + (i === 0 ? "esquerdo" : "direito") +
+        " · regra " + esc(no.regra) + " sobre a linha " + no.de + "</span>";
+      h += r.novos.map(linha).join("") + desenha(r.no) + "</div>";
+    });
+    return h;
+  }
+  function render(){
+    const src = ent.value.trim();
+    const partes = src.split(";").map(x => x.trim()).filter(x => x.length);
+    if(partes.length < 1){ saida.innerHTML = '<div class="erro">Escreva ao menos uma fórmula.</div>'; return; }
+    let arv;
+    try { arv = partes.map(parse); }
+    catch(e){
+      saida.innerHTML = '<div class="erro"><strong>Não é fórmula bem formada.</strong> ' + esc(e.msg) +
+        "<code>" + esc(src) + "\n" + " ".repeat(Math.max(0, e.pos || 0)) + "^</code></div>";
+      return;
+    }
+    const prem = arv.slice(0, -1), conc = arv[arv.length - 1];
+    const iniciais = prem.concat([{op:"¬", a:conc}]);
+    let res;
+    try { res = construir(iniciais); }
+    catch(e){ saida.innerHTML = '<div class="erro">O tablô ficou grande demais para ser exibido.</div>'; return; }
+    let h = '<div class="tb">';
+    h += res.raiz.map((x, i) => {
+      const rot = i < prem.length ? "premissa" : "negação da conclusão";
+      return '<div class="ln"><span class="num">' + x.id + '.</span><span class="frm">' + esc(show(x.f)) +
+        '</span><span class="just">' + rot + "</span></div>";
+    }).join("");
+    h += desenha(res.arvore) + "</div>";
+    const ab = abertos(res.arvore);
+    if(ab.length === 0){
+      h += '<div class="verdict"><b>Válido</b>Todos os ramos fecham. Não há valoração que torne as premissas verdadeiras e a conclusão falsa, e portanto ' +
+        (prem.length ? esc(prem.map(show).join(", ")) + " ⊨ " : "⊨ ") + esc(show(conc)) + ".</div>";
+    } else {
+      h += '<div class="verdict bad"><b>Inválido</b>' + ab.length + " ramo" + (ab.length === 1 ? "" : "s") +
+        " permanece" + (ab.length === 1 ? "" : "m") + " aberto. " +
+        (ab.length === 1 ? "O contramodelo indicado acima torna" : "Cada contramodelo indicado acima torna") +
+        " as premissas verdadeiras e a conclusão falsa; confira" + (ab.length === 1 ? "-o" : " um deles") +
+        " no laboratório do módulo 3.</div>";
+    }
+    saida.innerHTML = h;
+  }
+  document.querySelectorAll("[data-ins]").forEach(b => b.addEventListener("click", () => {
+    const p = ent.selectionStart || ent.value.length;
+    ent.value = ent.value.slice(0, p) + b.dataset.ins + ent.value.slice(ent.selectionEnd || p);
+    ent.focus(); ent.selectionStart = ent.selectionEnd = p + b.dataset.ins.length;
+    render();
+  }));
+  document.querySelectorAll("[data-ex]").forEach(b => b.addEventListener("click", () => { ent.value = b.dataset.ex; render(); }));
+  ent.addEventListener("input", render);
+  render();
+})();
+</script>
+<script>
+(function(){
+  const links = Array.from(document.querySelectorAll("nav.toc a"));
+  const alvos = links.map(a => document.getElementById(a.getAttribute("href").slice(1))).filter(Boolean);
+  function spy(){
+    let atual = alvos[0];
+    alvos.forEach(t => { if(t.getBoundingClientRect().top <= 120) atual = t; });
+    links.forEach(a => a.classList.toggle("on", a.getAttribute("href") === "#" + (atual ? atual.id : "")));
+  }
+  window.addEventListener("scroll", spy, {passive:true}); spy();
+})();
+</script>
+
+</body>
+</html>

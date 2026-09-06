@@ -1,0 +1,382 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<style>:root{color-scheme:light dark}body{margin:0;font:14px/1.5 system-ui,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style>
+</head>
+<body>
+<title>Bons e Maus Argumentos</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,600&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<style>
+:root{
+  --ground:#EEF1EE; --surface:#FAFBF9; --surface-2:#E2E7E3; --raised:#FFFFFF;
+  --ink:#131A18; --ink-soft:#38443F; --muted:#5F6C66; --line:#CBD4CE; --line-soft:#DDE4DF;
+  --accent:#0C6355; --accent-ink:#08463C; --accent-soft:#D6E7E2;
+  --verum:#0C6355; --falsum:#A33C20; --brass:#8A6D0B;
+  --shadow:0 1px 2px rgba(19,26,24,.06), 0 8px 24px -12px rgba(19,26,24,.18);
+  --serif:"Spectral", Georgia, "Times New Roman", serif;
+  --mono:"IBM Plex Mono", "SFMono-Regular", Consolas, monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --ground:#0E1413; --surface:#151D1B; --surface-2:#1D2926; --raised:#1A2422;
+    --ink:#E4EAE6; --ink-soft:#BCC7C2; --muted:#8D9C96; --line:#2B3835; --line-soft:#222E2B;
+    --accent:#4FBCA6; --accent-ink:#8FD8C8; --accent-soft:#17332E;
+    --verum:#4FBCA6; --falsum:#DE8461; --brass:#CFA93A;
+    --shadow:0 1px 2px rgba(0,0,0,.4), 0 10px 30px -14px rgba(0,0,0,.7);
+  }
+}
+:root[data-theme="dark"]{
+  --ground:#0E1413; --surface:#151D1B; --surface-2:#1D2926; --raised:#1A2422;
+  --ink:#E4EAE6; --ink-soft:#BCC7C2; --muted:#8D9C96; --line:#2B3835; --line-soft:#222E2B;
+  --accent:#4FBCA6; --accent-ink:#8FD8C8; --accent-soft:#17332E;
+  --verum:#4FBCA6; --falsum:#DE8461; --brass:#CFA93A;
+  --shadow:0 1px 2px rgba(0,0,0,.4), 0 10px 30px -14px rgba(0,0,0,.7);
+}
+
+*{box-sizing:border-box}
+body{margin:0;background:var(--ground);color:var(--ink);font-family:var(--serif);
+  font-size:17px;line-height:1.62;-webkit-font-smoothing:antialiased}
+.shell{max-width:1180px;margin:0 auto;padding:0 24px;display:grid;
+  grid-template-columns:220px minmax(0,1fr);gap:52px;align-items:start}
+.hero{grid-column:1/-1;padding:52px 0 32px;border-bottom:1px solid var(--line)}
+.hero .eyebrow{font:600 10.5px/1 var(--mono);letter-spacing:.18em;text-transform:uppercase;color:var(--accent)}
+.hero h1{font-size:clamp(34px,4.8vw,54px);font-weight:600;letter-spacing:-.032em;line-height:1.03;
+  margin:16px 0 12px;max-width:17ch;text-wrap:balance}
+.hero .lede{font-size:19px;color:var(--ink-soft);max-width:62ch;margin:0 0 28px}
+.facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:0;border-top:1px solid var(--line)}
+.facts div{padding:14px 20px 14px 0}
+.facts .k{font:600 10px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.facts .v{font-size:16.5px;margin-top:6px;line-height:1.3}
+nav.toc{position:sticky;top:26px;padding:32px 0 40px;font-size:14px}
+nav.toc .lbl{font:600 10px/1 var(--mono);letter-spacing:.16em;text-transform:uppercase;color:var(--muted);
+  padding-bottom:10px;border-bottom:1px solid var(--line);display:block;margin-bottom:12px}
+nav.toc a{display:block;color:var(--muted);text-decoration:none;padding:5px 0 5px 12px;
+  border-left:2px solid transparent;line-height:1.35}
+nav.toc a:hover{color:var(--ink)}
+nav.toc a.on{color:var(--accent);border-left-color:var(--accent);font-weight:500}
+article{padding:32px 0 90px;max-width:72ch}
+article h2{font-size:26px;font-weight:600;letter-spacing:-.018em;line-height:1.16;
+  margin:52px 0 4px;scroll-margin-top:28px;text-wrap:balance}
+article h2:first-of-type{margin-top:10px}
+article h2 .num{font:600 11px/1 var(--mono);letter-spacing:.14em;color:var(--accent);display:block;margin-bottom:10px}
+article h3{font-size:19px;font-weight:600;margin:32px 0 8px;letter-spacing:-.01em;scroll-margin-top:28px}
+article h4{font-size:16.5px;font-weight:600;margin:24px 0 6px}
+article p{margin:0 0 16px;color:var(--ink-soft)}
+article p strong{color:var(--ink);font-weight:600}
+article .intro{font-size:18.5px;color:var(--ink);margin-bottom:22px}
+.m{font-family:var(--mono);font-size:.92em;background:var(--surface);padding:1px 5px;border-radius:2px;color:var(--ink)}
+.tw{overflow-x:auto;margin:20px 0 24px;border:1px solid var(--line);border-radius:4px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;font-size:14.6px;min-width:440px}
+th,td{text-align:left;padding:10px 13px;border-bottom:1px solid var(--line-soft);vertical-align:top;color:var(--ink-soft)}
+tr:last-child td{border-bottom:0}
+th{font:600 10px/1.4 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--muted);
+  border-bottom:1px solid var(--line);background:var(--ground)}
+td.m2{font-family:var(--mono);font-size:13.5px;white-space:nowrap;color:var(--ink)}
+td.c{text-align:center;font-family:var(--mono)}
+td strong{color:var(--ink)}
+/* blocos formais */
+.fx{font-family:var(--mono);font-size:15px;background:var(--surface);border:1px solid var(--line);
+  border-radius:4px;padding:14px 16px;margin:0 0 18px;overflow-x:auto;color:var(--ink);white-space:pre-wrap}
+.thm{border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:4px;background:var(--surface);
+  padding:18px 20px;margin:22px 0}
+.thm .lb{font:600 10.5px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--accent);
+  display:block;margin-bottom:9px}
+.thm p{margin:0 0 10px;color:var(--ink)}
+.thm p:last-child{margin-bottom:0}
+.thm.lema{border-left-color:var(--brass)}
+.thm.lema .lb{color:var(--brass)}
+.prova{border-left:2px solid var(--line);padding:2px 0 2px 16px;margin:16px 0 22px}
+.prova .lb{font:600 10px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--muted);
+  display:block;margin-bottom:8px}
+.prova p{font-size:16px;margin:0 0 12px}
+.prova p:last-child{margin-bottom:0}
+.qed::after{content:" ▪";color:var(--accent)}
+.marco{border-left:3px solid var(--brass);padding:4px 0 4px 15px;margin:26px 0;font-size:16px;color:var(--ink)}
+.marco b{font:600 10px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--brass);
+  display:block;margin-bottom:6px}
+.note{font-size:14.5px;color:var(--muted);border-left:2px solid var(--line);padding-left:16px;margin:22px 0}
+figure{margin:28px 0 32px}
+figure svg{width:100%;height:auto;display:block;border:1px solid var(--line);border-radius:4px;background:var(--surface)}
+figcaption{font-size:13.5px;color:var(--muted);margin-top:10px;line-height:1.5}
+figcaption b{font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--accent);font-weight:600;margin-right:8px}
+.svg-t{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.06em;fill:var(--muted)}
+.svg-l{font-family:Spectral,Georgia,serif;font-size:14px;fill:var(--ink)}
+.svg-s{font-family:Spectral,Georgia,serif;font-size:12.5px;fill:var(--muted)}
+.svg-bx{fill:var(--ground);stroke:var(--line);stroke-width:1.2}
+.svg-bx-a{fill:var(--accent-soft);stroke:var(--accent);stroke-width:1.4}
+.svg-ar{stroke:var(--muted);stroke-width:1.3;fill:none}
+/* interativos genéricos */
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:9px;margin:18px 0}
+.card{text-align:left;border:1px solid var(--line);border-radius:4px;background:var(--surface);
+  padding:11px 13px;cursor:pointer;font-family:var(--serif);color:var(--ink)}
+.card:hover{border-color:var(--accent)}
+.card[aria-pressed="true"]{border-color:var(--accent);background:var(--accent-soft)}
+.card .n{font:600 10px/1 var(--mono);letter-spacing:.1em;color:var(--muted);display:block;margin-bottom:5px}
+.card .t{font-size:14.5px;font-weight:500;line-height:1.25}
+.readout{border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:4px;
+  background:var(--surface);padding:16px 18px;margin-bottom:8px}
+.readout .rk{font:600 10px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:8px}
+.readout p{font-size:15px;margin:0 0 8px;color:var(--ink-soft)}
+.readout p:last-child{margin-bottom:0}
+.readout ol{margin:6px 0 0;padding-left:20px;font-size:14.5px;color:var(--ink-soft)}
+.readout ol li{margin-bottom:5px}
+.refs{margin-top:12px}
+.refs p{padding-left:34px;text-indent:-34px;font-size:15.5px;margin-bottom:13px}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+@media (max-width:900px){
+  .shell{grid-template-columns:1fr;gap:0}
+  nav.toc{position:static;padding:22px 0 0;columns:2;column-gap:24px}
+  nav.toc .lbl{column-span:all}
+  article{padding-top:22px}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+<style>
+.cbar{display:flex;align-items:center;gap:14px;flex-wrap:wrap;padding:9px 24px;
+  border-bottom:1px solid var(--line);background:var(--surface-2);
+  font:500 12.5px/1 var(--mono);position:sticky;top:0;z-index:20}
+.cbar a{color:var(--accent);text-decoration:none;white-space:nowrap}
+.cbar a:hover{text-decoration:underline}
+.cbar .home{font-weight:600}
+.cbar .where{color:var(--muted);letter-spacing:.06em;text-transform:uppercase;font-size:10.5px}
+.cbar .sp{flex:1}
+.cbar .nx{color:var(--ink-soft)}
+.nextgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px;margin:22px 0 8px}
+.nextgrid .nx{display:block;text-decoration:none;border:1px solid var(--line);border-radius:4px;
+  background:var(--surface);padding:16px 18px;color:var(--ink)}
+.nextgrid .nx:hover{border-color:var(--accent)}
+.nextgrid .k{font:600 10px/1 var(--mono);letter-spacing:.13em;text-transform:uppercase;color:var(--accent);display:block}
+.nextgrid .t{font-size:16.5px;font-weight:600;margin:9px 0 6px;line-height:1.2;display:block}
+.nextgrid .d{font-size:14px;color:var(--muted);line-height:1.45;display:block}
+</style>
+<nav class="cbar"><a class="home" href="index.html">&#9666; Índice do curso</a><span class="where">Nível A · complementar</span><span class="sp"></span><a class="nx" href="01a-slides-modulo-1.html">&larr; Aula do módulo 1</a><a class="nx" href="02-modulo-2.html">Módulo 2 · Linguagem e conjuntos &rarr;</a></nav>
+<div class="shell">
+  <header class="hero">
+    <div class="eyebrow">Curso de fluência em lógica · módulo complementar 1A</div>
+    <h1>Bons e maus argumentos</h1>
+    <p class="lede">Módulo autônomo de argumentação informal, posicionado entre os módulos 1 e 2, para o aluno que precisa avaliar argumentos reais antes de dispor de qualquer cálculo. Trata do que a forma lógica não captura, e do que ainda assim pode ser avaliado com rigor.</p>
+    <div class="facts">
+      <div><div class="k">Posição</div><div class="v">Entre os módulos 1 e 2</div></div>
+      <div><div class="k">Nível</div><div class="v">A · iniciante</div></div>
+      <div><div class="k">Unidades</div><div class="v">Seis</div></div>
+      <div><div class="k">Pré-requisito</div><div class="v">Marco A1</div></div>
+      <div><div class="k">Marco</div><div class="v">A1b</div></div>
+      <div><div class="k">Notação</div><div class="v">Nenhuma</div></div>
+    </div>
+  </header>
+
+  <nav class="toc" id="toc">
+    <span class="lbl">Unidades</span>
+    <a href="#i">Por que este módulo existe</a>
+    <a href="#u1">1A.1 O que a forma não captura</a>
+    <a href="#u2">1A.2 Reconstrução caridosa</a>
+    <a href="#u3">1A.3 Diagramação de argumentos</a>
+    <a href="#u4">1A.4 Esquemas e perguntas críticas</a>
+    <a href="#u5">1A.5 Ônus da prova e diálogo</a>
+    <a href="#u6">1A.6 Força indutiva</a>
+    <a href="#marco">Marco A1b</a>
+    <a href="#proximo">Próximo passo</a>
+    <a href="#ref">Referências</a>
+  </nav>
+
+  <article>
+    <h2 id="i"><span class="num">Abertura</span>Por que este módulo existe</h2>
+    <p class="intro">A proposta original limitava a argumentação informal à unidade 1.6, dedicada às falácias. O limite era estreito por uma razão que o próprio material adotado deixa clara: a lógica formal não é capaz de fornecer sequer uma noção adequada de falácia, uma vez que uma falácia não é simplesmente um argumento inválido, e muitos argumentos inválidos não são falácias (Murcho, 2006, como citado em Neves Filho e Rui, 2016).</p>
+    <p>O argumento «Platão era grego, logo a neve é branca» é inválido e não é falacioso, porque não é sequer um argumento. O que caracteriza a falácia é ser enganosa, isto é, ter a aparência de bom raciocínio (Neves Filho e Rui, 2016, cap. IV). A aparência é uma propriedade que nenhum cálculo detecta, e é por isso que o tema exige tratamento próprio.</p>
+    <p>Este módulo é autônomo: pode ser omitido sem prejuízo dos demais, e nada nos módulos 2 a 6 depende dele. A numeração 1A preserva a numeração original do curso. A sua função no percurso é dupla. Fornece ao aluno, desde o início, um repertório de avaliação aplicável ao material que ele efetivamente encontra fora da sala, que é argumentativo mas raramente formalizável; e delimita, por contraste, o que o aparato formal dos módulos seguintes vai e não vai oferecer.</p>
+    <p>Nenhuma notação é introduzida aqui. O módulo inteiro transcorre em português.</p>
+
+    <h2 id="u1"><span class="num">Unidade 1A.1</span>O que a forma não captura</h2>
+    <p>A lógica formal avalia argumentos pela forma, e o faz de modo conclusivo: dada a forma, a validade está determinada. O preço dessa precisão é a estreiteza do domínio. Os raciocínios dedutivos formalizáveis constituem uma parte pequena do modo cotidiano de raciocinar, e a maior parte dos bons argumentos que se produzem, tanto quanto a maior parte dos maus, não é formal (Neves Filho e Rui, 2016, cap. IV, §1).</p>
+    <p>A lógica informal ocupa-se desse restante. Ela não substitui a formal nem compete com ela: aplica-se onde a forma não decide. As perguntas que ela responde são de outro tipo. Não «esta forma preserva verdade», mas «esta premissa é aceitável», «esta amostra sustenta esta generalização», «esta autoridade é competente neste assunto», «este ônus cabe a quem afirma ou a quem nega».</p>
+    <p>Convém fixar desde já uma consequência que costuma incomodar. As avaliações informais admitem graus e admitem disputa razoável. Duas pessoas competentes podem discordar sobre se uma amostra é representativa, e nenhuma delas estará cometendo um erro de cálculo. Isso não torna a avaliação arbitrária: há critérios, e há respostas erradas. Torna-a, apenas, não algorítmica.</p>
+    <div class="tw"><table>
+      <tr><th></th><th>Avaliação formal</th><th>Avaliação informal</th></tr>
+      <tr><td class="m2">Objeto</td><td>A forma do argumento</td><td>O conteúdo das premissas e a relação com o contexto</td></tr>
+      <tr><td class="m2">Resultado</td><td>Válido ou inválido</td><td>Forte, fraco ou inaceitável, com graus</td></tr>
+      <tr><td class="m2">Procedimento</td><td>Mecânico, no caso proposicional</td><td>Não algorítmico, guiado por perguntas críticas</td></tr>
+      <tr><td class="m2">Discordância</td><td>Um dos lados erra</td><td>Pode ser razoável dos dois lados</td></tr>
+      <tr><td class="m2">Alcance</td><td>Pequeno, e conclusivo nele</td><td>Amplo, e inconclusivo em parte dele</td></tr>
+    </table></div>
+
+    <h2 id="u2"><span class="num">Unidade 1A.2</span>Reconstrução caridosa</h2>
+    <p>Argumentos reais chegam incompletos. Premissas ficam implícitas por óbvias, por inconvenientes ou por descuido, e o trabalho de avaliação começa por torná-las explícitas. Um argumento com premissa suprimida chama-se <strong>entimema</strong>, e a operação de completá-lo é a operação mais delicada da lógica informal, porque é nela que se decide, de fato, o que será avaliado.</p>
+    <p>Considere-se a passagem: «Ele não pode ter cometido a fraude, porque estava fora do país naquela semana.» A conclusão e a premissa expressa são claras. A premissa suprimida não é. Ela poderia ser «quem está fora do país não pode cometer fraude», que é falsa e transforma o argumento em algo indefensável; ou «quem está fora do país não pode assinar presencialmente os documentos em questão», que é plausível e torna o argumento discutível mas sério.</p>
+    <p>O <strong>princípio de caridade</strong> determina a escolha: acrescenta-se a premissa mais fraca que torna o argumento válido ou forte, e não a mais conveniente para refutá-lo. A razão do princípio não é a cortesia. É que refutar uma versão que o proponente não sustentaria não refuta nada, e o argumento reaparece intacto na resposta seguinte. O procedimento oposto, atribuir ao adversário a versão mais fraca, tem nome próprio e é a falácia do homem de palha, tratada na unidade 1.6.</p>
+    <h4>Padronização</h4>
+    <p>Antes de avaliar, convém reescrever o argumento em forma padronizada: cada premissa em uma linha numerada, a conclusão por último, premissas implícitas marcadas como tais, e material que não sustenta a conclusão simplesmente removido. A padronização é o análogo informal da tradução que o módulo 3 fará com símbolos, e o aluno que a domina chega ao módulo 3 com metade do trabalho já aprendido.</p>
+    <div class="fx">Passagem original
+  «O aumento da tarifa não se justifica pelo custo do combustível. Ele responde
+   por menos de um quinto do custo operacional, e o diesel caiu no trimestre.
+   É verdade que a empresa opera com margens apertadas.»
+
+Padronização
+  P1  O combustível responde por menos de um quinto do custo operacional.
+  P2  O preço do diesel caiu no último trimestre.
+  P3  [implícita] Um item que responde por parcela menor do custo e cujo preço
+      caiu não justifica aumento de tarifa.
+  ─────────────────────────────────────────────────────────────────────────
+  C   O aumento da tarifa não se justifica pelo custo do combustível.
+
+  Descartado: «a empresa opera com margens apertadas» (concessão; não sustenta C).</div>
+    <p>Note-se que a premissa implícita P3 é onde a discussão efetivamente ocorre. Antes da padronização, ela era invisível e por isso imune à crítica. Este é o rendimento principal do procedimento.</p>
+
+    <h2 id="u3"><span class="num">Unidade 1A.3</span>Diagramação de argumentos</h2>
+    <p>Nem toda premissa sustenta a conclusão do mesmo modo. Distinguir os modos importa porque determina o efeito de refutar uma delas.</p>
+    <figure>
+      <svg viewBox="0 0 880 250" role="img" aria-label="Três estruturas de apoio entre premissas e conclusão: convergente, ligada e serial.">
+        <defs><marker id="a1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="var(--muted)"/></marker></defs>
+        <g>
+          <text class="svg-t" x="16" y="20">CONVERGENTE</text>
+          <rect class="svg-bx" x="16" y="34" width="74" height="34" rx="3"/><text class="svg-l" x="53" y="56" text-anchor="middle">P1</text>
+          <rect class="svg-bx" x="110" y="34" width="74" height="34" rx="3"/><text class="svg-l" x="147" y="56" text-anchor="middle">P2</text>
+          <path class="svg-ar" d="M53 72 L94 118" marker-end="url(#a1)"/><path class="svg-ar" d="M147 72 L106 118" marker-end="url(#a1)"/>
+          <rect class="svg-bx-a" x="63" y="122" width="74" height="34" rx="3"/><text class="svg-l" x="100" y="144" text-anchor="middle">C</text>
+          <text class="svg-s" x="16" y="188">Cada premissa apoia a conclusão</text>
+          <text class="svg-s" x="16" y="206">por si. Refutar uma enfraquece</text>
+          <text class="svg-s" x="16" y="224">o argumento; não o destrói.</text>
+
+          <text class="svg-t" x="316" y="20">LIGADA</text>
+          <rect class="svg-bx" x="316" y="34" width="74" height="34" rx="3"/><text class="svg-l" x="353" y="56" text-anchor="middle">P1</text>
+          <rect class="svg-bx" x="410" y="34" width="74" height="34" rx="3"/><text class="svg-l" x="447" y="56" text-anchor="middle">P2</text>
+          <line x1="316" y1="82" x2="484" y2="82" stroke="var(--accent)" stroke-width="1.6"/>
+          <path class="svg-ar" d="M400 82 L400 118" marker-end="url(#a1)"/>
+          <rect class="svg-bx-a" x="363" y="122" width="74" height="34" rx="3"/><text class="svg-l" x="400" y="144" text-anchor="middle">C</text>
+          <text class="svg-s" x="316" y="188">As premissas só apoiam a</text>
+          <text class="svg-s" x="316" y="206">conclusão em conjunto. Refutar</text>
+          <text class="svg-s" x="316" y="224">uma delas destrói o apoio.</text>
+
+          <text class="svg-t" x="640" y="20">SERIAL</text>
+          <rect class="svg-bx" x="640" y="34" width="74" height="34" rx="3"/><text class="svg-l" x="677" y="56" text-anchor="middle">P1</text>
+          <path class="svg-ar" d="M677 72 L677 92" marker-end="url(#a1)"/>
+          <rect class="svg-bx" x="640" y="96" width="74" height="34" rx="3"/><text class="svg-l" x="677" y="118" text-anchor="middle">P2</text>
+          <path class="svg-ar" d="M677 134 L677 154" marker-end="url(#a1)"/>
+          <rect class="svg-bx-a" x="640" y="158" width="74" height="34" rx="3"/><text class="svg-l" x="677" y="180" text-anchor="middle">C</text>
+          <text class="svg-s" x="640" y="216">P1 sustenta P2, que sustenta C.</text>
+          <text class="svg-s" x="640" y="234">O elo mais fraco define a força.</text>
+        </g>
+      </svg>
+      <figcaption><b>Figura 1</b>As três estruturas de apoio. A distinção tem consequência prática imediata: em estrutura ligada, derrubar uma premissa encerra a discussão; em estrutura convergente, obriga a derrubar as demais uma a uma. Identificar a estrutura é, portanto, decidir onde vale a pena atacar.</figcaption>
+    </figure>
+    <p>O silogismo do módulo 2 é o caso puro de estrutura ligada: nenhuma das duas premissas, isolada, sustenta a conclusão. Já a passagem padronizada na unidade anterior é convergente em P1 e P2, e ligada quanto a P3, que é indispensável a ambas. Argumentos reais misturam as três estruturas, e o diagrama serve justamente para exibir a mistura.</p>
+
+    <h2 id="u4"><span class="num">Unidade 1A.4</span>Esquemas argumentativos e perguntas críticas</h2>
+    <p>Argumentos informais recorrentes se organizam em <strong>esquemas</strong>, cada um com um conjunto próprio de <strong>perguntas críticas</strong>. O esquema descreve um padrão de inferência que não é válido nem falacioso em si: é provisoriamente aceitável e cede diante de resposta desfavorável a uma das perguntas. Essa é a forma de avaliação característica da tradição de lógica informal representada por Walton (2012), indicada na bibliografia adicional de Mortari (2023).</p>
+    <p>O rendimento pedagógico do esquema é grande, e é o inverso do rendimento da lista de falácias. A lista de falácias ensina a reconhecer o defeito depois de cometido; o esquema com perguntas críticas ensina a interrogar o argumento antes de julgá-lo, e mostra que o mesmo padrão pode produzir bons e maus argumentos. O apelo à autoridade, por exemplo, não é falacioso: é indispensável, e a maior parte do que qualquer pessoa sabe repousa nele. Torna-se falacioso quando falha a resposta a uma pergunta crítica determinada.</p>
+    <div class="cards" id="esq"></div>
+    <div class="readout" id="esqOut">
+      <div class="rk">Esquema</div>
+      <p>Selecione um esquema para ver a sua forma e as perguntas críticas que o testam. Um argumento que responde bem a todas elas é provisoriamente aceitável, ainda que não seja dedutivamente válido.</p>
+    </div>
+
+    <h2 id="u5"><span class="num">Unidade 1A.5</span>Ônus da prova e diálogo</h2>
+    <p>Argumentos não ocorrem no vazio. Ocorrem em diálogos com regras, e algumas propriedades da avaliação dependem dessas regras e não do argumento isolado. A distinção é antiga: os estoicos dividiram a lógica em retórica, a ciência que estuda o discurso, e dialética, a ciência que estuda o verdadeiro e o falso por meio de perguntas e respostas (Morais et al., 2019, cap. 7).</p>
+    <p>O conceito operacional é o de <strong>ônus da prova</strong>. Em um diálogo, uma das partes tem a obrigação de sustentar sua tese, e a outra tem apenas a de responder. Quem afirma assume o ônus; quem apenas nega, não. A regra explica por que «você não provou que não existe» não estabelece nada: a exigência de prova está sendo dirigida a quem não a assumiu.</p>
+    <p>A regra tem exceções reconhecidas, e elas são exatamente o que torna o tema interessante. Presunções deslocam o ônus. Na presunção de inocência, quem acusa prova; em uma discussão sobre segurança de um produto, muitas jurisdições atribuem o ônus a quem o introduz, e não a quem o contesta. Determinar de quem é o ônus em um caso concreto é uma questão substantiva, e frequentemente é a questão em disputa.</p>
+    <p>Duas outras noções completam a unidade. O <strong>desvio de questão</strong> ocorre quando a resposta estabelece algo verdadeiro que não é o que estava em jogo, e é o mecanismo comum a várias falácias já vistas. A <strong>concessão</strong>, ao contrário, é um movimento legítimo: reconhecer um ponto do adversário sem abrir mão da tese. O aluno que aprendeu na unidade 1.2 a descartar material concessivo na reconstrução deve agora reconhecer que, embora não sustente a conclusão, a concessão cumpre função dialética real.</p>
+
+    <h2 id="u6"><span class="num">Unidade 1A.6</span>Força indutiva</h2>
+    <p>A unidade 1.5 estabeleceu que argumentos indutivos não se avaliam por validade. Restou em aberto como se avaliam. Esta unidade fecha a lacuna, tratando dos quatro tipos que mais aparecem.</p>
+    <h4>Generalização a partir de amostra</h4>
+    <p>A força depende do tamanho da amostra, de sua representatividade e da variabilidade da população. Amostra grande e enviesada é pior do que amostra pequena e aleatória, e este é o erro mais comum: a generalização apressada da unidade 1.6 quase nunca é apressada por número, e sim por viés de seleção. O caso limite é a amostra que se autosseleciona, como o questionário respondido apenas por quem se interessa pelo tema.</p>
+    <h4>Analogia</h4>
+    <p>Conclui que dois casos que se assemelham em vários aspectos se assemelham também no aspecto em disputa. A força depende do número de semelhanças relevantes, do número de diferenças relevantes e, sobretudo, de haver conexão entre as semelhanças invocadas e a propriedade concluída. Semelhanças numerosas mas irrelevantes não sustentam nada.</p>
+    <h4>Inferência causal</h4>
+    <p>Uma correlação admite quatro explicações concorrentes, e o argumento causal só se sustenta quando as três últimas foram afastadas: que A cause B, que B cause A, que um terceiro fator cause ambos, ou que a correlação seja acidental. A ordem temporal exclui a segunda; um mecanismo plausível favorece a primeira; o controle de variáveis trata da terceira; a magnitude e a replicação tratam da quarta.</p>
+    <h4>Inferência à melhor explicação</h4>
+    <p>Conclui que a hipótese que melhor explica os dados é verdadeira. A força depende de a hipótese vencer concorrentes efetivamente consideradas, e não apenas de explicar bem. O defeito característico é a comparação com um conjunto vazio de alternativas, que faz qualquer hipótese parecer a melhor.</p>
+    <div class="note">Nenhum desses quatro tipos é formalizável nos cálculos dos módulos 3 a 6, e o aluno não deve esperar reencontrá-los ali. O que reencontrará, no módulo 6, é a discussão sobre a existência de sistemas formais alternativos, alguns dos quais motivados justamente por raciocínio não dedutivo.</div>
+
+    <h2 id="marco"><span class="num">Verificação</span>Marco A1b</h2>
+    <div class="marco"><b>Marco A1b</b>Padronizar um argumento retirado de texto de circulação corrente, explicitando a premissa suprimida pela regra de caridade; diagramar a estrutura de apoio identificando trechos convergentes, ligados e seriais; classificar o argumento em um esquema e aplicar-lhe as perguntas críticas correspondentes; e determinar, com justificativa, a quem cabe o ônus da prova na disputa em que ele aparece.</div>
+    <p>O marco é vencido por produção escrita, e não por teste de escolha, porque não existe gabarito único para nenhuma das quatro operações. A correção deve, portanto, incidir sobre a justificação e não sobre a resposta. O guia de prompts de correção que acompanha esta proposta traz uma rubrica específica para este artefato.</p>
+    <p>Como exercício de fixação, Neves Filho e Rui (2016, cap. IV, §11) fornece uma lista de casos, entre os quais o de número 6 pede exatamente o que este marco exige: localizar um raciocínio falacioso real, explicitar o contexto e sustentar por que se trata de falácia.</p>
+
+    <h2 id="proximo"><span class="num">Encerramento</span>Próximo passo</h2><p>O ciclo de cada módulo se fecha em três movimentos: resolver os exercícios, verificar o marco no banco de itens e submeter o artefato escrito à rubrica correspondente.</p><div class="nextgrid"><a class="nx" href="provas.html"><span class="k">Verificar</span><span class="t">Provas de Domínio</span><span class="d">O banco cobre os marcos A1 a C2; o marco A1b verifica-se por produção escrita.</span></a><a class="nx" href="prompts.html#p1"><span class="k">Corrigir o artefato</span><span class="t">Prompt 1 · Reconstrução informal</span><span class="d">Rubrica exata do artefato exigido pelo marco A1b.</span></a><a class="nx" href="02-modulo-2.html"><span class="k">Seguir</span><span class="t">Módulo 2 · Linguagem e conjuntos</span><span class="d">Nível A · módulo 2 no percurso.</span></a></div>
+
+    <h2 id="ref">Referências</h2>
+    <div class="refs">
+      <p>Morais, B. R., Figueiró, F. H., Pires, L. T., Veríssimo, L. M., &amp; Sapunaru, R. A. (Orgs.). (2019). <em>Introdução à lógica a partir de sua história filosófica: Vol. 1. De Heráclito aos medievais</em>. Editora Fi.</p>
+      <p>Mortari, C. A. (2016). <em>Introdução à lógica</em> (2a ed.). Editora Unesp.</p>
+      <p>Mortari, C. A. (2023). <em>Plano de ensino: FIL 6021 Lógica I</em> [Plano de ensino]. Universidade Federal de Santa Catarina, Departamento de Filosofia.</p>
+      <p>Murcho, D. (2006). Lógica informal. In J. Branquinho, D. Murcho, &amp; N. G. Gomes (Eds.), <em>Enciclopédia de termos lógico-filosóficos</em>. Martins Fontes.</p>
+      <p>Neves Filho, E. F. das, &amp; Rui, M. de L. (2016). <em>Elementos de lógica</em> (Série Dissertatio de Filosofia, Vol. 11). NEPFIL Online.</p>
+      <p>Walton, D. (2012). <em>Lógica informal</em> (2a ed.). Martins Fontes.</p>
+    </div>
+  </article>
+</div>
+<script>
+(function(){
+  const ESQ = [
+    ["Apelo à autoridade",
+     "E é especialista no domínio D. E afirma que α, e α pertence a D. Logo, α.",
+     ["E é de fato especialista em D, ou em algum domínio vizinho apenas?",
+      "A afirmação α está dentro de D, ou E está opinando fora de sua competência?",
+      "E citou evidência, ou apenas asseverou?",
+      "Há especialistas de igual competência que discordam?",
+      "E tem interesse no resultado da disputa?"]],
+    ["Argumento por analogia",
+     "O caso C1 assemelha-se ao caso C2 em vários aspectos. C1 tem a propriedade P. Logo, C2 tem P.",
+     ["As semelhanças invocadas são relevantes para P, ou apenas numerosas?",
+      "Há diferença entre C1 e C2 que seja relevante para P?",
+      "Existe um terceiro caso, semelhante a C1 do mesmo modo, que não tem P?",
+      "A analogia é usada para concluir, ou apenas para ilustrar?"]],
+    ["Argumento causal",
+     "A e B ocorrem juntos com regularidade. Logo, A causa B.",
+     ["A ordem temporal é compatível com A causar B?",
+      "B poderia estar causando A?",
+      "Existe fator comum que cause A e B?",
+      "A correlação pode ser acidental, dado o número de comparações feitas?",
+      "Há mecanismo plausível ligando A a B?"]],
+    ["Argumento pelas consequências",
+     "Se aceitarmos α, seguem-se consequências ruins. Logo, não devemos aceitar α.",
+     ["As consequências apontadas de fato se seguiriam?",
+      "A conclusão é sobre a verdade de α ou sobre a conveniência de agir como se α?",
+      "Há consequências boas sendo omitidas?",
+      "A gravidade das consequências foi estimada ou apenas asseverada?"]],
+    ["Argumento de sinal",
+     "A presença de S indica, tipicamente, a presença de F. S está presente. Logo, F.",
+     ["Com que frequência S ocorre sem F?",
+      "Existe explicação alternativa para a presença de S neste caso?",
+      "S foi observado de modo confiável?"]],
+    ["Apelo à opinião comum",
+     "A maioria aceita α. Logo, α.",
+     ["A maioria em questão tem acesso à evidência relevante?",
+      "A opinião é estável ou recente e volátil?",
+      "Trata-se de matéria em que a aceitação geral é evidência, como o uso linguístico, ou de matéria em que não é, como um fato empírico?",
+      "A alegação de que a maioria aceita foi verificada?"]]
+  ];
+  const box = document.getElementById("esq"), out = document.getElementById("esqOut");
+  ESQ.forEach((e, k) => {
+    const b = document.createElement("button");
+    b.type = "button"; b.className = "card"; b.setAttribute("aria-pressed", "false");
+    b.innerHTML = '<span class="n">ESQ ' + String(k+1).padStart(2,"0") + '</span><span class="t">' + e[0] + "</span>";
+    b.addEventListener("click", () => {
+      box.querySelectorAll(".card").forEach(o => o.setAttribute("aria-pressed", String(o === b)));
+      out.innerHTML = '<div class="rk">' + e[0] + "</div>" +
+        '<p style="font-family:var(--mono);font-size:14px;color:var(--ink)">' + e[1] + "</p>" +
+        '<p style="margin-top:12px"><strong>Perguntas críticas</strong></p><ol>' +
+        e[2].map(q => "<li>" + q + "</li>").join("") + "</ol>";
+    });
+    box.appendChild(b);
+  });
+})();
+</script>
+<script>
+(function(){
+  const links = Array.from(document.querySelectorAll("nav.toc a"));
+  const alvos = links.map(a => document.getElementById(a.getAttribute("href").slice(1))).filter(Boolean);
+  function spy(){
+    let atual = alvos[0];
+    alvos.forEach(t => { if(t.getBoundingClientRect().top <= 120) atual = t; });
+    links.forEach(a => a.classList.toggle("on", a.getAttribute("href") === "#" + (atual ? atual.id : "")));
+  }
+  window.addEventListener("scroll", spy, {passive:true}); spy();
+})();
+</script>
+
+</body>
+</html>
