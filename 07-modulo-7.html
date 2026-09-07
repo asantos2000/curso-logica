@@ -125,10 +125,15 @@ figcaption b{font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-
 .readout ol{margin:6px 0 0;padding-left:20px;font-size:14.5px;color:var(--ink-soft)}
 .readout ol li{margin-bottom:5px}
 .refs{margin-top:12px}
+.solucao{border:1px solid var(--line);border-radius:4px;background:var(--surface);padding:12px 16px;margin:12px 0}
+.solucao summary{cursor:pointer;color:var(--accent);font-weight:600}
+.solucao p:first-of-type{margin-top:12px}
+.solucao p:last-child{margin-bottom:0}
+.solucao details{border-top:1px solid var(--line);padding-top:10px;margin-top:12px}
 .refs p{padding-left:34px;text-indent:-34px;font-size:15.5px;margin-bottom:13px}
 :focus-visible{outline:2px solid var(--accent);outline-offset:3px}
 @media (max-width:900px){
-  .shell{grid-template-columns:1fr;gap:0}
+  .shell{grid-template-columns:minmax(0,1fr);gap:0}
   nav.toc{position:static;padding:22px 0 0;columns:2;column-gap:24px}
   nav.toc .lbl{column-span:all}
   article{padding-top:22px}
@@ -158,11 +163,11 @@ figcaption b{font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-
   <header class="hero">
     <div class="eyebrow">Curso de fluência em lógica · módulo complementar 7</div>
     <h1>Correção e completude</h1>
-    <p class="lede">Módulo metateórico com as demonstrações. O que o módulo 6 enuncia, este demonstra: que o cálculo não prova nada de falso, que prova tudo o que decorre semanticamente, e onde exatamente esse acordo termina.</p>
+    <p class="lede">Módulo metateórico com as demonstrações: o cálculo preserva a verdade das hipóteses e alcança todas as suas consequências semânticas. Esse acordo será distinguido dos limites de teorias aritméticas.</p>
     <div class="facts">
       <div><div class="k">Posição</div><div class="v">Após o módulo 6</div></div>
       <div><div class="k">Nível</div><div class="v">C · avançado</div></div>
-      <div><div class="k">Unidades</div><div class="v">Nove</div></div>
+      <div><div class="k">Unidades</div><div class="v">Dez</div></div>
       <div><div class="k">Pré-requisito</div><div class="v">Marcos C1 e C2</div></div>
       <div><div class="k">Marco</div><div class="v">C3</div></div>
       <div><div class="k">Exige</div><div class="v">Indução matemática</div></div>
@@ -183,6 +188,7 @@ figcaption b{font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-
     <a href="#u9">7.9 Primeira ordem</a>
     <a href="#u10">7.10 Duas completudes</a>
     <a href="#marco">Marco C3</a>
+    <a href="#solucoes">Pistas e soluções</a>
     <a href="#proximo">Próximo passo</a>
     <a href="#ref">Referências</a>
   </nav>
@@ -190,10 +196,15 @@ figcaption b{font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-
   <article>
     <h2 id="i"><span class="num">Abertura</span>O que se vai demonstrar</h2>
     <p class="intro">A unidade 6.2 enuncia dois teoremas e discute o que afirmam. Este módulo os demonstra. A escolha original de não demonstrá-los seguia o tratamento do livro-texto e era adequada a um curso introdutório; para o aluno disposto a acompanhar duas induções e uma construção, a demonstração rende algo que o enunciado não rende, que é entender <em>por que</em> as duas relações coincidem e quão pouco disso é acidental.</p>
-    <p>O aparato exigido é modesto: indução matemática, a noção de conjunto enumerável e a disposição de acompanhar uma construção infinita por etapas. Nada além do que o módulo 2 já forneceu.</p>
-    <p>As demonstrações são apresentadas primeiro para o cálculo proposicional, onde a construção é transparente, e depois estendidas ao cálculo de predicados, onde apenas uma dificuldade nova aparece e uma única ideia a resolve. O módulo termina na fronteira, distinguindo a completude do cálculo, que se demonstra, da completude de uma teoria, que em geral falha.</p>
+    <p>É preciso conhecer conjuntos, funções e enumerabilidade, tratados no módulo 2. A indução matemática e a recursão por etapas são preparadas abaixo antes de serem usadas nas provas. O exercício sobre linguagens não enumeráveis é uma extensão opcional, que exige um princípio de escolha.</p>
+    <p>As demonstrações são apresentadas integralmente para o cálculo proposicional. Para a primeira ordem, oferece-se um esboço: substituição, parâmetros próprios, testemunhas e interpretação de termos exigem trabalho adicional. O módulo termina distinguindo a completude do cálculo da completude de uma teoria, sujeita às hipóteses dos teoremas de incompletude.</p>
 
     <h2 id="u1"><span class="num">Unidade 7.1</span>Aparato e duas induções</h2>
+    <h4>Preparação: indução e recursão</h4>
+    <p><strong>Indução matemática</strong> é uma forma de provar uma afirmação para todo natural n. Prove a base, n = 0; depois, para um n arbitrário, suponha a afirmação em n e prove-a em n + 1. A hipótese do passo é local: ela autoriza avançar uma etapa, e a base inicia a cadeia. Conferir somente alguns exemplos não substitui esses dois passos.</p>
+    <p>Exemplo: a soma dos n primeiros números ímpares é n². Para n = 0, a soma vazia é 0. Se a soma dos n primeiros é n², somar o próximo ímpar, 2n + 1, produz n² + 2n + 1 = (n + 1)². A base e o passo estabelecem a afirmação para todo n.</p>
+    <p><strong>Recursão</strong> serve para definir uma sequência: fixe Δ₀ e uma regra que determina Δ<sub>n+1</sub> a partir de Δ<sub>n</sub>. A indução pode então provar propriedades dessa sequência. No lema de Lindenbaum, definiremos Δ<sub>n+1</sub> por um teste de consistência. A definição matemática não afirma que esse teste possa ser executado por um algoritmo para qualquer conjunto de hipóteses.</p>
+    <p>Recorde também: numa cadeia crescente Δ₀ ⊆ Δ₁ ⊆ ⋯, qualquer coleção finita de elementos da união está contida numa mesma etapa. Para cada elemento escolha uma etapa em que ele já entrou; a maior dessas finitíssimas etapas contém todos. Esse fato será o elo entre derivações finitas e a construção infinita.</p>
     <p>Fixe-se a linguagem proposicional do módulo 3, com letras sentenciais em quantidade enumerável e os operadores ¬, ∧, ∨, → e ↔, e o sistema de dedução natural do módulo 4, chamado aqui de <span class="m">N</span>. As duas relações em questão foram definidas na unidade 4.5.</p>
     <div class="thm"><span class="lb">Definições</span>
       <p><strong>Γ ⊢ α</strong> quando existe uma derivação de α em <span class="m">N</span> cujas hipóteses não descarregadas pertencem todas a Γ.</p>
@@ -207,6 +218,12 @@ figcaption b{font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-
     <p>Para provar que toda derivação tem a propriedade Ψ, mostra-se que a derivação de uma linha só, consistindo em uma hipótese, tem Ψ, e que, se as subderivações imediatas de uma derivação têm Ψ, então ela também tem. Como toda derivação é construída por um número finito de aplicações de regras, segue-se que toda derivação tem Ψ.</p>
     <p>A primeira indução percorre a linguagem; a segunda percorre o sistema dedutivo. A demonstração da correção usa a segunda; a do lema do modelo canônico usa a primeira.</p>
 
+    <h4>Prática de preparação</h4>
+    <p><strong>A.</strong> Defina c(P) = 0, c(¬α) = c(α) + 1 e c(α ◦ β) = c(α) + c(β) + 1 para um conectivo binário ◦. Calcule c(¬(P∧Q)→R) e prove, por indução estrutural, que toda fórmula tem complexidade finita.</p>
+    <details class="solucao"><summary>Conferir a indução estrutural</summary><p>A complexidade é 3: uma conjunção, uma negação e um condicional. Na base, c(P)=0 é finito. No passo unário, um número finito mais 1 continua finito; no binário, a soma de dois números finitos mais 1 continua finita. As hipóteses são aplicadas às subfórmulas imediatas.</p></details>
+    <p><strong>B.</strong> Numa cadeia crescente Δ₀ ⊆ Δ₁ ⊆ ⋯, uma derivação usa premissas que entraram nas etapas 2, 5 e 9. Em qual etapa estão todas disponíveis? Explique como esse argumento muda para uma derivação finita qualquer.</p>
+    <details class="solucao"><summary>Conferir a passagem da finitude para uma etapa</summary><p>Na etapa 9, a maior das três. Para uma derivação finita qualquer, liste as etapas de entrada das premissas utilizadas e tome o máximo. A cadeia crescente conserva cada premissa dali em diante. Se não houver premissas, qualquer etapa basta. Isso não exige que o conjunto inteiro de hipóteses seja finito.</p></details>
+
     <h2 id="u2"><span class="num">Unidade 7.2</span>Correção</h2>
     <div class="thm"><span class="lb">Teorema 1 · correção</span>
       <p>Para todo conjunto Γ de fórmulas e toda fórmula α, se Γ ⊢ α, então Γ ⊨ α.</p>
@@ -218,13 +235,13 @@ figcaption b{font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-
       <p><em>Introdução da conjunção.</em> Por hipótese de indução, Γ₁ ⊨ α e Γ₂ ⊨ β. Seja v tal que v ⊨ Γ₁ ∪ Γ₂. Então v(α) = v(β) = V, e pela tabela de ∧, v(α∧β) = V. Logo Γ₁ ∪ Γ₂ ⊨ α∧β.</p>
       <p><em>Eliminação da conjunção, introdução da disjunção, eliminação da dupla negação, eliminação e introdução do bicondicional.</em> Todos por verificação direta na tabela do operador correspondente, no mesmo padrão do caso anterior.</p>
       <p><em>Modus ponens.</em> Por hipótese de indução, Γ₁ ⊨ α→β e Γ₂ ⊨ α. Seja v ⊨ Γ₁ ∪ Γ₂. Então v(α→β) = V e v(α) = V. Se fosse v(β) = F, a tabela de → daria v(α→β) = F. Logo v(β) = V.</p>
-      <p><em>Eliminação da disjunção.</em> Por hipótese de indução, Γ₁ ⊨ α∨β, Γ₂ ∪ {α} ⊨ γ e Γ₃ ∪ {β} ⊨ γ. Seja v ⊨ Γ₁ ∪ Γ₂ ∪ Γ₃. Como v(α∨β) = V, tem-se v(α) = V ou v(β) = V. No primeiro caso v ⊨ Γ₂ ∪ {α}, e portanto v(γ) = V; no segundo, v ⊨ Γ₃ ∪ {β}, e novamente v(γ) = V.</p>
+      <p><em>Eliminação da disjunção, na forma direta de Sell.</em> As três subderivações terminam em α∨β, α→γ e β→γ. Pela hipótese de indução, Γ₁ ⊨ α∨β, Γ₂ ⊨ α→γ e Γ₃ ⊨ β→γ. Seja v ⊨ Γ₁ ∪ Γ₂ ∪ Γ₃. Se v(α) = V, a verdade de α→γ exige v(γ) = V; se v(β) = V, a verdade de β→γ exige o mesmo. A disjunção garante pelo menos um dos casos. Logo Γ₁ ∪ Γ₂ ∪ Γ₃ ⊨ γ. Esta regra não descarrega hipóteses.</p>
       <p><em>Prova do condicional.</em> Por hipótese de indução, Γ ∪ {α} ⊨ β. Seja v ⊨ Γ. Se v(α) = F, então v(α→β) = V pela tabela de →. Se v(α) = V, então v ⊨ Γ ∪ {α}, donde v(β) = V e novamente v(α→β) = V. Em qualquer caso Γ ⊨ α→β.</p>
       <p><em>Redução ao absurdo.</em> Por hipótese de indução, Γ ∪ {α} ⊨ β∧¬β para alguma fórmula β. Seja v ⊨ Γ e suponha-se, por absurdo, que v(¬α) = F, isto é, v(α) = V. Então v ⊨ Γ ∪ {α}, donde v(β∧¬β) = V, o que exigiria v(β) = V e v(¬β) = V, impossível pela tabela de ¬. Logo v(¬α) = V, e Γ ⊨ ¬α.</p>
       <p class="qed">Esgotadas as regras, a indução está completa.</p>
     </div>
     <p>Duas observações sobre a demonstração. A primeira é que ela é, em essência, uma tabela de correspondência: a cada regra de inferência corresponde exatamente um fato sobre a tabela de verdade do operador que ela manipula. É neste sentido preciso que as regras foram bem escolhidas, e a demonstração serve também de justificativa <em>a posteriori</em> das escolhas feitas no módulo 4.</p>
-    <p>A segunda é que os passos não imediatos são exatamente os das três regras que descarregam hipóteses, a saber a eliminação da disjunção, a prova do condicional e a redução ao absurdo. Só nelas o conjunto de hipóteses da conclusão difere do das subderivações, e é por isso que a unidade 4.3 insistiu em que o descarregamento fosse registrado com precisão.</p>
+    <p>A segunda é que as duas regras que descarregam hipóteses, PC e RAA, exigem acompanhar quais suposições permanecem abertas. A análise por casos com hipóteses α e β é um atalho derivado: primeiro PC transforma as duas subderivações em α→γ e β→γ; depois aplica-se a E∨ direta. Mantém-se, assim, o sistema de oito regras diretas e duas hipotéticas do módulo 4 e de Sell (2014, pp. 24–25).</p>
     <div class="thm lema"><span class="lb">Corolário 1.1</span>
       <p>Todo conjunto satisfazível é consistente.</p>
     </div>
@@ -278,7 +295,7 @@ figcaption b{font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-
       <p>(i) Suponha-se Δ ⊢ α e α ∉ Δ. Por maximalidade, ¬α ∈ Δ, donde Δ ⊢ ¬α. Com Δ ⊢ α, isso torna Δ inconsistente.</p>
       <p>(ii) Se ¬α ∈ Δ e também α ∈ Δ, então Δ ⊢ α e Δ ⊢ ¬α, e Δ seria inconsistente; logo α ∉ Δ. Reciprocamente, se α ∉ Δ, a maximalidade dá ¬α ∈ Δ.</p>
       <p>(iii) Se α∧β ∈ Δ, a eliminação da conjunção dá Δ ⊢ α e Δ ⊢ β, e (i) põe ambas em Δ. Se α ∈ Δ e β ∈ Δ, a introdução da conjunção dá Δ ⊢ α∧β, e (i) conclui.</p>
-      <p>(iv) Se α ∈ Δ, a introdução da disjunção dá Δ ⊢ α∨β, e (i) conclui; simetricamente para β. Reciprocamente, suponha-se α∨β ∈ Δ com α ∉ Δ e β ∉ Δ. Por (ii), ¬α ∈ Δ e ¬β ∈ Δ. Fixe-se uma fórmula qualquer γ. Sob a hipótese α, dispõe-se de α e de ¬α, e o lema 2(c) fornece γ; sob a hipótese β, dispõe-se de β e de ¬β, e o mesmo lema fornece γ. Como as duas subderivações têm a mesma conclusão, a eliminação da disjunção aplicada a α∨β dá Δ ⊢ γ. Tomando γ como α e depois como ¬α, obtém-se Δ ⊢ α e Δ ⊢ ¬α, e Δ seria inconsistente.</p>
+      <p>(iv) Se α ∈ Δ, a introdução da disjunção dá Δ ⊢ α∨β, e (i) conclui; simetricamente para β. Reciprocamente, suponha-se α∨β ∈ Δ com α ∉ Δ e β ∉ Δ. Por (ii), ¬α ∈ Δ e ¬β ∈ Δ. Fixe-se uma fórmula qualquer γ. Sob a hipótese α, dispõe-se de α e de ¬α, e o lema 2(c) fornece γ; PC descarrega α e dá α→γ. Analogamente, sob β obtém-se γ, e PC dá β→γ. A E∨ direta, aplicada a α∨β e aos dois condicionais, dá Δ ⊢ γ. Tomando γ como α e depois como ¬α, obtém-se uma inconsistência em Δ.</p>
       <p>(v) Se α→β ∈ Δ e α ∈ Δ, modus ponens dá Δ ⊢ β e (i) põe β em Δ; logo α ∉ Δ ou β ∈ Δ. Reciprocamente: se β ∈ Δ, a prova do condicional a partir da hipótese α, que não é usada, dá Δ ⊢ α→β; se α ∉ Δ, então ¬α ∈ Δ por (ii); sob a hipótese α dispõe-se de α e de ¬α, e o lema 2(c) fornece β, de modo que a prova do condicional descarrega α e dá Δ ⊢ α→β. Em ambos os casos (i) conclui.</p>
       <p>(vi) Decorre de (iii) e (v) aplicados às duas direções do bicondicional, com as regras de introdução e eliminação de ↔. <span class="qed"></span></p>
     </div>
@@ -349,7 +366,7 @@ figcaption b{font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-
     <div class="thm"><span class="lb">Corolário 8.1 · adequação</span>
       <p>Γ ⊢ α se e somente se Γ ⊨ α.</p>
     </div>
-    <p>Este é o enunciado que a unidade 4.5 antecipou e a unidade 6.2 apenas afirmou. As duas relações, definidas por meios inteiramente distintos, coincidem em extensão. A coincidência não é necessária nem óbvia: ela vale para este sistema e esta semântica, e o módulo 8 exibirá pares em que falha.</p>
+    <p>Este é o enunciado que a unidade 4.5 antecipou e a unidade 6.2 apenas afirmou. As duas relações, definidas por meios distintos, coincidem em extensão para este sistema e esta semântica. Trocar só a semântica pode destruir o acordo: o modus ponens clássico não preserva valores designados em LP. Isso não impede que uma lógica não clássica tenha um sistema dedutivo correto e completo para sua própria semântica.</p>
     <div class="thm"><span class="lb">Corolário 8.2 · compacidade</span>
       <p>Se Γ ⊨ α, então existe Γ₀ ⊆ Γ finito com Γ₀ ⊨ α. Equivalentemente: se todo subconjunto finito de Γ é satisfazível, então Γ é satisfazível.</p>
     </div>
@@ -372,20 +389,21 @@ figcaption b{font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-
     <p>A indução na estrutura da derivação permanece, com dois acréscimos. O primeiro é o <strong>lema da substituição</strong>, que relaciona a verdade de α(x/t) em uma estrutura à verdade de α sob a atribuição que envia x ao valor de t; sem ele, os passos relativos a ∀E e ∃I não podem sequer ser enunciados. O segundo é o tratamento das <strong>restrições sobre a variável própria</strong>.</p>
     <p>Este segundo ponto é o que dá sentido à exigência que a unidade 5.6 impôs sem justificar. Na introdução do universal, a variável própria não pode ocorrer livre em nenhuma hipótese não descarregada. Sem a restrição, seria possível partir da hipótese Px e concluir ∀xPx, o que é semanticamente desastroso: existem estruturas e atribuições em que Px é verdadeira e ∀xPx é falsa. Com a restrição, o passo indutivo se completa, porque a ausência de x nas hipóteses garante que a verdade <em>das hipóteses</em> não depende do valor atribuído a x. Como Γ ⊨ Px vale para toda atribuição que satisfaz Γ, e satisfazer Γ é insensível ao valor de x, segue-se Γ ⊨ ∀xPx. A restrição não é, portanto, uma convenção de escrita: é exatamente a condição sob a qual a correção sobrevive.</p>
     <h4>Completude</h4>
-    <p>Aqui aparece uma dificuldade genuinamente nova. Um conjunto maximal consistente Δ pode conter ∃xα sem conter nenhuma instância α(x/t), e então não há como interpretar o quantificador existencial no modelo canônico: a construção fica sem testemunha.</p>
-    <p>A solução é a de Henkin (1949). Acrescenta-se à linguagem uma quantidade enumerável de constantes novas, e a construção de Lindenbaum é entrelaçada com a introdução de testemunhas: sempre que ∃xα entra no conjunto, acrescenta-se também α(x/c) para uma constante nova c ainda não usada. Prova-se que o acréscimo preserva a consistência, precisamente porque c é nova e nada foi antes afirmado a respeito dela. O resultado é um Δ que é maximal consistente e <strong>completo quanto ao existencial</strong>: toda fórmula existencial que ele contém tem uma testemunha explícita.</p>
-    <p>O modelo canônico é então construído com os próprios termos como objetos. O domínio é o conjunto dos termos fechados da linguagem estendida; cada constante denota a si mesma; e um predicado vale de uma sequência de termos exatamente quando a fórmula atômica correspondente pertence a Δ. Quando a linguagem tem identidade, o domínio é tomado sobre as classes de equivalência dos termos pela relação «t = u pertence a Δ», que os axiomas da identidade garantem ser de fato uma equivalência compatível com predicados e funções. O lema da verdade é então provado por indução, e os dois casos quantificacionais são exatamente os que a completude existencial resolve.</p>
+    <p>Comecemos por conjuntos de <strong>sentenças</strong>, numa linguagem enumerável. Um conjunto maximal consistente Δ pode conter ∃xα sem conter nenhuma instância fechada α(x/t), e então a construção do modelo canônico fica sem testemunha para esse existencial.</p>
+    <p>A solução é a de Henkin (1949). Reserva-se um suprimento enumerável de constantes que não ocorrem nas sentenças iniciais. A construção de Lindenbaum intercala decisões e testemunhas: para uma sentença ∃xα aceita, acrescenta-se α(x/c), com c ainda ausente do conjunto construído até essa etapa. A preservação da consistência é um lema sintático que usa essa condição de novidade. A enumeração deve incluir também as sentenças formadas com as constantes novas, para que nenhum existencial fique sem exame. O resultado é um Δ maximal consistente e <strong>completo quanto ao existencial</strong>: toda sentença existencial de Δ tem uma testemunha.</p>
+    <p>O modelo canônico usa os termos fechados da linguagem estendida como objetos; ao menos uma constante nova garante domínio não vazio. Cada constante denota a si mesma, cada símbolo funcional opera por formação de termos, e um predicado vale de uma sequência de termos quando a sentença atômica correspondente pertence a Δ. Com identidade, usam-se classes de termos pela equivalência «t = u pertence a Δ». Os axiomas da identidade garantem que funções e predicados estejam bem definidos nessas classes. O lema da verdade exige uma indução que trate explicitamente quantificadores e substituições por termos; as testemunhas resolvem o caso existencial.</p>
+    <p>Para estender o resultado a fórmulas abertas, substitua cada variável livre x por uma constante nova c<sub>x</sub>, distinta das demais e reservada para ela. O resultado sobre sentenças produz uma estrutura; a atribuição g(x) = interpretação de c<sub>x</sub> recupera as fórmulas originais pelo lema da substituição. No lado sintático, parâmetros novos podem ser trocados de volta por variáveis após renomear variáveis ligadas e próprias para evitar captura. Esse passo justifica o enunciado geral abaixo; ele não se confunde com o fechamento universal das hipóteses.</p>
     <div class="thm"><span class="lb">Teorema 9 · completude do cálculo de predicados</span>
       <p>Para todo conjunto Γ de fórmulas de primeira ordem e toda fórmula α, se Γ ⊨ α, então Γ ⊢ α (Gödel, 1930; a demonstração aqui esboçada é a de Henkin, 1949).</p>
     </div>
     <h4>Três consequências</h4>
-    <p>A <strong>compacidade</strong> vale com a mesma demonstração do corolário 8.2, e agora sem análogo proposicional trivial: dela seguem-se os resultados sobre modelos não standard da aritmética que a unidade 6.1 mencionou.</p>
-    <p>O <strong>teorema de Löwenheim-Skolem descendente</strong> é imediato da construção: o modelo canônico tem por domínio um conjunto de termos de uma linguagem enumerável, e é portanto no máximo enumerável. Toda teoria de primeira ordem satisfazível em linguagem enumerável tem modelo enumerável, o que produz o chamado paradoxo de Skolem quando aplicado à teoria dos conjuntos.</p>
+    <p>A <strong>compacidade</strong> vale com a mesma demonstração do corolário 8.2. Uma aplicação nova é obter modelos não standard da aritmética: aos axiomas de Peano acrescente uma constante c e, para cada numeral n, a sentença c &gt; n, com a ordem definida aritmeticamente. Cada parte finita é satisfeita nos naturais interpretando c como um número suficientemente grande. Pela compacidade, há um modelo de todas elas, no qual c supera cada numeral padrão.</p>
+    <p>Uma forma do <strong>teorema de Löwenheim-Skolem descendente</strong> resulta da construção: os termos de uma linguagem enumerável formam um conjunto enumerável, e seu quociente é no máximo enumerável. Toda teoria satisfazível nessa linguagem tem um modelo finito ou enumeravelmente infinito; se a teoria exige infinitude, o modelo obtido é enumeravelmente infinito. Aplicado à teoria dos conjuntos, o resultado leva ao chamado paradoxo de Skolem.</p>
     <p>A <strong>semidecidibilidade</strong> decorre de que as derivações podem ser enumeradas mecanicamente: para α válida, o procedimento que gera todas as derivações em ordem acaba encontrando uma. Para α inválida, porém, ele não para. E aqui o resultado é negativo e definitivo.</p>
     <div class="thm"><span class="lb">Teorema 10 · indecidibilidade</span>
       <p>Não existe procedimento efetivo que decida, para toda fórmula de primeira ordem, se ela é válida (Church, 1936; Turing, 1936).</p>
     </div>
-    <p>É este teorema que a unidade 5.5 registrou ao observar que há tablôs que não terminam. A comparação com o corolário 8.3 fixa a diferença: no cálculo proposicional, o número de valorações relevantes é finito e a busca esgota-se; no cálculo de predicados, o número de estruturas a considerar não admite redução análoga, e nenhuma outra redução é possível.</p>
+    <p>É este teorema que a unidade 5.5 registrou ao observar que há tablôs que não terminam. A comparação com o corolário 8.3 fixa a diferença: no cálculo proposicional, o número de valorações relevantes é finito e a busca esgota-se; no cálculo de predicados, o número de estruturas a considerar não admite redução análoga, e não existe um algoritmo alternativo que decida a validade de todas as fórmulas.</p>
 
     <h2 id="u10"><span class="num">Unidade 7.10</span>Duas completudes que não se devem confundir</h2>
     <p>A palavra «completude» nomeia dois enunciados diferentes, e a confusão entre eles é o erro mais frequente de quem encontra estes teoremas pela primeira vez.</p>
@@ -393,7 +411,7 @@ figcaption b{font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-
       <tr><th></th><th>Completude do cálculo</th><th>Completude de uma teoria</th></tr>
       <tr><td class="m2">Sujeito</td><td>O sistema dedutivo</td><td>Um conjunto de axiomas T</td></tr>
       <tr><td class="m2">Enunciado</td><td>Se Γ ⊨ α, então Γ ⊢ α</td><td>Para toda sentença α, T ⊢ α ou T ⊢ ¬α</td></tr>
-      <tr><td class="m2">Estatuto</td><td>Verdadeiro, demonstrado por Gödel em 1930</td><td>Falso para teorias aritméticas, demonstrado por Gödel em 1931</td></tr>
+      <tr><td class="m2">Estatuto</td><td>Vale para o cálculo clássico de primeira ordem (Gödel, 1930)</td><td>Falha para teorias que satisfaçam as hipóteses do teorema 11 abaixo (Gödel–Rosser)</td></tr>
       <tr><td class="m2">Significa</td><td>O aparato dedutivo não deixa escapar nenhuma consequência</td><td>Os axiomas decidem toda pergunta formulável</td></tr>
     </table></div>
     <div class="thm"><span class="lb">Teorema 11 · primeiro teorema da incompletude</span>
@@ -405,14 +423,23 @@ figcaption b{font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-
     <h2 id="marco"><span class="num">Verificação</span>Marco C3 e exercícios</h2>
     <div class="marco"><b>Marco C3</b>Reproduzir a demonstração da completude proposicional sem consulta, indicando, para cada passo, qual lema é usado e onde a hipótese de consistência é empregada; explicar por que a demonstração é não construtiva; e enunciar com precisão a diferença entre o teorema 9 e o teorema 11.</div>
     <h4>Exercícios</h4>
-    <p><strong>1.</strong> A demonstração do lema 3 usa a enumerabilidade da linguagem. Onde exatamente? Que parte do argumento falha se a linguagem tiver uma quantidade não enumerável de letras sentenciais, e como o lema pode ser recuperado nesse caso?</p>
+    <p><strong>1.</strong> A demonstração do lema 3 usa a enumerabilidade da linguagem. Onde exatamente? <em>Extensão opcional:</em> que parte falha para uma quantidade não enumerável de letras sentenciais, e como recuperar o lema usando o lema de Zorn?</p>
     <p><strong>2.</strong> Mostre que, se Γ é maximal consistente, então Γ é fechado por consequência semântica: se Γ ⊨ α, então α ∈ Γ. Que teorema deste módulo você precisou usar?</p>
     <p><strong>3.</strong> Exiba uma estrutura, uma atribuição e uma fórmula que mostrem por que a introdução do universal sem a restrição sobre a variável própria destruiria a correção.</p>
     <p><strong>4.</strong> A compacidade foi aqui demonstrada a partir da completude. Explique por que <em>esta</em> demonstração da compacidade não pode, por sua vez, ser usada para demonstrar a completude, e localize o ponto exato da circularidade. Em seguida, descreva o que seria preciso ter para que a rota inversa funcionasse, isto é, uma demonstração da compacidade por meios exclusivamente semânticos.</p>
     <p><strong>5.</strong> O corolário 8.3 estabelece que o cálculo proposicional é decidível; o teorema 10 estabelece que o de predicados não é. Como isso é possível, se todo argumento proposicional é também um argumento de primeira ordem?</p>
-    <p><strong>6.</strong> Suponha que alguém proponha acrescentar ao sistema <span class="m">N</span> a regra «de α infira ∀xα», sem restrição. Verifique, percorrendo a demonstração do teorema 1, qual passo indutivo deixa de funcionar.</p>
+    <p><strong>6.</strong> Suponha que, na extensão de <span class="m">N</span> à primeira ordem, alguém proponha a regra «de α infira ∀xα», sem restrição. Verifique, percorrendo a estratégia de demonstração do teorema 1, qual passo indutivo deixa de funcionar.</p>
 
-    <h2 id="proximo"><span class="num">Encerramento</span>Próximo passo</h2><p>O ciclo de cada módulo se fecha em três movimentos: resolver os exercícios, verificar o marco no banco de itens e submeter o artefato escrito à rubrica correspondente.</p><div class="nextgrid"><a class="nx" href="provas.html"><span class="k">Verificar</span><span class="t">Provas de Domínio</span><span class="d">O banco cobre os marcos A1 a C2; o marco C3 verifica-se por produção escrita.</span></a><a class="nx" href="prompts.html#p7"><span class="k">Corrigir o artefato</span><span class="t">Prompt 7 · Trabalho integrador</span><span class="d">Rubrica mais próxima do artefato escrito exigido pelo marco C3.</span></a><a class="nx" href="08-modulo-8.html"><span class="k">Seguir</span><span class="t">Módulo 8 · Lógicas não clássicas</span><span class="d">Nível C · complementar no percurso.</span></a></div>
+    <h2 id="solucoes"><span class="num">Apoio à prática</span>Pistas e soluções comentadas</h2>
+    <p>Para cada resposta escrita, atribua de 0 a 2 a: <strong>hipóteses e definições</strong> corretamente identificadas; <strong>encadeamento</strong> dos passos com os lemas necessários; <strong>conclusão e alcance</strong> do resultado. Use 0 para ausente ou incorreto, 1 para parcial e 2 para suficiente. Refaça qualquer critério com 0. A reprodução integral da completude será avaliada pela <a href="prompts.html#p8">rubrica específica de C3</a>.</p>
+    <details class="solucao" id="s7-1"><summary>1 · Enumerabilidade e extensão opcional</summary><p><strong>Pista.</strong> Procure o ponto em que cada fórmula recebe uma posição natural.</p><details><summary>Solução comentada</summary><p>A enumeração α₀, α₁, … permite examinar toda fórmula em alguma etapa finita. Com linguagem não enumerável, essa lista deixa fórmulas de fora; não se pode concluir que a união decide todas. A prova de consistência da união, fundada na finitude das derivações, continua válida.</p><p>Na extensão opcional, ordene por inclusão os conjuntos consistentes que contêm Γ. A união de qualquer cadeia é consistente: uma derivação de contradição usaria só finitíssimas premissas, todas presentes num mesmo membro da cadeia. Pelo lema de Zorn existe um elemento maximal por inclusão. Se ele não contém α, acrescentar α produz inconsistência, e o lema 2(a) dá ¬α; o fechamento dedutivo do conjunto maximal põe ¬α nele. Assim se recupera a maximalidade definida em 7.3. Esta rota usa um princípio de escolha adicional.</p></details></details>
+    <details class="solucao" id="s7-2"><summary>2 · Fechamento semântico</summary><p><strong>Pista.</strong> O lema 4(i) fala de consequência sintática. Qual teorema permite chegar a ela?</p><details><summary>Solução comentada</summary><p>Se Γ ⊨ α, a completude (teorema 7) dá Γ ⊢ α. Como Γ é maximal consistente, o lema 4(i) dá α ∈ Γ. A correção sozinha vai na direção oposta e não justifica essa passagem.</p></details></details>
+    <details class="solucao" id="s7-3"><summary>3 · Contraexemplo à generalização irrestrita</summary><p><strong>Pista.</strong> Escolha dois objetos e uma propriedade que só um deles tenha.</p><details><summary>Solução comentada</summary><p>Seja o domínio {0, 1}, com P interpretado por {0}, e g(x) = 0. Então Px é verdadeira sob g, mas ∀xPx é falsa porque P não vale de 1. A hipótese Px ainda aberta depende do valor de x. A conclusão universal não pode ser obtida dela por I∀.</p></details></details>
+    <details class="solucao" id="s7-4"><summary>4 · Onde surge a circularidade</summary><p><strong>Pista.</strong> A prova do corolário 8.2 cita explicitamente o teorema 7.</p><details><summary>Solução comentada</summary><p>A rota apresentada é completude → existência de derivação finita → compacidade. Usar essa mesma compacidade para provar a completude pressuporia o teorema que se quer provar. Uma rota inversa legítima precisaria de uma demonstração semântica independente da compacidade e de uma prova independente da completude para conjuntos finitos de premissas. Então Γ ⊨ α forneceria Γ₀ finito com Γ₀ ⊨ α; a completude finita daria Γ₀ ⊢ α, e a monotonicidade, Γ ⊢ α. A compacidade sozinha não fornece informação sobre um cálculo arbitrário.</p></details></details>
+    <details class="solucao" id="s7-5"><summary>5 · Fragmento decidível, linguagem indecidível</summary><p><strong>Pista.</strong> Um algoritmo que resolve um subconjunto de casos resolve automaticamente os demais?</p><details><summary>Solução comentada</summary><p>Não. Os argumentos proposicionais constituem um fragmento da linguagem de primeira ordem. Um procedimento geral para a linguagem maior decidiria também esse fragmento; o inverso não se segue. As tabelas tratam finitíssimas atribuições às letras envolvidas, mas essa redução não cobre todos os quantificadores e estruturas da linguagem maior. Ter um fragmento decidível é compatível com a indecidibilidade do problema geral.</p></details></details>
+    <details class="solucao" id="s7-6"><summary>6 · O passo indutivo inválido</summary><p><strong>Pista.</strong> A hipótese indutiva fornece Γ ⊨ α. Escreva exatamente o que ainda falta para ∀xα.</p><details><summary>Solução comentada</summary><p>Para obter Γ ⊨ ∀xα, seria preciso que, em toda estrutura e atribuição g que satisfaz Γ, α permanecesse verdadeira quando g(x) fosse substituído por qualquer objeto. A hipótese indutiva só vale sob atribuições que ainda satisfazem Γ. Se x ocorre livre em Γ, essa condição pode se perder ao variar x. O modelo do exercício 3, com Γ = {Px}, mostra precisamente a falha. Impor que x não ocorra livre nas hipóteses abertas resolve esse caso da indução.</p></details></details>
+
+    <h2 id="proximo"><span class="num">Encerramento</span>Próximo passo</h2><p>Reproduza a demonstração, confira os pontos indicados nas soluções e revise sua produção com a rubrica de C3. Consulte o <a href="guia-estudo.html">guia de estudo</a> para planejar as leituras.</p><div class="nextgrid"><a class="nx" href="prompts.html#p8"><span class="k">Verificar o marco C3</span><span class="t">Prompt 8 · Prova metateórica</span><span class="d">Rubrica específica para a demonstração da completude e a distinção entre as duas completudes.</span></a><a class="nx" href="08-modulo-8.html"><span class="k">Seguir</span><span class="t">Módulo 8 · Lógicas não clássicas</span><span class="d">Nível C · complementar no percurso.</span></a></div>
 
     <h2 id="ref">Referências</h2>
     <div class="refs">
@@ -422,6 +449,7 @@ figcaption b{font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-
       <p>Henkin, L. (1949). The completeness of the first-order functional calculus. <em>The Journal of Symbolic Logic</em>, <em>14</em>(3), 159–166.</p>
       <p>Mortari, C. A. (2016). <em>Introdução à lógica</em> (2a ed.). Editora Unesp.</p>
       <p>Rosser, J. B. (1936). Extensions of some theorems of Gödel and Church. <em>The Journal of Symbolic Logic</em>, <em>1</em>(3), 87–91.</p>
+      <p>Sell, S. (2014). <a href="references/logica-2.pdf"><em>Lógica II</em></a> [Livro didático]. UnisulVirtual. Regras do sistema: unidade 1, pp. 24–25.</p>
       <p>Turing, A. M. (1936). On computable numbers, with an application to the Entscheidungsproblem. <em>Proceedings of the London Mathematical Society</em>, <em>42</em>, 230–265.</p>
     </div>
   </article>

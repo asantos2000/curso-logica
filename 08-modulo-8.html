@@ -125,10 +125,15 @@ figcaption b{font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-
 .readout ol{margin:6px 0 0;padding-left:20px;font-size:14.5px;color:var(--ink-soft)}
 .readout ol li{margin-bottom:5px}
 .refs{margin-top:12px}
+.solucao{border:1px solid var(--line);border-radius:4px;background:var(--surface);padding:12px 16px;margin:12px 0}
+.solucao summary{cursor:pointer;color:var(--accent);font-weight:600}
+.solucao p:first-of-type{margin-top:12px}
+.solucao p:last-child{margin-bottom:0}
+.solucao details{border-top:1px solid var(--line);padding-top:10px;margin-top:12px}
 .refs p{padding-left:34px;text-indent:-34px;font-size:15.5px;margin-bottom:13px}
 :focus-visible{outline:2px solid var(--accent);outline-offset:3px}
 @media (max-width:900px){
-  .shell{grid-template-columns:1fr;gap:0}
+  .shell{grid-template-columns:minmax(0,1fr);gap:0}
   nav.toc{position:static;padding:22px 0 0;columns:2;column-gap:24px}
   nav.toc .lbl{column-span:all}
   article{padding-top:22px}
@@ -215,14 +220,15 @@ figcaption b{font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-
     <a href="#u5">8.5 Intuicionista</a>
     <a href="#u6">8.6 Relevância e paraconsistência</a>
     <a href="#marco">Marco C4</a>
+    <a href="#solucoes">Pistas e soluções</a>
     <a href="#proximo">Próximo passo</a>
     <a href="#ref">Referências</a>
   </nav>
 
   <article>
     <h2 id="i"><span class="num">Abertura</span>O mapa</h2>
-    <p class="intro">A unidade 6.5 tratava seis famílias de lógicas não clássicas em uma única aula, o que bastava para nomeá-las e não para operá-las. Este módulo dá a cada uma o espaço de uma unidade, e às modais aléticas o de uma unidade com laboratório, uma vez que são elas que fornecem o aparato semântico do qual várias das demais dependem.</p>
-    <p>A organização segue um critério único: cada família é identificada pelo que faz com a lógica clássica. Ou acrescenta recursos expressivos preservando tudo o que era válido, ou recusa algum princípio e passa a validar menos. A distinção, na formulação de Haack (2002), separa lógicas <strong>suplementares</strong> de lógicas <strong>rivais</strong>, e é a única maneira de impedir que o assunto se dissolva em uma lista.</p>
+    <p class="intro">O módulo 6 apresentou um panorama das lógicas não clássicas. Aqui o estudo se organiza em seis unidades: um mapa, um tratamento das modalidades com laboratório e comparações entre diferentes leituras e sistemas. A semântica de mundos fornece parte do aparato que reaparecerá nas unidades seguintes.</p>
+    <p>O critério é comparar o que cada sistema preserva ou modifica na lógica clássica. A distinção entre lógicas <strong>suplementares</strong> e <strong>rivais</strong>, discutida por Haack (2002), orienta essa comparação. É preciso examinar as inferências com premissas, além do conjunto de fórmulas válidas: LP, por exemplo, modifica as primeiras sem perder tautologias clássicas.</p>
 
     <h2 id="u1"><span class="num">Unidade 8.1</span>O que é ser clássica</h2>
     <p>Convém enunciar os pressupostos antes de recusá-los. A lógica desenvolvida nos módulos 3 a 7 satisfaz, entre outros, os seguintes princípios.</p>
@@ -230,13 +236,13 @@ figcaption b{font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-
       <tr><th>Princípio</th><th>Enunciado</th><th>Recusado por</th></tr>
       <tr><td><strong>Bivalência</strong></td><td>Toda proposição é verdadeira ou falsa, e não ambas</td><td>Polivalentes</td></tr>
       <tr><td><strong>Veritofuncionalidade</strong></td><td>O valor do composto depende só do valor das partes</td><td>Modais (por acréscimo)</td></tr>
-      <tr><td><strong>Terceiro excluído</strong></td><td>⊨ α ∨ ¬α</td><td>Intuicionista; polivalentes com {1} designado</td></tr>
+      <tr><td><strong>Terceiro excluído</strong></td><td>⊨ α ∨ ¬α</td><td>Intuicionista; Ł₃, K₃ e Bochvar</td></tr>
       <tr><td><strong>Dupla negação</strong></td><td>¬¬α ⊨ α</td><td>Intuicionista</td></tr>
       <tr><td><strong>Explosão</strong></td><td>α, ¬α ⊨ β, para β qualquer</td><td>Paraconsistentes</td></tr>
       <tr><td><strong>Monotonicidade</strong></td><td>Se Γ ⊨ α, então Γ ∪ {β} ⊨ α</td><td>Lógicas não monotônicas</td></tr>
       <tr><td><strong>Irrelevância admitida</strong></td><td>⊨ α → (β → α), sem conexão entre α e β</td><td>Lógicas da relevância</td></tr>
     </table></div>
-    <p>A tabela permite ler a diferença entre os dois tipos. Uma lógica <strong>suplementar</strong> acrescenta operadores e mantém válido tudo o que era válido: as modais, as temporais e as epistêmicas são desta espécie, e uma fórmula sem operadores modais é válida na lógica modal exatamente quando é válida na clássica. Uma lógica <strong>rival</strong> recusa algum princípio e invalida teoremas: a intuicionista, as polivalentes, as paraconsistentes e as da relevância são desta espécie, e a discussão sobre elas é substantiva, isto é, sobre qual lógica está certa, e não meramente sobre qual é mais conveniente.</p>
+    <p>Uma lógica <strong>suplementar</strong> amplia os recursos sem alterar a lógica da linguagem original. Nas modais clássicas aqui estudadas, uma fórmula proposicional sem operadores modais é válida exatamente quando é válida na clássica. Uma lógica <strong>rival</strong> modifica algum princípio ou inferência da linguagem compartilhada. Isso pode reduzir o conjunto de teoremas, como na intuicionista, ou conservar as tautologias e modificar a consequência com premissas, como em LP. A discussão pode envolver tanto a adequação de uma lógica a um domínio quanto teses filosóficas sobre verdade e consequência.</p>
     <div class="note">A distinção não é limpa em todos os casos. Uma lógica modal com quantificadores levanta questões sobre a validade de fórmulas puramente quantificacionais, e sistemas paraconsistentes podem ser apresentados como extensões de fragmentos clássicos. O critério serve para orientar, não para classificar exaustivamente.</div>
 
     <h2 id="u2"><span class="num">Unidade 8.2</span>Modais aléticas</h2>
@@ -260,7 +266,8 @@ M, w ⊨ ◇α       sse  M, u ⊨ α  para algum u tal que wRu</div>
       <tr><td class="m2">B</td><td class="m2">α → □◇α</td><td>Simétrica</td><td>B = T + B</td></tr>
       <tr><td class="m2">5</td><td class="m2">◇α → □◇α</td><td>Euclidiana</td><td>S5 = T + 5</td></tr>
     </table></div>
-    <p>A leitura filosófica de cada propriedade é imediata. A reflexividade diz que o mundo atual é possível relativamente a si mesmo, e é o que faz o necessário ser verdadeiro; a sua recusa é apropriada em leituras deônticas, onde o obrigatório nem sempre ocorre. A transitividade diz que o que é necessário é necessariamente necessário, isto é, que a própria modalidade não é contingente. Em S5, em que R é de equivalência, todos os mundos se enxergam mutuamente e as modalidades iteradas colapsam: □□α equivale a □α, e a modalidade passa a não depender do ponto de vista.</p>
+    <p>A reflexividade diz que o mundo atual é possível relativamente a si mesmo, fazendo o necessário ser verdadeiro nesse mundo; sua recusa é apropriada em leituras deônticas, onde o obrigatório nem sempre ocorre. A transitividade valida que o necessário é necessariamente necessário. Em S5, R é uma relação de equivalência: todos os mundos <strong>da mesma classe</strong> se enxergam mutuamente. As modalidades iteradas colapsam, por exemplo □□α equivale a □α, e o valor de □α é constante dentro de cada classe.</p>
+    <p>Classes distintas podem discordar. Tome três mundos com somente as três setas reflexivas e p verdadeiro apenas em w₁: o frame valida S5, mas □p é verdadeiro em w₁ e falso em w₂. A relação universal, em que todos acessam todos, é um caso especial. Frames universais e frames de equivalência caracterizam as mesmas fórmulas válidas de S5, embora não sejam a mesma classe de frames (Open Logic Project, §2.6).</p>
     <p>O laboratório abaixo permite verificar a correspondência diretamente. O aluno altera a relação de acessibilidade e observa quais esquemas passam a valer no frame, sem consultar a tabela.</p>
     <div class="lab" id="lab">
       <h4>Laboratório de Kripke</h4>
@@ -285,15 +292,23 @@ M, w ⊨ ◇α       sse  M, u ⊨ α  para algum u tal que wRu</div>
           <div class="vv" id="props"></div>
         </div>
       </div>
-      <table class="axt" id="axiomas">
+      <h4>Validade no frame</h4>
+      <div class="tw"><table class="axt" id="axiomas">
         <tr><th>Esquema</th><th>Fórmula</th><th>Vale no frame</th><th>Propriedade de R</th><th>Presente</th></tr>
-      </table>
-      <p style="font-size:13.5px;color:var(--muted);margin:14px 0 0">As duas últimas colunas devem coincidir sempre. Quando coincidem, o aluno está observando a teoria da correspondência em funcionamento; se alguma linha divergisse, haveria erro no laboratório e não na teoria.</p>
+      </table></div>
+      <p style="font-size:13.5px;color:var(--muted)">As colunas «Vale no frame» e «Presente» devem coincidir. Aqui são examinadas todas as valorações; mudar somente os valores de p e q não muda esse resultado.</p>
+      <h4>Verdade no modelo atual, por mundo</h4>
+      <p class="sub">Esta tabela usa os valores que você escolheu acima. Uma fórmula pode ser verdadeira neste modelo e ainda falhar no frame, sob outra valoração.</p>
+      <div class="tw" id="modelo-atual" aria-live="polite"></div>
+      <h4>Como os esquemas que falham são refutados</h4>
+      <p class="sub">Abra uma contravaloração: ela mantém R e pode usar valores diferentes dos controles atuais. O mundo indicado torna falsa a fórmula do esquema.</p>
+      <div id="contramodelos"></div>
     </div>
     <p>Duas experiências valem a pena. A primeira é partir do frame vazio, em que nenhum mundo acessa nenhum: ali □α é vacuamente verdadeira para toda α, e ◇α é falsa para toda α, de modo que D falha e T falha. A segunda é construir um frame transitivo e não reflexivo, verificando que 4 vale e T não, o que separa duas propriedades que a intuição costuma confundir.</p>
     <h4>De dicto e de re</h4>
-    <p>Quando quantificadores entram na linguagem modal, surge uma ambiguidade que o português não desfaz. «Todo solteiro é necessariamente não casado» admite duas leituras: ∀x(Sx → □¬Cx), que atribui a cada solteiro a propriedade de necessariamente não ser casado, e □∀x(Sx → ¬Cx), que atribui necessidade ao enunciado inteiro. A primeira é de re, a segunda de dicto, e apenas a segunda é verdadeira. Distingui-las é a aplicação mais imediata do módulo 5 a este material.</p>
-    <p>A lógica modal quantificada levanta ainda a questão de saber se o domínio varia de mundo para mundo. Se não varia, a <strong>fórmula de Barcan</strong>, ◇∃xα → ∃x◇α, é válida, e com ela o compromisso de que nada poderia existir além do que existe. Mais precisamente, ela corresponde a domínios decrescentes, isto é, à condição de que o domínio de um mundo acessível esteja contido no do mundo de partida; são os domínios crescentes que a invalidam, ao custo de complicar a semântica dos termos que não denotam em todos os mundos.</p>
+    <p>Quando quantificadores entram na linguagem modal, surge uma ambiguidade. «Todo solteiro é necessariamente não casado» pode ser formalizado como ∀x(Sx → □¬Cx), leitura <em>de re</em>, ou □∀x(Sx → ¬Cx), leitura <em>de dicto</em>. A segunda acompanha a relação conceitual entre ser solteiro e não ser casado; a primeira diria que quem é solteiro não poderia casar. As fórmulas, com S e C arbitrários, não são verdades lógicas: é preciso especificar a interpretação.</p>
+    <div class="note">Modelo que separa as leituras: domínio constante {a}, mundos w₀ e w₁, acessibilidade universal. Em w₀, a é solteiro e não casado; em w₁, é casado e não solteiro. Sx → ¬Cx vale em ambos os mundos, portanto a leitura de dicto é verdadeira em w₀. A leitura de re é falsa ali: a é solteiro em w₀, mas ¬Ca falha no mundo acessível w₁.</div>
+    <p>A lógica modal quantificada levanta ainda a questão de saber se o domínio varia de mundo para mundo. Se não varia, a <strong>fórmula de Barcan</strong>, ◇∃xα → ∃x◇α, é válida, e com ela o compromisso de que nada poderia existir além do que existe. Mais precisamente, ela corresponde a domínios decrescentes, isto é, à condição de que o domínio de um mundo acessível esteja contido no do mundo de partida; permitir que surjam objetos novos em mundos acessíveis admite contramodelos, ao custo de complicar a semântica dos termos que não denotam em todos os mundos. Domínios constantes satisfazem tanto crescimento quanto decrescimento por inclusão e validam a fórmula.</p>
     <h2 id="u3"><span class="num">Unidade 8.3</span>Deônticas, epistêmicas e temporais</h2>
     <p>O mesmo aparato serve a outras leituras do operador, e a escolha do sistema passa a ser uma questão substantiva sobre o domínio interpretado.</p>
     <h4>Deônticas</h4>
@@ -333,22 +348,27 @@ M, w ⊨ ◇α       sse  M, u ⊨ α  para algum u tal que wRu</div>
     </div>
     <p>As consequências dessa escolha são drásticas e fáceis de verificar. Em Ł₃, o terceiro excluído falha: com α valendo ½, α ∨ ¬α vale máximo entre ½ e ½, isto é, ½, que não é designado. Em K₃, cujo único valor designado é 1 e cujas tabelas nunca produzem 1 a partir de ½ apenas, não há tautologia alguma. Em LP, que tem exatamente as mesmas tabelas de K₃ mas designa também ½, todas as tautologias clássicas voltam a valer, e o que se perde é a explosão: com α valendo ½, tanto α quanto ¬α são designadas, ao passo que uma β qualquer pode valer 0. LP é, por isso, uma lógica paraconsistente, e será reencontrada na unidade 8.6. O preço, contudo, não se limita à explosão: com α valendo ½ e β valendo 0, tanto α quanto α → β são designadas e β não é, de modo que o modus ponens e o silogismo disjuntivo também falham. O conjunto das fórmulas válidas coincide com o clássico; a relação de consequência, não.</p>
     <p>Note-se que K₃ e LP diferem <em>apenas</em> na escolha dos valores designados, e ainda assim uma não tem tautologias e a outra tem todas as clássicas. É a demonstração mais econômica de que a relação de consequência não é determinada apenas pelas tabelas.</p>
-    <div class="note">Ł₃ e K₃ divergem em um único ponto das tabelas: quando antecedente e consequente valem ½, o condicional de Łukasiewicz vale 1 e o de Kleene vale ½. É dessa única casa que decorre a validade de α → α em Ł₃ e a sua falha em K₃.</div>
+    <p>Essa comparação é sobre as matrizes. A leitura do símbolo ½ também muda: em K₃ ele representa «nem verdadeiro nem falso», uma lacuna; em LP representa «verdadeiro e falso», uma sobreposição. Em Ł₃, a interpretação histórica é a indeterminação. Usar o mesmo número facilita o cálculo, mas não identifica essas interpretações.</p>
+    <div class="note">As tabelas do <em>condicional</em> de Ł₃ e K₃ divergem em uma única casa: ½ → ½ vale 1 em Ł₃ e ½ em K₃. Disso decorre a validade de α → α em Ł₃ e sua falha em K₃. Se definirmos ↔ como a conjunção dos dois condicionais, sua tabela também diferirá nessa atribuição.</div>
 
     <h2 id="u5"><span class="num">Unidade 8.5</span>Intuicionista</h2>
     <p>A motivação não é semântica, e sim epistemológica. Na interpretação de Brouwer, Heyting e Kolmogorov, afirmar α é dispor de uma construção que prova α. Daí decorre a leitura dos operadores: uma prova de α ∧ β é um par de provas; uma prova de α ∨ β é uma prova de um dos disjuntos, com a indicação de qual; uma prova de α → β é um procedimento que converte provas de α em provas de β; e ¬α abrevia α → ⊥.</p>
     <p>Com essa leitura, o terceiro excluído deixa de ser evidente: afirmar α ∨ ¬α exigiria dispor, para qualquer α, de uma prova de α ou de uma prova de que α leva ao absurdo, o que não se tem. Caem com ele a eliminação da dupla negação, uma das leis de De Morgan e a lei de Peirce. O que permanece é considerável, e a lógica intuicionista não é uma lógica clássica mutilada arbitrariamente: ela é exatamente o fragmento que a leitura construtiva sustenta.</p>
-    <p>A semântica de Kripke aplica-se aqui, com duas alterações. Os mundos são estados de informação ordenados por uma relação reflexiva e transitiva, a valoração é <strong>monotônica</strong>, de modo que o que foi provado permanece provado, e a cláusula do condicional passa a quantificar sobre estados futuros: w força α → β quando todo estado u acessível a partir de w que força α também força β. A negação recebe tratamento análogo, e é por isso que w pode não forçar α nem forçar ¬α.</p>
-    <div class="note">Este é o ponto de contato com o módulo 7. A demonstração da completude ali apresentada depende do lema 2(b), cuja obtenção usa a eliminação da dupla negação, e é essa dependência, na lógica-objeto, que a torna inaplicável aqui. Sem a dupla negação não se obtêm conjuntos maximais consistentes que decidam toda fórmula, e a construção precisa ser refeita com <em>teorias primas</em>, isto é, conjuntos fechados por consequência nos quais α ∨ β só pertence ao conjunto quando α ou β pertence, ordenados por inclusão. A completude da lógica intuicionista relativamente à semântica de Kripke é um teorema demonstrado por essa via.</div>
+    <p>Na semântica intuicionista de Kripke, os mundos são estados de informação ordenados por uma relação reflexiva e transitiva. A valoração atômica é <strong>monotônica</strong>: se um estado força p, seus sucessores também o forçam. Escreve-se w ⊩ α para «w força α». A conjunção e a disjunção são locais; já w ⊩ α → β exige que todo u ≥ w que force α também force β. Nenhum estado força ⊥; portanto w ⊩ ¬α exige que nenhum u ≥ w force α.</p>
+    <div class="thm"><span class="lb">Exemplo · informação que cresce</span>
+      <p>Tome dois estados w₀ ≤ w₁, incluindo a reflexividade. Apenas w₁ força p. Em w₀ não se força p; tampouco ¬p, pois w₁ é uma extensão que força p. Logo w₀ não força p ∨ ¬p. Isso não significa que ele force a negação do terceiro excluído.</p>
+      <p>Nenhum dos dois estados força ¬p; por isso w₀ força ¬¬p. Como w₀ não força p, ele também refuta ¬¬p → p. O mesmo modelo mostra por que não forçar uma fórmula é diferente de forçar sua negação.</p>
+    </div>
+    <div class="note">O elo com o módulo 7 é o lema 2(b): Γ ⊬ᵢ α não garante que Γ ∪ {¬α} seja intuicionisticamente consistente. Conjuntos maximais consistentes que decidem todas as fórmulas existem também no caso intuicionista; porém todos eles contêm p ∨ ¬p, pois decidem p, e não bastam para refutá-lo. O modelo canônico usa <em>teorias primas consistentes</em>, não necessariamente maximais: conjuntos fechados por consequência nos quais a presença de α ∨ β implica a de α ou a de β. Ordenadas por inclusão, elas permitem crescimento de informação. O lema de extensão preserva a não derivabilidade da fórmula alvo. É por essa via que se demonstra a completude para Kripke (Bezhanishvili e de Jongh, §3.3, p. 18).</div>
 
     <h2 id="u6"><span class="num">Unidade 8.6</span>Relevância e paraconsistência</h2>
     <p>As duas famílias atacam pontos distintos, mas partem da mesma insatisfação com o condicional material.</p>
     <h4>Relevância</h4>
-    <p>São válidas classicamente as fórmulas α → (β → α) e ¬α → (α → β), conhecidas como paradoxos da implicação material. Elas permitem inferir um condicional cujo antecedente e cujo consequente nada têm entre si, e para as lógicas da relevância isso é um defeito e não uma peculiaridade. O requisito imposto é o <strong>compartilhamento de variáveis</strong>: em um condicional válido, antecedente e consequente devem partilhar ao menos uma letra sentencial. Os sistemas R e E, de Anderson e Belnap, formalizam a exigência, ao custo de uma semântica consideravelmente mais complexa, com uma relação ternária entre mundos.</p>
+    <p>São válidas classicamente as fórmulas α → (β → α) e ¬α → (α → β), conhecidas como paradoxos da implicação material. A primeira permite introduzir um antecedente β sem usar sua informação; a segunda deriva qualquer condicional de um antecedente negado. Nos sistemas de relevância R e E, de Anderson e Belnap, o <strong>compartilhamento de variáveis</strong> é uma condição necessária: antecedente e consequente de um condicional válido partilham alguma letra. Ela não é suficiente, pois até os dois paradoxos acima partilham letras entre os lados. As regras desses sistemas impõem condições adicionais; uma semântica usual emprega uma relação ternária entre mundos.</p>
     <h4>Paraconsistência</h4>
     <p>Aqui o alvo é a explosão. Em lógica clássica, um único par contraditório trivializa a teoria inteira, e qualquer fórmula passa a ser demonstrável, o que se verifica pelo lema 2(c) do módulo 7. Uma lógica é <strong>paraconsistente</strong> quando a explosão falha, isto é, quando é possível conter uma contradição sem que tudo se siga.</p>
     <p>A motivação é em parte prática: bancos de dados, corpos de conhecimento científico em transição e sistemas jurídicos contêm inconsistências localizadas, e o interesse está em raciocinar com eles sem descartá-los. O sistema LP da unidade 8.4 é o exemplo mais simples. Os sistemas C<sub>n</sub> de Newton da Costa constituem a contribuição brasileira mais influente à área e organizam hierarquicamente graus de tolerância à contradição. O <strong>dialeteísmo</strong>, defendido por Priest, dá um passo adicional e sustenta que algumas contradições são verdadeiras, tese metafísica que a paraconsistência técnica não exige.</p>
-    <p>Observe-se, para encerrar, que o lema 2(c) do módulo 7 mostra exatamente <em>como</em> a explosão é obtida na dedução natural clássica: por redução ao absurdo, com introdução da conjunção, seguida de eliminação da dupla negação. Um sistema que conserve as três regras terá a explosão como consequência inevitável, e é este o critério de leitura que o módulo 7 oferece.</p><p>O que os sistemas efetivamente existentes abandonam, porém, não é a dupla negação. LP a conserva, pois ¬¬α e α recebem sempre o mesmo valor nas suas tabelas, e os sistemas C<sub>n</sub> de da Costa também a conservam. O que eles restringem é a redução ao absurdo e, de modo característico, o silogismo disjuntivo, cuja falha em LP foi verificada na unidade 8.4. Ler um sistema paraconsistente é, portanto, perguntar antes de tudo o que ele fez com essas duas regras.</p>
+    <p>Observe-se, para encerrar, como o lema 2(c) do módulo 7 obtém a explosão: I∧ reúne a contradição; RAA, sob a hipótese adicional ¬β, produz ¬¬β; e a eliminação da dupla negação dá β. Conservar essas regras <em>e</em> o uso das premissas sob hipóteses adicionais, com descarga mesmo quando a hipótese não foi usada, conserva essa derivação.</p><p>LP conserva a eliminação da dupla negação, pois ¬¬α e α têm sempre o mesmo valor; os sistemas C<sub>n</sub> de da Costa também conservam essa eliminação. Isso não os obriga a aceitar a RAA clássica irrestrita. O silogismo disjuntivo também precisa ser examinado: sua falha em LP foi verificada na unidade 8.4. Ao comparar sistemas, indique precisamente qual regra e quais condições de uso estão em jogo.</p>
 
     <h2 id="marco"><span class="num">Verificação</span>Marco C4 e exercícios</h2>
     <div class="marco"><b>Marco C4</b>Construir um frame de Kripke que valide 4 e invalide T, exibindo a valoração que refuta T; formalizar uma ambiguidade de dicto e de re e mostrar em que modelo as duas leituras divergem; calcular, nas tabelas de Ł₃, um caso em que o terceiro excluído falha; e explicar por que K₃ e LP, tendo as mesmas tabelas, validam conjuntos de fórmulas radicalmente distintos.</div>
@@ -357,17 +377,29 @@ M, w ⊨ ◇α       sse  M, u ⊨ α  para algum u tal que wRu</div>
     <p><strong>2.</strong> Verifique, pelas tabelas da unidade 8.4, que α → α é válida em Ł₃ e não é válida em K₃. Identifique a única linha responsável pela diferença.</p>
     <p><strong>3.</strong> Mostre que em LP o argumento «α, ¬α, portanto β» é inválido, exibindo a atribuição de valores que o refuta.</p>
     <p><strong>4.</strong> Explique por que uma lógica deôntica não deve validar □α → α, e proponha um exemplo em português em que a validação produziria conclusão inaceitável.</p>
-    <p><strong>5.</strong> Percorra a demonstração do lema 2(c) do módulo 7 e identifique o conjunto mínimo de regras cuja conservação torna a explosão inevitável. Verifique, em seguida, pelas tabelas da unidade 8.4, que LP conserva a eliminação da dupla negação, e conclua qual das demais regras ele necessariamente abandona.</p>
+    <p><strong>5.</strong> Percorra a demonstração do lema 2(c) do módulo 7 e identifique as regras usadas nessa derivação cuja conservação, com as mesmas condições de hipótese e descarga, torna a explosão inevitável. Verifique, em seguida, pelas tabelas da unidade 8.4, que LP conserva a eliminação da dupla negação, e conclua qual das demais regras ele necessariamente abandona.</p>
     <p><strong>6.</strong> A lógica modal é suplementar à clássica, no sentido da unidade 8.1. Enuncie com precisão o que isso significa a respeito das fórmulas sem operadores modais, e explique por que a lógica modal quantificada torna a afirmação menos simples.</p>
 
-    <h2 id="proximo"><span class="num">Encerramento</span>Próximo passo</h2><p>O ciclo de cada módulo se fecha em três movimentos: resolver os exercícios, verificar o marco no banco de itens e submeter o artefato escrito à rubrica correspondente.</p><div class="nextgrid"><a class="nx" href="provas.html"><span class="k">Verificar</span><span class="t">Provas de Domínio</span><span class="d">O banco cobre os marcos A1 a C2; o marco C4 verifica-se por produção escrita.</span></a><a class="nx" href="prompts.html#p7"><span class="k">Corrigir o artefato</span><span class="t">Prompt 7 · Trabalho integrador</span><span class="d">Rubrica mais próxima do artefato escrito exigido pelo marco C4.</span></a></div>
+    <h2 id="solucoes"><span class="num">Apoio à prática</span>Pistas e soluções comentadas</h2>
+    <p>Avalie cada resposta aberta em três critérios de 0 a 2: <strong>construção</strong> do modelo ou escolha do exemplo; <strong>verificação</strong> dos valores e propriedades relevantes; <strong>explicação</strong> do que o exemplo demonstra. Use 0 para ausente ou incorreto, 1 para parcial e 2 para suficiente. Refaça critérios com 0. Para a produção completa do marco, use a <a href="prompts.html#p9">rubrica de C4</a>.</p>
+    <details class="solucao" id="s8-1"><summary>1 · Um frame euclidiano e não transitivo</summary><p><strong>Pista.</strong> Faça w₂ e w₃ acessarem um ao outro e a si mesmos; faça w₁ acessar apenas w₂.</p><details><summary>Solução comentada</summary><p>Use R = {(w₁,w₂), (w₂,w₂), (w₂,w₃), (w₃,w₂), (w₃,w₃)}. Os sucessores de w₂ e w₃ formam um grupo completamente conectado; o único sucessor de w₁, w₂, acessa a si mesmo. Logo R é euclidiana e 5 vale. Mas w₁Rw₂ e w₂Rw₃ sem w₁Rw₃: não é transitiva. Com p verdadeira em w₂ e falsa em w₃, □p é verdadeira em w₁ e □□p é falsa ali, refutando 4. O valor de p em w₁ é irrelevante para esse cálculo.</p></details></details>
+    <details class="solucao" id="s8-2"><summary>2 · Identidade do condicional</summary><p><strong>Pista.</strong> Leia a diagonal de cada tabela do condicional.</p><details><summary>Solução comentada</summary><p>Em Ł₃, 1→1, ½→½ e 0→0 valem 1; portanto α→α é válida. Em K₃, a casa ½→½ vale máx.(½,½) = ½, não designado. As outras duas casas da diagonal valem 1, de modo que apenas a atribuição intermediária explica a diferença.</p></details></details>
+    <details class="solucao" id="s8-3"><summary>3 · Contravaloração da explosão em LP</summary><p><strong>Pista.</strong> Faça a contradição receber o valor também designado em LP.</p><details><summary>Solução comentada</summary><p>Com α = ½ e β = 0, tanto α quanto ¬α valem ½, designado em LP; β não é designada. Essa única atribuição basta para refutar o argumento. Ela não torna falso o terceiro excluído como validade de LP, pois ali ½ também é preservado.</p></details></details>
+    <details class="solucao" id="s8-4"><summary>4 · Obrigatório não significa ocorrido</summary><p><strong>Pista.</strong> Pense numa obrigação descumprida, como pagar uma conta na data.</p><details><summary>Solução comentada</summary><p>«É obrigatório pagar a conta hoje» não permite concluir «a conta foi paga hoje». Num modelo, o mundo atual pode acessar um mundo ideal em que o pagamento ocorre, sem acessar a si mesmo, onde o pagamento não ocorre. Isso torna □P verdadeira e P falsa no mundo atual. Uma lógica deôntica que admita transgressões não valida T em todos os seus modelos; não é preciso proibir toda seta reflexiva.</p></details></details>
+    <details class="solucao" id="s8-5"><summary>5 · Regras que produzem explosão</summary><p><strong>Pista.</strong> Separe o papel de I∧, RAA e eliminação da dupla negação. A suposição pode ser dispensável para obter a contradição.</p><details><summary>Solução comentada</summary><p>Na derivação do lema 2(c), I∧ reúne α e ¬α; sob a hipótese ¬β, RAA dá ¬¬β; a eliminação da dupla negação dá β. Esse conjunto basta, com a possibilidade de usar as premissas sob uma hipótese adicional e descarregá-la mesmo sem tê-la usado. Não se afirma aqui que seja a única apresentação possível da explosão.</p><p>LP preserva I∧, pois o mínimo de dois designados ainda é designado, e preserva a dupla negação, pois 1 − (1 − a) = a. Logo não pode conservar essa RAA irrestrita. Verificação: tome α = ½ e β = 0. As premissas α e ¬α são designadas; sob ¬β = 1, sua conjunção continua designada. RAA concluiria ¬¬β = 0, que não é designado. O ponto que falha é tratar uma contradição designada como absurdo que autoriza essa descarga.</p></details></details>
+    <details class="solucao" id="s8-6"><summary>6 · Conservatividade da extensão modal</summary><p><strong>Pista.</strong> Fixe a linguagem em que a comparação é feita.</p><details><summary>Solução comentada</summary><p>Para toda fórmula α da linguagem proposicional sem □ ou ◇, α é válida nos sistemas modais clássicos apresentados se e somente se é válida classicamente. As novas modalidades ampliam o que se pode exprimir; não retiram validades desse fragmento.</p><p>Com quantificadores, é preciso declarar se os domínios são constantes ou variáveis, como nomes e variáveis denotam e que existência é pressuposta. Na semântica usual de domínio constante e termos denotantes, o fragmento sem modalidades continua clássico. Outras escolhas exigem conferir suas condições quantificacionais. Não basta dizer «acrescentar □»: as interações entre quantificação e modalidade, como Barcan, dependem dessas escolhas.</p></details></details>
+
+    <h2 id="proximo"><span class="num">Encerramento</span>Próximo passo</h2><p>Reúna os modelos, as contravalorações e as explicações em uma produção escrita e revise-a pela rubrica de C4. O <a href="guia-estudo.html">guia de estudo</a> ajuda a selecionar as próximas leituras.</p><div class="nextgrid"><a class="nx" href="prompts.html#p9"><span class="k">Verificar o marco C4</span><span class="t">Prompt 9 · Comparação de lógicas</span><span class="d">Rubrica específica para modelos modais, leitura de re/de dicto e cálculo polivalente.</span></a><a class="nx" href="06-modulo-6.html#lab"><span class="k">Retomar o laboratório</span><span class="t">Calculadora polivalente</span><span class="d">Confira as contravalorações e compare os valores designados de cada sistema.</span></a></div>
 
     <h2 id="ref">Referências</h2>
     <div class="refs">
+      <p>Bezhanishvili, N., &amp; de Jongh, D. (2006). <a href="https://www.math.uni-hamburg.de/home/khomskii/intuitionistic_old_2008/PP-2006-25.text.pdf"><em>Intuitionistic Logic</em></a>. Institute for Logic, Language and Computation. §3.3, pp. 15–18: modelos de Kripke e completude.</p>
       <p>Haack, S. (2002). <em>Filosofia das lógicas</em> (C. A. Mortari &amp; L. H. de A. Dutra, Trads.). Editora Unesp.</p>
       <p>Mortari, C. A. (2016). <em>Introdução à lógica</em> (2a ed.). Editora Unesp.</p>
       <p>Mortari, C. A. (2023). <em>Plano de ensino: FIL 6021 Lógica I</em> [Plano de ensino]. Universidade Federal de Santa Catarina, Departamento de Filosofia.</p>
       <p>Priest, G. (2008). <em>An introduction to non-classical logic: From if to is</em> (2nd ed.). Cambridge University Press.</p>
+      <p>Open Logic Project. <a href="https://builds.openlogicproject.org/content/normal-modal-logic/normal-modal-logic.pdf"><em>Normal Modal Logic</em></a>. §§2.3–2.6: correspondência e diferença entre frames de equivalência e universais.</p>
+      <p>O plano de ensino indica os temas do percurso. Os detalhes de semântica e as construções deste módulo são extensões didáticas; as fontes técnicas acima permitem aprofundá-los.</p>
     </div>
   </article>
 </div>
@@ -397,14 +429,15 @@ M, w ⊨ ◇α       sse  M, u ⊨ α  para algum u tal que wRu</div>
       case "◇":  { for(let u=0;u<N;u++) if(R[w][u] && ev(a[1], u, val)) return true; return false; }
     }
   }
-  function frameValid(a){
+  function frameCountermodel(a){
     for(let m=0; m<64; m++){
       const val = {p:[], q:[]};
       for(let w=0; w<N; w++){ val.p[w] = !!(m >> w & 1); val.q[w] = !!(m >> (w+3) & 1); }
-      for(let w=0; w<N; w++) if(!ev(a, w, val)) return false;
+      for(let w=0; w<N; w++) if(!ev(a, w, val)) return {w, val};
     }
-    return true;
+    return null;
   }
+  function frameValid(a){ return frameCountermodel(a) === null; }
   const PROP = {
     refl:  () => [0,1,2].every(w => R[w][w]),
     ser:   () => [0,1,2].every(w => [0,1,2].some(u => R[w][u])),
@@ -483,15 +516,17 @@ M, w ⊨ ◇α       sse  M, u ⊨ α  para algum u tal que wRu</div>
     valEl.querySelectorAll(".tg").forEach(b => {
       const on = V[ATOMS[+b.dataset.i]][+b.dataset.j];
       b.classList.toggle("on", on); b.textContent = on ? "V" : "F";
+      b.setAttribute("aria-label", ATOMS[+b.dataset.i] + " em " + NOMES[+b.dataset.j] + ": " + (on ? "verdadeiro" : "falso"));
     });
     drawGraph();
     const nomes = {refl:"reflexiva", ser:"serial", trans:"transitiva", sim:"simétrica", eucl:"euclidiana"};
     document.getElementById("props").innerHTML = Object.keys(nomes).map(k =>
       "<span>" + nomes[k] + " <b>" + (PROP[k]() ? "sim" : "não") + "</b></span>").join("");
     const t = document.getElementById("axiomas");
+    const resultados = AX.map(a => ({a, contra:frameCountermodel(a[2])}));
     t.innerHTML = '<tr><th>Esq.</th><th>Fórmula</th><th>Vale no frame</th><th>Propriedade de R</th><th>Presente</th></tr>' +
-      AX.map(a => {
-        const vale = frameValid(a[2]), tem = PROP[a[4]]();
+      resultados.map(({a, contra}) => {
+        const vale = contra === null, tem = PROP[a[4]]();
         const bate = (a[4] === "sempre") ? vale : (vale === tem);
         return "<tr><td class='f'>" + a[0] + "</td><td class='f'>" + a[1] + "</td>" +
           "<td><span class='pill " + (vale ? "yes" : "no") + "'>" + (vale ? "sim" : "não") + "</span></td>" +
@@ -500,6 +535,17 @@ M, w ⊨ ◇α       sse  M, u ⊨ α  para algum u tal que wRu</div>
             : "<span class='pill " + (tem ? "yes" : "no") + "'>" + (tem ? "sim" : "não") + "</span>") +
           (bate ? "" : " <span class='match bad'>divergência</span>") + "</td></tr>";
       }).join("");
+    document.getElementById("modelo-atual").innerHTML = '<table><tr><th>Fórmula</th>' +
+      NOMES.map(w => '<th>' + w + '</th>').join('') + '</tr>' +
+      AX.map(a => '<tr><th scope="row">' + a[1] + '</th>' +
+        NOMES.map((w,i) => '<td>' + (ev(a[2],i,V) ? 'V' : 'F') + '</td>').join('') + '</tr>').join('') + '</table>';
+    const falhas = resultados.filter(r => r.contra !== null);
+    document.getElementById("contramodelos").innerHTML = falhas.length === 0
+      ? '<p>Todos os esquemas listados são válidos neste frame; não há contravaloração para eles.</p>'
+      : falhas.map(({a,contra}) => '<details class="solucao"><summary>Contravaloração de ' + a[0] + ' em ' + NOMES[contra.w] + '</summary>' +
+        '<p>Com os valores abaixo, ' + a[1] + ' é <strong>falsa em ' + NOMES[contra.w] + '</strong>. A acessibilidade é a mesma do grafo.</p>' +
+        '<div class="tw"><table><tr><th>Letra</th>' + NOMES.map(w => '<th>' + w + '</th>').join('') + '</tr>' +
+        ATOMS.map(p => '<tr><th scope="row">' + p + '</th>' + contra.val[p].map(v => '<td>' + (v ? 'V' : 'F') + '</td>').join('') + '</tr>').join('') + '</table></div></details>').join('');
   }
 
   document.querySelector("[data-preset='T']").click();

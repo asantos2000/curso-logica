@@ -125,10 +125,15 @@ figcaption b{font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-
 .readout ol{margin:6px 0 0;padding-left:20px;font-size:14.5px;color:var(--ink-soft)}
 .readout ol li{margin-bottom:5px}
 .refs{margin-top:12px}
+.solucao{border:1px solid var(--line);border-radius:4px;background:var(--surface);padding:12px 16px;margin:12px 0}
+.solucao summary{cursor:pointer;color:var(--accent);font-weight:600}
+.solucao p:first-of-type{margin-top:12px}
+.solucao p:last-child{margin-bottom:0}
+.solucao details{border-top:1px solid var(--line);padding-top:10px;margin-top:12px}
 .refs p{padding-left:34px;text-indent:-34px;font-size:15.5px;margin-bottom:13px}
 :focus-visible{outline:2px solid var(--accent);outline-offset:3px}
 @media (max-width:900px){
-  .shell{grid-template-columns:1fr;gap:0}
+  .shell{grid-template-columns:minmax(0,1fr);gap:0}
   nav.toc{position:static;padding:22px 0 0;columns:2;column-gap:24px}
   nav.toc .lbl{column-span:all}
   article{padding-top:22px}
@@ -222,6 +227,7 @@ table.tv tr.contra td{background:var(--falsum);color:#fff;opacity:.92}
     <a href="#lab">Calculadora polivalente</a>
     <a href="#u6">6.6 História recente</a>
     <a href="#marco">Marco C2</a>
+    <a href="#solucoes">Pistas e soluções</a>
     <a href="#proximo">Próximo passo</a>
     <a href="#ref">Referências</a>
   </nav>
@@ -268,12 +274,12 @@ table.tv tr.contra td{background:var(--falsum);color:#fff;opacity:.92}
       <tr><th>Princípio</th><th>Enunciado</th><th>Quem o recusa</th></tr>
       <tr><td><strong>Bivalência</strong></td><td>Toda proposição é verdadeira ou falsa, e não ambas</td><td>Polivalentes</td></tr>
       <tr><td><strong>Veritofuncionalidade</strong></td><td>O valor do composto depende só do valor das partes</td><td>Modais, por acréscimo de operadores</td></tr>
-      <tr><td><strong>Terceiro excluído</strong></td><td>⊨ α ∨ ¬α</td><td>Intuicionista; polivalentes com {1} designado</td></tr>
+      <tr><td><strong>Terceiro excluído</strong></td><td>⊨ α ∨ ¬α</td><td>Intuicionista; Ł₃, K₃ e Bochvar</td></tr>
       <tr><td><strong>Dupla negação</strong></td><td>¬¬α ⊨ α</td><td>Intuicionista</td></tr>
       <tr><td><strong>Explosão</strong></td><td>α, ¬α ⊨ β, para β qualquer</td><td>Paraconsistentes</td></tr>
       <tr><td><strong>Irrelevância admitida</strong></td><td>⊨ α → (β → α), sem conexão entre α e β</td><td>Lógicas da relevância</td></tr>
     </table></div>
-    <p>A distinção que organiza o campo, na formulação de Haack (2002), separa dois tipos de desvio. Uma lógica <strong>suplementar</strong> acrescenta recursos e preserva tudo o que era válido: as modais e as temporais são desta espécie, e uma fórmula sem operadores modais é válida na lógica modal exatamente quando é válida na clássica. Uma lógica <strong>rival</strong> recusa algum princípio e invalida teoremas: a intuicionista, as polivalentes e as paraconsistentes são desta espécie.</p>
+    <p>A distinção entre lógicas <strong>suplementares</strong> e <strong>rivais</strong>, discutida por Haack (2002), organiza este percurso. Uma suplementar acrescenta recursos preservando a lógica de partida: nas extensões modais clássicas aqui estudadas, uma fórmula sem operadores modais é válida exatamente quando é válida na clássica. Uma rival modifica princípios ou inferências da linguagem compartilhada. Isso não exige perder teoremas: a intuicionista invalida o terceiro excluído, enquanto LP conserva as tautologias clássicas e recusa certas inferências com premissas, como a explosão. É preciso comparar tanto fórmulas válidas quanto relações de consequência.</p>
     <p>A diferença importa porque muda a natureza da discussão. Diante de uma lógica suplementar, a pergunta é se o recurso acrescentado é útil. Diante de uma rival, a pergunta é qual das duas está certa, e essa é uma questão filosófica substantiva, não uma questão de conveniência.</p>
     <figure>
       <svg viewBox="0 0 880 264" role="img" aria-label="Diagrama em que a lógica clássica se ramifica em famílias não clássicas conforme o princípio recusado.">
@@ -323,7 +329,7 @@ table.tv tr.contra td{background:var(--falsum);color:#fff;opacity:.92}
     <p>O mesmo aparato serve a outras leituras. Nas <strong>deônticas</strong>, □ é lido como obrigação, e o ponto decisivo é que □α → α deve falhar, pois do obrigatório não se segue o que ocorre. Nas <strong>epistêmicas</strong>, □ é lido como conhecimento. Nas <strong>temporais</strong>, organizadas por Prior, a relação de acessibilidade é a ordem do tempo, e é aqui que o arco histórico do curso se fecha: a discussão aristotélica dos futuros contingentes, apresentada na unidade 2.4, ganha uma formulação em que a pergunta pode ser posta com precisão.</p>
     <h2 id="u5"><span class="num">Unidade 6.5</span>Polivalentes, intuicionista e da relevância</h2>
     <p>Recusar a bivalência significa admitir mais de dois valores. A motivação histórica de Łukasiewicz foi o estatuto dos enunciados sobre futuros contingentes, aos quais atribuir V ou F pareceria comprometer-se com o determinismo: se «haverá batalha naval amanhã» já é verdadeira hoje, em que sentido o amanhã está em aberto?</p>
-    <p>Escrevendo 1 para verdadeiro, ½ para indeterminado e 0 para falso, os sistemas divergem em dois pontos: nas tabelas dos operadores e no conjunto de <strong>valores designados</strong>, isto é, naqueles que contam como bons para efeito de validade. Um argumento é válido quando toda atribuição que dá valor designado às premissas dá valor designado à conclusão.</p>
+    <p>Escrevendo 1, ½ e 0 para os três valores, os sistemas divergem nas tabelas dos operadores e no conjunto de <strong>valores designados</strong>, aqueles que devem ser preservados pela consequência. Um argumento é válido quando toda atribuição que dá valor designado às premissas dá valor designado à conclusão. Os números não fixam sozinhos a interpretação: em K₃, ½ representa uma lacuna, «nem verdadeiro nem falso»; em LP representa uma sobreposição, «verdadeiro e falso». Por isso LP o designa e K₃ não. Em Ł₃, a leitura histórica é a indeterminação de futuros contingentes.</p>
     <div class="tw"><table>
       <tr><th>Sistema</th><th>Negação e binários</th><th>Condicional</th><th>Designados</th><th>Consequência</th></tr>
       <tr><td class="m2">Ł₃</td><td>¬a = 1−a, ∧ mín., ∨ máx.</td><td>Próprio de Łukasiewicz</td><td class="c">{1}</td><td>Vale α → α; falha o terceiro excluído</td></tr>
@@ -374,7 +380,7 @@ table.tv tr.contra td{background:var(--falsum);color:#fff;opacity:.92}
     <p>A motivação aqui não é semântica, e sim epistemológica. Na interpretação de Brouwer, Heyting e Kolmogorov, afirmar α é dispor de uma construção que prova α. Uma prova de α ∨ β é uma prova de um dos disjuntos com a indicação de qual; uma prova de α → β é um procedimento que converte provas de α em provas de β.</p>
     <p>Com essa leitura, o terceiro excluído deixa de ser evidente: afirmar α ∨ ¬α exigiria dispor, para toda α, de uma prova de α ou de uma prova de que α leva ao absurdo, o que não se tem. Caem com ele a eliminação da dupla negação, uma das leis de De Morgan e a lei de Peirce. A lógica intuicionista não é a clássica mutilada ao acaso: é exatamente o fragmento que a leitura construtiva sustenta.</p>
     <h4>Relevância e paraconsistência</h4>
-    <p>As lógicas da <strong>relevância</strong> recusam que um condicional válido possa ter antecedente e consequente sem conexão alguma, e impõem que ambos partilhem ao menos uma letra sentencial. O alvo são os chamados paradoxos da implicação material, entre eles a fórmula α → (β → α) que a unidade 3.3 já apontava como estranha ao «se» do português.</p>
+    <p>As lógicas da <strong>relevância</strong> recusam certos condicionais cuja validade clássica dispensa uma conexão entre as informações envolvidas. Nos sistemas R e E, todo condicional válido tem antecedente e consequente que partilham alguma letra sentencial. Essa é uma condição necessária, não suficiente: α → (β → α) partilha α entre os dois lados e, mesmo assim, é um dos paradoxos da implicação material recusados. As regras do sistema devem fazer mais do que verificar o compartilhamento.</p>
     <p>As lógicas <strong>paraconsistentes</strong> recusam a explosão: nelas, uma contradição não trivializa o corpo de afirmações. A motivação é em parte prática, pois bancos de dados, corpos de conhecimento em transição e sistemas jurídicos contêm inconsistências localizadas e ainda assim se quer raciocinar com eles. Os sistemas C<sub>n</sub> de Newton da Costa constituem a contribuição brasileira mais influente à área, e o dialeteísmo de Priest dá um passo adicional, sustentando que algumas contradições são verdadeiras.</p>
 
     <h2 id="u6"><span class="num">Unidade 6.6</span>História recente</h2>
@@ -388,15 +394,26 @@ table.tv tr.contra td{background:var(--falsum);color:#fff;opacity:.92}
     <div class="marco"><b>Marco C2</b>Enunciar com precisão os teoremas de correção e completude e dizer o que cada um não afirma; explicar o que a indecidibilidade do cálculo de predicados exclui e o que não exclui; e avaliar um mesmo argumento em lógica clássica e em uma lógica polivalente, exibindo a atribuição de valores responsável pela diferença.</div>
     <h4>Exercícios</h4>
     <p><strong>1.</strong> Um colega afirma que, pelo teorema da completude, toda fórmula é demonstrável ou refutável. Mostre que ele confunde dois enunciados e exiba uma fórmula que serve de contraexemplo à sua tese.</p>
-    <p><strong>2.</strong> Explique por que a semidecidibilidade da validade em primeira ordem é compatível com a completude, mas não com a decidibilidade. Relacione a resposta com o que ocorre nos tablôs da unidade 5.5.</p>
+    <p><strong>2.</strong> Explique por que a completude e a semidecidibilidade da validade em primeira ordem não implicam sua decidibilidade. Relacione a resposta com os tablôs da unidade 5.5 e explique por que todo problema decidível também é semidecidível.</p>
     <p><strong>3.</strong> Na calculadora, teste o terceiro excluído nos cinco sistemas e registre os resultados. Depois explique, em uma frase por sistema, o que cada resultado revela sobre a escolha dos valores designados.</p>
     <p><strong>4.</strong> Teste a explosão em K₃ e em LP. O resultado em K₃ surpreende? Explique por que a explosão vale ali apesar de haver três valores, e localize a razão no conjunto de designados.</p>
     <p><strong>5.</strong> Teste o modus ponens em LP e exiba a atribuição que o refuta. Discuta o que significa, para o valor prático de uma lógica, perder o modus ponens.</p>
     <p><strong>6.</strong> Explique por que a lógica modal é suplementar e a intuicionista é rival, no sentido da unidade 6.3. Diga o que cada uma faz com o conjunto das fórmulas válidas da lógica clássica.</p>
     <p><strong>7.</strong> Uma lógica deôntica não deve validar □α → α. Formule um exemplo em português em que a validação produziria conclusão inaceitável, e diga qual propriedade da relação de acessibilidade precisa ser abandonada.</p>
-    <p><strong>8.</strong> Escolha um trecho de meia página de um texto filosófico ou científico, reconstrua o argumento, formalize-o em primeira ordem, decida a sua validade pelo método que julgar adequado e discuta o que a formalização preservou e o que perdeu. Este é o trabalho integrador do curso, e a última pergunta é a que mais importa.</p>
+    <p><strong>8.</strong> Escolha um trecho de meia página de um texto filosófico ou científico, reconstrua o argumento, formalize-o em primeira ordem e investigue sua validade pelo método que julgar adequado. Apresente uma derivação ou um contramodelo; se a investigação não terminar, registre o resultado como inconclusivo e explique o limite encontrado. Discuta o que a formalização preservou e o que perdeu. Este é o trabalho integrador do curso.</p>
 
-    <h2 id="proximo"><span class="num">Encerramento</span>Próximo passo</h2><p>O ciclo de cada módulo se fecha em três movimentos: resolver os exercícios, verificar o marco no banco de itens e submeter o artefato escrito à rubrica correspondente.</p><div class="nextgrid"><a class="nx" href="provas.html#C2"><span class="k">Verificar o marco</span><span class="t">Provas de Domínio · marco C2</span><span class="d">Itens autocorrigidos com justificativa e fonte. O marco é vencido a partir de 75% de acerto.</span></a><a class="nx" href="prompts.html#p7"><span class="k">Corrigir o artefato</span><span class="t">Prompt 7 · Trabalho integrador</span><span class="d">Rubrica do trabalho final: reconstrução, formalização, decisão e discussão das perdas.</span></a><a class="nx" href="07-modulo-7.html"><span class="k">Seguir</span><span class="t">Módulo 7 · Correção e completude</span><span class="d">Nível C · complementar no percurso.</span></a></div>
+    <h2 id="solucoes"><span class="num">Apoio à prática</span>Pistas e soluções comentadas</h2>
+    <p>Tente resolver antes de abrir. Para os exercícios 1–7, avalie sua resposta em três critérios, de 0 a 2 cada: <strong>conceitos</strong> corretamente distinguidos; <strong>evidência</strong> por cálculo, exemplo ou argumento; <strong>conclusão</strong> com o alcance correto. Use 0 para ausente ou incorreto, 1 para parcial e 2 para suficiente. Refaça os critérios que receberam 0. No exercício 8, use a <a href="prompts.html#p7">rubrica do trabalho integrador</a>.</p>
+    <details class="solucao" id="s6-1"><summary>1 · Completude não decide toda sentença</summary><p><strong>Pista.</strong> Escolha uma fórmula contingente e use duas valorações.</p><details><summary>Solução comentada</summary><p>P serve: há uma valoração que a torna V e outra que a torna F. Pela correção, nem ⊢ P nem ⊢ ¬P. A completude do cálculo garante derivar as consequências das hipóteses; não torna todo conjunto de hipóteses uma teoria que decide todas as sentenças.</p></details></details>
+    <details class="solucao" id="s6-2"><summary>2 · Decisão e semidecisão</summary><p><strong>Pista.</strong> Compare o que cada procedimento deve fazer nos casos negativos.</p><details><summary>Solução comentada</summary><p>Uma enumeração efetiva das derivações, junto da completude, encontra prova de toda fórmula válida. Quando a fórmula é inválida, a busca pode continuar sem resposta. Decidir exigiria parar com a resposta correta também nesses casos. Todo procedimento de decisão já é, em particular, uma semidecisão dos casos positivos. Portanto as propriedades são compatíveis; é a validade geral de primeira ordem que é semidecidível e não decidível. Um tablô que continua crescendo não autoriza concluir invalidade.</p></details></details>
+    <details class="solucao" id="s6-3"><summary>3 · Terceiro excluído nos cinco sistemas</summary><p><strong>Pista.</strong> Calcule P ∨ ¬P em P = ½ nos sistemas que admitem esse valor.</p><details><summary>Solução comentada</summary><p>Na clássica, o resultado é sempre 1. Em Ł₃ e K₃, P = ½ dá ½, que não é designado: a fórmula não é válida. Em LP, a mesma linha dá ½ designado; as outras dão 1, então a fórmula é válida. Em Bochvar, ½ contamina a fórmula e não é designado: ela não é válida. O veredito depende das tabelas e dos designados; saber apenas que há três valores não basta.</p></details></details>
+    <details class="solucao" id="s6-4"><summary>4 · Explosão em K₃ e LP</summary><p><strong>Pista.</strong> É possível designar P e ¬P simultaneamente?</p><details><summary>Solução comentada</summary><p>Em K₃, não: se P = 1, ¬P = 0; se P = 0, a primeira premissa falha; se P = ½, nenhuma é designada. Logo não existe valoração que designe as duas premissas, e P, ¬P ⊨ Q vale vacuamente. Em LP, P = ½ e Q = 0 designa as duas premissas e não a conclusão: a explosão falha.</p></details></details>
+    <details class="solucao" id="s6-5"><summary>5 · Modus ponens em LP</summary><p><strong>Pista.</strong> Use uma premissa com valor ½ e conclusão com valor 0.</p><details><summary>Solução comentada</summary><p>Com P = ½ e Q = 0, P → Q = máx.(1 − ½, 0) = ½. P e P → Q são designadas e Q não é: o argumento é inválido. A perda dificulta usar esse condicional como regra de passagem de informação. O diagnóstico vale para o condicional material de LP; não mostra que todo sistema paraconsistente precise perder todo tipo de modus ponens.</p></details></details>
+    <details class="solucao" id="s6-6"><summary>6 · Suplementar e rival</summary><p><strong>Pista.</strong> Separe ampliação de linguagem e mudança de consequência.</p><details><summary>Solução comentada</summary><p>Os sistemas modais clássicos apresentados preservam, na linguagem sem modalidades, exatamente as validades proposicionais clássicas e acrescentam operadores. A intuicionista usa os conectivos compartilhados, mas não valida em geral P ∨ ¬P, válido classicamente. Já uma rival como LP preserva as tautologias e modifica inferências com premissas: a classificação não se reduz a contar teoremas.</p></details></details>
+    <details class="solucao" id="s6-7"><summary>7 · Obrigação sem cumprimento</summary><p><strong>Pista.</strong> Compare o mundo atual com um mundo em que a obrigação é cumprida.</p><details><summary>Solução comentada</summary><p>«É obrigatório entregar o relatório» pode ser verdadeira enquanto «o relatório foi entregue» é falsa. Faça w acessar um mundo ideal u em que P vale, mas não acessar a si mesmo; ponha P falsa em w. Então □P é verdadeira e P falsa em w. Se quiser um frame serial, acrescente uRu. Abandona-se a exigência de reflexividade em todos os mundos, e não necessariamente toda seta reflexiva.</p></details></details>
+    <details class="solucao" id="s6-8"><summary>8 · Trabalho integrador</summary><p><strong>Pista.</strong> Registre a fonte, a leitura escolhida e o dicionário antes da formalização.</p><details><summary>Critérios de uma solução comentada</summary><p>Não há gabarito único. Uma produção suficiente identifica o trecho e sua origem; distingue premissas, conclusão e pressupostos acrescentados; declara domínio, predicados e escopos; sustenta o resultado com uma prova ou contramodelo verificável; e comenta uma perda concreta de significado, como modalidade, tempo ou contexto. Se o método não decidir o caso, descreva o que foi tentado e deixe a validade em aberto. Resultado inconclusivo não equivale a argumento inválido.</p><p>Use a <a href="prompts.html#p7">rubrica completa</a> para avaliar cada etapa. A revisão do argumento e dos limites da formalização continua necessária mesmo quando a conta formal está correta.</p></details></details>
+
+    <h2 id="proximo"><span class="num">Encerramento</span>Próximo passo</h2><p>Resolva os exercícios, faça o teste de conhecimentos e revise sua produção escrita. O <a href="guia-estudo.html">guia de estudo</a> organiza leituras e prática por unidade.</p><div class="nextgrid"><a class="nx" href="provas.html#C2"><span class="k">Verificar conhecimentos</span><span class="t">Provas de Domínio · C2</span><span class="d">O teste exige 75% de acerto; o domínio do marco exige também a produção e sua justificativa.</span></a><a class="nx" href="prompts.html#p7"><span class="k">Corrigir o artefato</span><span class="t">Prompt 7 · Trabalho integrador</span><span class="d">Reconstrução, formalização, investigação da validade e discussão das perdas.</span></a><a class="nx" href="07-modulo-7.html"><span class="k">Seguir</span><span class="t">Módulo 7 · Correção e completude</span><span class="d">Nível C · complementar no percurso.</span></a></div>
 
     <h2 id="ref">Referências</h2>
     <div class="refs">
@@ -460,7 +477,7 @@ function show(n,pai){
   pai=pai||0; const pr=PREC[n.op]; let s;
   if(n.op==='at') return n.nome;
   if(n.op==='¬') s='¬'+show(n.a,PREC['¬']);
-  else s=show(n.l, n.op==='→'?pr+1:pr)+' '+n.op+' '+show(n.r,pr);
+  else s=show(n.l, n.op==='→'?pr+1:pr)+' '+n.op+' '+show(n.r,n.op==='→'?pr:pr+1);
   return pr<pai?'('+s+')':s;
 }
 function atomos(n,acc){ acc=acc||new Set(); if(n.op==='at')acc.add(n.nome); else if(n.op==='¬')atomos(n.a,acc); else {atomos(n.l,acc);atomos(n.r,acc);} return acc; }
@@ -514,7 +531,11 @@ function sub(n,acc){ acc=acc||[]; if(n.op!=='at'){ if(n.op==='¬')sub(n.a,acc); 
       S.vals.map(mostra).join(", ") + ". Designados: " + S.des.map(mostra).join(", ") + ". " + S.info;
     const src = ent.value.trim();
     if(!src){ saida.innerHTML = '<div class="erro">Escreva uma fórmula para começar.</div>'; return; }
-    const partes = src.split(";").map(x => x.trim()).filter(x => x.length);
+    const partes = src.split(";").map(x => x.trim());
+    if(partes.some(x => !x)){
+      saida.innerHTML = '<div class="erro">Há uma parte vazia. Escreva uma fórmula em cada parte do argumento, com a conclusão por último.</div>';
+      return;
+    }
     modo = partes.length > 1 ? "a" : "f";
     let arv;
     try { arv = partes.map(parse); }
@@ -535,7 +556,7 @@ function sub(n,acc){ acc=acc||[]; if(n.op!=='at'){ if(n.op==='¬')sub(n.a,acc); 
     for(let m = 0; m < total; m++){
       const g = {}; let k = m;
       for(let i = at.length - 1; i >= 0; i--){ g[at[i]] = S.vals[k % S.vals.length]; k = Math.floor(k / S.vals.length); }
-      linhas.push({g, vals: cols.map(c => av(c.n, g, S))});
+      linhas.push({g, vals: cols.map(c => av(c.n, g, S)), principal: av(arv[0], g, S)});
     }
     const des = v => S.des.includes(v);
     let h = '<div class="vt"><table class="tv"><tr>';
@@ -546,7 +567,7 @@ function sub(n,acc){ acc=acc||[]; if(n.op!=='at'){ if(n.op==='¬')sub(n.a,acc); 
     linhas.forEach(l => {
       let contra = false;
       if(modo === "a") contra = l.vals.slice(0, -1).every(des) && !des(l.vals[l.vals.length - 1]);
-      else if(!des(l.vals[l.vals.length - 1])) { naoDes++; contra = true; }
+      else if(!des(l.principal)) { naoDes++; contra = true; }
       if(modo === "a" && contra) contras++;
       h += "<tr" + (contra ? ' class="contra"' : "") + ">";
       at.forEach(a => h += '<td class="at">' + mostra(l.g[a]) + "</td>");
@@ -558,16 +579,16 @@ function sub(n,acc){ acc=acc||[]; if(n.op!=='at'){ if(n.op==='¬')sub(n.a,acc); 
     if(modo === "f"){
       h += naoDes === 0
         ? '<div class="verdict"><b>Válida em ' + S.nome + '</b>Toda atribuição dá à fórmula um valor designado.</div>'
-        : '<div class="verdict bad"><b>Não válida em ' + S.nome + "</b>Há " + naoDes + " atribuição" +
-          (naoDes === 1 ? "" : "ões") + " em que a fórmula não recebe valor designado, destacada" +
+        : '<div class="verdict bad"><b>Não válida em ' + S.nome + "</b>Há " + naoDes +
+          (naoDes === 1 ? " atribuição" : " atribuições") + " em que a fórmula não recebe valor designado, destacada" +
           (naoDes === 1 ? "" : "s") + " na tabela.</div>";
     } else {
       const conc = cols[cols.length - 1].s, prem = cols.slice(0, -1).map(c => c.s);
       h += contras === 0
         ? '<div class="verdict"><b>Válido em ' + S.nome + "</b>Não há atribuição que dê valor designado a todas as premissas e não designado à conclusão. Portanto " +
           esc(prem.join(", ")) + " acarreta " + esc(conc) + " neste sistema.</div>"
-        : '<div class="verdict bad"><b>Inválido em ' + S.nome + "</b>Há " + contras + " atribuição" +
-          (contras === 1 ? "" : "ões") + " com todas as premissas designadas e a conclusão não designada. " +
+        : '<div class="verdict bad"><b>Inválido em ' + S.nome + "</b>Há " + contras +
+          (contras === 1 ? " atribuição" : " atribuições") + " com todas as premissas designadas e a conclusão não designada. " +
           (contras === 1 ? "Ela é um contraexemplo." : "Cada uma é um contraexemplo.") + "</div>";
     }
     saida.innerHTML = h;
@@ -578,8 +599,8 @@ function sub(n,acc){ acc=acc||[]; if(n.op!=='at'){ if(n.op==='¬')sub(n.a,acc); 
     render();
   }));
   document.querySelectorAll("[data-ins]").forEach(b => b.addEventListener("click", () => {
-    const p = ent.selectionStart || ent.value.length;
-    ent.value = ent.value.slice(0, p) + b.dataset.ins + ent.value.slice(ent.selectionEnd || p);
+    const p = ent.selectionStart ?? ent.value.length;
+    ent.value = ent.value.slice(0, p) + b.dataset.ins + ent.value.slice(ent.selectionEnd ?? p);
     ent.focus(); ent.selectionStart = ent.selectionEnd = p + b.dataset.ins.length;
     render();
   }));

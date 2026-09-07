@@ -1,0 +1,851 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Guia de estudo · Curso de lógica</title>
+<style>:root{color-scheme:light dark}body{margin:0;font:14px/1.5 system-ui,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style>
+<style>
+:root{
+  --ground:#EEF1EE; --surface:#FAFBF9; --surface-2:#E2E7E3; --raised:#FFFFFF;
+  --ink:#131A18; --ink-soft:#38443F; --muted:#5F6C66; --line:#CBD4CE; --line-soft:#DDE4DF;
+  --accent:#0C6355; --accent-ink:#08463C; --accent-soft:#D6E7E2;
+  --verum:#0C6355; --falsum:#A33C20; --brass:#8A6D0B;
+  --shadow:0 1px 2px rgba(19,26,24,.06), 0 8px 24px -12px rgba(19,26,24,.18);
+  --serif:"Spectral", Georgia, "Times New Roman", serif;
+  --mono:"IBM Plex Mono", "SFMono-Regular", Consolas, monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --ground:#0E1413; --surface:#151D1B; --surface-2:#1D2926; --raised:#1A2422;
+    --ink:#E4EAE6; --ink-soft:#BCC7C2; --muted:#8D9C96; --line:#2B3835; --line-soft:#222E2B;
+    --accent:#4FBCA6; --accent-ink:#8FD8C8; --accent-soft:#17332E;
+    --verum:#4FBCA6; --falsum:#DE8461; --brass:#CFA93A;
+    --shadow:0 1px 2px rgba(0,0,0,.4), 0 10px 30px -14px rgba(0,0,0,.7);
+  }
+}
+:root[data-theme="dark"]{
+  --ground:#0E1413; --surface:#151D1B; --surface-2:#1D2926; --raised:#1A2422;
+  --ink:#E4EAE6; --ink-soft:#BCC7C2; --muted:#8D9C96; --line:#2B3835; --line-soft:#222E2B;
+  --accent:#4FBCA6; --accent-ink:#8FD8C8; --accent-soft:#17332E;
+  --verum:#4FBCA6; --falsum:#DE8461; --brass:#CFA93A;
+  --shadow:0 1px 2px rgba(0,0,0,.4), 0 10px 30px -14px rgba(0,0,0,.7);
+}
+
+*{box-sizing:border-box}
+body{margin:0;background:var(--ground);color:var(--ink);font-family:var(--serif);
+  font-size:17px;line-height:1.62;-webkit-font-smoothing:antialiased}
+.shell{max-width:1180px;margin:0 auto;padding:0 24px;display:grid;
+  grid-template-columns:220px minmax(0,1fr);gap:52px;align-items:start}
+.hero{grid-column:1/-1;padding:52px 0 32px;border-bottom:1px solid var(--line)}
+.hero .eyebrow{font:600 10.5px/1 var(--mono);letter-spacing:.18em;text-transform:uppercase;color:var(--accent)}
+.hero h1{font-size:clamp(34px,4.8vw,54px);font-weight:600;letter-spacing:-.032em;line-height:1.03;
+  margin:16px 0 12px;max-width:17ch;text-wrap:balance}
+.hero .lede{font-size:19px;color:var(--ink-soft);max-width:62ch;margin:0 0 28px}
+.facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:0;border-top:1px solid var(--line)}
+.facts div{padding:14px 20px 14px 0}
+.facts .k{font:600 10px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.facts .v{font-size:16.5px;margin-top:6px;line-height:1.3}
+nav.toc{position:sticky;top:26px;padding:32px 0 40px;font-size:14px}
+nav.toc .lbl{font:600 10px/1 var(--mono);letter-spacing:.16em;text-transform:uppercase;color:var(--muted);
+  padding-bottom:10px;border-bottom:1px solid var(--line);display:block;margin-bottom:12px}
+nav.toc a{display:block;color:var(--muted);text-decoration:none;padding:5px 0 5px 12px;
+  border-left:2px solid transparent;line-height:1.35}
+nav.toc a:hover{color:var(--ink)}
+nav.toc a.on{color:var(--accent);border-left-color:var(--accent);font-weight:500}
+article{padding:32px 0 90px;max-width:72ch}
+article h2{font-size:26px;font-weight:600;letter-spacing:-.018em;line-height:1.16;
+  margin:52px 0 4px;scroll-margin-top:28px;text-wrap:balance}
+article h2:first-of-type{margin-top:10px}
+article h2 .num{font:600 11px/1 var(--mono);letter-spacing:.14em;color:var(--accent);display:block;margin-bottom:10px}
+article h3{font-size:19px;font-weight:600;margin:32px 0 8px;letter-spacing:-.01em;scroll-margin-top:28px}
+article h4{font-size:16.5px;font-weight:600;margin:24px 0 6px}
+article p{margin:0 0 16px;color:var(--ink-soft)}
+article p strong{color:var(--ink);font-weight:600}
+article .intro{font-size:18.5px;color:var(--ink);margin-bottom:22px}
+.m{font-family:var(--mono);font-size:.92em;background:var(--surface);padding:1px 5px;border-radius:2px;color:var(--ink)}
+.tw{overflow-x:auto;margin:20px 0 24px;border:1px solid var(--line);border-radius:4px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;font-size:14.6px;min-width:440px}
+th,td{text-align:left;padding:10px 13px;border-bottom:1px solid var(--line-soft);vertical-align:top;color:var(--ink-soft)}
+tr:last-child td{border-bottom:0}
+th{font:600 10px/1.4 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--muted);
+  border-bottom:1px solid var(--line);background:var(--ground)}
+td.m2{font-family:var(--mono);font-size:13.5px;white-space:nowrap;color:var(--ink)}
+td.c{text-align:center;font-family:var(--mono)}
+td strong{color:var(--ink)}
+/* blocos formais */
+.fx{font-family:var(--mono);font-size:15px;background:var(--surface);border:1px solid var(--line);
+  border-radius:4px;padding:14px 16px;margin:0 0 18px;overflow-x:auto;color:var(--ink);white-space:pre-wrap}
+.thm{border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:4px;background:var(--surface);
+  padding:18px 20px;margin:22px 0}
+.thm .lb{font:600 10.5px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--accent);
+  display:block;margin-bottom:9px}
+.thm p{margin:0 0 10px;color:var(--ink)}
+.thm p:last-child{margin-bottom:0}
+.thm.lema{border-left-color:var(--brass)}
+.thm.lema .lb{color:var(--brass)}
+.prova{border-left:2px solid var(--line);padding:2px 0 2px 16px;margin:16px 0 22px}
+.prova .lb{font:600 10px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--muted);
+  display:block;margin-bottom:8px}
+.prova p{font-size:16px;margin:0 0 12px}
+.prova p:last-child{margin-bottom:0}
+.qed::after{content:" ▪";color:var(--accent)}
+.marco{border-left:3px solid var(--brass);padding:4px 0 4px 15px;margin:26px 0;font-size:16px;color:var(--ink)}
+.marco b{font:600 10px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--brass);
+  display:block;margin-bottom:6px}
+.note{font-size:14.5px;color:var(--muted);border-left:2px solid var(--line);padding-left:16px;margin:22px 0}
+figure{margin:28px 0 32px}
+figure svg{width:100%;height:auto;display:block;border:1px solid var(--line);border-radius:4px;background:var(--surface)}
+figcaption{font-size:13.5px;color:var(--muted);margin-top:10px;line-height:1.5}
+figcaption b{font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--accent);font-weight:600;margin-right:8px}
+.svg-t{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.06em;fill:var(--muted)}
+.svg-l{font-family:Spectral,Georgia,serif;font-size:14px;fill:var(--ink)}
+.svg-s{font-family:Spectral,Georgia,serif;font-size:12.5px;fill:var(--muted)}
+.svg-bx{fill:var(--ground);stroke:var(--line);stroke-width:1.2}
+.svg-bx-a{fill:var(--accent-soft);stroke:var(--accent);stroke-width:1.4}
+.svg-ar{stroke:var(--muted);stroke-width:1.3;fill:none}
+/* interativos genéricos */
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:9px;margin:18px 0}
+.card{text-align:left;border:1px solid var(--line);border-radius:4px;background:var(--surface);
+  padding:11px 13px;cursor:pointer;font-family:var(--serif);color:var(--ink)}
+.card:hover{border-color:var(--accent)}
+.card[aria-pressed="true"]{border-color:var(--accent);background:var(--accent-soft)}
+.card .n{font:600 10px/1 var(--mono);letter-spacing:.1em;color:var(--muted);display:block;margin-bottom:5px}
+.card .t{font-size:14.5px;font-weight:500;line-height:1.25}
+.readout{border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:4px;
+  background:var(--surface);padding:16px 18px;margin-bottom:8px}
+.readout .rk{font:600 10px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:8px}
+.readout p{font-size:15px;margin:0 0 8px;color:var(--ink-soft)}
+.readout p:last-child{margin-bottom:0}
+.readout ol{margin:6px 0 0;padding-left:20px;font-size:14.5px;color:var(--ink-soft)}
+.readout ol li{margin-bottom:5px}
+.refs{margin-top:12px}
+.refs p{padding-left:34px;text-indent:-34px;font-size:15.5px;margin-bottom:13px}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+@media (max-width:900px){
+  .shell{grid-template-columns:minmax(0,1fr);gap:0}
+  nav.toc{position:static;padding:22px 0 0;columns:2;column-gap:24px}
+  nav.toc .lbl{column-span:all}
+  article{padding-top:22px}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+<style>.shell{max-width:1100px}a{color:var(--accent-ink)}.unidade{border:1px solid var(--line);border-radius:5px;background:var(--surface);padding:20px;margin:18px 0}.unidade h3{margin:0 0 10px}.unidade p:last-child{margin-bottom:0}details{border-left:3px solid var(--accent);padding:8px 12px;margin:10px 0 14px}summary{cursor:pointer;font-weight:600}details p{margin:12px 0 0}code{font-family:var(--mono);font-size:.88em}nav.toc{max-height:85vh;overflow:auto}.refs a{overflow-wrap:anywhere}@media(max-width:600px){.shell{padding:0 16px}.unidade{padding:15px}nav.toc{max-height:none}table{min-width:520px}}@media print{nav.toc{display:none}.shell{display:block}details{break-inside:avoid}}</style>
+</head>
+<body>
+<div class="shell">
+<header class="hero">
+<div class="eyebrow">
+<a href="index.html">Curso de fluência em lógica</a> · apoio ao estudo</div>
+<h1>Leituras, prática e conferência</h1>
+<p class="lede">Uma trilha por unidade, com duas atividades essenciais, retorno comentado e uma proposta de aprofundamento. Use as soluções depois de registrar sua tentativa.</p>
+</header>
+<nav class="toc" aria-label="Guia de estudo">
+<span class="lbl">Nesta página</span>
+<a href="#como">Como usar</a>
+<a href="#m1">Módulo 1</a>
+<a href="#m2">Módulo 2</a>
+<a href="#m3">Módulo 3</a>
+<a href="#m4">Módulo 4</a>
+<a href="#m5">Módulo 5</a>
+<a href="#m6">Módulo 6</a>
+<a href="#complementares">Complementares</a>
+<a href="#pagani">Pagani: correspondências</a>
+<a href="#notacao">Folha de notação</a>
+<a href="#fontes">Arquivos das referências</a>
+<a href="index.html">Voltar ao índice</a>
+</nav>
+<article>
+<h2 id="como">Como usar este guia</h2>
+<p>Leia a unidade do curso e consulte a faixa indicada na referência. Em Mortari, as páginas impressas coincidem com o número da página no PDF desta pasta; em <em>Elementos de lógica</em>, some três à página impressa. Em Morais e Sell, os links indicam diretamente a página do PDF. As faixas de leitura são localizadas pelo sumário e por passagens conferidas; não significam que todas as páginas tenham sido revisadas integralmente.</p>
+<p>As atividades essenciais abaixo são propostas didáticas do curso, salvo quando há número explícito de exercício do livro. Faça também os exercícios ao fim do módulo; todos contam com pistas, soluções ou critérios para respostas abertas. Nos laboratórios, primeiro preveja o resultado, depois calcule e explique qualquer diferença. O aprofundamento é opcional. As antecipações de notação do módulo 2 podem ser retomadas nos módulos 3 e 5.</p>
+<p>O teste do marco requer todos os itens respondidos e pelo menos 75% de acerto. Para concluir o marco, revise também sua produção escrita pelos critérios do módulo e pela rubrica pertinente. Uma resposta de modelo de linguagem precisa de conferência; se não houver evidência suficiente, o resultado pode permanecer inconclusivo.</p>
+<h2 id="m1">
+<span class="num">Módulo 1 · A1</span>
+<a href="01-modulo-1.html">Argumento, inferência e validade</a>
+</h2>
+<p>
+<a href="01-modulo-1.html#marco">Exercícios e artefato do marco</a> · <a href="01-modulo-1.html#solucoes">Pistas e soluções do módulo</a> · <a href="provas.html#A1">Teste A1</a>
+</p>
+<section class="unidade" id="u1-1">
+<h3>
+<a href="01-modulo-1.html#u1">1.1 · Raciocínio e inferência</a>
+</h3>
+<p>
+<strong>Leitura:</strong> <a href="references/introducao%20a%20logica-cezar%20mortari%20-%20scan.pdf#page=13">Mortari, pp. 13–17</a>.</p>
+<p>
+<strong>Essencial:</strong> Distinga o ato de inferir da consequência lógica. Reconstrua o problema dos brincos (ex. 1.1, p. 15).</p>
+<details>
+<summary>Conferir o raciocínio</summary>
+<p>Inferir é um ato; consequência é uma relação entre premissas e conclusão. Nos brincos, as duas respostas negativas eliminam os casos com rubi em Griselda, restando esmeralda. Veja a correspondência de Pagani abaixo.</p>
+</details>
+<p>
+<strong>Aprofundamento:</strong> Descreva outro raciocínio por eliminação de possibilidades.</p>
+</section>
+<section class="unidade" id="u1-2">
+<h3>
+<a href="01-modulo-1.html#u2">1.2 · Anatomia do argumento</a>
+</h3>
+<p>
+<strong>Leitura:</strong> <a href="references/introducao%20a%20logica-cezar%20mortari%20-%20scan.pdf#page=18">Mortari, pp. 18–24</a>.</p>
+<p>
+<strong>Essencial:</strong> Separe premissas e conclusão de um parágrafo. Distinga uma concessão de uma razão para a conclusão.</p>
+<details>
+<summary>Conferir o raciocínio</summary>
+<p>A conclusão é a afirmação que as razões pretendem sustentar. Uma concessão reconhece algo que poderia favorecer a posição contrária; não a apague da reconstrução. Use os exercícios comentados do módulo.</p>
+</details>
+<p>
+<strong>Aprofundamento:</strong> Reconstrua um argumento sem indicadores como “logo”.</p>
+</section>
+<section class="unidade" id="u1-3">
+<h3>
+<a href="01-modulo-1.html#u3">1.3 · Sentença e proposição</a>
+</h3>
+<p>
+<strong>Leitura:</strong> <a href="references/introducao%20a%20logica-cezar%20mortari%20-%20scan.pdf#page=25">Mortari, pp. 25–32</a>.</p>
+<p>
+<strong>Essencial:</strong> Explique por que “eu cheguei” depende do contexto. Produza duas sentenças diferentes que expressem a mesma proposição.</p>
+<details>
+<summary>Conferir o raciocínio</summary>
+<p>O referente de “eu” e o momento de chegada dependem do contexto. “Ana admira Bia” e “Bia é admirada por Ana” podem expressar a mesma proposição no mesmo contexto.</p>
+</details>
+<p>
+<strong>Aprofundamento:</strong> Compare uma pergunta, uma ordem e uma afirmação.</p>
+</section>
+<section class="unidade" id="u1-4">
+<h3>
+<a href="01-modulo-1.html#u4">1.4 · Validade e correção</a>
+</h3>
+<p>
+<strong>Leitura:</strong> <a href="references/introducao%20a%20logica-cezar%20mortari%20-%20scan.pdf#page=33">Mortari, pp. 33–41</a>.</p>
+<p>
+<strong>Essencial:</strong> Construa uma forma inválida com premissas verdadeiras. Explique por que uma conclusão verdadeira não basta para validade.</p>
+<details>
+<summary>Conferir o raciocínio</summary>
+<p>Todo gato é mamífero; toda baleia é mamífero; logo, toda baleia é gato: as premissas verdadeiras e a conclusão falsa refutam a forma. Validade exclui esse padrão em qualquer interpretação.</p>
+</details>
+<p>
+<strong>Aprofundamento:</strong> Dê um argumento válido cuja conclusão seja falsa e identifique a premissa falsa.</p>
+</section>
+<section class="unidade" id="u1-5">
+<h3>
+<a href="01-modulo-1.html#u5">1.5 · Dedução e indução</a>
+</h3>
+<p>
+<strong>Leitura:</strong> <a href="references/introducao%20a%20logica-cezar%20mortari%20-%20scan.pdf#page=42">Mortari, pp. 42–45</a>.</p>
+<p>
+<strong>Essencial:</strong> Compare garantia dedutiva e apoio indutivo. Explique por que uma amostra grande ainda pode ser enviesada.</p>
+<details>
+<summary>Conferir o raciocínio</summary>
+<p>A dedução válida garante a conclusão dadas as premissas; a indução oferece apoio graduável. Tamanho não corrige uma seleção sistematicamente inadequada.</p>
+</details>
+<p>
+<strong>Aprofundamento:</strong> Reformule uma generalização apressada delimitando sua população.</p>
+</section>
+<section class="unidade" id="u1-6">
+<h3>
+<a href="01-modulo-1.html#u6">1.6 · Falácias informais</a>
+</h3>
+<p>
+<strong>Leitura:</strong> <a href="references/elementos-de-logica.pdf#page=76">Elementos, pp. 73–89 (PDF 76 em diante)</a>.</p>
+<p>
+<strong>Essencial:</strong> Analise um apelo à autoridade contextualizado. Diferencie ataque pessoal relevante de ad hominem falacioso.</p>
+<details>
+<summary>Conferir o raciocínio</summary>
+<p>A competência, a área, as evidências e possíveis conflitos precisam ser examinados. Uma crítica à credibilidade de um testemunho pode ser pertinente; atacar a pessoa não refuta por si só a tese.</p>
+</details>
+<p>
+<strong>Aprofundamento:</strong> Crie dois contextos em que a mesma frase receba avaliações diferentes.</p>
+</section>
+<h2 id="m2">
+<span class="num">Módulo 2 · A2</span>
+<a href="02-modulo-2.html">Linguagem, conjuntos e silogística</a>
+</h2>
+<p>
+<a href="02-modulo-2.html#marco">Exercícios e artefato do marco</a> · <a href="02-modulo-2.html#solucoes">Pistas e soluções do módulo</a> · <a href="provas.html#A2">Teste A2</a>
+</p>
+<section class="unidade" id="u2-1">
+<h3>
+<a href="02-modulo-2.html#u1">2.1 · Uso e menção</a>
+</h3>
+<p>
+<strong>Leitura:</strong> <a href="references/introducao%20a%20logica-cezar%20mortari%20-%20scan.pdf#page=53">Mortari, pp. 53–64</a>.</p>
+<p>
+<strong>Essencial:</strong> Resolva Mortari 3.1(a–h). Resolva 3.2(a–f), justificando as aspas.</p>
+<details>
+<summary>Conferir o raciocínio</summary>
+<p>Em 3.1: V, F, F, F, V, F, V, F segundo as convenções da seção. Em 3.2, confira a expressão nomeada antes de inserir aspas; os pares e a mudança de ordem em Pagani estão indicados abaixo.</p>
+</details>
+<p>
+<strong>Aprofundamento:</strong> Resolva 3.2(g–i) e explique os níveis de citação.</p>
+</section>
+<section class="unidade" id="u2-2">
+<h3>
+<a href="02-modulo-2.html#u2">2.2 · Conjuntos</a>
+</h3>
+<p>
+<strong>Leitura:</strong> <a href="references/introducao%20a%20logica-cezar%20mortari%20-%20scan.pdf#page=65">Mortari, pp. 65–88</a>.</p>
+<p>
+<strong>Essencial:</strong> Com A={1,2}, compare 1∈A e {1}⊆A. Explique por que uma relação binária tem extensão em D².</p>
+<details>
+<summary>Conferir o raciocínio</summary>
+<p>As duas afirmações sobre A são verdadeiras, mas pertencimento relaciona objeto e conjunto, enquanto inclusão relaciona conjuntos. A extensão binária contém pares ordenados; em geral, aridade n exige Dⁿ.</p>
+</details>
+<p>
+<strong>Aprofundamento:</strong> Prove que uma função injetiva entre conjuntos finitos de mesmo tamanho é sobrejetiva.</p>
+</section>
+<section class="unidade" id="u2-3">
+<h3>
+<a href="02-modulo-2.html#u3">2.3 · Origens gregas</a>
+</h3>
+<p>
+<strong>Leitura:</strong> <a href="references/introducao-logica-filosofia.pdf#page=19">Morais et al., PDF pp. 19–46</a>.</p>
+<p>
+<strong>Essencial:</strong> Diferencie uma tese sobre mudança de uma regra de inferência. Explique o papel de um contraexemplo em um argumento.</p>
+<details>
+<summary>Conferir o raciocínio</summary>
+<p>Uma tese sobre a realidade não é, por si, uma regra sobre como concluir. Um contraexemplo à validade mantém as premissas verdadeiras e torna falsa a conclusão; não basta discordar da conclusão.</p>
+</details>
+<p>
+<strong>Aprofundamento:</strong> Compare o uso de refutação nos capítulos históricos.</p>
+</section>
+<section class="unidade" id="u2-4">
+<h3>
+<a href="02-modulo-2.html#u4">2.4 · Aristóteles</a>
+</h3>
+<p>
+<strong>Leitura:</strong> <a href="references/introducao%20a%20logica-cezar%20mortari%20-%20scan.pdf#page=483">Mortari, pp. 483–522</a>; <a href="references/elementos-de-logica.pdf#page=32">Elementos, pp. 29–45 (PDF 32 em diante)</a>.</p>
+<p>
+<strong>Essencial:</strong> Classifique A/E/I/O com sujeito vazio na leitura booleana. Faça os dois exemplos de <a href="02-modulo-2.html#venn">Venn-Euler</a> antes de abrir a solução.</p>
+<details>
+<summary>Conferir o raciocínio</summary>
+<p>Com sujeito vazio: A e E são verdadeiras; I e O são falsas. Barbara força a conclusão; em AAA-2 sobra uma região que fornece contramodelo. Na convenção tradicional do laboratório, S, P e M devem ser não vazios.</p>
+</details>
+<p>
+<strong>Aprofundamento:</strong> Encontre uma das nove formas adicionais válidas sob a exigência de termos não vazios.</p>
+</section>
+<section class="unidade" id="u2-5">
+<h3>
+<a href="02-modulo-2.html#u5">2.5 · Estoicos e medievais</a>
+</h3>
+<p>
+<strong>Leitura:</strong> <a href="references/introducao-logica-filosofia.pdf#page=61">Morais et al., PDF pp. 61–78</a>; <a href="references/introducao%20a%20logica-cezar%20mortari%20-%20scan.pdf#page=47">Mortari, pp. 47–52</a>.</p>
+<p>
+<strong>Essencial:</strong> Compare análise por termos e por proposições. Reescreva modus ponens em português.</p>
+<details>
+<summary>Conferir o raciocínio</summary>
+<p>A silogística trata relações entre termos; a análise proposicional trata combinações de proposições. Se chove, a rua molha; chove; logo, a rua molha. A notação é antecipação, retomada no módulo 3.</p>
+</details>
+<p>
+<strong>Aprofundamento:</strong> Compare duas formas de tratar futuros contingentes.</p>
+</section>
+<h2 id="m3">
+<span class="num">Módulo 3 · B1</span>
+<a href="03-modulo-3.html">Cálculo proposicional</a>
+</h2>
+<p>
+<a href="03-modulo-3.html#marco">Exercícios e artefato do marco</a> · <a href="03-modulo-3.html#solucoes">Pistas e soluções do módulo</a> · <a href="provas.html#B1">Teste B1</a>
+</p>
+<section class="unidade" id="u3-1">
+<h3>
+<a href="03-modulo-3.html#u1">3.1 · Sintaxe</a>
+</h3>
+<p>
+<strong>Leitura:</strong> <a href="references/introducao%20a%20logica-cezar%20mortari%20-%20scan.pdf#page=89">Mortari, pp. 89–114</a>.</p>
+<p>
+<strong>Essencial:</strong> Localize o conectivo principal de ¬(P∧Q)→R. Compare (P→Q)→R e P→(Q→R).</p>
+<details>
+<summary>Conferir o raciocínio</summary>
+<p>O principal é →. As duas associações diferem: com P=Q=R=F, a primeira é F e a segunda V. Parênteses preservam a árvore de formação.</p>
+</details>
+<p>
+<strong>Aprofundamento:</strong> Desenhe as árvores sintáticas antes de usar o laboratório.</p>
+</section>
+<section class="unidade" id="u3-2">
+<h3>
+<a href="03-modulo-3.html#u2">3.2 · Tradução</a>
+</h3>
+<p>
+<strong>Leitura:</strong> <a href="references/introducao%20a%20logica-cezar%20mortari%20-%20scan.pdf#page=99">Mortari, pp. 99–114</a>.</p>
+<p>
+<strong>Essencial:</strong> Traduza “P somente se Q”. Negue “Se A, então C”.</p>
+<details>
+<summary>Conferir o raciocínio</summary>
+<p>As fórmulas são P→Q e A∧¬C. Duas traduções concordarem em duas valorações não prova equivalência: compare todas as linhas ou dê uma prova.</p>
+</details>
+<p>
+<strong>Aprofundamento:</strong> Construa duas traduções que concordem em P=Q=V e P=Q=F, mas divirjam nas outras linhas.</p>
+</section>
+<section class="unidade" id="u3-3">
+<h3>
+<a href="03-modulo-3.html#u3">3.3 · Valorações</a>
+</h3>
+<p>
+<strong>Leitura:</strong> <a href="references/introducao%20a%20logica-cezar%20mortari%20-%20scan.pdf#page=115">Mortari, pp. 115–138</a>.</p>
+<p>
+<strong>Essencial:</strong> Calcule ¬P∨Q quando P=V e Q=F. Preveja a classificação de P antes de calculá-la.</p>
+<details>
+<summary>Conferir o raciocínio</summary>
+<p>¬P∨Q é F nessa linha. P é contingente: há uma linha V e uma F. A fórmula principal pode ser atômica.</p>
+</details>
+<p>
+<strong>Aprofundamento:</strong> Compare as tabelas de P→Q e ¬P∨Q.</p>
+</section>
+<section class="unidade" id="u3-4">
+<h3>
+<a href="03-modulo-3.html#u4">3.4 · Consequência</a>
+</h3>
+<p>
+<strong>Leitura:</strong> <a href="references/introducao%20a%20logica-cezar%20mortari%20-%20scan.pdf#page=139">Mortari, pp. 139–156</a>.</p>
+<p>
+<strong>Essencial:</strong> Decida P→Q, P ⊨ Q. Refute P→Q, Q ⊨ P.</p>
+<details>
+<summary>Conferir o raciocínio</summary>
+<p>O primeiro argumento é válido: nenhuma linha torna ambas as premissas V e Q falsa. Para o segundo, P=F e Q=V é contravaloração.</p>
+</details>
+<p>
+<strong>Aprofundamento:</strong> Explique por que uma tabela completa constitui uma prova semântica finita.</p>
+</section>
+<h2 id="m4">
+<span class="num">Módulo 4 · B2</span>
+<a href="04-modulo-4.html">Métodos de prova</a>
+</h2>
+<p>
+<a href="04-modulo-4.html#marco">Exercícios e artefato do marco</a> · <a href="04-modulo-4.html#solucoes">Pistas e soluções do módulo</a> · <a href="provas.html#B2">Teste B2</a>
+</p>
+<section class="unidade" id="u4-1">
+<h3>
+<a href="04-modulo-4.html#u1">4.1 · Tablôs</a>
+</h3>
+<p>
+<strong>Leitura:</strong> <a href="references/introducao%20a%20logica-cezar%20mortari%20-%20scan.pdf#page=263">Mortari, pp. 263–279</a>; <a href="references/introducao%20a%20logica-cezar%20mortari%20-%20scan.pdf#page=289">Mortari, pp. 289–292</a>.</p>
+<p>
+<strong>Essencial:</strong> Feche o tablô de P→Q, P, ¬Q. Leia um contramodelo de P→Q, Q, ¬P.</p>
+<details>
+<summary>Conferir o raciocínio</summary>
+<p>No primeiro, os ramos ¬P e Q entram em conflito com P e ¬Q. No segundo, o ramo com ¬P e Q é aberto e saturado: P=F, Q=V.</p>
+</details>
+<p>
+<strong>Aprofundamento:</strong> Compare com a tabela de verdade do mesmo argumento.</p>
+</section>
+<section class="unidade" id="u4-2">
+<h3>
+<a href="04-modulo-4.html#u2">4.2 · Sistemas formais</a>
+</h3>
+<p>
+<strong>Leitura:</strong> <a href="references/introducao%20a%20logica-cezar%20mortari%20-%20scan.pdf#page=297">Mortari, pp. 297–306</a>.</p>
+<p>
+<strong>Essencial:</strong> Diferencie axioma e regra. Distinga fórmula de esquema de fórmula.</p>
+<details>
+<summary>Conferir o raciocínio</summary>
+<p>Um axioma é admitido sem premissas; uma regra autoriza uma passagem. Um esquema representa suas instâncias por substituição, respeitando a sintaxe.</p>
+</details>
+<p>
+<strong>Aprofundamento:</strong> Identifique quais escolhas variam entre os sistemas de Mortari e Sell.</p>
+</section>
+<section class="unidade" id="u4-3">
+<h3>
+<a href="04-modulo-4.html#u3">4.3 · Dedução natural</a>
+</h3>
+<p>
+<strong>Leitura:</strong> <a href="references/introducao%20a%20logica-cezar%20mortari%20-%20scan.pdf#page=307">Mortari, pp. 307–338</a>; <a href="references/logica-2.pdf#page=37">Sell, unidade 2 (PDF p. 37 em diante)</a>.</p>
+<p>
+<strong>Essencial:</strong> Derive P→P por hipótese e PC. Derive R de P∨Q, P→R e Q→R com a E∨ direta adotada no curso.</p>
+<details>
+<summary>Conferir o raciocínio</summary>
+<p>Em P→P, abra P e descarregue-a ao concluir o condicional. Na E∨ direta, as três premissas autorizam R, sem descarregar hipóteses. O silogismo disjuntivo de P∨Q e ¬P a Q é outra regra, derivada nessa apresentação. Consulte o quadro de comparação do módulo.</p>
+</details>
+<p>
+<strong>Aprofundamento:</strong> Reconstrua a regra por casos como derivação usando PC e regras do sistema.</p>
+</section>
+<section class="unidade" id="u4-4">
+<h3>
+<a href="04-modulo-4.html#u4">4.4 · Regras derivadas</a>
+</h3>
+<p>
+<strong>Leitura:</strong> <a href="references/introducao%20a%20logica-cezar%20mortari%20-%20scan.pdf#page=339">Mortari, pp. 339–343</a>; <a href="references/introducao%20a%20logica-cezar%20mortari%20-%20scan.pdf#page=358">Mortari, pp. 358–359</a>.</p>
+<p>
+<strong>Essencial:</strong> Derive ¬P de P→Q e ¬Q. Aplique DC a P∨Q, P→R e Q→S.</p>
+<details>
+<summary>Conferir o raciocínio</summary>
+<p>A primeira é modus tollens, demonstrável por hipótese P e RAA. O dilema construtivo geral conclui R∨S. Na derivação, identifique qual hipótese é descarregada.</p>
+</details>
+<p>
+<strong>Aprofundamento:</strong> Prove a regra derivada usada, recorrendo apenas às regras básicas.</p>
+</section>
+<section class="unidade" id="u4-5">
+<h3>
+<a href="04-modulo-4.html#u5">4.5 · ⊢ e ⊨</a>
+</h3>
+<p>
+<strong>Leitura:</strong> <a href="references/introducao%20a%20logica-cezar%20mortari%20-%20scan.pdf#page=360">Mortari, pp. 360–364</a>.</p>
+<p>
+<strong>Essencial:</strong> Leia Γ⊢A e Γ⊨A em palavras. Separe as duas direções que as conectam.</p>
+<details>
+<summary>Conferir o raciocínio</summary>
+<p>⊢ indica derivabilidade no sistema; ⊨ indica preservação semântica. Correção: Γ⊢A implica Γ⊨A. Completude: Γ⊨A implica Γ⊢A.</p>
+</details>
+<p>
+<strong>Aprofundamento:</strong> Explique por que uma prova sintática precisa de uma metaprova de correção.</p>
+</section>
+<h2 id="m5">
+<span class="num">Módulo 5 · C1</span>
+<a href="05-modulo-5.html">Primeira ordem</a>
+</h2>
+<p>
+<a href="05-modulo-5.html#marco">Exercícios e artefato do marco</a> · <a href="05-modulo-5.html#solucoes">Pistas e soluções do módulo</a> · <a href="provas.html#C1">Teste C1</a>
+</p>
+<section class="unidade" id="u5-1">
+<h3>
+<a href="05-modulo-5.html#u1">5.1 · Quantificação</a>
+</h3>
+<p>
+<strong>Leitura:</strong> <a href="references/introducao%20a%20logica-cezar%20mortari%20-%20scan.pdf#page=157">Mortari, pp. 157–186</a>.</p>
+<p>
+<strong>Essencial:</strong> Traduza “Todo estudante lê algum livro”. Compare com “Algum livro é lido por todo estudante”.</p>
+<details>
+<summary>Conferir o raciocínio</summary>
+<p>Com E, L e R: ∀x(Ex→∃y(Ly∧Rxy)) e ∃y(Ly∧∀x(Ex→Rxy)). A primeira permite um livro diferente para cada estudante.</p>
+</details>
+<p>
+<strong>Aprofundamento:</strong> Formalize “todos, salvo a, são P” exigindo que a seja de fato a exceção.</p>
+</section>
+<section class="unidade" id="u5-2">
+<h3>
+<a href="05-modulo-5.html#u2">5.2 · Interpretações</a>
+</h3>
+<p>
+<strong>Leitura:</strong> <a href="references/introducao%20a%20logica-cezar%20mortari%20-%20scan.pdf#page=187">Mortari, pp. 187–212</a>.</p>
+<p>
+<strong>Essencial:</strong> Defina domínio e interpretação de R. Explique por que dois nomes podem designar o mesmo objeto.</p>
+<details>
+<summary>Conferir o raciocínio</summary>
+<p>O domínio é não vazio; R binária recebe um subconjunto de D². Nomes distintos não impõem objetos distintos sem uma condição adicional de desigualdade.</p>
+</details>
+<p>
+<strong>Aprofundamento:</strong> Descreva uma estrutura com domínio unitário e a=b.</p>
+</section>
+<section class="unidade" id="u5-3">
+<h3>
+<a href="05-modulo-5.html#u3">5.3 · Verdade</a>
+</h3>
+<p>
+<strong>Leitura:</strong> <a href="references/introducao%20a%20logica-cezar%20mortari%20-%20scan.pdf#page=213">Mortari, pp. 213–246</a>.</p>
+<p>
+<strong>Essencial:</strong> Em D={1,2}, R como igualdade, avalie ∀x∃yRxy. Avalie ∃y∀xRxy.</p>
+<details>
+<summary>Conferir o raciocínio</summary>
+<p>A primeira é V: escolha y=x. A segunda é F: nenhum único y é igual aos dois objetos. Preveja o resultado antes de montar o modelo.</p>
+</details>
+<p>
+<strong>Aprofundamento:</strong> Verifique que com domínio unitário as duas sentenças são verdadeiras.</p>
+</section>
+<section class="unidade" id="u5-4">
+<h3>
+<a href="05-modulo-5.html#u4">5.4 · Validade</a>
+</h3>
+<p>
+<strong>Leitura:</strong> <a href="references/introducao%20a%20logica-cezar%20mortari%20-%20scan.pdf#page=247">Mortari, pp. 247–262</a>.</p>
+<p>
+<strong>Essencial:</strong> Diferencie verdade em uma estrutura de validade. Explique o limite de buscar apenas modelos com até três objetos.</p>
+<details>
+<summary>Conferir o raciocínio</summary>
+<p>Uma estrutura favorável não prova validade; um contramodelo basta para refutá-la. A ausência de contramodelo em poucos tamanhos não exclui modelos maiores ou infinitos.</p>
+</details>
+<p>
+<strong>Aprofundamento:</strong> Construa uma sentença que exija pelo menos quatro objetos distintos.</p>
+</section>
+<section class="unidade" id="u5-5">
+<h3>
+<a href="05-modulo-5.html#u5">5.5 · Tablôs quantificados</a>
+</h3>
+<p>
+<strong>Leitura:</strong> <a href="references/introducao%20a%20logica-cezar%20mortari%20-%20scan.pdf#page=280">Mortari, pp. 280–296</a>.</p>
+<p>
+<strong>Essencial:</strong> Inicie o tablô de ∀xPx e ¬∃xPx sem nomes prévios. Explique por que uma universal pode precisar de nova instância depois.</p>
+<details>
+<summary>Conferir o raciocínio</summary>
+<p>Introduza um primeiro nome a e obtenha Pa e ¬Pa. Quando surgem novos nomes no ramo, universais devem ser retomadas; uma estratégia justa não adia indefinidamente uma expansão necessária.</p>
+</details>
+<p>
+<strong>Aprofundamento:</strong> Compare ramo finito saturado, ramo ainda incompleto e busca que não termina.</p>
+</section>
+<section class="unidade" id="u5-6">
+<h3>
+<a href="05-modulo-5.html#u6">5.6 · Dedução quantificada</a>
+</h3>
+<p>
+<strong>Leitura:</strong> <a href="references/introducao%20a%20logica-cezar%20mortari%20-%20scan.pdf#page=343">Mortari, pp. 343–358</a>.</p>
+<p>
+<strong>Essencial:</strong> Mostre o erro de a=a ⊢ ∀x(x=a). Explique o erro de instanciar ∀x∃yRxy como ∃yRyy.</p>
+<details>
+<summary>Conferir o raciocínio</summary>
+<p>Na I∀, a precisa estar ausente também da conclusão generalizada: aqui permanece. Na segunda passagem, y foi capturada; renomeie antes o quantificador interno, obtendo ∃zRyz.</p>
+</details>
+<p>
+<strong>Aprofundamento:</strong> Construa o contramodelo da segunda inferência com R como desigualdade em dois objetos.</p>
+</section>
+<section class="unidade" id="u5-7">
+<h3>
+<a href="05-modulo-5.html#u7">5.7 · Identidade e funções</a>
+</h3>
+<p>
+<strong>Leitura:</strong> <a href="references/introducao%20a%20logica-cezar%20mortari%20-%20scan.pdf#page=365">Mortari, pp. 365–404</a>.</p>
+<p>
+<strong>Essencial:</strong> Diferencie a=b de identidade dos símbolos escritos. Defina uma função unária em D.</p>
+<details>
+<summary>Conferir o raciocínio</summary>
+<p>a=b afirma coincidência de denotação. Uma função unária total atribui exatamente um elemento de D a cada elemento de D; seu símbolo é diferente da função que o interpreta.</p>
+</details>
+<p>
+<strong>Aprofundamento:</strong> Formalize existência e unicidade sem usar ∃!.</p>
+</section>
+<h2 id="m6">
+<span class="num">Módulo 6 · C2</span>
+<a href="06-modulo-6.html">Metateoria e outras lógicas</a>
+</h2>
+<p>
+<a href="06-modulo-6.html#marco">Exercícios e artefato do marco</a> · <a href="06-modulo-6.html#solucoes">Pistas e soluções do módulo</a> · <a href="provas.html#C2">Teste C2</a>
+</p>
+<section class="unidade" id="u6-1">
+<h3>
+<a href="06-modulo-6.html#u1">6.1 · Teorias</a>
+</h3>
+<p>
+<strong>Leitura:</strong> <a href="references/introducao%20a%20logica-cezar%20mortari%20-%20scan.pdf#page=405">Mortari, pp. 405–434</a>.</p>
+<p>
+<strong>Essencial:</strong> Diferencie teoria completa e cálculo completo. Explique o papel de axiomas não lógicos.</p>
+<details>
+<summary>Conferir o raciocínio</summary>
+<p>Uma teoria consistente completa decide cada sentença da sua linguagem. Um cálculo completo deriva toda consequência semântica. Axiomas não lógicos restringem as estruturas estudadas.</p>
+</details>
+<p>
+<strong>Aprofundamento:</strong> Dê um exemplo de sentença independente de um conjunto simples de axiomas.</p>
+</section>
+<section class="unidade" id="u6-2">
+<h3>
+<a href="06-modulo-6.html#u2">6.2 · Decidibilidade</a>
+</h3>
+<p>
+<strong>Leitura:</strong> <a href="references/introducao%20a%20logica-cezar%20mortari%20-%20scan.pdf#page=257">Mortari, pp. 257–262</a>; <a href="references/introducao%20a%20logica-cezar%20mortari%20-%20scan.pdf#page=293">Mortari, pp. 293–296</a>; <a href="references/introducao%20a%20logica-cezar%20mortari%20-%20scan.pdf#page=360">Mortari, pp. 360–364</a>.</p>
+<p>
+<strong>Essencial:</strong> Compare decidir e semidecidir. Explique como completude pode coexistir com indecidibilidade.</p>
+<details>
+<summary>Conferir o raciocínio</summary>
+<p>Decidir exige terminar com resposta correta em todos os casos. Semidecidir garante reconhecimento dos casos positivos, sem exigir parada nos negativos. Enumerar provas não garante decidir todos os casos negativos. Todo problema decidível também é semidecidível.</p>
+</details>
+<p>
+<strong>Aprofundamento:</strong> Descreva uma enumeração de provas e o que acontece se a sentença não for teorema.</p>
+</section>
+<section class="unidade" id="u6-3">
+<h3>
+<a href="06-modulo-6.html#u3">6.3 · Lógica clássica</a>
+</h3>
+<p>
+<strong>Leitura:</strong> <a href="references/introducao%20a%20logica-cezar%20mortari%20-%20scan.pdf#page=435">Mortari, pp. 435–443</a>.</p>
+<p>
+<strong>Essencial:</strong> Diferencie tautologia e consequência. Explique por que LP pode preservar tautologias clássicas e rejeitar explosão.</p>
+<details>
+<summary>Conferir o raciocínio</summary>
+<p>Tautologias não têm premissas; consequência exige preservação de designação das premissas para a conclusão. Em LP, P=½ e Q=0 refuta P,¬P⊨Q, mesmo preservando as tautologias no fragmento ¬,∧,∨,→ material.</p>
+</details>
+<p>
+<strong>Aprofundamento:</strong> Teste uma inferência cuja validade dependa dos valores designados.</p>
+</section>
+<section class="unidade" id="u6-4">
+<h3>
+<a href="06-modulo-6.html#u4">6.4 · Modais e temporais</a>
+</h3>
+<p>
+<strong>Leitura:</strong> <a href="references/introducao%20a%20logica-cezar%20mortari%20-%20scan.pdf#page=444">Mortari, pp. 444–461</a>.</p>
+<p>
+<strong>Essencial:</strong> Interprete □P em um mundo. Explique por que S5 não exige relação universal em todo o conjunto de mundos.</p>
+<details>
+<summary>Conferir o raciocínio</summary>
+<p>□P exige P em todo sucessor acessível. S5 usa relações de equivalência; cada classe forma um agrupamento de acessibilidade universal, mas classes distintas podem estar desconectadas.</p>
+</details>
+<p>
+<strong>Aprofundamento:</strong> Desenhe um quadro S5 com duas classes.</p>
+</section>
+<section class="unidade" id="u6-5">
+<h3>
+<a href="06-modulo-6.html#u5">6.5 · Polivalentes e intuicionismo</a>
+</h3>
+<p>
+<strong>Leitura:</strong> <a href="references/introducao%20a%20logica-cezar%20mortari%20-%20scan.pdf#page=462">Mortari, pp. 462–476</a>.</p>
+<p>
+<strong>Essencial:</strong> Preveja as linhas designadas de P em LP e K₃. Compare (P↔Q)↔(P↔Q) com ((P↔Q)↔P)↔Q em Ł₃.</p>
+<details>
+<summary>Conferir o raciocínio</summary>
+<p>Em LP, 1 e ½ são designados; em K₃, só 1. Em Ł₃, com P=½ e Q=0, as fórmulas associadas como escrito valem 1 e 0. Os parênteses são essenciais.</p>
+</details>
+<p>
+<strong>Aprofundamento:</strong> Explique o terceiro valor separadamente em cada interpretação, sem tratá-lo como o mesmo conceito.</p>
+</section>
+<section class="unidade" id="u6-6">
+<h3>
+<a href="06-modulo-6.html#u6">6.6 · História recente</a>
+</h3>
+<p>
+<strong>Leitura:</strong> <a href="references/introducao%20a%20logica-cezar%20mortari%20-%20scan.pdf#page=477">Mortari, pp. 477–482</a>.</p>
+<p>
+<strong>Essencial:</strong> Situe a passagem para linguagens formais. Relacione uma pergunta filosófica a uma lógica estudada.</p>
+<details>
+<summary>Conferir o raciocínio</summary>
+<p>A formalização permite definir sintaxe, semântica e prova de modo explícito. Exemplos: necessidade nas modais, informação contraditória em paraconsistência, prova construtiva no intuicionismo. O critério é justificar a ligação, sem confundir lógica com sua aplicação.</p>
+</details>
+<p>
+<strong>Aprofundamento:</strong> Escreva um parágrafo sobre o que uma formalização ganha e perde.</p>
+</section>
+<h2 id="complementares">Módulos complementares</h2>
+<p>Os complementares ampliam a base das seis referências; suas demonstrações e exemplos não devem ser atribuídos integralmente a Mortari ou ao plano FIL 6021. O plano registra uma disciplina institucional, sem validar este curso.</p>
+<div class="tw">
+<table>
+<tr>
+<th>Módulo e leitura</th>
+<th>Prática essencial</th>
+<th>Conferência e aprofundamento</th>
+</tr>
+<tr>
+<td>
+<a href="01b-modulo-1a.html">1A · Argumentação informal</a>
+<br>
+<a href="references/introducao%20a%20logica-cezar%20mortari%20-%20scan.pdf#page=18">Mortari, pp. 18–45</a>; <a href="references/elementos-de-logica.pdf#page=76">Elementos, pp. 73–89 (PDF 76 em diante)</a>
+</td>
+<td>Reconstrua um argumento preservando concessões. Diagrame apoios ligados e independentes.</td>
+<td>
+<a href="01b-modulo-1a.html#solucoes">Práticas e critérios locais</a>; <a href="prompts.html#p1">rubrica 1</a>. Aprofunde comparando dois esquemas argumentativos; a organização por esquemas é ampliação didática.</td>
+</tr>
+<tr>
+<td>
+<a href="07-modulo-7.html">7 · Correção e completude</a>
+<br>
+<a href="references/introducao%20a%20logica-cezar%20mortari%20-%20scan.pdf#page=257">Mortari, pp. 257–262</a>; <a href="references/introducao%20a%20logica-cezar%20mortari%20-%20scan.pdf#page=360">Mortari, pp. 360–364</a>; <a href="references/introducao%20a%20logica-cezar%20mortari%20-%20scan.pdf#page=405">Mortari, pp. 405–434</a>
+</td>
+<td>Faça a preparação em indução matemática e estrutural. Reconstrua uma metaprova indicando hipóteses e lema utilizado.</td>
+<td>
+<a href="07-modulo-7.html#solucoes">Soluções e critérios C3</a>; <a href="prompts.html#p8">rubrica 8</a>. Aprofunde a extensão de Henkin. As referências introduzem os resultados; as provas desenvolvidas são uma ampliação do curso.</td>
+</tr>
+<tr>
+<td>
+<a href="08-modulo-8.html">8 · Lógicas não clássicas</a>
+<br>
+<a href="references/introducao%20a%20logica-cezar%20mortari%20-%20scan.pdf#page=444">Mortari, pp. 444–476</a>
+</td>
+<td>Produza uma contravaloração modal e confira todos os mundos. Explique o contramodelo intuicionista de dois estados.</td>
+<td>
+<a href="08-modulo-8.html#solucoes">Soluções e critérios C4</a>; <a href="prompts.html#p9">rubrica 9</a>. Aprofunde de re/de dicto. As construções detalhadas e a fonte técnica sobre teorias intuicionistas são identificadas no módulo.</td>
+</tr>
+</table>
+</div>
+<h2 id="pagani">Pagani: correspondência por enunciado</h2>
+<p>O PDF de Pagani usa outra paginação e outra organização de exercícios. Estes são os pares efetivamente conferidos em imagem. Mesmo quando o número coincide, compare o enunciado; em 3.2, a ordem dos últimos itens muda. A correspondência permite localizar uma resposta, sem transformar o gabarito em autoridade infalível.</p>
+<div class="tw">
+<table>
+<tr>
+<th>Mortari, 2ª ed. (2016)</th>
+<th>Pagani</th>
+<th>O que foi conferido</th>
+</tr>
+<tr>
+<td>
+<a href="references/introducao%20a%20logica-cezar%20mortari%20-%20scan.pdf#page=15">1.1, p. 15</a>, contexto pp. 14–15</td>
+<td>
+<a href="references/Respostas-exercicios-Introducao-logica-mortari.pdf#page=1">1.1, PDF pp. 1–2</a> (remete à p. 3 de outra organização)</td>
+<td>Problema dos brincos de Griselda; resposta por eliminação de casos.</td>
+</tr>
+<tr>
+<td>
+<a href="references/introducao%20a%20logica-cezar%20mortari%20-%20scan.pdf#page=60">3.1(a–h), p. 60</a>
+</td>
+<td>
+<a href="references/Respostas-exercicios-Introducao-logica-mortari.pdf#page=3">3.1(a–h), PDF p. 3</a> (remete à p. 37)</td>
+<td>Oito itens de uso e menção; enunciados na mesma ordem.</td>
+</tr>
+<tr>
+<td>
+<a href="references/introducao%20a%20logica-cezar%20mortari%20-%20scan.pdf#page=60">3.2(a–i), p. 60</a>
+</td>
+<td>
+<a href="references/Respostas-exercicios-Introducao-logica-mortari.pdf#page=3">3.2, PDF p. 3</a> (remete à p. 37)</td>
+<td>(a–f) correspondem a (a–f); Mortari (g) ↔ Pagani (h); Mortari (h) ↔ Pagani (i); Mortari (i) ↔ Pagani (g).</td>
+</tr>
+</table>
+</div>
+<p>Os demais exercícios do gabarito não têm correspondência integral validada neste guia. Não converta automaticamente “capítulo 12 de Pagani” em “capítulo 12 da 2ª edição”. Para tradução, tablôs, dedução, identidade, metateoria e não clássicas, a prática essencial tem retorno neste guia e soluções no módulo; exercícios adicionais do livro exigem conferência do enunciado antes de recorrer a Pagani.</p>
+<h2 id="notacao">Folha de notação</h2>
+<div class="tw">
+<table>
+<tr>
+<th>Escrita</th>
+<th>Leitura e cuidado</th>
+</tr>
+<tr>
+<td>¬A; A∧B; A∨B</td>
+<td>Negação, conjunção e disjunção inclusiva. O alcance de ¬ deve ser explicitado com parênteses.</td>
+</tr>
+<tr>
+<td>A→B; A↔B</td>
+<td>Condicional e bicondicional. Escreva parênteses em cadeias, sobretudo nas lógicas polivalentes; não suponha associatividade.</td>
+</tr>
+<tr>
+<td>Γ⊢A; Γ⊨A</td>
+<td>Derivabilidade no sistema indicado; consequência na semântica indicada. Γ é um conjunto de premissas.</td>
+</tr>
+<tr>
+<td>α, β; P, Q</td>
+<td>Letras gregas usualmente representam fórmulas arbitrárias na metalinguagem; P e Q podem ser átomos proposicionais ou predicados, conforme a assinatura declarada.</td>
+</tr>
+<tr>
+<td>∀xA; ∃xA</td>
+<td>Para todo x; existe x. Use ∀x(Px→Qx) para “todo P é Q” e ∃x(Px∧Qx) para “algum P é Q”; não são regras universais para todo uso dos quantificadores.</td>
+</tr>
+<tr>
+<td>A[t/x]</td>
+<td>Substituição das ocorrências livres de x por t, sem captura. Renomeie variáveis ligadas quando necessário.</td>
+</tr>
+<tr>
+<td>I∀; E∃</td>
+<td>Na apresentação de I∀ por constante própria, o parâmetro arbitrário não ocorre nas premissas, hipóteses abertas nem na conclusão generalizada. Na E∃, a testemunha é nova e não ocorre na conclusão nem nas outras hipóteses das quais ela depende; descarregue a hipótese de testemunha.</td>
+</tr>
+<tr>
+<td>PC, RAA, E∨, DC</td>
+<td>O curso segue a apresentação de Sell: prova condicional, redução ao absurdo clássica e E∨ direta. DC é o dilema construtivo geral. O quadro do módulo 4 distingue essa escolha das regras de Mortari.</td>
+</tr>
+<tr>
+<td>a∈A; A⊆B; Dⁿ</td>
+<td>Pertencimento; inclusão; produto cartesiano n vezes. Um predicado n-ário recebe extensão contida em Dⁿ.</td>
+</tr>
+<tr>
+<td>V/F; 1, ½, 0</td>
+<td>Verdade e falsidade; valores de matrizes. A designação é parte da lógica: em LP, 1 e ½; em K₃ e Ł₃, somente 1. O sentido de ½ varia entre sistemas.</td>
+</tr>
+<tr>
+<td>□A; ◇A; M,w⊨A</td>
+<td>Necessidade; possibilidade; verdade de A no mundo w de um modelo. Validade no quadro quantifica sobre todas as valorações e todos os mundos.</td>
+</tr>
+</table>
+</div>
+<h2 id="fontes">Arquivos das referências</h2>
+<div class="refs">
+<p>
+<a href="references/introducao%20a%20logica-cezar%20mortari%20-%20scan.pdf">Mortari (2016), Introdução à lógica, 2ª edição</a>.</p>
+<p>
+<a href="references/elementos-de-logica.pdf">Neves Filho e Rui (2016), Elementos de lógica</a>.</p>
+<p>
+<a href="references/logica-2.pdf">Sell (2014), Lógica II</a>.</p>
+<p>
+<a href="references/introducao-logica-filosofia.pdf">Morais et al. (2019), Introdução à lógica a partir de sua história filosófica</a>.</p>
+<p>
+<a href="references/fil6021-logica-I-cezar%20mortari.pdf">Mortari (2023), plano FIL 6021</a>.</p>
+<p>
+<a href="references/Respostas-exercicios-Introducao-logica-mortari.pdf">Pagani (s.d.), Respostas para exercícios</a>.</p>
+</div>
+<p>
+<a href="index.html">Voltar ao índice do curso</a> · <a href="prompts.html">Nove rubricas de correção</a>
+</p>
+</article>
+</div>
+</body>
+</html>

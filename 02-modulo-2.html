@@ -127,8 +127,12 @@ figcaption b{font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-
 .refs{margin-top:12px}
 .refs p{padding-left:34px;text-indent:-34px;font-size:15.5px;margin-bottom:13px}
 :focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+details{margin:10px 0;border:1px solid var(--line);border-radius:4px;background:var(--surface);padding:0 15px}
+summary{padding:11px 0;cursor:pointer;font-weight:600;color:var(--accent)}
+details p{margin:0 0 14px}
+.venn svg{max-width:440px;margin-inline:auto}
 @media (max-width:900px){
-  .shell{grid-template-columns:1fr;gap:0}
+  .shell{grid-template-columns:minmax(0,1fr);gap:0}
   nav.toc{position:static;padding:22px 0 0;columns:2;column-gap:24px}
   nav.toc .lbl{column-span:all}
   article{padding-top:22px}
@@ -180,7 +184,7 @@ figcaption b{font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-
 .corner.q rect{stroke-dasharray:3 3}
 /* silogismo */
 .sil{display:grid;grid-template-columns:minmax(230px,1fr) minmax(250px,1.1fr);gap:22px;align-items:start}
-@media (max-width:720px){.sil{grid-template-columns:1fr}}
+@media (max-width:720px){.sil{grid-template-columns:minmax(0,1fr)}}
 .forma{font-family:var(--mono);font-size:14px;background:var(--ground);border:1px solid var(--line-soft);
   border-radius:4px;padding:13px 15px;line-height:1.85;color:var(--ink)}
 .forma .t{color:var(--accent);font-weight:600}
@@ -214,7 +218,7 @@ figcaption b{font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-
       <div><div class="k">Unidades</div><div class="v">Cinco</div></div>
       <div><div class="k">Pré-requisito</div><div class="v">Marco A1</div></div>
       <div><div class="k">Marco</div><div class="v">A2</div></div>
-      <div><div class="k">Notação lógica</div><div class="v">Ainda nenhuma</div></div>
+      <div><div class="k">Notação lógica</div><div class="v">Antecipações opcionais</div></div>
       <div><div class="k">Texto-base</div><div class="v">Mortari (2016, caps. 3–4)</div></div>
     </div>
   </header>
@@ -228,8 +232,10 @@ figcaption b{font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-
     <a href="#u4">2.4 Aristóteles</a>
     <a href="#quadrado">O quadrado das oposições</a>
     <a href="#silogismo">Verificador de silogismos</a>
+    <a href="#venn">Silogismos por Venn-Euler</a>
     <a href="#u5">2.5 Estoicos e medievais</a>
     <a href="#marco">Marco A2</a>
+    <a href="#solucoes">Pistas e soluções</a>
     <a href="#proximo">Próximo passo</a>
     <a href="#ref">Referências</a>
   </nav>
@@ -249,7 +255,7 @@ figcaption b{font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-
 «Sócrates» tem oito letras.   A palavra é mencionada; fala-se da palavra.
 Sócrates tem oito letras.     Falso: o homem não tem letras.
 «Sócrates» era filósofo.      Falso: a palavra não fazia filosofia.</div>
-    <p>A confusão entre os dois não é rara nem inofensiva. Ela produz os paradoxos semânticos, e produz também, de modo mais prosaico, a incapacidade de ler a definição de fórmula do módulo 3, na qual símbolos são mencionados o tempo todo.</p>
+    <p>Confundir uso e menção dificulta a análise dos paradoxos semânticos e a leitura da definição de fórmula do módulo 3, na qual símbolos são mencionados o tempo todo. Distinguir os níveis é uma ferramenta para examinar essas questões; não é, por si, uma solução de todos os paradoxos.</p>
     <div class="lab" id="labum">
       <h4>Exercício de uso e menção</h4>
       <p class="sub">Clique em cada sentença para verificar se ela é verdadeira. Três delas confundem os níveis.</p>
@@ -319,7 +325,7 @@ Identidade       A = B  se e somente se  A e B têm exatamente os mesmos element
     <h4>Pares ordenados, relações e funções</h4>
     <p>No par ordenado ⟨a, b⟩, ao contrário do que ocorre em conjuntos, a ordem importa: ⟨a, b⟩ e ⟨b, a⟩ são distintos, exceto quando a e b coincidem. O <strong>produto cartesiano</strong> A × B é o conjunto de todos os pares ordenados cujo primeiro membro está em A e o segundo em B.</p>
     <p>Uma <strong>relação</strong> de A em B é qualquer subconjunto de A × B, e uma <strong>função</strong> de A em B é uma relação que associa a cada elemento de A exatamente um elemento de B. As três propriedades que o curso usará são as seguintes. Uma função é <strong>injetiva</strong> quando elementos distintos do domínio têm imagens distintas; <strong>sobrejetiva</strong> quando todo elemento de B é imagem de algum elemento de A; e <strong>bijetiva</strong> quando é as duas coisas.</p>
-    <div class="note">A definição de valoração, no módulo 3, será exatamente esta: uma função do conjunto das letras sentenciais no conjunto {V, F}. A definição de interpretação, no módulo 5, será uma função que associa a cada constante de predicado um subconjunto do domínio. Nenhuma das duas é compreensível sem este parágrafo.</div>
+    <div class="note">No módulo 3, uma valoração atribuirá V ou F a cada letra sentencial. No módulo 5, a interpretação atribuirá a cada predicado unário um subconjunto do domínio D; a cada binário, um subconjunto de D × D; e a um predicado de aridade n, um subconjunto de Dⁿ. Um predicado binário como «ama» descreve pares ordenados, não apenas indivíduos isolados.</div>
     <h4>Conjuntos infinitos</h4>
     <p>Dois conjuntos têm o mesmo número de elementos quando existe uma bijeção entre eles. O critério é inócuo no caso finito e produz, no caso infinito, o resultado que fundou a teoria: o conjunto dos números naturais e o dos números pares têm o mesmo tamanho, pois n ↦ 2n é uma bijeção, ainda que um esteja propriamente contido no outro. Um conjunto é <strong>enumerável</strong> quando pode ser posto em bijeção com os naturais, isto é, quando os seus elementos podem ser dispostos em uma lista infinita indexada.</p>
     <p>O conceito não é apresentado aqui por curiosidade. A demonstração da completude, no módulo complementar 7, depende de que a linguagem tenha uma quantidade enumerável de fórmulas, pois é isso que permite dispô-las em fila e percorrê-las uma a uma. Sem esta unidade, aquele argumento é literalmente inexecutável.</p>
@@ -417,11 +423,65 @@ Barbara, modo AAA na figura 1:
         </div>
         <div>
           <span class="ctl">Conclusões que se seguem</span>
-          <table class="concl" id="tabconcl"></table>
+          <div class="tw" style="margin:0"><table class="concl" id="tabconcl"></table></div>
         </div>
       </div>
     </div>
     <p>Duas experiências valem a pena. A primeira é percorrer os quatro modos da figura 1 que os medievais batizaram de Barbara, Celarent, Darii e Ferio, e verificar que valem nas duas leituras. A segunda é examinar o modo AAI na figura 3, chamado Darapti, que vale apenas na leitura tradicional: ele conclui uma particular de duas universais, o que exige que o termo médio não seja vazio. Contando ao todo, são quinze os modos válidos na leitura moderna e vinte e quatro na tradicional.</p>
+
+    <h3 id="venn">Decidir um silogismo por Venn-Euler</h3>
+    <p>Usaremos diagramas de Venn com três conjuntos, mantendo todas as regiões possíveis. O retângulo é o universo; os círculos são S, P e M. <strong>Sombrear significa que uma região está vazia</strong>; uma marca <strong>×</strong> indica pelo menos um indivíduo. Uma região em branco pode estar vazia ou ocupada: ausência de marca não decide sua existência. Esse procedimento prepara o Marco A2 e acompanha Mortari (2016, apêndice A, §A.5).</p>
+    <div class="tw"><table>
+      <tr><th>Premissa</th><th>Como registrar</th></tr>
+      <tr><td>Todo X é Y (A)</td><td>Sombreie a parte de X que fica fora de Y.</td></tr>
+      <tr><td>Nenhum X é Y (E)</td><td>Sombreie a intersecção X ∩ Y.</td></tr>
+      <tr><td>Algum X é Y (I)</td><td>Coloque × na intersecção X ∩ Y.</td></tr>
+      <tr><td>Algum X não é Y (O)</td><td>Coloque × na parte de X que fica fora de Y.</td></tr>
+    </table></div>
+    <p>Registre primeiro as universais. Quando uma particular permite duas regiões separadas pelo terceiro círculo e nenhuma está excluída, coloque a marca sobre a fronteira entre elas, indicando que sua localização ainda não foi decidida. Não escolha uma região sem razão. Se outra premissa exclui uma dessas regiões, a marca deve ficar na restante.</p>
+    <p>Na leitura moderna, universais não criam marcas de existência. Na leitura tradicional deste curso, todos os termos são não vazios: registre também essas exigências, sem escolher arbitrariamente uma região possível. Para testar a validade, desenhe <strong>somente as premissas</strong> e verifique se elas já forçam a marcação exigida pela conclusão. Se não, procure uma ocupação permitida que torne a conclusão falsa.</p>
+    <h4>Exemplo 1 · Barbara é válido nas duas leituras</h4>
+    <div class="fx">Todo M é P.   Todo S é M.   Logo, todo S é P.</div>
+    <ol>
+      <li>Sombreie M fora de P: ali não pode haver um M.</li>
+      <li>Sombreie S fora de M: ali não pode haver um S.</li>
+      <li>Examine S fora de P. A parte fora de M foi excluída no passo 2; a parte dentro de M foi excluída no passo 1. Toda a região S − P está vazia: a conclusão já está representada.</li>
+    </ol>
+    <figure class="venn">
+      <svg viewBox="0 0 320 240" role="img" aria-label="Barbara: regiões M fora de P e S fora de M sombreadas. Toda a região S fora de P está vazia.">
+        <defs>
+          <pattern id="barbara-shade" width="7" height="7" patternUnits="userSpaceOnUse"><path d="M0 7 L7 0" stroke="var(--muted)" stroke-width="1"/></pattern>
+          <mask id="barbara-out-p"><rect width="320" height="240" fill="white"/><circle cx="200" cy="85" r="65" fill="black"/></mask>
+          <mask id="barbara-out-m"><rect width="320" height="240" fill="white"/><circle cx="150" cy="150" r="65" fill="black"/></mask>
+        </defs>
+        <rect x="8" y="8" width="304" height="224" fill="none" stroke="var(--line)"/>
+        <circle cx="150" cy="150" r="65" fill="url(#barbara-shade)" mask="url(#barbara-out-p)"/>
+        <circle cx="100" cy="85" r="65" fill="url(#barbara-shade)" mask="url(#barbara-out-m)"/>
+        <g fill="none" stroke="var(--accent)" stroke-width="1.5"><circle cx="100" cy="85" r="65"/><circle cx="200" cy="85" r="65"/><circle cx="150" cy="150" r="65"/></g>
+        <g class="svg-l"><text x="57" y="77">S</text><text x="232" y="77">P</text><text x="145" y="197">M</text><text x="290" y="25">U</text></g>
+      </svg>
+      <figcaption><b>Barbara</b>Hachuras indicam regiões vazias. A leitura moderna não afirma que exista um S; ainda assim, todo S, se houver, pertence a P. Acrescentar existência não altera essa conclusão universal.</figcaption>
+    </figure>
+    <h4>Exemplo 2 · Duas subclasses de M não precisam coincidir</h4>
+    <div class="fx">Todo P é M.   Todo S é M.   Logo, todo S é P.   (AAA, figura 2)</div>
+    <ol>
+      <li>Sombreie P fora de M e S fora de M.</li>
+      <li>A região S ∩ M fora de P continua disponível. Uma marca × ali satisfaz as premissas e torna «Todo S é P» falsa.</li>
+      <li>Para respeitar também a leitura tradicional, coloque outro indivíduo em P ∩ M fora de S. Assim S, P e M são todos não vazios. Esse é um contraexemplo nas duas leituras.</li>
+    </ol>
+    <figure class="venn">
+      <svg viewBox="0 0 320 240" role="img" aria-label="Contraexemplo de AAA na figura 2: a pertence a S e M, fora de P; b pertence a P e M, fora de S. As partes de S e P fora de M estão vazias.">
+        <defs>
+          <pattern id="aaa2-shade" width="7" height="7" patternUnits="userSpaceOnUse"><path d="M0 7 L7 0" stroke="var(--muted)" stroke-width="1"/></pattern>
+          <mask id="aaa2-out-m"><rect width="320" height="240" fill="white"/><circle cx="150" cy="150" r="65" fill="black"/></mask>
+        </defs>
+        <rect x="8" y="8" width="304" height="224" fill="none" stroke="var(--line)"/>
+        <g fill="url(#aaa2-shade)" mask="url(#aaa2-out-m)"><circle cx="100" cy="85" r="65"/><circle cx="200" cy="85" r="65"/></g>
+        <g fill="none" stroke="var(--accent)" stroke-width="1.5"><circle cx="100" cy="85" r="65"/><circle cx="200" cy="85" r="65"/><circle cx="150" cy="150" r="65"/></g>
+        <g class="svg-l"><text x="57" y="77">S</text><text x="232" y="77">P</text><text x="145" y="197">M</text><text x="290" y="25">U</text><text x="100" y="130">× a</text><text x="182" y="130">× b</text></g>
+      </svg>
+      <figcaption><b>Contraexemplo</b>U = {a, b}, S = {a}, P = {b}, M = {a, b}. Ambas as premissas são verdadeiras, mas a é um S que não é P. As marcas mostram uma ocupação possível; não são exigidas pelas premissas universais.</figcaption>
+    </figure>
     <h2 id="u5"><span class="num">Unidade 2.5</span>Estoicos, medievais e a virada contemporânea</h2>
     <h4>A lógica estoica</h4>
     <p>Os estoicos, sobretudo Crisipo de Solos, desenvolveram uma lógica de tipo inteiramente distinto do aristotélico. Onde Aristóteles analisa proposições em termos, os estoicos tratam proposições inteiras como unidades e estudam como se combinam. Dividiram a lógica em retórica, que estuda o discurso, e dialética, que estuda o verdadeiro e o falso por perguntas e respostas, e dentro da dialética analisaram os <em>dizíveis</em>, entre os quais os <em>asseríveis</em>, que são os que podem ser verdadeiros ou falsos (Morais et al., 2019, cap. 7).</p>
@@ -436,15 +496,32 @@ Barbara, modo AAA na figura 1:
     <h2 id="marco"><span class="num">Verificação</span>Marco A2 e exercícios</h2>
     <div class="marco"><b>Marco A2</b>Empregar corretamente aspas de menção em sentenças que falam de expressões; operar com união, intersecção, diferença e complemento, e distinguir pertinência de inclusão; e decidir a validade de um silogismo categórico por diagramas de Venn-Euler, declarando qual leitura das categóricas está sendo adotada.</div>
     <h4>Exercícios</h4>
-    <p><strong>1.</strong> Escreva quatro sentenças verdadeiras sobre a palavra «lógica»: duas em que ela seja usada e duas em que seja mencionada. Depois escreva duas sentenças falsas que resultem de trocar um caso pelo outro.</p>
+    <p><strong>1.</strong> Escreva quatro sentenças verdadeiras com a palavra «lógica»: duas em que ela seja usada e duas em que seja mencionada. Depois escreva duas sentenças falsas que resultem de trocar um caso pelo outro.</p>
     <p><strong>2.</strong> Sendo A = {1, 2, 3} e B = {3, 4}, determine ℘(B), A − B, B − A e (A ∪ B) − (A ∩ B). Verifique que a última operação, chamada diferença simétrica, corresponde a uma disjunção exclusiva.</p>
     <p><strong>3.</strong> Mostre que ∅ ⊆ A vale para todo conjunto A. Identifique, na sua demonstração, o ponto em que se raciocina por vacuidade, e relacione-o com a linha da tabela de verdade do condicional em que o antecedente é falso.</p>
-    <p><strong>4.</strong> Exiba uma função dos naturais nos naturais que seja injetiva e não sobrejetiva, e outra que seja sobrejetiva e não injetiva. Explique por que nenhuma das duas seria possível se o domínio fosse finito.</p>
-    <p><strong>5.</strong> Use o quadrado das oposições na leitura tradicional para determinar todos os valores que se seguem de «Algum político não é honesto» ser verdadeira. Repita na leitura moderna e explique a diferença.</p>
-    <p><strong>6.</strong> No verificador de silogismos, encontre os quatro modos válidos da figura 1 nas duas leituras e os cinco modos que só valem na tradicional. Para um destes últimos, exiba o modelo com um termo vazio que o refuta na leitura moderna.</p>
+    <p><strong>4.</strong> Adote ℕ = {0, 1, 2, …}. Exiba uma função de ℕ em ℕ que seja injetiva e não sobrejetiva, e outra que seja sobrejetiva e não injetiva. Explique por que nenhuma das duas seria possível para uma função de um conjunto finito nele mesmo.</p>
+    <p><strong>5.</strong> Use o quadrado tradicional para determinar os valores que se seguem de «Algum político não é honesto» ser verdadeira. Repita na leitura moderna e explique se há diferença neste caso. Depois parta de «Todo político é honesto» verdadeira e compare novamente as duas leituras.</p>
+    <p><strong>6.</strong> No verificador, encontre os quatro modos da figura 1 válidos nas duas leituras e, considerando as quatro figuras, os nove modos que só valem na tradicional. Para um destes últimos, exiba um modelo com um termo vazio que o refuta na leitura moderna. Antes de conferir no laboratório, resolva Barbara e AAA da figura 2 por diagramas de Venn-Euler.</p>
     <p><strong>7.</strong> Formalize «Todo S é P» e «Algum S é P» como indicado na tabela da unidade 2.4 e explique, sem usar o aparato do módulo 5, por que a primeira não implica a segunda quando não há nenhum S.</p>
 
-    <h2 id="proximo"><span class="num">Encerramento</span>Próximo passo</h2><p>O ciclo de cada módulo se fecha em três movimentos: resolver os exercícios, verificar o marco no banco de itens e submeter o artefato escrito à rubrica correspondente.</p><div class="nextgrid"><a class="nx" href="provas.html#A2"><span class="k">Verificar o marco</span><span class="t">Provas de Domínio · marco A2</span><span class="d">Itens autocorrigidos com justificativa e fonte. O marco é vencido a partir de 75% de acerto.</span></a><a class="nx" href="03-modulo-3.html"><span class="k">Seguir</span><span class="t">Módulo 3 · Cálculo proposicional</span><span class="d">Nível B · módulo 3 no percurso.</span></a></div>
+    <h2 id="solucoes"><span class="num">Apoio ao estudo</span>Pistas e soluções comentadas</h2>
+    <p>Tente cada exercício, use a pista quando necessário e confira a solução explicando cada passo. As fórmulas proposicionais e quantificacionais antecipadas neste módulo são opcionais nesta primeira leitura; o <a href="guia-estudo.html">guia de estudo</a> indica quando retomá-las.</p>
+    <details><summary>1 · Pista</summary><p>A disciplina pode estudar argumentos; a palavra tem letras e propriedades gramaticais.</p></details>
+    <details><summary>1 · Respostas possíveis</summary><p>Uso: «A lógica estuda a consequência entre afirmações»; «A lógica é ensinada em cursos de filosofia». Menção: «“Lógica” tem seis letras»; «“Lógica” começa com a letra l». Trocas falsas: «“A lógica” estuda argumentos» atribui estudo a uma expressão; «A lógica tem seis letras» atribui letras à disciplina. A resposta pode usar outras sentenças, desde que o predicado pertença ao objeto indicado.</p></details>
+    <details><summary>2 · Pista</summary><p>Inclua o vazio e o próprio B em ℘(B). Na última expressão, retire da união os elementos comuns aos dois conjuntos.</p></details>
+    <details><summary>2 · Solução</summary><p>℘(B) = {∅, {3}, {4}, {3, 4}}; A − B = {1, 2}; B − A = {4}; (A ∪ B) − (A ∩ B) = {1, 2, 4}. Um elemento pertence à diferença simétrica quando pertence a exatamente um dos conjuntos. Essa é a condição da disjunção exclusiva aplicada a «x pertence a A» e «x pertence a B».</p></details>
+    <details><summary>3 · Pista</summary><p>O que seria necessário encontrar para mostrar que ∅ não está incluído em A?</p></details>
+    <details><summary>3 · Solução</summary><p>Seria necessário um elemento do vazio que não pertencesse a A. Como ∅ não tem elementos, esse contraexemplo não existe. Logo, todo elemento de ∅ pertence a A: a afirmação vale por vacuidade. Na antecipação proposicional, o condicional «se x pertence a ∅, então x pertence a A» não pode ter antecedente verdadeiro e consequente falso, pois seu antecedente é sempre falso.</p></details>
+    <details><summary>4 · Pista</summary><p>Para deixar números sem imagem, dobre a entrada. Para fazer entradas diferentes terem a mesma imagem sem omitir saídas, agrupe os naturais em pares consecutivos.</p></details>
+    <details><summary>4 · Solução</summary><p>f(n) = 2n é injetiva, pois 2n = 2m implica n = m; não é sobrejetiva, pois 1 não é imagem. Defina g(2k) = g(2k + 1) = k: todo k tem imagem inversa, mas 0 e 1 têm a mesma imagem 0. Em um conjunto finito com n elementos, uma função injetiva nele mesmo produz n imagens distintas e portanto cobre todo o contradomínio. Se é sobrejetiva, n entradas precisam cobrir n saídas; repetir uma imagem deixaria alguma saída sem antecedente. A condição de ser o mesmo conjunto finito é essencial.</p></details>
+    <details><summary>5 · Pista</summary><p>O é contraditória de A. Para obter efeitos diferentes entre as leituras, examine a existência de indivíduos exigida pela subalternação.</p></details>
+    <details><summary>5 · Solução</summary><p>De O verdadeira, segue A falsa; E e I permanecem indeterminadas em ambas as leituras. Neste caso não há diferença. De A verdadeira, na tradicional seguem E falsa, I verdadeira e O falsa, pois há pelo menos um sujeito. Na moderna segue apenas O falsa; E e I ficam indeterminadas. Se não houver políticos, A e E são verdadeiras e I e O falsas.</p></details>
+    <details><summary>6 · Pista</summary><p>Registre a figura junto às três letras. Algumas formas obtêm conclusões particulares de universais e precisam de existência; teste um termo vazio.</p></details>
+    <details><summary>6 · Solução e contramodelo</summary><p>Figura 1, nas duas leituras: AAA (Barbara), EAE (Celarent), AII (Darii), EIO (Ferio). Exclusivamente tradicionais: AAI-1, EAO-1, AEO-2, EAO-2, AAI-3, EAO-3, AAI-4, AEO-4 e EAO-4. Para Darapti (AAI-3), tome U = {a, b}, M = ∅, S = {a}, P = {b}. «Todo M é P» e «Todo M é S» são verdadeiras por vacuidade, mas «Algum S é P» é falsa. O <a href="#venn">percurso de Venn-Euler</a> mostra Barbara e o contraexemplo de AAA-2 passo a passo; refaça-os sem desenhar a conclusão como se fosse premissa.</p></details>
+    <details><summary>7 · Pista</summary><p>«Todo» exclui contraexemplos; «algum» exige um exemplo.</p></details>
+    <details><summary>7 · Solução</summary><p>«Todo S é P»: ∀x(Sx → Px). «Algum S é P»: ∃x(Sx ∧ Px). Se S é vazio, não há um S fora de P, de modo que a universal é verdadeira. Também não existe um indivíduo que seja S e P, de modo que a particular é falsa. A inferência só se recupera acrescentando a existência de algum S.</p></details>
+
+    <h2 id="proximo"><span class="num">Encerramento</span>Próximo passo</h2><p>O ciclo de cada módulo se fecha em três movimentos: resolver os exercícios, verificar o marco no banco de itens e submeter o artefato escrito à rubrica correspondente.</p><div class="nextgrid"><a class="nx" href="provas.html#A2"><span class="k">Verificar o marco</span><span class="t">Provas de Domínio · marco A2</span><span class="d">Itens autocorrigidos com justificativa e fonte. O teste exige 75% de acerto; o domínio do marco inclui a produção escrita.</span></a><a class="nx" href="03-modulo-3.html"><span class="k">Seguir</span><span class="t">Módulo 3 · Cálculo proposicional</span><span class="d">Nível B · módulo 3 no percurso.</span></a></div>
 
     <h2 id="ref">Referências</h2>
     <div class="refs">

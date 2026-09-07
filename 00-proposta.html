@@ -126,7 +126,7 @@ figcaption b{font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-
 .note{font-size:14.5px;color:var(--muted);border-left:2px solid var(--line);padding-left:16px;margin:22px 0}
 :focus-visible{outline:2px solid var(--accent);outline-offset:3px}
 @media (max-width:900px){
-  .shell{grid-template-columns:1fr;gap:0}
+  .shell{grid-template-columns:minmax(0,1fr);gap:0}
   nav.toc{position:static;padding:24px 0 0;columns:2;column-gap:24px}
   nav.toc .lbl{column-span:all}
   article{padding-top:24px}
@@ -200,22 +200,22 @@ figcaption b{font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-
     <div class="tw"><table>
       <tr><th>Fonte</th><th>Natureza</th><th>Cobertura</th><th>Papel no curso</th></tr>
       <tr><td><strong>Mortari (2016)</strong></td><td>Livro-texto, 527 páginas, 18 capítulos e um apêndice</td><td>Da noção de argumento à aritmética formalizada e às lógicas não clássicas</td><td>Espinha dorsal. Fornece a sequência, o rigor e os exercícios de todos os seis módulos</td></tr>
-      <tr><td><strong>Neves Filho e Rui (2016)</strong></td><td>Livro didático de introdução, 94 páginas</td><td>Noções introdutórias, lógica aristotélica, cálculo proposicional preliminar, falácias informais</td><td>Porta de entrada. Texto de primeira leitura no nível A, e única fonte para as falácias</td></tr>
+      <tr><td><strong>Neves Filho e Rui (2016)</strong></td><td>Livro didático de introdução, 96 páginas no PDF</td><td>Noções introdutórias, lógica aristotélica, cálculo proposicional preliminar, falácias informais</td><td>Porta de entrada. Texto de primeira leitura no nível A e base da seleção de falácias</td></tr>
       <tr><td><strong>Sell (2014)</strong></td><td>Livro didático a distância, quatro unidades, 60 horas-aula</td><td>Dedução natural proposicional e quantificacional, na notação de Nolt e Rohatyn</td><td>Fonte de exercícios de derivação. Trata a dedução natural com mais vagar do que o livro-texto</td></tr>
       <tr><td><strong>Morais et al. (2019)</strong></td><td>Coletânea de história da filosofia, oito capítulos</td><td>De Heráclito aos medievais</td><td>Contextualização histórica do módulo 2 e da discussão sobre futuros contingentes no módulo 6</td></tr>
-      <tr><td><strong>Mortari (2023)</strong></td><td>Plano de ensino de disciplina obrigatória</td><td>Programa de 90 horas-aula em seis tópicos</td><td>Referência de sequência e de proporção entre tópicos, validada em uso institucional</td></tr>
-      <tr><td><strong>Pagani (s.d.)</strong></td><td>Gabarito comentado, 93 páginas</td><td>Exercícios 1.1 a 12.6 do livro-texto</td><td>Viabiliza o formato autoinstrucional: sem ele, o aluno sozinho não teria como conferir a própria resolução</td></tr>
+      <tr><td><strong>Mortari (2023)</strong></td><td>Plano de ensino de disciplina obrigatória</td><td>Programa de 90 horas-aula em seis tópicos</td><td>Exemplo institucional de sequência e proporção entre tópicos; não constitui validação deste material</td></tr>
+      <tr><td><strong>Pagani (s.d.)</strong></td><td>Gabarito comentado, 93 páginas</td><td>Respostas numeradas de 1.1 a 12.6 em outra organização do livro</td><td>Apoio à conferência quando o enunciado corresponde ao da edição adotada; ver guia de estudo</td></tr>
     </table></div>
-    <p>Três observações resultam do diagnóstico. A primeira é que o conjunto é autossuficiente para o objetivo declarado: não há lacuna de conteúdo entre o iniciante absoluto e a metateoria, e todas as fontes estão em português, o que remove a barreira linguística que costuma acompanhar a bibliografia de lógica.</p>
-    <p>A segunda é que o gabarito de Pagani (s.d.) cobre os capítulos 1 a 12 do livro-texto, isto é, até os tablôs semânticos, e não alcança os capítulos de dedução natural, identidade, teorias formalizadas e lógicas não clássicas. A partir da unidade 4.2, que trata dos sistemas axiomáticos do capítulo 13, a correção automática precisa vir de outro lugar, o que justifica o banco de itens autocorrigidos descrito na seção 6.</p>
+    <p>Três observações resultam do diagnóstico. A primeira é que as seis fontes em português sustentam o percurso principal. As demonstrações de completude, os esquemas de argumentação informal e parte da semântica dos módulos complementares ampliam essa base; seu desenvolvimento didático e as fontes adicionais são identificados nos módulos e no guia de estudo.</p>
+    <p>A segunda é que a numeração de Pagani não corresponde automaticamente à 2ª edição de Mortari. O arquivo termina em respostas de tablôs, mas seus números não delimitam a cobertura dos capítulos da edição adotada. O <a href="guia-estudo.html#pagani">guia de estudo</a> registra pares conferidos por enunciado; os exercícios autorais dispõem de pistas e soluções locais, e os marcos combinam teste e produção escrita.</p>
     <p>A terceira é que há divergência de notação entre as fontes. Mortari (2016) e Sell (2014) usam convenções distintas para as regras de derivação, e Sell trabalha na notação de Nolt e Rohatyn (1991, como citado em Sell, 2014). Longe de ser um defeito, a divergência é oportunidade pedagógica: ler notação alheia é parte do eixo da leitura, e a proposta a explora deliberadamente no módulo 4.</p>
     <h2 id="s3"><span class="num">Seção 3</span>Princípios de desenho</h2>
     <p>Cinco decisões estruturam o curso e merecem justificação explícita, uma vez que cada uma exclui alternativas defensáveis.</p>
 
-    <h3>Nenhum símbolo lógico antes do terceiro módulo</h3>
-    <p>Os dois primeiros módulos não empregam notação lógico-simbólica, à exceção da notação conjuntista da unidade 2.2. A primeira letra sentencial aparece na unidade 3.1, depois que o aluno já sabe distinguir premissa de conclusão, validade de correção e dedução de indução. A ordem contraria o hábito de abrir cursos de lógica pela tabela de verdade, e segue a de Mortari (2016), cujos dois primeiros capítulos não contêm notação alguma. O custo é uma entrada mais lenta; o benefício é que a simbolização chega como abreviação de algo já compreendido, e não como um cálculo a ser decorado.</p>
+    <h3>Introdução gradual da notação</h3>
+    <p>O módulo 1 trabalha com argumentos em língua natural. O módulo 2 introduz notação conjuntista e antecipa algumas formas lógicas na história da lógica e na silogística; essas antecipações são explicadas no local. O estudo sistemático da linguagem proposicional começa na unidade 3.1, quando o aluno já distingue premissa de conclusão, validade de correção e dedução de indução.</p>
 
-    <h3>A semântica precede a sintaxe</h3>
+    <h3>A semântica precede os métodos de prova</h3>
     <p>O curso apresenta valorações, funções de verdade e tabelas antes de qualquer regra de inferência, e apresenta os tablôs semânticos antes da dedução natural. A razão é que o aluno precisa saber <em>o que</em> uma prova estabelece antes de aprender a construí-la. Quem encontra a dedução natural sem ter antes compreendido a relação de consequência semântica tende a lê-la como um jogo de manipulação de linhas, e a não perceber que a existência de uma derivação é um fato a respeito da preservação de verdade.</p>
     <p>Essa opção também determina a escolha, feita pelo proponente, de adotar os dois métodos de prova com os tablôs em primeiro lugar. O tablô é um procedimento de decisão para o cálculo proposicional: aplicado mecanicamente, ele termina, e termina informando qual dos dois casos ocorre. Quando fecha, atesta a validade; quando permanece aberto, o ramo saturado entrega diretamente a valoração que refuta o argumento. O aluno obtém, portanto, refutação e prova pelo mesmo instrumento, o que consolida a compreensão antes que a dedução natural lhe exija criatividade.</p>
 
@@ -259,13 +259,13 @@ figcaption b{font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-
     <p>O módulo 2 dedica três de suas cinco unidades à história da disciplina, apoiadas em Morais et al. (2019) e no apêndice de Mortari (2016). A escolha não é decorativa. Os paradoxos de Zenão são o primeiro emprego sistemático da redução ao absurdo, que reaparece como regra no módulo 4; o quadrado aristotélico das oposições é o exercício natural de leitura de relações lógicas antes que exista notação para elas; e a discussão dos futuros contingentes é a motivação histórica das lógicas polivalentes do módulo 6. Cada bloco histórico prepara um bloco técnico posterior.</p>
 
     <h3>A divergência de notação é exercitada</h3>
-    <p>Como observado na seção 2, as fontes não convergem em notação. A proposta trata isso como matéria de ensino: no módulo 4, o mesmo argumento é derivado uma vez na apresentação de Mortari (2016) e uma vez na de Sell (2014). O aluno constata que a diferença é de convenção e não de substância, o que é precisamente a habilidade exigida de quem lê literatura de várias procedências.</p>
+    <p>Como observado na seção 2, as fontes não convergem em notação nem na seleção das regras primitivas. O quadro do módulo 4 compara Mortari (2016) e Sell (2014), e a solução do silogismo disjuntivo mostra como uma regra primitiva numa apresentação pode ser derivada em outra. O aluno deve conferir o esquema e as condições de aplicação, além do nome da regra.</p>
 
     <h3>Cada módulo termina em um critério observável</h3>
     <p>Por ser autoinstrucional, o curso não dispõe do calendário como mecanismo de progressão. Em seu lugar, cada módulo se encerra em um marco de domínio, isto é, uma descrição de desempenho que o próprio aluno pode verificar, combinada a um teste autocorrigido com limiar de setenta e cinco por cento. O marco é redigido em termos de execução e não de familiaridade: não se pede que o aluno conheça os tablôs, e sim que feche um tablô para um argumento válido de três premissas e extraia de um ramo aberto a valoração que refuta um inválido.</p>
 
     <h2 id="s4"><span class="num">Seção 4</span>Arquitetura do curso</h2>
-    <p>O curso se organiza em três níveis, seis módulos e trinta e três unidades. Os níveis marcam mudanças de natureza, e não de dificuldade apenas: o nível A não emprega notação lógico-simbólica, o nível B trabalha no cálculo proposicional e o nível C estende o tratamento à primeira ordem e à reflexão sobre o próprio sistema.</p>
+    <p>O percurso principal se organiza em três níveis, seis módulos e trinta e três unidades. Os níveis marcam mudanças de natureza, e não de dificuldade apenas: o nível A parte da língua natural e introduz gradualmente a notação, o nível B trabalha no cálculo proposicional e o nível C estende o tratamento à primeira ordem e à reflexão sobre o próprio sistema. Os três módulos complementares ampliam esse percurso.</p>
     <div class="tw"><table>
       <tr><th>Nível</th><th>Módulos</th><th>Unidades</th><th>Ponto de chegada</th></tr>
       <tr><td class="m2">A</td><td><strong>1</strong> Argumento, inferência e validade<br><strong>2</strong> Linguagem, conjuntos e origem histórica</td><td>11</td><td>Reconstrução de argumentos em texto corrido e avaliação de silogismos categóricos</td></tr>
@@ -383,56 +383,56 @@ figcaption b{font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-
     </section>
     <h2 id="s6"><span class="num">Seção 6</span>Avaliação e evidência de fluência</h2>
     <p>A avaliação opera em três camadas, articuladas pela mesma exigência de que nenhuma delas isoladamente autorize a progressão.</p>
-    <p>A primeira camada é a prática dirigida. O aluno resolve os exercícios do livro-texto e confere a própria resolução no gabarito comentado de Pagani (s.d.), que cobre os exercícios 1.1 a 12.6, isto é, do primeiro capítulo aos tablôs semânticos. Trata-se da camada de maior volume e menor formalidade, e é onde o erro deve ocorrer com frequência sem custo.</p>
-    <p>A segunda camada é o teste de marco, autocorrigido, com justificativa e fonte em cada item. São vinte e nove itens distribuídos pelos seis marcos, em três formatos: escolha simples, múltipla seleção e preenchimento de coluna de tabela de verdade. O limiar de setenta e cinco por cento não é arbitrário: com quatro a seis itens por marco, ele exige que no máximo um item seja errado, o que corresponde a admitir descuido mas não lacuna. A partir do módulo 4, quando o gabarito de Pagani deixa de cobrir o conteúdo, esta camada passa a ser a principal fonte de correção automática.</p>
+    <p>A primeira camada é a prática dirigida: leituras e atividades essenciais por unidade no guia de estudo, exercícios autorais com pistas e soluções ao fim de cada módulo, e exercícios do livro com gabarito apenas onde há correspondência de enunciado confirmada. O aprofundamento é opcional; a prática essencial prepara o artefato do marco.</p>
+    <p>A segunda camada é o teste de marco, autocorrigido, com justificativa e fonte em cada item. São 47 itens, de sete a nove por marco, com escolha simples, múltipla seleção e preenchimento de coluna de tabela de verdade. A aprovação exige responder a todos e acertar pelo menos 75%. Esse limiar é uma decisão pedagógica de triagem, sem pretensão de certificação estatística de domínio. A produção escrita é avaliada separadamente e também precisa ser verificada.</p>
     <p>A terceira camada é a produção escrita, que a correção automática não alcança. Cada marco do nível B e do nível C exige um artefato: uma tradução comentada, um tablô com a leitura do contramodelo, uma derivação em dedução natural, uma formalização com quantificação múltipla. Estes artefatos são o que efetivamente evidencia fluência, e por isso a proposta recomenda, ainda que o formato seja autoinstrucional, que ao menos os artefatos dos marcos B2, C1 e C2 sejam submetidos a leitura humana, seja de um professor, seja de um par mais adiantado.</p>
-    <p>Um trabalho integrador encerra o percurso, à maneira das três provas do plano de Mortari (2023), mas com formato distinto: o aluno escolhe um trecho de meia página de um texto filosófico ou científico, reconstrói o argumento nele contido, formaliza-o em primeira ordem, decide sua validade pelo método que julgar adequado e discute o que a formalização preservou e o que perdeu. A última pergunta é a que distingue o aluno fluente do aluno treinado.</p>
+    <p>Um trabalho integrador encerra o percurso, à maneira das três provas do plano de Mortari (2023), mas com formato distinto: o aluno escolhe um trecho de meia página de um texto filosófico ou científico, reconstrói o argumento nele contido, formaliza-o em primeira ordem, procura uma prova ou um contramodelo e discute o que a formalização preservou e o que perdeu. A reconstrução deve distinguir premissas explícitas de implícitas, sem acrescentar uma ponte artificial apenas para tornar o argumento válido. Se a análise permanecer inconclusiva, o aluno documenta o método e seu limite. Quando a atividade exigir decisão, deve-se escolher previamente um caso tratável.</p>
 
     <h2 id="s7"><span class="num">Seção 7</span>Materiais produzidos</h2>
-    <p>Os seis módulos do percurso obrigatório e os três complementares foram integralmente redigidos, cada um como documento autônomo com unidades, marco de saída, exercícios e ao menos um recurso interativo. A eles somam-se três instrumentos transversais. O quadro abaixo é o índice do curso.</p>
+    <p>Os seis módulos do percurso obrigatório e os três complementares foram integralmente redigidos, cada um como documento autônomo com unidades, marco de saída, exercícios e ao menos um recurso interativo. A eles somam-se quatro instrumentos transversais. O quadro abaixo é o índice do curso.</p>
     <h3>Percurso obrigatório</h3>
     <div class="res">
-      <a class="rc" href="https://claude.ai/code/artifact/396634f4-8781-4ff8-bddc-16cc6e0d6757" target="_blank" rel="noopener">
+      <a class="rc" href="01a-slides-modulo-1.html">
         <span class="k">Módulo 1 · slides</span><span class="t">Anatomia do Argumento</span>
         <span class="d">Treze slides com reconstrução de argumento por clique, quadro interativo de validade e verdade, oito falácias e verificação imediata.</span></a>
-      <a class="rc" href="https://claude.ai/code/artifact/4711ada1-0c06-408a-a4a0-74616265fd2d" target="_blank" rel="noopener">
+      <a class="rc" href="02-modulo-2.html">
         <span class="k">Módulo 2</span><span class="t">A Linguagem Antes do Símbolo</span>
         <span class="d">Uso e menção, teoria elementar de conjuntos, origens gregas e Aristóteles, com quadrado das oposições e verificador de silogismos que compara as duas leituras das categóricas.</span></a>
-      <a class="rc" href="https://claude.ai/code/artifact/d6a66975-4019-4566-9561-a60a24ccac91" target="_blank" rel="noopener">
+      <a class="rc" href="03-modulo-3.html">
         <span class="k">Módulo 3</span><span class="t">A Primeira Linguagem Formal</span>
         <span class="d">Sintaxe, tradução e semântica do cálculo proposicional, com laboratório que analisa fórmulas, constrói a tabela por subfórmulas e testa argumentos.</span></a>
-      <a class="rc" href="https://claude.ai/code/artifact/450c56fd-5e1e-4bf3-8f47-20d8aee8ab78" target="_blank" rel="noopener">
+      <a class="rc" href="04-modulo-4.html">
         <span class="k">Módulo 4</span><span class="t">Como se Escreve uma Prova</span>
         <span class="d">Tablôs com construtor automático que exibe ramos, fechamentos e contramodelo; sistemas formais; as dez regras da dedução natural e as derivadas.</span></a>
-      <a class="rc" href="https://claude.ai/code/artifact/79ea0c2e-d094-4995-a151-d041d3ec37f7" target="_blank" rel="noopener">
+      <a class="rc" href="05-modulo-5.html">
         <span class="k">Módulo 5</span><span class="t">Dentro da Proposição</span>
         <span class="d">Cálculo de predicados, quantificação múltipla e identidade, com laboratório em que o aluno monta estruturas finitas e avalia sentenças nelas.</span></a>
-      <a class="rc" href="https://claude.ai/code/artifact/13d651d6-21b5-4025-b67d-82871c761f04" target="_blank" rel="noopener">
+      <a class="rc" href="06-modulo-6.html">
         <span class="k">Módulo 6</span><span class="t">O Sistema como Objeto</span>
         <span class="d">Teorias formalizadas, correção e completude enunciadas, o mapa das lógicas não clássicas e calculadora que compara cinco sistemas de valores.</span></a>
     </div>
     <h3>Módulos complementares</h3>
     <div class="res">
-      <a class="rc" href="https://claude.ai/code/artifact/58b46df1-cd00-4503-be36-a70d7fba9dbb" target="_blank" rel="noopener">
+      <a class="rc" href="01b-modulo-1a.html">
         <span class="k">Módulo 1A</span><span class="t">Bons e Maus Argumentos</span>
         <span class="d">Argumentação informal entre os módulos 1 e 2: reconstrução caridosa, diagramação da estrutura de apoio, esquemas argumentativos com perguntas críticas e força indutiva.</span></a>
-      <a class="rc" href="https://claude.ai/code/artifact/ef9c2d87-b346-45e0-9c24-d767ad47c62e" target="_blank" rel="noopener">
+      <a class="rc" href="07-modulo-7.html">
         <span class="k">Módulo 7</span><span class="t">Correção e Completude</span>
         <span class="d">As demonstrações metateóricas, do lema de Lindenbaum ao modelo canônico, com extensão a primeira ordem, indecidibilidade e incompletude.</span></a>
-      <a class="rc" href="https://claude.ai/code/artifact/662812a8-c11b-4be0-922f-1f560374081e" target="_blank" rel="noopener">
+      <a class="rc" href="08-modulo-8.html">
         <span class="k">Módulo 8</span><span class="t">Seis Lógicas Não Clássicas</span>
         <span class="d">Modais, deônticas e temporais, polivalentes, intuicionista, relevância e paraconsistência, com laboratório de modelos de Kripke.</span></a>
     </div>
-    <h3>Instrumentos transversais</h3>
+    <h3>Instrumentos transversais</h3><p><a href="guia-estudo.html">Guia de leituras e exercícios</a>: páginas por unidade, atividades essenciais e opcionais, soluções, notação e uso verificado do gabarito.</p>
     <div class="res">
-      <a class="rc" href="https://claude.ai/code/artifact/2defcd2b-2280-46d0-a1cf-4c3cb213e473" target="_blank" rel="noopener">
+      <a class="rc" href="atlas.html">
         <span class="k">Mapa mental</span><span class="t">Atlas da Lógica</span>
         <span class="d">Árvore navegável dos três níveis, seis módulos e trinta e três unidades, com ficha por nó e filtro por eixo de fluência.</span></a>
-      <a class="rc" href="https://claude.ai/code/artifact/e8da66bb-bdae-464a-bf9b-1b8526b2a0dd" target="_blank" rel="noopener">
+      <a class="rc" href="provas.html">
         <span class="k">Banco de testes</span><span class="t">Provas de Domínio</span>
-        <span class="d">Vinte e nove itens autocorrigidos cobrindo os seis marcos, com justificativa e fonte em cada resposta e registro de progresso.</span></a>
-      <a class="rc" href="https://claude.ai/code/artifact/7eae729c-efc1-4b90-a34b-7b67071a17ec" target="_blank" rel="noopener">
-        <span class="k">Instrumento</span><span class="t">Sete Prompts de Correção</span>
+        <span class="d">Quarenta e sete itens autocorrigidos cobrindo os seis marcos, com justificativa e fonte em cada resposta e registro de progresso.</span></a>
+      <a class="rc" href="prompts.html">
+        <span class="k">Instrumento</span><span class="t">Nove Prompts de Correção</span>
         <span class="d">Rubricas prontas para submeter cada artefato escrito a um modelo de linguagem, com protocolo de conferência do veredito recebido.</span></a>
     </div>
     <p class="note">Todos os materiais e este relatório foram gravados também na pasta de trabalho do proponente, em formato HTML autocontido, de modo que possam ser abertos sem conexão e distribuídos a alunos.</p>
@@ -440,9 +440,9 @@ figcaption b{font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-
     <h2 id="s8"><span class="num">Seção 8</span>Decisões revistas</h2>
     <p>Quatro pontos haviam sido resolvidos por opção justificada, com a ressalva de que admitiam revisão sem que a arquitetura se desfizesse. O proponente optou por desenvolver os quatro, e o que segue registra o que cada decisão passou a ser.</p>
     <p><strong>Argumentação informal.</strong> A proposta original limitava o tema à unidade 1.6. Passou a existir um módulo autônomo, numerado 1A para preservar a numeração dos demais, situado entre os módulos 1 e 2 e composto de seis unidades sem notação alguma. Ele trata da reconstrução caridosa e do entimema, da diagramação da estrutura de apoio, dos esquemas argumentativos com as respectivas perguntas críticas, do ônus da prova e da avaliação de força indutiva. Nenhum módulo posterior depende dele, e omiti-lo deixa o percurso intacto.</p>
-    <p><strong>Profundidade metateórica.</strong> A proposta original enunciava correção e completude sem demonstrá-los, seguindo o tratamento do livro-texto. Passou a existir o módulo 7, que as demonstra: correção por indução na estrutura da derivação, lema de Lindenbaum, propriedades dos conjuntos maximais consistentes, lema da verdade, existência de modelo e completude por contraposição, com os corolários de compacidade e decidibilidade. A extensão a primeira ordem é apresentada pelo método de Henkin, e o módulo encerra distinguindo a completude do cálculo da completude de uma teoria, com o primeiro teorema da incompletude. O pré-requisito matemático é a indução e a noção de conjunto enumerável, ambas já fornecidas na unidade 2.2.</p>
+    <p><strong>Profundidade metateórica.</strong> A proposta original enunciava correção e completude sem demonstrá-los, seguindo o tratamento do livro-texto. Passou a existir o módulo 7, que as demonstra: correção por indução na estrutura da derivação, lema de Lindenbaum, propriedades dos conjuntos maximais consistentes, lema da verdade, existência de modelo e completude por contraposição, com os corolários de compacidade e decidibilidade. A extensão a primeira ordem é apresentada pelo método de Henkin, e o módulo encerra distinguindo a completude do cálculo da completude de uma teoria, com o primeiro teorema da incompletude. A noção de conjunto enumerável é retomada da unidade 2.2; a indução matemática e a indução estrutural recebem uma preparação própria no início do módulo 7.</p>
     <p><strong>Extensão das lógicas não clássicas.</strong> As famílias tratadas nas unidades 6.4 e 6.5 passaram a ter módulo próprio, o de número 8, com uma unidade para cada uma e tratamento estendido das modais aléticas. A ênfase se justifica por uma razão que não é apenas de interesse: a semântica de mundos possíveis desenvolvida ali é reutilizada na apresentação das temporais, das epistêmicas e da própria lógica intuicionista, de modo que investir nela reduz o custo das demais. O módulo inclui um laboratório em que o aluno altera a relação de acessibilidade e observa quais esquemas passam a valer, verificando a teoria da correspondência em vez de memorizá-la.</p>
-    <p><strong>Leitura humana dos artefatos escritos.</strong> A lacuna descrita na seção 6 permanece real, e a solução adotada a reduz sem fechá-la. Foram redigidos sete prompts, um para cada tipo de artefato do curso, que instruem um modelo de linguagem a avaliar a produção do aluno em vez de refazê-la: cada um fixa a postura do corretor, fornece a rubrica específica, exige que a verificação seja mostrada linha a linha e proíbe a entrega da solução na primeira passagem. O instrumento vem acompanhado de um protocolo de conferência do próprio veredito recebido, uma vez que modelos de linguagem erram de modo característico em manipulação simbólica. A recomendação de leitura humana ao menos para os marcos B2, C1 e C2 é mantida; o que muda é que o aluno chega a ela com uma versão já depurada.</p>
+    <p><strong>Leitura humana dos artefatos escritos.</strong> A lacuna descrita na seção 6 permanece real, e a solução adotada a reduz sem fechá-la. Foram redigidos nove prompts, um para cada tipo de artefato do curso, que instruem um modelo de linguagem a avaliar a produção do aluno em vez de refazê-la: cada um fixa a postura do corretor, fornece a rubrica específica, exige que a verificação seja mostrada linha a linha e proíbe a entrega da solução na primeira passagem. O instrumento vem acompanhado de um protocolo de conferência do próprio veredito recebido, uma vez que modelos de linguagem erram de modo característico em manipulação simbólica. A recomendação de leitura humana ao menos para os marcos B2, C1 e C2 é mantida; o que muda é que o aluno chega a ela com uma versão já depurada.</p>
     <p>Com isso, o curso passa a ter nove módulos, dos quais seis constituem o percurso obrigatório e três são complementares e dispensáveis sem prejuízo dos demais. Resta em aberto uma questão que este documento não resolve, a da existência de uma turma, que tornaria possível a mediação docente recomendada na seção 6. Quanto ao material, os nove módulos foram redigidos e estão listados na seção 7.</p>
 
     <h2 id="proximo"><span class="num">Encerramento</span>Próximo passo</h2><p>O ciclo de cada módulo se fecha em três movimentos: resolver os exercícios, verificar o marco no banco de itens e submeter o artefato escrito à rubrica correspondente.</p><div class="nextgrid"><a class="nx" href="01-modulo-1.html"><span class="k">Seguir</span><span class="t">Módulo 1 · Argumento e validade</span><span class="d">Nível A · módulo 1 no percurso.</span></a></div>

@@ -127,8 +127,11 @@ figcaption b{font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-
 .refs{margin-top:12px}
 .refs p{padding-left:34px;text-indent:-34px;font-size:15.5px;margin-bottom:13px}
 :focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+details{margin:10px 0;border:1px solid var(--line);border-radius:4px;background:var(--surface);padding:0 15px}
+summary{padding:11px 0;cursor:pointer;font-weight:600;color:var(--accent)}
+details p{margin:0 0 14px}
 @media (max-width:900px){
-  .shell{grid-template-columns:1fr;gap:0}
+  .shell{grid-template-columns:minmax(0,1fr);gap:0}
   nav.toc{position:static;padding:22px 0 0;columns:2;column-gap:24px}
   nav.toc .lbl{column-span:all}
   article{padding-top:22px}
@@ -183,7 +186,7 @@ figcaption b{font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-
       <div><div class="k">Unidades</div><div class="v">Seis</div></div>
       <div><div class="k">Pré-requisito</div><div class="v">Nenhum</div></div>
       <div><div class="k">Marco</div><div class="v">A1</div></div>
-      <div><div class="k">Notação</div><div class="v">Nenhuma</div></div>
+      <div><div class="k">Notação</div><div class="v">Esquemas em português</div></div>
       <div><div class="k">Texto-base</div><div class="v">Mortari (2016, caps. 1–2)</div></div>
     </div>
   </header>
@@ -199,30 +202,31 @@ figcaption b{font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-
     <a href="#u5">1.5 Dedução e indução</a>
     <a href="#u6">1.6 Falácias informais</a>
     <a href="#marco">Marco A1</a>
+    <a href="#solucoes">Pistas e soluções</a>
     <a href="#proximo">Próximo passo</a>
     <a href="#ref">Referências</a>
   </nav>
 
   <article>
     <h2 id="i"><span class="num">Abertura</span>Por onde o curso começa</h2>
-    <p class="intro">Este módulo não introduz símbolo algum. A primeira letra sentencial aparece só na unidade 3.1, e a demora é deliberada: quem simboliza cedo demais aprende a manipular fórmulas sem reconhecer o argumento que elas representam, e não sabe responder o que a manipulação está calculando.</p>
+    <p class="intro">Este módulo ensina a ler argumentos em português antes de estudar uma linguagem formal. As letras que aparecem nos esquemas apenas reservam lugares para expressões; a sintaxe e a semântica do cálculo proposicional serão desenvolvidas na unidade 3.1. Começamos por reconhecer o argumento que uma fórmula deverá representar.</p>
     <p>O que se instala aqui é uma competência de leitura. Ao fim do módulo, o aluno extrai de um parágrafo qualquer a estrutura argumentativa que ele carrega, julga separadamente se o argumento é bem construído e se as suas afirmações são verdadeiras, e reconhece um repertório de defeitos que nenhum cálculo detecta.</p>
     <p>O módulo tem um recurso de aula que o acompanha, com os mesmos conteúdos em formato de apresentação e exercícios de clique. Convém percorrer os dois: este documento é a referência, e a apresentação é o percurso.</p>
 
     <h2 id="u1"><span class="num">Unidade 1.1</span>Raciocínio e inferência</h2>
     <p>Lógica não é o estudo empírico de como as pessoas pensam. Que alguém conclua algo por hábito, por pressa ou sob pressão é assunto da psicologia. A lógica pergunta outra coisa: dado um conjunto de afirmações, quais outras se seguem delas.</p>
-    <p>Mortari (2016, §§1.1–1.2) formula a diferença como a que existe entre <strong>raciocínio</strong>, processo que ocorre no tempo e pode ser bom ou ruim por muitas razões, e <strong>inferência</strong>, relação entre proposições que se sustenta ou não se sustenta, independentemente de quem a percorra e de quando.</p>
+    <p>Mortari (2016, §1.2, pp. 16–17) chama esse processo mental de <strong>raciocínio</strong> ou <strong>processo de inferência</strong>. Distinguimos o processo da <strong>relação de consequência lógica</strong>: a questão de saber se a conclusão se segue das premissas independe de alguém ter percorrido mentalmente essa passagem.</p>
     <p>A distinção tem consequência imediata. Um raciocínio pode chegar a uma conclusão verdadeira por um caminho péssimo, e a intuição de que há aí algo defeituoso, mesmo com o resultado certo, é a intuição de validade que o módulo vai tornar precisa.</p>
 
     <h2 id="u2"><span class="num">Unidade 1.2</span>Anatomia do argumento</h2>
-    <p>Um <strong>argumento</strong> é um conjunto de proposições em que algumas, as <strong>premissas</strong>, são oferecidas como razão para aceitar outra, a <strong>conclusão</strong>. Nem todo texto que afirma coisas é argumento: descrições, narrativas e explicações não oferecem razões para aceitar nada.</p>
+    <p>Um <strong>argumento</strong> é um conjunto de proposições em que algumas, as <strong>premissas</strong>, são oferecidas como razão para aceitar outra, a <strong>conclusão</strong>. Nem todo texto que afirma coisas é argumento. Uma descrição pode apenas apresentar uma situação; uma explicação pode esclarecer por que ocorreu um fato já aceito. A função da passagem e seu contexto determinam se ela também oferece razões para aceitar uma conclusão.</p>
     <p>Alguns marcadores linguísticos ajudam, mas a maior parte dos argumentos reais não os traz.</p>
     <div class="tw"><table>
       <tr><th>Antecedem a conclusão</th><th>Antecedem premissas</th></tr>
       <tr><td>logo, portanto, assim, segue-se que, conclui-se que, consequentemente, de modo que</td><td>pois, porque, já que, uma vez que, dado que, visto que, afinal</td></tr>
     </table></div>
     <p>Na ausência de indicador, o teste é funcional: pergunte de cada período o que ele está fazendo ali. Se a passagem o oferece como razão para aceitar outro, é premissa; se é aquilo que a passagem quer que se aceite, é conclusão; se não faz nem uma coisa nem outra, não pertence ao argumento.</p>
-    <p>Essa terceira possibilidade é a que se costuma esquecer. Textos argumentativos reais contêm concessões, ilustrações e contexto, e nenhum deles sustenta a conclusão. Suprimi-los não enfraquece o argumento, e é esse o critério para descartá-los.</p>
+    <p>Textos argumentativos reais contêm concessões, ilustrações e contexto. Avalie a função de cada trecho: uma concessão pode reconhecer uma objeção sem apoiar a conclusão, enquanto o contexto pode ser indispensável para interpretar uma premissa. Retirar um trecho sem perda de apoio é uma pista de sua função, não um teste infalível: premissas redundantes também podem ser retiradas sem enfraquecer a inferência.</p>
     <div class="fx">Passagem
   «O aumento da tarifa não se justifica pelo custo do combustível. Ele responde
    por menos de um quinto do custo operacional, e o diesel caiu no trimestre.
@@ -241,8 +245,8 @@ Reconstrução
     <p>Três coisas se confundem com frequência, e distingui-las importa para o que virá.</p>
     <div class="tw"><table>
       <tr><th>Termo</th><th>O que é</th><th>Exemplo</th></tr>
-      <tr><td><strong>Sentença</strong></td><td>A cadeia de símbolos de uma língua</td><td>«Está chovendo» e «It is raining» são duas</td></tr>
-      <tr><td><strong>Proposição</strong></td><td>O que a sentença exprime, e o que é verdadeiro ou falso</td><td>As duas sentenças acima exprimem uma só</td></tr>
+      <tr><td><strong>Sentença</strong></td><td>Uma sequência formada segundo a gramática de uma língua</td><td>«Está chovendo» e «It is raining» são duas</td></tr>
+      <tr><td><strong>Proposição</strong></td><td>O que a sentença exprime em um contexto, e o que é verdadeiro ou falso</td><td>As duas sentenças acima podem exprimir a mesma proposição quando se referem ao mesmo lugar e momento</td></tr>
       <tr><td><strong>Enunciado</strong></td><td>O ato de proferir a sentença numa ocasião</td><td>Duas pessoas dizendo «eu tenho fome»</td></tr>
     </table></div>
     <p>A distinção não é preciosismo. Quando, no módulo 3, uma letra sentencial for introduzida, ela representará a proposição, e é por isso que a mesma letra poderá traduzir sentenças diferentes. Mortari (2016, §1.4) adota «proposição» sem compromisso ontológico forte, e o debate metafísico correspondente é matéria do módulo 6.</p>
@@ -307,7 +311,7 @@ Reconstrução
     <p>O módulo complementar 1A trata da avaliação de argumentos indutivos com o cuidado que o assunto merece, examinando generalização por amostra, analogia, inferência causal e inferência à melhor explicação.</p>
 
     <h2 id="u6"><span class="num">Unidade 1.6</span>Falácias informais</h2>
-    <p>Uma <strong>falácia</strong> não é simplesmente um argumento inválido. «Platão era grego, logo a neve é branca» é inválido e não é falacioso, porque não é sequer um argumento. O que caracteriza a falácia é ser enganosa, isto é, ter a aparência de bom raciocínio (Neves Filho e Rui, 2016, cap. IV).</p>
+    <p>Uma <strong>falácia</strong> não é simplesmente um argumento inválido. «Platão era grego, logo a neve é branca» oferece uma conclusão sem apoio pertinente; a falha é tão manifesta que dificilmente engana. O que caracteriza uma falácia, no sentido usado aqui, é um argumento defeituoso com aparência de bom raciocínio. Uma petição de princípio pode até ser dedutivamente válida e falhar em justificar a conclusão (Neves Filho e Rui, 2016, cap. IV, pp. 76–77).</p>
     <p>Como a aparência não é propriedade da forma, nenhum cálculo detecta falácias informais, e a única defesa é o reconhecimento treinado. Oito delas cobrem a maior parte dos casos de circulação corrente.</p>
     <div class="cards" id="fcards"></div>
     <div class="readout" id="falOut"><div class="rk">Falácias</div><p>Clique em uma para ver a definição e um exemplo. Convém ler as oito antes de tentar o teste do marco: o item correspondente pede identificação em exemplo inédito.</p></div>
@@ -317,13 +321,26 @@ Reconstrução
     <div class="marco"><b>Marco A1</b>Extrair premissas e conclusão de um parágrafo argumentativo que contenha material concessivo; julgar validade e correção separadamente, justificando cada julgamento; e nomear oito falácias informais em exemplos inéditos.</div>
     <h4>Exercícios</h4>
     <p><strong>1.</strong> Em «Nenhum candidato aprovado deixou de entregar a documentação, de modo que Marina entregou a documentação, já que ela foi aprovada», identifique premissas e conclusão, e diga qual indicador linguístico sustenta cada identificação.</p>
-    <p><strong>2.</strong> Escreva um argumento válido com premissas falsas e conclusão verdadeira. Depois escreva um inválido com premissas verdadeiras e conclusão verdadeira. Explique por que o segundo não é melhor que o primeiro.</p>
+    <p><strong>2.</strong> Escreva um argumento válido com premissas falsas e conclusão verdadeira. Depois escreva um inválido com premissas verdadeiras e conclusão verdadeira. Explique por que a verdade das afirmações do segundo não garante sua validade nem sua correção.</p>
     <p><strong>3.</strong> Recolha um parágrafo argumentativo de jornal e reconstrua-o, descartando o material que não sustenta a conclusão. Justifique cada descarte.</p>
     <p><strong>4.</strong> Refute a forma «Se P, então Q; Q; logo P» exibindo um contraexemplo próprio, isto é, diferente do apresentado na unidade 1.4.</p>
     <p><strong>5.</strong> Localize, em discurso público recente, um exemplo de cada uma de quatro falácias à sua escolha. Explique o contexto e por que se trata de falácia, e não de mero desacordo.</p>
-    <p><strong>6.</strong> O exercício 1.1 do livro-texto tem resolução comentada em Pagani (s.d.). Resolva-o antes de conferir.</p>
+    <p><strong>6.</strong> Resolva o problema dos brincos da princesa, exercício 1.1 de Mortari (2016, p. 15), antes de conferir a resolução. A correspondência deste enunciado com o exercício 1.1 de Pagani foi verificada; a página que Pagani indica para o livro é de outra organização editorial.</p>
 
-    <h2 id="proximo"><span class="num">Encerramento</span>Próximo passo</h2><p>O ciclo de cada módulo se fecha em três movimentos: resolver os exercícios, verificar o marco no banco de itens e submeter o artefato escrito à rubrica correspondente.</p><div class="nextgrid"><a class="nx" href="provas.html#A1"><span class="k">Verificar o marco</span><span class="t">Provas de Domínio · marco A1</span><span class="d">Itens autocorrigidos com justificativa e fonte. O marco é vencido a partir de 75% de acerto.</span></a><a class="nx" href="prompts.html#p1"><span class="k">Corrigir o artefato</span><span class="t">Prompt 1 · Reconstrução informal</span><span class="d">Rubrica para a reconstrução escrita de um argumento, aplicável desde o marco A1.</span></a><a class="nx" href="01a-slides-modulo-1.html"><span class="k">Seguir</span><span class="t">Aula do módulo 1</span><span class="d">Nível A · aula no percurso.</span></a></div>
+    <h2 id="solucoes"><span class="num">Apoio ao estudo</span>Pistas e soluções comentadas</h2>
+    <p>Tente primeiro sem ajuda. Abra a pista se precisar; depois compare sua justificativa com a solução ou com os critérios da tarefa aberta. O <a href="guia-estudo.html">guia de estudo</a> reúne as leituras e o percurso.</p>
+    <details><summary>1 · Pista</summary><p>«De modo que» introduz o que se quer concluir; «já que» introduz uma razão adicional.</p></details>
+    <details><summary>1 · Solução</summary><p>P1: nenhum candidato aprovado deixou de entregar a documentação. P2: Marina foi aprovada, marcada por «já que». C: Marina entregou a documentação, introduzida por «de modo que». A ordem no parágrafo não coincide com a ordem padronizada P1, P2, C.</p></details>
+    <details><summary>2 · Pista</summary><p>Para o primeiro, preserve uma forma válida e troque os termos. Para o segundo, use afirmação do consequente e encontre também uma situação que revele seu defeito.</p></details>
+    <details><summary>2 · Um par de soluções</summary><p>Válido: «Todo cão é réptil; todo réptil é mamífero; logo, todo cão é mamífero». As duas premissas são falsas e a conclusão é verdadeira. Para o inválido, imagine que Ana seja médica e tenha formação superior: «Se Ana é médica, tem formação superior; Ana tem formação superior; logo, Ana é médica». Todas as afirmações são verdadeiras nesse cenário. Mas as premissas também poderiam ser verdadeiras se Ana fosse engenheira e não médica; não garantem a conclusão. Nenhum dos argumentos é correto: o primeiro tem premissas falsas; o segundo é inválido.</p></details>
+    <details><summary>3 · Pista e critérios para a reconstrução aberta</summary><p>Registre fonte, data e parágrafo completo. Declare a conclusão, numere as premissas e explique a função dos trechos restantes. Preserve contexto necessário e marque premissas implícitas, sem atribuí-las silenciosamente ao autor. A resposta está bem sustentada quando cada inclusão e descarte se justifica pelo papel do trecho nessa passagem. O exemplo da tarifa é um modelo de organização, não um gabarito para qualquer texto.</p></details>
+    <details><summary>4 · Pista</summary><p>Procure uma condição suficiente que não seja necessária: ser múltiplo de 4 é suficiente para ser par.</p></details>
+    <details><summary>4 · Solução possível</summary><p>«Se 6 é múltiplo de 4, então 6 é par; 6 é par; logo, 6 é múltiplo de 4». As premissas são verdadeiras e a conclusão falsa. O contraexemplo conserva «se P, então Q; Q; logo P» e mostra por que Q não garante P.</p></details>
+    <details><summary>5 · Pista e rubrica da tarefa aberta</summary><p>Escolha quatro tipos e recolha uma passagem contextualizada para cada um. Para cada caso, apresente: fonte e data; tese e razões oferecidas; nome da falácia; explicação do defeito; e uma leitura alternativa plausível, se houver. Nomear a falácia sem mostrar por que o contexto não legitima o argumento é insuficiente. Por exemplo, citar um especialista competente com evidência pertinente não é automaticamente apelo falacioso à autoridade.</p></details>
+    <details><summary>6 · Pista</summary><p>O silêncio da primeira princesa exclui uma combinação dos brincos das outras duas. A segunda princesa leva em conta tanto o que vê quanto esse silêncio.</p></details>
+    <details><summary>6 · Solução e fonte conferida</summary><p>Griselda usa esmeraldas. Se Genoveva e Griselda usassem rubis, Guilhermina saberia que seus próprios brincos são de esmeralda, pois só há dois pares de rubi. Como Guilhermina não sabe, as duas restantes não usam ambas rubi. Se Griselda usasse rubi, Genoveva então saberia que usa esmeralda. O segundo silêncio exclui isso. A conclusão depende de as princesas compreenderem essas informações e raciocinarem corretamente, como pressupõe o problema. Confira a enumeração em <a href="references/Respostas-exercicios-Introducao-logica-mortari.pdf#page=1">Pagani, exercício 1.1, a partir da p. 1 do PDF</a>.</p></details>
+
+    <h2 id="proximo"><span class="num">Encerramento</span>Próximo passo</h2><p>O ciclo de cada módulo se fecha em três movimentos: resolver os exercícios, verificar o marco no banco de itens e submeter o artefato escrito à rubrica correspondente.</p><div class="nextgrid"><a class="nx" href="provas.html#A1"><span class="k">Verificar o marco</span><span class="t">Provas de Domínio · marco A1</span><span class="d">Itens autocorrigidos com justificativa e fonte. O teste exige 75% de acerto; o domínio do marco inclui a produção escrita.</span></a><a class="nx" href="prompts.html#p1"><span class="k">Corrigir o artefato</span><span class="t">Prompt 1 · Reconstrução informal</span><span class="d">Rubrica para a reconstrução escrita de um argumento, aplicável desde o marco A1.</span></a><a class="nx" href="01a-slides-modulo-1.html"><span class="k">Seguir</span><span class="t">Aula do módulo 1</span><span class="d">Nível A · aula no percurso.</span></a></div>
 
     <h2 id="ref">Referências</h2>
     <div class="refs">

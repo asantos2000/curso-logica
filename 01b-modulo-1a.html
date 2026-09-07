@@ -127,8 +127,11 @@ figcaption b{font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-
 .refs{margin-top:12px}
 .refs p{padding-left:34px;text-indent:-34px;font-size:15.5px;margin-bottom:13px}
 :focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+details{margin:10px 0;border:1px solid var(--line);border-radius:4px;background:var(--surface);padding:0 15px}
+summary{padding:11px 0;cursor:pointer;font-weight:600;color:var(--accent)}
+details p{margin:0 0 14px}
 @media (max-width:900px){
-  .shell{grid-template-columns:1fr;gap:0}
+  .shell{grid-template-columns:minmax(0,1fr);gap:0}
   nav.toc{position:static;padding:22px 0 0;columns:2;column-gap:24px}
   nav.toc .lbl{column-span:all}
   article{padding-top:22px}
@@ -165,7 +168,7 @@ figcaption b{font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-
       <div><div class="k">Unidades</div><div class="v">Seis</div></div>
       <div><div class="k">Pré-requisito</div><div class="v">Marco A1</div></div>
       <div><div class="k">Marco</div><div class="v">A1b</div></div>
-      <div><div class="k">Notação</div><div class="v">Nenhuma</div></div>
+      <div><div class="k">Notação</div><div class="v">Esquemas em português</div></div>
     </div>
   </header>
 
@@ -179,6 +182,7 @@ figcaption b{font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-
     <a href="#u5">1A.5 Ônus da prova e diálogo</a>
     <a href="#u6">1A.6 Força indutiva</a>
     <a href="#marco">Marco A1b</a>
+    <a href="#solucoes">Pistas e critérios</a>
     <a href="#proximo">Próximo passo</a>
     <a href="#ref">Referências</a>
   </nav>
@@ -186,9 +190,9 @@ figcaption b{font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-
   <article>
     <h2 id="i"><span class="num">Abertura</span>Por que este módulo existe</h2>
     <p class="intro">A proposta original limitava a argumentação informal à unidade 1.6, dedicada às falácias. O limite era estreito por uma razão que o próprio material adotado deixa clara: a lógica formal não é capaz de fornecer sequer uma noção adequada de falácia, uma vez que uma falácia não é simplesmente um argumento inválido, e muitos argumentos inválidos não são falácias (Murcho, 2006, como citado em Neves Filho e Rui, 2016).</p>
-    <p>O argumento «Platão era grego, logo a neve é branca» é inválido e não é falacioso, porque não é sequer um argumento. O que caracteriza a falácia é ser enganosa, isto é, ter a aparência de bom raciocínio (Neves Filho e Rui, 2016, cap. IV). A aparência é uma propriedade que nenhum cálculo detecta, e é por isso que o tema exige tratamento próprio.</p>
+    <p>O argumento «Platão era grego, logo a neve é branca» não oferece apoio pertinente à conclusão. Sua falha é tão manifesta que dificilmente engana. Uma falácia, no sentido adotado aqui, combina um defeito com aparência de bom raciocínio; pode até ter forma dedutivamente válida, como na petição de princípio (Neves Filho e Rui, 2016, cap. IV, pp. 76–77). Identificar esse defeito exige avaliar também conteúdo e contexto.</p>
     <p>Este módulo é autônomo: pode ser omitido sem prejuízo dos demais, e nada nos módulos 2 a 6 depende dele. A numeração 1A preserva a numeração original do curso. A sua função no percurso é dupla. Fornece ao aluno, desde o início, um repertório de avaliação aplicável ao material que ele efetivamente encontra fora da sala, que é argumentativo mas raramente formalizável; e delimita, por contraste, o que o aparato formal dos módulos seguintes vai e não vai oferecer.</p>
-    <p>Nenhuma notação é introduzida aqui. O módulo inteiro transcorre em português.</p>
+    <p>O trabalho é feito em português. As letras dos diagramas e esquemas apenas identificam partes do argumento; não exigem domínio de um cálculo formal.</p>
 
     <h2 id="u1"><span class="num">Unidade 1A.1</span>O que a forma não captura</h2>
     <p>A lógica formal avalia argumentos pela forma, e o faz de modo conclusivo: dada a forma, a validade está determinada. O preço dessa precisão é a estreiteza do domínio. Os raciocínios dedutivos formalizáveis constituem uma parte pequena do modo cotidiano de raciocinar, e a maior parte dos bons argumentos que se produzem, tanto quanto a maior parte dos maus, não é formal (Neves Filho e Rui, 2016, cap. IV, §1).</p>
@@ -205,10 +209,10 @@ figcaption b{font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-
 
     <h2 id="u2"><span class="num">Unidade 1A.2</span>Reconstrução caridosa</h2>
     <p>Argumentos reais chegam incompletos. Premissas ficam implícitas por óbvias, por inconvenientes ou por descuido, e o trabalho de avaliação começa por torná-las explícitas. Um argumento com premissa suprimida chama-se <strong>entimema</strong>, e a operação de completá-lo é a operação mais delicada da lógica informal, porque é nela que se decide, de fato, o que será avaliado.</p>
-    <p>Considere-se a passagem: «Ele não pode ter cometido a fraude, porque estava fora do país naquela semana.» A conclusão e a premissa expressa são claras. A premissa suprimida não é. Ela poderia ser «quem está fora do país não pode cometer fraude», que é falsa e transforma o argumento em algo indefensável; ou «quem está fora do país não pode assinar presencialmente os documentos em questão», que é plausível e torna o argumento discutível mas sério.</p>
-    <p>O <strong>princípio de caridade</strong> determina a escolha: acrescenta-se a premissa mais fraca que torna o argumento válido ou forte, e não a mais conveniente para refutá-lo. A razão do princípio não é a cortesia. É que refutar uma versão que o proponente não sustentaria não refuta nada, e o argumento reaparece intacto na resposta seguinte. O procedimento oposto, atribuir ao adversário a versão mais fraca, tem nome próprio e é a falácia do homem de palha, tratada na unidade 1.6.</p>
+    <p>Considere-se a passagem: «Ele não pode ter cometido a fraude, porque estava fora do país naquela semana.» Estar fora do país não impede qualquer fraude. Uma reconstrução mais específica exigiria duas premissas implícitas: «essa fraude exigia que ele assinasse presencialmente os documentos no país naquela semana» e «estar fora do país durante todo esse período impedia essa assinatura». Essas condições tornariam o apoio válido, mas só podem ser atribuídas ao proponente se o contexto as sustentar. Sem essa informação, registre a lacuna.</p>
+    <p>O <strong>princípio de caridade</strong> combina uma interpretação razoável com fidelidade ao que foi dito. Explicite a premissa necessária ao apoio pretendido, evite pressupostos mais fortes do que o contexto permite e marque suas hipóteses de reconstrução. Não basta acrescentar um condicional conveniente que torne qualquer argumento válido. Se houver leituras plausíveis diferentes, compare-as; atribuir deliberadamente uma posição distorcida ao adversário é o homem de palha.</p>
     <h4>Padronização</h4>
-    <p>Antes de avaliar, convém reescrever o argumento em forma padronizada: cada premissa em uma linha numerada, a conclusão por último, premissas implícitas marcadas como tais, e material que não sustenta a conclusão simplesmente removido. A padronização é o análogo informal da tradução que o módulo 3 fará com símbolos, e o aluno que a domina chega ao módulo 3 com metade do trabalho já aprendido.</p>
+    <p>Antes de avaliar, reescreva o argumento em forma padronizada: uma premissa por linha numerada, conclusão por último e premissas implícitas marcadas e justificadas. Separe da lista de premissas o material que não oferece apoio a essa conclusão, preservando em uma nota o contexto necessário para interpretar a passagem. Concessões e ilustrações não são descartadas apenas por receberem esses nomes.</p>
     <div class="fx">Passagem original
   «O aumento da tarifa não se justifica pelo custo do combustível. Ele responde
    por menos de um quinto do custo operacional, e o diesel caiu no trimestre.
@@ -257,12 +261,13 @@ Padronização
           <path class="svg-ar" d="M677 134 L677 154" marker-end="url(#a1)"/>
           <rect class="svg-bx-a" x="640" y="158" width="74" height="34" rx="3"/><text class="svg-l" x="677" y="180" text-anchor="middle">C</text>
           <text class="svg-s" x="640" y="216">P1 sustenta P2, que sustenta C.</text>
-          <text class="svg-s" x="640" y="234">O elo mais fraco define a força.</text>
+          <text class="svg-s" x="640" y="234">Cada passagem precisa de apoio.</text>
         </g>
       </svg>
-      <figcaption><b>Figura 1</b>As três estruturas de apoio. A distinção tem consequência prática imediata: em estrutura ligada, derrubar uma premissa encerra a discussão; em estrutura convergente, obriga a derrubar as demais uma a uma. Identificar a estrutura é, portanto, decidir onde vale a pena atacar.</figcaption>
+      <figcaption><b>Figura 1</b>As três estruturas de apoio. Refutar uma premissa indispensável compromete aquele apoio ligado; na estrutura convergente, outras razões podem continuar disponíveis. Em nenhum caso a perda de um argumento demonstra, por si, que sua conclusão seja falsa.</figcaption>
     </figure>
-    <p>O silogismo do módulo 2 é o caso puro de estrutura ligada: nenhuma das duas premissas, isolada, sustenta a conclusão. Já a passagem padronizada na unidade anterior é convergente em P1 e P2, e ligada quanto a P3, que é indispensável a ambas. Argumentos reais misturam as três estruturas, e o diagrama serve justamente para exibir a mistura.</p>
+    <p>O silogismo usual do módulo 2 exemplifica apoio ligado: as premissas trabalham juntas. A passagem sobre a tarifa também tem apoio <strong>ligado na reconstrução oferecida</strong>: P3 exige participação pequena no custo <em>e</em> queda do preço; P1 ou P2 isoladamente não satisfazem essa condição. Seu diagrama é <span class="m">{P1, P2, P3} → C</span>.</p>
+    <p>Compare um apoio convergente: «A biblioteca deveria abrir à noite: isso permitiria seu uso por quem trabalha de dia; além disso, reduziria a lotação nos horários atuais». Cada benefício oferece uma razão própria para a proposta. Refutar um deixa o outro disponível, embora ainda seja preciso avaliar custos e alternativas. Um argumento pode combinar trechos ligados, convergentes e seriais.</p>
 
     <h2 id="u4"><span class="num">Unidade 1A.4</span>Esquemas argumentativos e perguntas críticas</h2>
     <p>Argumentos informais recorrentes se organizam em <strong>esquemas</strong>, cada um com um conjunto próprio de <strong>perguntas críticas</strong>. O esquema descreve um padrão de inferência que não é válido nem falacioso em si: é provisoriamente aceitável e cede diante de resposta desfavorável a uma das perguntas. Essa é a forma de avaliação característica da tradição de lógica informal representada por Walton (2012), indicada na bibliografia adicional de Mortari (2023).</p>
@@ -275,26 +280,45 @@ Padronização
 
     <h2 id="u5"><span class="num">Unidade 1A.5</span>Ônus da prova e diálogo</h2>
     <p>Argumentos não ocorrem no vazio. Ocorrem em diálogos com regras, e algumas propriedades da avaliação dependem dessas regras e não do argumento isolado. A distinção é antiga: os estoicos dividiram a lógica em retórica, a ciência que estuda o discurso, e dialética, a ciência que estuda o verdadeiro e o falso por meio de perguntas e respostas (Morais et al., 2019, cap. 7).</p>
-    <p>O conceito operacional é o de <strong>ônus da prova</strong>. Em um diálogo, uma das partes tem a obrigação de sustentar sua tese, e a outra tem apenas a de responder. Quem afirma assume o ônus; quem apenas nega, não. A regra explica por que «você não provou que não existe» não estabelece nada: a exigência de prova está sendo dirigida a quem não a assumiu.</p>
+    <p>O conceito operacional é o de <strong>ônus da prova</strong>. Quem apresenta uma tese assume a obrigação de oferecer razões quando ela é contestada. Quem apenas suspende o assentimento ou pede razões não assume, por isso, a obrigação de provar a tese contrária. Já afirmar uma tese negativa, como «não existe nenhum erro neste relatório», também exige apoio. «Você não provou que não existe» não demonstra, por si, que algo existe.</p>
     <p>A regra tem exceções reconhecidas, e elas são exatamente o que torna o tema interessante. Presunções deslocam o ônus. Na presunção de inocência, quem acusa prova; em uma discussão sobre segurança de um produto, muitas jurisdições atribuem o ônus a quem o introduz, e não a quem o contesta. Determinar de quem é o ônus em um caso concreto é uma questão substantiva, e frequentemente é a questão em disputa.</p>
-    <p>Duas outras noções completam a unidade. O <strong>desvio de questão</strong> ocorre quando a resposta estabelece algo verdadeiro que não é o que estava em jogo, e é o mecanismo comum a várias falácias já vistas. A <strong>concessão</strong>, ao contrário, é um movimento legítimo: reconhecer um ponto do adversário sem abrir mão da tese. O aluno que aprendeu na unidade 1.2 a descartar material concessivo na reconstrução deve agora reconhecer que, embora não sustente a conclusão, a concessão cumpre função dialética real.</p>
+    <p>Duas outras noções completam a unidade. O <strong>desvio de questão</strong> ocorre quando a resposta trata de algo que não resolve o ponto em disputa, mesmo que seja verdadeiro. A <strong>concessão</strong> é um movimento legítimo: reconhecer um ponto do adversário sem abandonar a tese. Ela pode esclarecer o alcance de uma posição ou antecipar uma objeção. Registre essa função ao reconstruir, mesmo quando a concessão não integra o apoio à conclusão examinada.</p>
 
     <h2 id="u6"><span class="num">Unidade 1A.6</span>Força indutiva</h2>
     <p>A unidade 1.5 estabeleceu que argumentos indutivos não se avaliam por validade. Restou em aberto como se avaliam. Esta unidade fecha a lacuna, tratando dos quatro tipos que mais aparecem.</p>
     <h4>Generalização a partir de amostra</h4>
-    <p>A força depende do tamanho da amostra, de sua representatividade e da variabilidade da população. Amostra grande e enviesada é pior do que amostra pequena e aleatória, e este é o erro mais comum: a generalização apressada da unidade 1.6 quase nunca é apressada por número, e sim por viés de seleção. O caso limite é a amostra que se autosseleciona, como o questionário respondido apenas por quem se interessa pelo tema.</p>
+    <p>A força depende conjuntamente do tamanho da amostra, de sua representatividade e da variabilidade da população. Aumentar uma amostra não elimina um viés de seleção; por outro lado, uma amostra aleatória muito pequena pode oferecer apoio insuficiente. Um questionário respondido apenas por quem se interessa pelo tema exige atenção à autosseleção. Antes de generalizar, examine quem pôde participar, quem respondeu e que grupos ficaram de fora (Neves Filho e Rui, 2016, p. 85).</p>
     <h4>Analogia</h4>
     <p>Conclui que dois casos que se assemelham em vários aspectos se assemelham também no aspecto em disputa. A força depende do número de semelhanças relevantes, do número de diferenças relevantes e, sobretudo, de haver conexão entre as semelhanças invocadas e a propriedade concluída. Semelhanças numerosas mas irrelevantes não sustentam nada.</p>
     <h4>Inferência causal</h4>
-    <p>Uma correlação admite quatro explicações concorrentes, e o argumento causal só se sustenta quando as três últimas foram afastadas: que A cause B, que B cause A, que um terceiro fator cause ambos, ou que a correlação seja acidental. A ordem temporal exclui a segunda; um mecanismo plausível favorece a primeira; o controle de variáveis trata da terceira; a magnitude e a replicação tratam da quarta.</p>
+    <p>Entre as explicações a investigar para uma correlação estão: A causar B, B causar A, um fator comum causar ambos ou uma associação acidental. Elas não esgotam todos os casos e podem se combinar, como em relações de realimentação. A ordem temporal, um mecanismo plausível, o controle de variáveis e a replicação ajudam a comparar hipóteses; nenhum desses indícios, isolado, garante causalidade.</p>
     <h4>Inferência à melhor explicação</h4>
-    <p>Conclui que a hipótese que melhor explica os dados é verdadeira. A força depende de a hipótese vencer concorrentes efetivamente consideradas, e não apenas de explicar bem. O defeito característico é a comparação com um conjunto vazio de alternativas, que faz qualquer hipótese parecer a melhor.</p>
+    <p>Propõe aceitar, provisoriamente, a hipótese que melhor explica os dados. A força depende da qualidade das alternativas consideradas, da adequação aos dados e de previsões que possam ser confrontadas com novas observações. Explicar bem é insuficiente se não houve comparação: a melhor hipótese entre alternativas ruins ainda pode ser falsa.</p>
     <div class="note">Nenhum desses quatro tipos é formalizável nos cálculos dos módulos 3 a 6, e o aluno não deve esperar reencontrá-los ali. O que reencontrará, no módulo 6, é a discussão sobre a existência de sistemas formais alternativos, alguns dos quais motivados justamente por raciocínio não dedutivo.</div>
 
     <h2 id="marco"><span class="num">Verificação</span>Marco A1b</h2>
     <div class="marco"><b>Marco A1b</b>Padronizar um argumento retirado de texto de circulação corrente, explicitando a premissa suprimida pela regra de caridade; diagramar a estrutura de apoio identificando trechos convergentes, ligados e seriais; classificar o argumento em um esquema e aplicar-lhe as perguntas críticas correspondentes; e determinar, com justificativa, a quem cabe o ônus da prova na disputa em que ele aparece.</div>
     <p>O marco é vencido por produção escrita, e não por teste de escolha, porque não existe gabarito único para nenhuma das quatro operações. A correção deve, portanto, incidir sobre a justificação e não sobre a resposta. O guia de prompts de correção que acompanha esta proposta traz uma rubrica específica para este artefato.</p>
     <p>Como exercício de fixação, Neves Filho e Rui (2016, cap. IV, §11) fornece uma lista de casos, entre os quais o de número 6 pede exatamente o que este marco exige: localizar um raciocínio falacioso real, explicitar o contexto e sustentar por que se trata de falácia.</p>
+    <h4>Prática orientada</h4>
+    <p><strong>1.</strong> Reconstrua o argumento da fraude da unidade 1A.2. Distinga informação fornecida, premissas que precisariam ser confirmadas e conclusão.</p>
+    <p><strong>2.</strong> Diagrame o exemplo da tarifa e o da biblioteca. Explique o efeito de retirar uma das razões em cada caso.</p>
+    <p><strong>3.</strong> Escolha um argumento real que apele a um especialista. Registre fonte e contexto; aplique as perguntas críticas do esquema antes de julgá-lo.</p>
+    <p><strong>4.</strong> Compare «não estou convencido de que o relatório esteja correto» e «o relatório contém um erro». Quem assumiu uma tese que precisa sustentar? Escreva uma resposta adequada a cada interlocutor.</p>
+    <p><strong>5.</strong> Uma consulta online recebe dez mil respostas voluntárias e anuncia «a maioria da cidade aprova a medida». O tamanho basta? Identifique informações necessárias para avaliar a generalização.</p>
+
+    <h2 id="solucoes"><span class="num">Apoio ao estudo</span>Pistas e critérios de avaliação</h2>
+    <p>As tarefas abertas admitem reconstruções diferentes. Compare a fidelidade à passagem e a qualidade da justificação. Consulte também o <a href="guia-estudo.html">guia de estudo</a>.</p>
+    <details><summary>1 · Pista</summary><p>Uma fraude pode ocorrer à distância. Qual característica dessa fraude tornaria a localização do suspeito relevante?</p></details>
+    <details><summary>1 · Modelo comentado</summary><p>P1 expressa: ele estava fora do país naquela semana. Hipóteses a confirmar: a fraude exigia sua assinatura presencial no país durante esse período; sua ausência impedia tal assinatura. C: ele não pode ter cometido essa fraude. A reconstrução só recebe essas hipóteses como premissas do proponente se houver apoio contextual. Sem ele, a resposta adequada identifica o entimema e a informação faltante; não declara a conclusão provada.</p></details>
+    <details><summary>2 · Pista</summary><p>Na tarifa, releia o «e» da premissa implícita. Na biblioteca, verifique se cada benefício ainda oferece alguma razão sem o outro.</p></details>
+    <details><summary>2 · Solução comentada</summary><p>Tarifa: {P1, P2, P3} → C. Retirar P1 ou P2 impede aplicar a condição conjunta de P3. Biblioteca: R1 → C e R2 → C, sob os pressupostos práticos do contexto. Uma razão pode continuar dando apoio à proposta mesmo se a outra cair. Isso não torna a proposta automaticamente aceitável: custos e objeções ainda precisam ser considerados.</p></details>
+    <details><summary>3 · Pista e rubrica aberta</summary><p>Identifique a tese, o especialista e seu domínio. Confira se a afirmação pertence à competência dele, qual evidência foi apresentada, se há divergência qualificada e se interesses relevantes afetam a confiança. Uma resposta suficiente registra o que foi e o que não foi verificado e justifica um juízo provisório. Não basta classificar todo apelo como falácia, nem aceitar a tese apenas pelo título do especialista.</p></details>
+    <details><summary>4 · Pista</summary><p>Pedir justificação e defender uma tese contrária são compromissos diferentes.</p></details>
+    <details><summary>4 · Solução possível</summary><p>A primeira frase suspende o assentimento: cabe a quem defende a correção do relatório apresentar suas razões. A segunda sustenta a existência de um erro e requer indicação ou evidência dele. Respostas adequadas seriam «Vou mostrar como conferimos os dados» e «Qual erro você identificou e como o verificou?». O contexto pode estabelecer presunções e obrigações adicionais, que devem ser explicitadas.</p></details>
+    <details><summary>5 · Pista</summary><p>Dez mil pessoas que decidiram responder não são automaticamente uma amostra representativa da cidade.</p></details>
+    <details><summary>5 · Critérios para uma boa resposta</summary><p>Investigue o universo da pesquisa, quem teve acesso, mecanismos de seleção, cobertura dos diferentes grupos, respostas repetidas, não resposta e formulação da pergunta. O tamanho reduz certas incertezas amostrais sob condições apropriadas, mas não corrige automaticamente a autosseleção. A consulta pode descrever seus respondentes; generalizar à população exige uma justificativa adicional para a amostragem.</p></details>
+    <details><summary>Marco A1b · Roteiro de conferência da produção</summary><p>Entregue a passagem com fonte, sua padronização, o diagrama, o esquema escolhido e a análise do diálogo. Confira: cada premissa implícita tem apoio contextual? As setas representam razões independentes ou conjuntas? As perguntas críticas foram respondidas com evidência? O ônus foi atribuído a uma tese efetivamente defendida? Leituras alternativas justificadas são aceitáveis; fatos não disponíveis devem permanecer assinalados como não verificados.</p></details>
 
     <h2 id="proximo"><span class="num">Encerramento</span>Próximo passo</h2><p>O ciclo de cada módulo se fecha em três movimentos: resolver os exercícios, verificar o marco no banco de itens e submeter o artefato escrito à rubrica correspondente.</p><div class="nextgrid"><a class="nx" href="provas.html"><span class="k">Verificar</span><span class="t">Provas de Domínio</span><span class="d">O banco cobre os marcos A1 a C2; o marco A1b verifica-se por produção escrita.</span></a><a class="nx" href="prompts.html#p1"><span class="k">Corrigir o artefato</span><span class="t">Prompt 1 · Reconstrução informal</span><span class="d">Rubrica exata do artefato exigido pelo marco A1b.</span></a><a class="nx" href="02-modulo-2.html"><span class="k">Seguir</span><span class="t">Módulo 2 · Linguagem e conjuntos</span><span class="d">Nível A · módulo 2 no percurso.</span></a></div>
 

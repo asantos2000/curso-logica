@@ -145,7 +145,7 @@ footer{margin-top:38px;padding-top:16px;border-top:1px solid var(--line);font-si
   <header>
     <div class="eyebrow">Curso de fluência em lógica · avaliação formativa</div>
     <h1>Provas de domínio</h1>
-    <p class="lede">Vinte e nove itens autocorrigidos, distribuídos pelos seis marcos do curso. Cada resposta traz o motivo e a fonte. O marco é considerado vencido a partir de setenta e cinco por cento de acerto.</p>
+    <p class="lede">Quarenta e sete itens autocorrigidos, distribuídos pelos seis marcos do curso. Cada resposta traz o motivo e a fonte. Para aprovar o teste, responda a todos os itens e alcance pelo menos 75% de acerto; a produção escrita do marco também precisa ser verificada.</p>
     <div class="marcos" id="marcos"></div>
     <div class="tools">
       <span id="overall">Progresso geral</span>
@@ -159,152 +159,710 @@ footer{margin-top:38px;padding-top:16px;border-top:1px solid var(--line);font-si
 </div>
 <script>
 const MARCOS = [
- { id:"A1", nome:"Argumento e validade", mod:"Módulo 1 · Nível A",
-   desc:"Extrair premissas e conclusão de um parágrafo argumentativo, julgar validade e correção separadamente e nomear falácias informais em exemplos inéditos.",
-   src:"Mortari (2016, caps. 1–2); Neves Filho e Rui (2016, caps. I e IV).",
-   itens:[
-   { t:"escolha", stem:"Em «Nenhum candidato aprovado deixou de entregar a documentação, de modo que Marina entregou a documentação, já que ela foi aprovada», qual é a conclusão?",
-     opts:["Marina entregou a documentação.","Marina foi aprovada.","Nenhum candidato aprovado deixou de entregar a documentação."], r:0,
-     fb:"«De modo que» é indicador de conclusão e «já que» é indicador de premissa. A passagem oferece a aprovação de Marina e a regra geral como razões para que se aceite que ela entregou a documentação.",
-     cite:"Mortari (2016, §1.3)." },
-   { t:"escolha", stem:"Um argumento tem todas as premissas verdadeiras e a conclusão falsa. Que se conclui a respeito dele?",
-     opts:["É certamente inválido.","É válido, mas incorreto.","Nada se conclui sem examinar a sua forma."], r:0,
-     fb:"Este é o único perfil de valores de verdade que a validade exclui: um argumento válido jamais leva de premissas todas verdadeiras a uma conclusão falsa. Observar esse perfil basta, portanto, para condenar o argumento, sem exame adicional da forma.",
-     cite:"Mortari (2016, §2.1)." },
-   { t:"multi", stem:"Assinale todas as características que pertencem aos argumentos dedutivos, e não aos indutivos.",
-     opts:["A conclusão não acrescenta informação às premissas.","A avaliação é binária: válido ou inválido, sem graus.","Nova evidência pode enfraquecer a inferência.","A verdade das premissas garante a da conclusão."], r:[0,1,3],
-     fb:"A terceira alternativa caracteriza a indução: argumentos indutivos são derrotáveis, e uma evidência adicional pode reduzir a força da inferência sem tocar em nenhuma premissa. As demais são propriedades da dedução.",
-     cite:"Mortari (2016, §2.3); Neves Filho e Rui (2016, cap. I, §4)." },
-   { t:"escolha", stem:"«O senhor não pode criticar o relatório de auditoria: nunca trabalhou um dia sequer em uma auditoria.» Qual é o defeito?",
-     opts:["Ad hominem.","Ad verecundiam.","Generalização apressada."], r:0,
-     fb:"O ataque recai sobre quem faz a crítica, e não sobre a crítica. Note que o ataque poderia ser verdadeiro e mesmo assim nada estabelecer: a inexperiência de quem aponta um erro não faz do erro um acerto.",
-     cite:"Neves Filho e Rui (2016, cap. IV, §3)." }
- ]},
- { id:"A2", nome:"Linguagem, conjuntos e silogismo", mod:"Módulo 2 · Nível A",
-   desc:"Empregar corretamente aspas de menção, operar com conjuntos e decidir a validade de um silogismo categórico.",
-   src:"Mortari (2016, caps. 3–4, Apêndice A); Neves Filho e Rui (2016, cap. II); Morais et al. (2019).",
-   itens:[
-   { t:"escolha", stem:"Qual das sentenças abaixo é verdadeira?",
-     opts:["«Gato» tem quatro letras.","Gato tem quatro letras.","«Gato» é um mamífero."], r:0,
-     fb:"A primeira menciona a palavra e afirma algo sobre ela, o que é verdadeiro. A segunda usa a palavra e afirma que o animal tem quatro letras, o que é falso. A terceira atribui a uma palavra uma propriedade do animal, e é igualmente falsa.",
-     cite:"Mortari (2016, §3.3)." },
-   { t:"escolha", stem:"Sendo A = {1, 2, 3} e B = {3, 4}, os conjuntos A ∪ B e A ∩ B são, respectivamente:",
-     opts:["{1, 2, 3, 4} e {3}","{1, 2, 3, 4} e {1, 2, 4}","{3} e {1, 2, 3, 4}"], r:0,
-     fb:"A união reúne os elementos de ambos, sem repetição; a intersecção retém apenas os que pertencem aos dois conjuntos, e o único é o 3.",
-     cite:"Mortari (2016, §4.4)." },
-   { t:"escolha", stem:"No quadrado tradicional das oposições, se «Todo S é P» é verdadeira, então «Algum S não é P» é:",
-     opts:["Falsa.","Verdadeira.","Indeterminada."], r:0,
-     fb:"As duas são contraditórias: não podem ser ambas verdadeiras nem ambas falsas. A verdade da universal afirmativa determina, portanto, a falsidade da particular negativa.",
-     cite:"Mortari (2016, §A.2); Neves Filho e Rui (2016, cap. II, §3)." },
-   { t:"escolha", stem:"«Todo A é B. Algum C é A. Portanto, algum C é B.» O silogismo é:",
-     opts:["Válido.","Inválido, por termo médio não distribuído.","Inválido, por conclusão particular a partir de premissa universal."], r:0,
-     fb:"É o modo Darii, da primeira figura. O diagrama de Venn confirma: o que é C e A está necessariamente dentro de B, uma vez que todo A está contido em B.",
-     cite:"Mortari (2016, §§A.3–A.5)." }
- ]},
- { id:"B1", nome:"Cálculo proposicional", mod:"Módulo 3 · Nível B",
-   desc:"Traduzir sem ambiguidade e decidir por tabela de verdade a validade de um argumento com até quatro letras sentenciais.",
-   src:"Mortari (2016, caps. 5–7); Neves Filho e Rui (2016, cap. III); Sell (2014, unidade 1).",
-   itens:[
-   { t:"escolha", stem:"Qual das sequências abaixo é uma fórmula bem formada do cálculo proposicional?",
-     opts:["¬(P ∧ Q) → R","(P → Q","P ∧ ∧ Q"], r:0,
-     fb:"A segunda tem parênteses não balanceados e a terceira repete um operador binário sem fórmula entre eles. Apenas a primeira é obtida pelas regras de formação a partir de fórmulas atômicas.",
-     cite:"Mortari (2016, §§5.4–5.5); Sell (2014, unidade 1, seção 2)." },
-   { t:"escolha", stem:"A tradução correta de «Só irei se ele vier» é:",
-     opts:["I → V","V → I","I ∧ V"], r:0,
-     fb:"«Somente se» introduz uma condição necessária, que ocupa o consequente. Dizer que só irei se ele vier é dizer que, se eu for, então ele veio. A leitura V → I confundiria condição necessária com suficiente e afirmaria que a vinda dele basta para que eu vá.",
-     cite:"Neves Filho e Rui (2016, cap. III, §3); Mortari (2016, §5.4)." },
-   { t:"tabela", stem:"Complete a coluna da fórmula ¬P ∨ Q. Clique em cada célula para alternar entre V e F.",
-     cols:["P","Q"], rows:[["V","V"],["V","F"],["F","V"],["F","F"]], tgt:"¬P ∨ Q", ans:["V","F","V","V"],
-     fb:"A disjunção só é falsa quando ambos os disjuntos o são, e isso ocorre apenas na segunda linha, em que ¬P é falsa por ser P verdadeira, e Q é falsa. A coluna resultante é idêntica à de P → Q, o que exibe a equivalência entre as duas fórmulas.",
-     cite:"Mortari (2016, §§6.3, 7.1)." },
-   { t:"escolha", stem:"Qual das fórmulas abaixo é uma contingência?",
-     opts:["P → ¬P","P ∨ ¬P","P ∧ ¬P"], r:0,
-     fb:"P → ¬P é falsa quando P é verdadeira e verdadeira quando P é falsa: assume os dois valores, e é portanto contingente. A segunda é tautologia e a terceira, contradição.",
-     cite:"Mortari (2016, §7.2)." },
-   { t:"escolha", stem:"Para mostrar que o argumento «P → Q, Q, portanto P» é inválido, que valoração serve de contraexemplo?",
-     opts:["v(P) = F e v(Q) = V","v(P) = V e v(Q) = F","v(P) = F e v(Q) = F"], r:0,
-     fb:"Com P falsa e Q verdadeira, o condicional P → Q é verdadeiro e a segunda premissa também, ao passo que a conclusão P é falsa. Há, então, uma linha da tabela com premissas verdadeiras e conclusão falsa, o que basta para a invalidade. O argumento comete a falácia da afirmação do consequente.",
-     cite:"Mortari (2016, §7.3)." }
- ]},
- { id:"B2", nome:"Tablôs e dedução natural", mod:"Módulo 4 · Nível B",
-   desc:"Fechar um tablô, extrair a valoração de um ramo aberto e produzir a derivação correspondente em dedução natural.",
-   src:"Mortari (2016, caps. 12–15); Sell (2014, unidades 1–2).",
-   itens:[
-   { t:"escolha", stem:"No método dos tablôs, a decomposição de ¬(α → β) produz:",
-     opts:["α e ¬β, no mesmo ramo.","¬α e β, em ramos distintos.","α e β, em ramos distintos."], r:0,
-     fb:"Um condicional só é falso quando o antecedente é verdadeiro e o consequente é falso. Não havendo outra maneira de falsificá-lo, a regra não ramifica: as duas fórmulas são acrescentadas ao mesmo ramo.",
-     cite:"Mortari (2016, §12.3)." },
-   { t:"escolha", stem:"Um ramo de um tablô é fechado quando:",
-     opts:["Contém uma fórmula e a sua negação.","Não admite mais nenhuma decomposição.","Contém apenas fórmulas atômicas."], r:0,
-     fb:"O fechamento marca a impossibilidade: aquele ramo descreve uma valoração que teria de atribuir V e F à mesma fórmula. Um ramo sem decomposições pendentes e sem contradição está saturado e aberto, e é dele que se lê o contramodelo.",
-     cite:"Mortari (2016, §§12.1–12.2, 12.6)." },
-   { t:"escolha", stem:"Constrói-se um tablô a partir das premissas e da negação da conclusão, e todos os ramos fecham. Isso mostra que:",
-     opts:["O argumento é válido.","O argumento é inválido.","As premissas são contraditórias entre si."], r:0,
-     fb:"O fechamento de todos os ramos significa que não existe valoração que torne as premissas verdadeiras e a conclusão falsa, e é exatamente esta a definição de consequência lógica. A terceira alternativa descreveria um tablô que fecha só com as premissas, antes de acrescentar a negação da conclusão.",
-     cite:"Mortari (2016, §12.4)." },
-   { t:"escolha", stem:"Na derivação abaixo, qual regra justifica a linha 6?<br><span class='mono'>1. P → Q &nbsp;(P) · 2. ¬Q &nbsp;(P) · 3. P &nbsp;(hipótese) · 4. Q &nbsp;(1, 3 MP) · 5. Q ∧ ¬Q &nbsp;(4, 2 I∧) · 6. ¬P</span>",
-     opts:["Redução ao absurdo, descarregando a hipótese da linha 3.","Modus tollens sobre as linhas 1 e 2.","Eliminação da conjunção sobre a linha 5."], r:0,
-     fb:"A hipótese P foi levantada na linha 3 e conduziu à contradição da linha 5; a redução ao absurdo descarrega a hipótese e conclui a sua negação. Esta derivação é, aliás, a demonstração de que o modus tollens é regra derivada, e não primitiva.",
-     cite:"Mortari (2016, §14.4); Sell (2014, unidade 2, seção 1)." },
-   { t:"multi", stem:"Assinale as regras hipotéticas da dedução natural, isto é, as que exigem levantar e depois descarregar uma hipótese.",
-     opts:["Prova do condicional.","Redução ao absurdo.","Modus ponens.","Introdução da conjunção."], r:[0,1],
-     fb:"Apenas essas duas operam sobre uma subderivação. As demais são regras não hipotéticas: aplicam-se diretamente a fórmulas já disponíveis, sem abrir suposição alguma.",
-     cite:"Sell (2014, unidade 1, seção 4); Mortari (2016, §14.4)." }
- ]},
- { id:"C1", nome:"Lógica de primeira ordem", mod:"Módulo 5 · Nível C",
-   desc:"Formalizar quantificação múltipla e identidade, refutar por estrutura finita e provar respeitando as restrições sobre variáveis.",
-   src:"Mortari (2016, caps. 8–11, 15–16); Sell (2014, unidades 3–4).",
-   itens:[
-   { t:"escolha", stem:"A formalização correta de «Todo cão late» é:",
-     opts:["∀x(Cx → Lx)","∀x(Cx ∧ Lx)","∃x(Cx → Lx)"], r:0,
-     fb:"A segunda afirma que tudo o que existe é cão e late. A universal afirmativa exige o condicional: para qualquer objeto, se for cão, então late.",
-     cite:"Mortari (2016, §§8.6, 9.2)." },
-   { t:"escolha", stem:"A formalização correta de «Algum cão late» é:",
-     opts:["∃x(Cx ∧ Lx)","∃x(Cx → Lx)","∀x(Cx ∧ Lx)"], r:0,
-     fb:"A particular afirmativa exige a conjunção. A segunda alternativa é verdadeira em qualquer domínio que contenha um objeto que não seja cão, pois o condicional se satisfaz por antecedente falso, e não diz portanto o que se pretende.",
-     cite:"Mortari (2016, §9.2)." },
-   { t:"escolha", stem:"«Todos amam alguém» formaliza-se, na leitura mais natural, como:",
-     opts:["∀x∃yAxy","∃y∀xAxy","∀x∀yAxy"], r:0,
-     fb:"A primeira permite que cada pessoa ame alguém diferente. A segunda é mais forte e afirma que existe uma pessoa amada por todos. A ordem dos quantificadores altera o que é dito, e a inversão não preserva o sentido.",
-     cite:"Mortari (2016, §9.3); Sell (2014, unidade 3, seção 4)." },
-   { t:"escolha", stem:"A fórmula ¬∀xPx é equivalente a:",
-     opts:["∃x¬Px","¬∃x¬Px","∀x¬Px"], r:0,
-     fb:"Negar que tudo tem a propriedade é afirmar que algo não a tem. A terceira alternativa é mais forte: afirma que nada tem a propriedade, o que não decorre da negação do universal.",
-     cite:"Mortari (2016, §15.3); Sell (2014, unidade 4, seção 4)." },
-   { t:"escolha", stem:"«Exatamente um objeto é R» formaliza-se, no cálculo com identidade, como:",
-     opts:["∃x(Rx ∧ ∀y(Ry → y = x))","∃xRx ∧ ∃yRy","∀x(Rx → ∃y(Ry ∧ y ≠ x))"], r:0,
-     fb:"A fórmula afirma a existência de um objeto com a propriedade e, em seguida, que qualquer objeto com essa propriedade coincide com ele, o que exprime unicidade. A terceira alternativa afirma o contrário: que há sempre outro.",
-     cite:"Mortari (2016, §16.1)." },
-   { t:"escolha", stem:"A regra de introdução do quantificador universal exige que a variável própria:",
-     opts:["Não ocorra livre em nenhuma premissa nem em hipótese ainda não descarregada.","Ocorra livre em pelo menos uma premissa.","Seja distinta de toda constante individual da linguagem."], r:0,
-     fb:"A restrição garante que nada de particular foi suposto a respeito do objeto designado pela variável. Sem ela, provar-se-ia o universal a partir de uma instância arbitrária mas comprometida, e o sistema deixaria de ser correto.",
-     cite:"Mortari (2016, §15.2); Sell (2014, unidade 4, seção 2)." }
- ]},
- { id:"C2", nome:"Metateoria e não clássicas", mod:"Módulo 6 · Nível C",
-   desc:"Enunciar correção e completude, explicar a indecidibilidade e avaliar um argumento em lógica clássica e em uma lógica polivalente.",
-   src:"Mortari (2016, caps. 17–18, §§11.3, 12.7, 15.5); Mortari (2023, tópicos 5–6).",
-   itens:[
-   { t:"escolha", stem:"O teorema da correção, para o cálculo proposicional clássico, afirma que:",
-     opts:["Se Γ ⊢ α, então Γ ⊨ α.","Se Γ ⊨ α, então Γ ⊢ α.","Γ ⊢ α se e somente se α é uma tautologia."], r:0,
-     fb:"A correção garante que o sistema dedutivo não prova nada além do que é semanticamente acarretado: tudo o que se deriva é consequência. A recíproca é o teorema da completude, e a conjunção dos dois estabelece a coincidência entre ⊢ e ⊨.",
-     cite:"Mortari (2016, §15.5); Mortari (2023, tópico 5)." },
-   { t:"escolha", stem:"Dizer que o cálculo de predicados clássico é indecidível significa que:",
-     opts:["Não há procedimento que decida, para toda fórmula, em número finito de passos, se ela é válida.","Há fórmulas válidas que não podem ser demonstradas no sistema.","O sistema é incorreto para fórmulas com quantificação múltipla."], r:0,
-     fb:"A segunda alternativa negaria a completude, que vale para o cálculo de predicados. A indecidibilidade é outra coisa: existe procedimento que confirma as fórmulas válidas, mas nenhum que, diante de uma fórmula inválida, sempre pare e o informe. É o que se manifesta nos tablôs que não terminam.",
-     cite:"Mortari (2016, §12.7)." },
-   { t:"escolha", stem:"A motivação de Łukasiewicz para introduzir um terceiro valor de verdade foi:",
-     opts:["O estatuto dos enunciados sobre futuros contingentes.","A existência de paradoxos na teoria dos conjuntos.","A necessidade de formalizar a lógica modal."], r:0,
-     fb:"O problema, herdado da discussão aristotélica da batalha naval, é o de enunciados sobre eventos futuros ainda indeterminados, aos quais atribuir V ou F pareceria comprometer-se com o determinismo. O terceiro valor representa essa indeterminação.",
-     cite:"Mortari (2016, §18.5); Morais et al. (2019, cap. 6)." },
-   { t:"escolha", stem:"A lógica intuicionista se distingue da clássica principalmente por:",
-     opts:["Não validar o terceiro excluído em geral.","Rejeitar o princípio de não contradição.","Admitir mais de dois valores de verdade."], r:0,
-     fb:"Na leitura intuicionista, afirmar α ∨ ¬α exigiria dispor de uma prova de α ou de uma prova de ¬α, o que nem sempre se tem. A não contradição permanece; e a lógica intuicionista não é polivalente, ainda que possa receber semânticas de mundos.",
-     cite:"Mortari (2016, §18.5)." },
-   { t:"multi", stem:"Assinale os pressupostos cuja recusa dá origem a lógicas não clássicas conhecidas.",
-     opts:["A bivalência.","O terceiro excluído.","O princípio da explosão.","A existência de uma relação de consequência."], r:[0,1,2],
-     fb:"A recusa da bivalência produz as lógicas polivalentes; a do terceiro excluído, a intuicionista; a da explosão, as paraconsistentes. A quarta alternativa não descreve um pressuposto substantivo: sem relação de consequência não haveria lógica alguma a discutir.",
-     cite:"Mortari (2016, §§18.1–18.2, 18.5)." }
- ]}
+  {
+    "id": "A1",
+    "nome": "Argumento e validade",
+    "mod": "Módulo 1 · Nível A",
+    "desc": "Extrair premissas e conclusão de um parágrafo argumentativo, julgar validade e correção separadamente e nomear falácias informais em exemplos inéditos.",
+    "src": "Mortari (2016, caps. 1–2); Neves Filho e Rui (2016, caps. I e IV).",
+    "itens": [
+      {
+        "t": "escolha",
+        "stem": "Em «Nenhum candidato aprovado deixou de entregar a documentação, de modo que Marina entregou a documentação, já que ela foi aprovada», qual é a conclusão?",
+        "opts": [
+          "Marina foi aprovada.",
+          "Marina entregou a documentação.",
+          "Nenhum candidato aprovado deixou de entregar a documentação."
+        ],
+        "r": 1,
+        "fb": "«De modo que» é indicador de conclusão e «já que» é indicador de premissa. A passagem oferece a aprovação de Marina e a regra geral como razões para que se aceite que ela entregou a documentação.",
+        "cite": "Mortari (2016, §1.3)."
+      },
+      {
+        "t": "escolha",
+        "stem": "Um argumento tem todas as premissas verdadeiras e a conclusão falsa. Que se conclui a respeito dele?",
+        "opts": [
+          "É válido, mas incorreto.",
+          "Nada se conclui sem examinar a sua forma.",
+          "É certamente inválido."
+        ],
+        "r": 2,
+        "fb": "Este é o único perfil de valores de verdade que a validade exclui: um argumento válido jamais leva de premissas todas verdadeiras a uma conclusão falsa. Observar esse perfil basta, portanto, para condenar o argumento, sem exame adicional da forma.",
+        "cite": "Mortari (2016, §2.1)."
+      },
+      {
+        "t": "multi",
+        "stem": "Assinale as afirmações corretas sobre dedução e indução.",
+        "opts": [
+          "Numa dedução válida, a conclusão já está implicada pelas premissas.",
+          "A validade dedutiva é avaliada sem graus: válido ou inválido.",
+          "Acrescentar uma premissa pode tornar inválido um argumento dedutivo antes válido.",
+          "Se a dedução é válida e as premissas são verdadeiras, a conclusão é verdadeira."
+        ],
+        "r": [
+          0,
+          1,
+          3
+        ],
+        "fb": "A consequência dedutiva clássica é monotônica: acrescentar premissas não destrói a validade. Na indução, nova evidência pode enfraquecer o apoio. A garantia de verdade da conclusão exige tanto validade quanto premissas verdadeiras.",
+        "cite": "Mortari (2016, §2.3); Neves Filho e Rui (2016, cap. I, §4).",
+        "id": "deducao-v2"
+      },
+      {
+        "t": "escolha",
+        "stem": "«O senhor não pode criticar o relatório de auditoria: nunca trabalhou um dia sequer em uma auditoria.» Qual é o defeito?",
+        "opts": [
+          "Ad hominem.",
+          "Ad verecundiam.",
+          "Generalização apressada."
+        ],
+        "r": 0,
+        "fb": "O ataque recai sobre quem faz a crítica, e não sobre a crítica. Note que o ataque poderia ser verdadeiro e mesmo assim nada estabelecer: a inexperiência de quem aponta um erro não faz do erro um acerto.",
+        "cite": "Neves Filho e Rui (2016, cap. IV, §3)."
+      },
+      {
+        "id": "aplicacao-contraexemplo",
+        "t": "escolha",
+        "stem": "«Todo gato é mamífero; toda baleia é mamífero; logo toda baleia é gato.» O que esse caso mostra?",
+        "opts": [
+          "A conclusão é falsa, logo qualquer argumento com essa conclusão é inválido.",
+          "A verdade das duas premissas basta para garantir validade.",
+          "Premissas verdadeiras e conclusão falsa refutam a forma do argumento."
+        ],
+        "r": 2,
+        "fb": "Gatos e baleias podem estar em partes diferentes do conjunto dos mamíferos. O termo comum não conecta as duas classes como exigiria a conclusão.",
+        "cite": "Mortari (2016, §§2.1–2.2)."
+      },
+      {
+        "id": "aplicacao-correcao",
+        "t": "escolha",
+        "stem": "Um argumento é válido e tem uma premissa falsa. Seu veredito de correção é:",
+        "opts": [
+          "É correto porque a forma é válida.",
+          "Não é correto; sua conclusão pode ser verdadeira ou falsa.",
+          "Sua conclusão é necessariamente falsa."
+        ],
+        "r": 1,
+        "fb": "Correção exige validade e verdade de todas as premissas. Uma premissa falsa elimina a correção, mas não determina o valor da conclusão.",
+        "cite": "Mortari (2016, §2.2)."
+      },
+      {
+        "id": "aplicacao-apoio",
+        "t": "escolha",
+        "stem": "«A estrada está interditada, portanto não podemos passar por ela. A interdição foi anunciada ontem.» Qual reconstrução distingue conclusão e contexto?",
+        "opts": [
+          "Conclusão: não podemos passar; razão: estrada interditada; a data contextualiza o anúncio.",
+          "Conclusão: o anúncio foi ontem; razão: não podemos passar.",
+          "Conclusão: estrada interditada; razão: anúncio de ontem, sem outra informação."
+        ],
+        "r": 0,
+        "fb": "O portanto introduz a conclusão. A informação temporal pode ajudar a interpretar se a interdição ainda vale, mas não substitui a premissa que oferece a restrição de passagem.",
+        "cite": "Mortari (2016, §§1.3–1.4)."
+      }
+    ]
+  },
+  {
+    "id": "A2",
+    "nome": "Linguagem, conjuntos e silogismo",
+    "mod": "Módulo 2 · Nível A",
+    "desc": "Empregar corretamente aspas de menção, operar com conjuntos e decidir a validade de um silogismo categórico.",
+    "src": "Mortari (2016, caps. 3–4, Apêndice A); Neves Filho e Rui (2016, cap. II); Morais et al. (2019).",
+    "itens": [
+      {
+        "t": "escolha",
+        "stem": "Qual das sentenças abaixo é verdadeira?",
+        "opts": [
+          "Gato tem quatro letras.",
+          "«Gato» tem quatro letras.",
+          "«Gato» é um mamífero."
+        ],
+        "r": 1,
+        "fb": "«Gato» tem quatro letras é verdadeira: fala da palavra. Atribuir letras ao animal ou a propriedade de ser mamífero à palavra confunde uso e menção.",
+        "cite": "Mortari (2016, §3.3)."
+      },
+      {
+        "t": "escolha",
+        "stem": "Sendo A = {1, 2, 3} e B = {3, 4}, os conjuntos A ∪ B e A ∩ B são, respectivamente:",
+        "opts": [
+          "{1, 2, 3, 4} e {3}",
+          "{1, 2, 3, 4} e {1, 2, 4}",
+          "{3} e {1, 2, 3, 4}"
+        ],
+        "r": 0,
+        "fb": "A união reúne os elementos de ambos, sem repetição; a intersecção retém apenas os que pertencem aos dois conjuntos, e o único é o 3.",
+        "cite": "Mortari (2016, §4.4)."
+      },
+      {
+        "t": "escolha",
+        "stem": "No quadrado tradicional das oposições, se «Todo S é P» é verdadeira, então «Algum S não é P» é:",
+        "opts": [
+          "Verdadeira.",
+          "Indeterminada.",
+          "Falsa."
+        ],
+        "r": 2,
+        "fb": "As duas são contraditórias: não podem ser ambas verdadeiras nem ambas falsas. A verdade da universal afirmativa determina, portanto, a falsidade da particular negativa.",
+        "cite": "Mortari (2016, §A.2); Neves Filho e Rui (2016, cap. II, §3)."
+      },
+      {
+        "t": "escolha",
+        "stem": "«Todo A é B. Algum C é A. Portanto, algum C é B.» O silogismo é:",
+        "opts": [
+          "Inválido, por termo médio não distribuído.",
+          "Inválido, por conclusão particular a partir de premissa universal.",
+          "Válido."
+        ],
+        "r": 2,
+        "fb": "É o modo Darii, da primeira figura. O diagrama de Venn confirma: o que é C e A está necessariamente dentro de B, uma vez que todo A está contido em B.",
+        "cite": "Mortari (2016, §§A.3–A.5)."
+      },
+      {
+        "id": "aplicacao-vazio",
+        "t": "escolha",
+        "stem": "Na leitura moderna, S é vazio. Quais os valores de «Todo S é P» e «Algum S é P»?",
+        "opts": [
+          "V e F, respectivamente.",
+          "F e F, respectivamente.",
+          "V e V, respectivamente."
+        ],
+        "r": 0,
+        "fb": "Não há S que viole a universal, mas também não há testemunha para a particular.",
+        "cite": "Mortari (2016, §A.6)."
+      },
+      {
+        "id": "aplicacao-venn",
+        "t": "escolha",
+        "stem": "Todo M é P; algum S é M. Ao desenhar o testemunho de S∩M, onde ele deve ficar?",
+        "opts": [
+          "Fora de P, porque a premissa é particular.",
+          "Na parte que também pertence a P.",
+          "Em qualquer parte de S, mesmo fora de M."
+        ],
+        "r": 1,
+        "fb": "Todo M é P esvazia M fora de P. O testemunho de S∩M deve portanto pertencer aos três conjuntos; segue que algum S é P.",
+        "cite": "Mortari (2016, §A.5)."
+      },
+      {
+        "id": "aplicacao-conjuntos",
+        "t": "multi",
+        "stem": "Se A={1,2}, quais afirmações são verdadeiras?",
+        "opts": [
+          "1 ∈ A",
+          "{1} ⊆ A",
+          "{1} ∈ A",
+          "∅ ⊆ A"
+        ],
+        "r": [
+          0,
+          1,
+          3
+        ],
+        "fb": "Os elementos de A são números, não conjuntos unitários. {1} é subconjunto porque seu único elemento pertence a A; o vazio é subconjunto de qualquer conjunto.",
+        "cite": "Mortari (2016, §§4.2–4.3)."
+      }
+    ]
+  },
+  {
+    "id": "B1",
+    "nome": "Cálculo proposicional",
+    "mod": "Módulo 3 · Nível B",
+    "desc": "Traduzir sem ambiguidade e decidir por tabela de verdade a validade de um argumento com até quatro letras sentenciais.",
+    "src": "Mortari (2016, caps. 5–7); Neves Filho e Rui (2016, cap. III); Sell (2014, unidade 1).",
+    "itens": [
+      {
+        "t": "escolha",
+        "stem": "Qual das sequências abaixo é uma fórmula bem formada do cálculo proposicional?",
+        "opts": [
+          "(P → Q",
+          "P ∧ ∧ Q",
+          "¬(P ∧ Q) → R"
+        ],
+        "r": 2,
+        "fb": "¬(P ∧ Q) → R é obtida pelas regras de formação. (P → Q tem parênteses não balanceados; P ∧ ∧ Q repete um operador binário sem fórmula entre eles.",
+        "cite": "Mortari (2016, §§5.4–5.5); Sell (2014, unidade 1, seção 2)."
+      },
+      {
+        "t": "escolha",
+        "stem": "A tradução correta de «Só irei se ele vier» é:",
+        "opts": [
+          "V → I",
+          "I → V",
+          "I ∧ V"
+        ],
+        "r": 1,
+        "fb": "«Somente se» introduz uma condição necessária, que ocupa o consequente. Dizer que só irei se ele vier é dizer que, se eu for, então ele virá. A leitura V → I confundiria condição necessária com suficiente e afirmaria que a vinda dele basta para que eu vá.",
+        "cite": "Neves Filho e Rui (2016, cap. III, §3); Mortari (2016, §5.4)."
+      },
+      {
+        "t": "tabela",
+        "stem": "Complete a coluna da fórmula ¬P ∨ Q. Clique em cada célula para alternar entre V e F.",
+        "cols": [
+          "P",
+          "Q"
+        ],
+        "rows": [
+          [
+            "V",
+            "V"
+          ],
+          [
+            "V",
+            "F"
+          ],
+          [
+            "F",
+            "V"
+          ],
+          [
+            "F",
+            "F"
+          ]
+        ],
+        "tgt": "¬P ∨ Q",
+        "ans": [
+          "V",
+          "F",
+          "V",
+          "V"
+        ],
+        "fb": "A disjunção só é falsa quando ambos os disjuntos o são, e isso ocorre apenas na segunda linha, em que ¬P é falsa por ser P verdadeira, e Q é falsa. A coluna resultante é idêntica à de P → Q, o que exibe a equivalência entre as duas fórmulas.",
+        "cite": "Mortari (2016, §§6.3, 7.1)."
+      },
+      {
+        "t": "escolha",
+        "stem": "Qual das fórmulas abaixo é uma contingência?",
+        "opts": [
+          "P → ¬P",
+          "P ∨ ¬P",
+          "P ∧ ¬P"
+        ],
+        "r": 0,
+        "fb": "P → ¬P é falsa quando P é verdadeira e verdadeira quando P é falsa: é contingente. P ∨ ¬P é tautologia; P ∧ ¬P é contradição.",
+        "cite": "Mortari (2016, §7.2)."
+      },
+      {
+        "t": "escolha",
+        "stem": "Para mostrar que o argumento «P → Q, Q, portanto P» é inválido, que valoração serve de contraexemplo?",
+        "opts": [
+          "v(P) = F e v(Q) = V",
+          "v(P) = V e v(Q) = F",
+          "v(P) = F e v(Q) = F"
+        ],
+        "r": 0,
+        "fb": "Com P falsa e Q verdadeira, o condicional P → Q é verdadeiro e a segunda premissa também, ao passo que a conclusão P é falsa. Há, então, uma linha da tabela com premissas verdadeiras e conclusão falsa, o que basta para a invalidade. O argumento comete a falácia da afirmação do consequente.",
+        "cite": "Mortari (2016, §7.3)."
+      },
+      {
+        "id": "aplicacao-traducao",
+        "t": "escolha",
+        "stem": "Uma tradução de «P ou Q» por P∧Q concorda com a frase nos casos V/V e F/F. Isso basta?",
+        "opts": [
+          "Sim; um caso verdadeiro e um falso bastam.",
+          "Sim; os dois conectivos são equivalentes.",
+          "Não; os casos V/F e F/V refutam a tradução inclusiva."
+        ],
+        "r": 2,
+        "fb": "Na disjunção inclusiva basta um disjunto verdadeiro; na conjunção são necessários ambos. A comparação deve abranger todas as combinações relevantes.",
+        "cite": "Mortari (2016, §§6.3,7.3)."
+      },
+      {
+        "id": "aplicacao-tabela-conjuncao",
+        "t": "tabela",
+        "stem": "Complete a coluna de P ∧ Q nas quatro valorações.",
+        "cols": [
+          "P",
+          "Q"
+        ],
+        "rows": [
+          [
+            "V",
+            "V"
+          ],
+          [
+            "V",
+            "F"
+          ],
+          [
+            "F",
+            "V"
+          ],
+          [
+            "F",
+            "F"
+          ]
+        ],
+        "tgt": "P ∧ Q",
+        "ans": [
+          "V",
+          "F",
+          "F",
+          "F"
+        ],
+        "fb": "A conjunção só é verdadeira quando as duas letras são verdadeiras.",
+        "cite": "Mortari (2016, §§6.3,7.1)."
+      },
+      {
+        "id": "aplicacao-somente",
+        "t": "escolha",
+        "stem": "I = «irei», V = «ele virá». Qual caso viola «Só irei se ele vier»?",
+        "opts": [
+          "I=F e V=V.",
+          "I=V e V=F.",
+          "I=F e V=F."
+        ],
+        "r": 1,
+        "fb": "A letra V nomeia a vinda e pode ter valor F. O condicional I→V só é falso quando eu vou e ele não vem.",
+        "cite": "Mortari (2016, §5.4)."
+      }
+    ]
+  },
+  {
+    "id": "B2",
+    "nome": "Tablôs e dedução natural",
+    "mod": "Módulo 4 · Nível B",
+    "desc": "Fechar um tablô, extrair a valoração de um ramo aberto e produzir a derivação correspondente em dedução natural.",
+    "src": "Mortari (2016, caps. 12–15); Sell (2014, unidades 1–2).",
+    "itens": [
+      {
+        "t": "escolha",
+        "stem": "No método dos tablôs, a decomposição de ¬(α → β) produz:",
+        "opts": [
+          "¬α e β, em ramos distintos.",
+          "α e ¬β, no mesmo ramo.",
+          "α e β, em ramos distintos."
+        ],
+        "r": 1,
+        "fb": "Um condicional só é falso quando o antecedente é verdadeiro e o consequente é falso. Não havendo outra maneira de falsificá-lo, a regra não ramifica: as duas fórmulas são acrescentadas ao mesmo ramo.",
+        "cite": "Mortari (2016, §12.3)."
+      },
+      {
+        "t": "escolha",
+        "stem": "Um ramo de um tablô é fechado quando:",
+        "opts": [
+          "Não admite mais nenhuma decomposição.",
+          "Contém apenas fórmulas atômicas.",
+          "Contém uma fórmula e a sua negação."
+        ],
+        "r": 2,
+        "fb": "O fechamento marca a impossibilidade: aquele ramo descreve uma valoração que teria de atribuir V e F à mesma fórmula. Um ramo sem decomposições pendentes e sem contradição está saturado e aberto, e é dele que se lê o contramodelo.",
+        "cite": "Mortari (2016, §§12.1–12.2, 12.6)."
+      },
+      {
+        "t": "escolha",
+        "stem": "Constrói-se um tablô a partir das premissas e da negação da conclusão, e todos os ramos fecham. Isso mostra que:",
+        "opts": [
+          "O argumento é válido.",
+          "O argumento é inválido.",
+          "As premissas são contraditórias entre si."
+        ],
+        "r": 0,
+        "fb": "Fechar todos os ramos exclui uma valoração com premissas verdadeiras e conclusão falsa. Isso prova validade; não prova que as premissas, consideradas sozinhas, são contraditórias.",
+        "cite": "Mortari (2016, §12.4)."
+      },
+      {
+        "t": "escolha",
+        "stem": "Na derivação abaixo, qual regra básica encerra a subderivação 3–5, descarregando a hipótese 3, para justificar a linha 6?<br><span class='mono'>1. P → Q &nbsp;(P) · 2. ¬Q &nbsp;(P) · 3. P &nbsp;(hipótese) · 4. Q &nbsp;(1, 3 MP) · 5. Q ∧ ¬Q &nbsp;(4, 2 I∧) · 6. ¬P</span>",
+        "opts": [
+          "Modus tollens sobre as linhas 1 e 2.",
+          "Redução ao absurdo, descarregando a hipótese da linha 3.",
+          "Eliminação da conjunção sobre a linha 5."
+        ],
+        "r": 1,
+        "fb": "A hipótese P foi levantada na linha 3 e conduziu à contradição da linha 5; a redução ao absurdo descarrega a hipótese e conclui a sua negação. Esta derivação é, aliás, a demonstração de que o modus tollens é regra derivada, e não primitiva.",
+        "cite": "Mortari (2016, §14.4); Sell (2014, unidade 2, seção 1).",
+        "id": "raa-v2"
+      },
+      {
+        "t": "multi",
+        "stem": "Assinale as regras hipotéticas da dedução natural, isto é, as que exigem levantar e depois descarregar uma hipótese.",
+        "opts": [
+          "Prova do condicional.",
+          "Redução ao absurdo.",
+          "Modus ponens.",
+          "Introdução da conjunção."
+        ],
+        "r": [
+          0,
+          1
+        ],
+        "fb": "Apenas essas duas operam sobre uma subderivação. As demais são regras não hipotéticas: aplicam-se diretamente a fórmulas já disponíveis, sem abrir suposição alguma.",
+        "cite": "Sell (2014, unidade 1, seção 4); Mortari (2016, §14.4)."
+      },
+      {
+        "id": "aplicacao-ramo",
+        "t": "escolha",
+        "stem": "Um ramo aberto e saturado tem como únicos literais ¬P e Q. A valoração extraída dele refuta P→Q, Q ⊨ P?",
+        "opts": [
+          "Não: toda premissa deve aparecer como literal positivo no ramo.",
+          "Não: um ramo aberto prova validade.",
+          "Sim: P=F, Q=V torna as premissas verdadeiras e a conclusão falsa."
+        ],
+        "r": 2,
+        "fb": "¬P e Q determinam P falsa e Q verdadeira. O condicional é verdadeiro por antecedente falso; Q também é verdadeira, enquanto P é falsa.",
+        "cite": "Mortari (2016, §12.6)."
+      },
+      {
+        "id": "aplicacao-escopo",
+        "t": "escolha",
+        "stem": "Após fechar a subderivação que assumia P e obter P→P, é legítimo citar a linha interna P para concluir P sem premissas?",
+        "opts": [
+          "Não; a linha depende da hipótese já descarregada.",
+          "Sim; toda linha anterior continua disponível.",
+          "Sim; P→P é tautologia, logo P também é."
+        ],
+        "r": 0,
+        "fb": "A prova do condicional autoriza transportar o condicional para fora, não a afirmação que dependia de sua hipótese.",
+        "cite": "Sell (2014, unidade 1, seção 4)."
+      },
+      {
+        "id": "aplicacao-dilema",
+        "t": "escolha",
+        "stem": "De P∨Q, P→R e Q→S, qual conclusão é garantida pelo dilema construtivo?",
+        "opts": [
+          "R∧S.",
+          "R.",
+          "R∨S."
+        ],
+        "r": 2,
+        "fb": "Em cada caso obtém-se um dos disjuntos, mas não necessariamente ambos nem especificamente R.",
+        "cite": "Sell (2014, unidade 2, pp.45–46)."
+      }
+    ]
+  },
+  {
+    "id": "C1",
+    "nome": "Lógica de primeira ordem",
+    "mod": "Módulo 5 · Nível C",
+    "desc": "Formalizar quantificação múltipla e identidade, construir contramodelos finitos nos exercícios propostos e provar respeitando as restrições sobre parâmetros e substituição.",
+    "src": "Mortari (2016, caps. 8–11, 15–16); Sell (2014, unidades 3–4).",
+    "itens": [
+      {
+        "t": "escolha",
+        "stem": "A formalização correta de «Todo cão late» é:",
+        "opts": [
+          "∀x(Cx ∧ Lx)",
+          "∀x(Cx → Lx)",
+          "∃x(Cx → Lx)"
+        ],
+        "r": 1,
+        "fb": "∀x(Cx → Lx) diz que qualquer objeto, se for cão, late. ∀x(Cx ∧ Lx) diria que todo objeto é cão e late.",
+        "cite": "Mortari (2016, §§8.6, 9.2)."
+      },
+      {
+        "t": "escolha",
+        "stem": "A formalização correta de «Algum cão late» é:",
+        "opts": [
+          "∃x(Cx ∧ Lx)",
+          "∃x(Cx → Lx)",
+          "∀x(Cx ∧ Lx)"
+        ],
+        "r": 0,
+        "fb": "∃x(Cx ∧ Lx) exige um mesmo objeto que seja cão e lata. ∃x(Cx → Lx) é satisfeita também por um objeto que não é cão, por antecedente falso.",
+        "cite": "Mortari (2016, §9.2)."
+      },
+      {
+        "t": "escolha",
+        "stem": "«Todos amam alguém» formaliza-se, na leitura mais natural, como:",
+        "opts": [
+          "∃y∀xAxy",
+          "∀x∃yAxy",
+          "∀x∀yAxy"
+        ],
+        "r": 1,
+        "fb": "∀x∃yAxy permite uma pessoa amada diferente para cada pessoa. ∃y∀xAxy afirma que uma mesma pessoa é amada por todos, sem exigir que seja a única; ∀x∀yAxy afirma que todos amam todos.",
+        "cite": "Mortari (2016, §9.3); Sell (2014, unidade 3, seção 4)."
+      },
+      {
+        "t": "escolha",
+        "stem": "A fórmula ¬∀xPx é equivalente a:",
+        "opts": [
+          "∃x¬Px",
+          "¬∃x¬Px",
+          "∀x¬Px"
+        ],
+        "r": 0,
+        "fb": "¬∀xPx equivale a ∃x¬Px: algo não tem P. ∀x¬Px afirma algo mais forte, que nada tem P; ¬∃x¬Px equivale ao universal afirmativo.",
+        "cite": "Mortari (2016, §15.3); Sell (2014, unidade 4, seção 4)."
+      },
+      {
+        "t": "escolha",
+        "stem": "«Exatamente um objeto é R» formaliza-se, no cálculo com identidade, como:",
+        "opts": [
+          "∃xRx ∧ ∃yRy",
+          "∀x(Rx → ∃y(Ry ∧ y ≠ x))",
+          "∃x(Rx ∧ ∀y(Ry → y = x))"
+        ],
+        "r": 2,
+        "fb": "∃x(Rx ∧ ∀y(Ry → y=x)) exige existência e unicidade. ∃xRx ∧ ∃yRy permite que as duas testemunhas coincidam. ∀x(Rx → ∃y(Ry ∧ y≠x)) diz que cada R tem outro R distinto, mas também é verdadeira se não houver R.",
+        "cite": "Mortari (2016, §16.1)."
+      },
+      {
+        "t": "escolha",
+        "stem": "Na versão com constante própria a, a regra I∀ de α(x/a) para ∀xα exige, além de substituição sem captura, que a:",
+        "opts": [
+          "Ocorra em alguma premissa, para garantir que o objeto exista.",
+          "Possa permanecer na conclusão, desde que não ocorra nas premissas.",
+          "Não ocorra nas premissas, nas hipóteses abertas nem na conclusão ∀xα."
+        ],
+        "r": 2,
+        "fb": "O parâmetro deve representar um objeto arbitrário. Ele não pode depender de hipóteses particulares nem permanecer na fórmula universal concluída. De a=a não se pode generalizar só uma ocorrência e concluir ∀x(x=a); pode-se obter ∀x(x=x).",
+        "cite": "Mortari (2016, §15.2); Sell (2014, unidade 4, seção 2).",
+        "id": "parametro-v2"
+      },
+      {
+        "id": "aplicacao-parametro",
+        "t": "escolha",
+        "stem": "Sem premissas, escreve-se a=a e aplica-se I∀ para concluir ∀x(x=a). Qual o erro?",
+        "opts": [
+          "O parâmetro a permanece na conclusão: não foi generalizado de modo admissível.",
+          "A reflexividade a=a sempre exige uma premissa.",
+          "Não há erro; todo domínio tem um único objeto."
+        ],
+        "r": 0,
+        "fb": "Em um domínio com dois objetos, nem todo objeto é a. A generalização admissível desse caso é ∀x(x=x).",
+        "cite": "Mortari (2016, §15.2, pp.347–348)."
+      },
+      {
+        "id": "aplicacao-captura",
+        "t": "escolha",
+        "stem": "De ∀x∃yRxy alguém obtém ∃yRyy substituindo x por y. Qual o problema?",
+        "opts": [
+          "Todo universal permite qualquer substituição textual.",
+          "A variável substituída foi capturada por ∃y; a inferência não é válida.",
+          "O problema é apenas trocar a ordem de impressão dos termos."
+        ],
+        "r": 1,
+        "fb": "Com dois objetos e R significando ser diferente de, ∀x∃yRxy é verdadeira e ∃yRyy falsa. É preciso uma substituição livre de captura.",
+        "cite": "Mortari (2016, Def.15.1, p.348)."
+      },
+      {
+        "id": "aplicacao-quantificadores",
+        "t": "escolha",
+        "stem": "No domínio {1,2}, R significa igualdade. Quais os valores de ∀x∃yRxy e ∃y∀xRxy?",
+        "opts": [
+          "V e V.",
+          "F e V.",
+          "V e F."
+        ],
+        "r": 2,
+        "fb": "Cada objeto é igual a algum objeto, ele próprio. Nenhum objeto é igual aos dois objetos distintos do domínio.",
+        "cite": "Mortari (2016, §9.3)."
+      }
+    ]
+  },
+  {
+    "id": "C2",
+    "nome": "Metateoria e não clássicas",
+    "mod": "Módulo 6 · Nível C",
+    "desc": "Enunciar correção e completude, explicar a indecidibilidade e avaliar um argumento em lógica clássica e em uma lógica polivalente.",
+    "src": "Mortari (2016, caps. 17–18, §§11.3, 12.7, 15.5); Mortari (2023, tópicos 5–6).",
+    "itens": [
+      {
+        "t": "escolha",
+        "stem": "O teorema da correção, para o cálculo proposicional clássico, afirma que:",
+        "opts": [
+          "Se Γ ⊨ α, então Γ ⊢ α.",
+          "Se Γ ⊢ α, então Γ ⊨ α.",
+          "Γ ⊢ α se e somente se α é uma tautologia."
+        ],
+        "r": 1,
+        "fb": "A correção garante que o sistema dedutivo não prova nada além do que é semanticamente acarretado: tudo o que se deriva é consequência. A recíproca é o teorema da completude, e a conjunção dos dois estabelece a coincidência entre ⊢ e ⊨.",
+        "cite": "Mortari (2016, §15.5); Mortari (2023, tópico 5)."
+      },
+      {
+        "t": "escolha",
+        "stem": "Dizer que o cálculo de predicados clássico é indecidível significa que:",
+        "opts": [
+          "Não há procedimento que decida, para toda fórmula, em número finito de passos, se ela é válida.",
+          "Há fórmulas válidas que não podem ser demonstradas no sistema.",
+          "O sistema é incorreto para fórmulas com quantificação múltipla."
+        ],
+        "r": 0,
+        "fb": "Indecidibilidade exclui um procedimento total que sempre responda se qualquer fórmula é válida. A completude permanece: é possível reconhecer as válidas enumerando provas. Não há reconhecimento que sempre confirme todos os casos inválidos, pois combinado ao primeiro ele daria uma decisão total.",
+        "cite": "Mortari (2016, §12.7)."
+      },
+      {
+        "t": "escolha",
+        "stem": "A motivação de Łukasiewicz para introduzir um terceiro valor de verdade foi:",
+        "opts": [
+          "O estatuto dos enunciados sobre futuros contingentes.",
+          "A existência de paradoxos na teoria dos conjuntos.",
+          "A necessidade de formalizar a lógica modal."
+        ],
+        "r": 0,
+        "fb": "O problema, herdado da discussão aristotélica da batalha naval, é o de enunciados sobre eventos futuros ainda indeterminados, aos quais atribuir V ou F pareceria comprometer-se com o determinismo. O terceiro valor representa essa indeterminação.",
+        "cite": "Mortari (2016, §18.5); Morais et al. (2019, cap. 6)."
+      },
+      {
+        "t": "escolha",
+        "stem": "A lógica intuicionista se distingue da clássica principalmente por:",
+        "opts": [
+          "Rejeitar o princípio de não contradição.",
+          "Admitir mais de dois valores de verdade.",
+          "Não validar o terceiro excluído em geral."
+        ],
+        "r": 2,
+        "fb": "Na leitura intuicionista, afirmar α ∨ ¬α exigiria dispor de uma prova de α ou de uma prova de ¬α, o que nem sempre se tem. A não contradição permanece; e a lógica intuicionista não é polivalente, ainda que possa receber semânticas de mundos.",
+        "cite": "Mortari (2016, §18.5)."
+      },
+      {
+        "t": "multi",
+        "stem": "Assinale os pressupostos cuja recusa dá origem a lógicas não clássicas conhecidas.",
+        "opts": [
+          "A bivalência.",
+          "O terceiro excluído.",
+          "O princípio da explosão.",
+          "A existência de uma relação de consequência."
+        ],
+        "r": [
+          0,
+          1,
+          2
+        ],
+        "fb": "A recusa da bivalência produz as lógicas polivalentes; a do terceiro excluído, a intuicionista; a da explosão, as paraconsistentes. A quarta alternativa não descreve um pressuposto substantivo: sem relação de consequência não haveria lógica alguma a discutir.",
+        "cite": "Mortari (2016, §§18.1–18.2, 18.5)."
+      },
+      {
+        "id": "aplicacao-lp",
+        "t": "escolha",
+        "stem": "Em LP, os designados são 1 e ½ e ¬½=½. Qual atribuição refuta P,¬P ⊨ Q?",
+        "opts": [
+          "P=1 e Q=0.",
+          "P=½ e Q=0.",
+          "P=0 e Q=0."
+        ],
+        "r": 1,
+        "fb": "Com P=½, ambas as premissas são designadas e Q=0 não é. Nos casos P=1 ou P=0, uma das premissas não é designada. O mesmo argumento é válido classicamente: nos dois valores clássicos, P e ¬P nunca são ambas verdadeiras. É a consequência com premissas que muda em LP.",
+        "cite": "Módulo 6, unidade 6.5, matriz LP."
+      },
+      {
+        "id": "aplicacao-kleene",
+        "t": "escolha",
+        "stem": "Em K₃, só 1 é designado. Por que P,¬P ⊨ Q é válida nesse sistema?",
+        "opts": [
+          "K₃ tem exatamente as mesmas operações e designados da lógica clássica.",
+          "P e ¬P nunca são simultaneamente designadas; não há contravaloração das premissas.",
+          "Toda fórmula com três valores é tautológica."
+        ],
+        "r": 1,
+        "fb": "Para P=½, também ¬P=½, e nenhuma das premissas é designada. Com P=1 ou 0, uma delas não é designada. A consequência vale por vacuidade.",
+        "cite": "Módulo 6, unidade 6.5, matriz K₃."
+      },
+      {
+        "id": "aplicacao-completude",
+        "t": "escolha",
+        "stem": "Qual afirmação distingue corretamente completude e decidibilidade?",
+        "opts": [
+          "Se o cálculo é completo, toda teoria nele formulada decide qualquer sentença.",
+          "Um problema decidível não pode ser semidecidível.",
+          "Completude semântica do cálculo não fornece, por si só, um algoritmo que sempre decida a validade."
+        ],
+        "r": 2,
+        "fb": "Completude relaciona derivabilidade e consequência semântica. Decidibilidade exige um procedimento que termine com resposta correta em todos os casos; decidibilidade implica semidecidibilidade.",
+        "cite": "Mortari (2016, §§12.7,15.5)."
+      }
+    ]
+  }
 ];
 </script>
 <script>
@@ -314,7 +872,10 @@ const MARCOS = [
   let state = {};
   try { state = JSON.parse(localStorage.getItem(KEY) || "{}") || {}; } catch(e){ state = {}; }
   function save(){ try { localStorage.setItem(KEY, JSON.stringify(state)); } catch(e){} }
-  function key(m,i){ return m + ":" + i; }
+  function key(m,i){
+    const item = MARCOS.find(marco => marco.id === m).itens[i];
+    return m + ":" + (item.id ?? i);
+  }
 
   const chips = document.getElementById("marcos");
   const main = document.getElementById("main");
@@ -329,8 +890,8 @@ const MARCOS = [
 
   function scoreOf(m){
     let done = 0, ok = 0;
-    m.itens.forEach((it, i) => { const s = state[key(m.id,i)]; if(s){ done++; if(s.ok) ok++; } });
-    return {done, ok, total:m.itens.length, pct: Math.round(100*ok/m.itens.length)};
+    m.itens.forEach((it, i) => { const s = state[key(m.id,i)]; if(s && typeof s.ok === "boolean"){ done++; if(s.ok) ok++; } });
+    return {done, ok, total:m.itens.length, pct: Math.round(100*ok/m.itens.length), passed: done === m.itens.length && ok/m.itens.length >= .75};
   }
 
   function paintChips(){
@@ -338,10 +899,10 @@ const MARCOS = [
     MARCOS.forEach((m, k) => {
       const s = scoreOf(m);
       const b = document.createElement("button");
-      b.type = "button"; b.className = "mc" + (s.pct >= 75 ? " pass" : "");
+      b.type = "button"; b.className = "mc" + (s.passed ? " pass" : "");
       b.setAttribute("aria-pressed", String(k === cur));
       b.innerHTML = '<span class="code">Marco ' + m.id + '</span><span class="nm">' + m.nome +
-        '</span><span class="sc">' + s.ok + "/" + s.total + (s.pct >= 75 ? " · vencido" : "") +
+        '</span><span class="sc">' + s.ok + "/" + s.total + (s.passed ? " · teste aprovado" : "") +
         '</span><span class="bar"><i style="width:' + (100*s.done/s.total) + '%"></i></span>';
       b.addEventListener("click", () => { cur = k; render(); });
       chips.appendChild(b);
@@ -359,15 +920,15 @@ const MARCOS = [
     if(!el) return;
     if(s.done < s.total){
       el.innerHTML = '<h3>Marco ' + m.id + " em andamento</h3><p>" + s.done + " de " + s.total +
-        " itens respondidos. O marco é considerado vencido a partir de 75% de acerto sobre o total.</p>";
+        " itens respondidos. Responda a todos para concluir o teste; a aprovação exige pelo menos 75% de acerto sobre o total.</p>";
       return;
     }
-    const passou = s.pct >= 75;
+    const passou = s.passed;
     el.innerHTML = '<div class="score">' + s.pct + "%</div><h3>" +
-      (passou ? "Marco " + m.id + " vencido" : "Marco " + m.id + " ainda não vencido") + "</h3><p>" +
+      (passou ? "Teste " + m.id + " aprovado" : "Teste " + m.id + " ainda não aprovado") + "</h3><p>" +
       (passou
-        ? "O aluno pode passar ao módulo seguinte. Convém, ainda assim, refazer os itens errados: no percurso autoinstrucional, o erro registrado indica a unidade a reler."
-        : "Recomenda-se retomar as unidades indicadas nas fontes dos itens errados antes de avançar, uma vez que os módulos seguintes pressupõem esta competência.") + "</p>";
+        ? 'Confira agora a produção escrita exigida no módulo com a <a href="prompts.html">rubrica correspondente</a>. O marco reúne teste e produção verificada. Retome também os itens errados antes de avançar.'
+        : 'Retome as unidades indicadas nas fontes dos itens errados e as <a href="guia-estudo.html">atividades essenciais</a> antes de repetir o teste. A produção escrita também integra o marco.') + "</p>";
   }
 
   function render(){

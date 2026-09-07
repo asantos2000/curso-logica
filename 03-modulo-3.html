@@ -126,9 +126,13 @@ figcaption b{font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-
 .readout ol li{margin-bottom:5px}
 .refs{margin-top:12px}
 .refs p{padding-left:34px;text-indent:-34px;font-size:15.5px;margin-bottom:13px}
+.ajuda{margin:10px 0;border:1px solid var(--line);border-radius:4px;padding:12px 16px;background:var(--surface)}
+.ajuda summary{cursor:pointer;color:var(--accent);font-weight:600}
+.ajuda[open] summary{margin-bottom:12px}
+.ajuda pre{overflow-x:auto;white-space:pre;font:13px/1.65 var(--mono);color:var(--ink)}
 :focus-visible{outline:2px solid var(--accent);outline-offset:3px}
 @media (max-width:900px){
-  .shell{grid-template-columns:1fr;gap:0}
+  .shell{grid-template-columns:minmax(0,1fr);gap:0}
   nav.toc{position:static;padding:22px 0 0;columns:2;column-gap:24px}
   nav.toc .lbl{column-span:all}
   article{padding-top:22px}
@@ -231,6 +235,7 @@ table.tv tr.contra td.at{background:var(--falsum);opacity:.75}
     <a href="#u4">3.4 Tabelas de verdade</a>
     <a href="#lab">Laboratório de tabelas</a>
     <a href="#marco">Marco B1</a>
+    <a href="#solucoes">Pistas e soluções</a>
     <a href="#proximo">Próximo passo</a>
     <a href="#ref">Referências</a>
   </nav>
@@ -238,7 +243,7 @@ table.tv tr.contra td.at{background:var(--falsum);opacity:.75}
   <article>
     <h2 id="i"><span class="num">Abertura</span>O que muda a partir daqui</h2>
     <p class="intro">Os dois primeiros módulos trataram de argumentos escritos em português. A partir desta unidade o objeto de estudo passa a ser uma linguagem construída por estipulação, com vocabulário fixado por lista e gramática dada por regras explícitas. A mudança é de natureza, não de grau.</p>
-    <p>O ganho é a eliminação da ambiguidade. Em português, «João não veio e Maria ficou» admite duas leituras conforme a negação incida sobre a primeira sentença ou sobre a conjunção inteira, e nada na frase decide entre elas. Na linguagem do cálculo, as duas leituras são duas fórmulas distintas, e a diferença é visível.</p>
+    <p>O ganho é tornar explícita a estrutura escolhida. «João não veio e Maria ficou» nega, na leitura usual, a vinda de João; «Não é verdade que João veio e Maria ficou» nega a conjunção inteira. Na linguagem do cálculo, essas leituras são fórmulas distintas, e a diferença de escopo é visível. Quando o português admite mais de uma leitura, a formalização deve declarar qual delas representa.</p>
     <p>A perda é a expressividade. A linguagem deste módulo não representa a estrutura interna das proposições, e por isso não alcança o silogismo estudado no módulo 2: «Todo homem é mortal, Sócrates é homem, logo Sócrates é mortal» torna-se, aqui, três letras sentenciais sem relação alguma, e o argumento aparece como inválido. Não é um defeito a corrigir agora; é a razão de existir o módulo 5.</p>
     <p>A ordem de apresentação segue Mortari (2016) e merece justificativa. Primeiro a sintaxe, que diz o que é uma fórmula sem falar de verdade; depois a semântica, que diz o que é uma valoração; só então a tabela, que é o modo tabular de exibir todas as valorações. Quem aprende a tabela primeiro tende a tratá-la como um procedimento mecânico sem objeto, e a não saber responder o que a tabela está calculando.</p>
 
@@ -301,7 +306,7 @@ Sinais de pontuação  (  )</div>
     <p>Traduzir é decidir, para cada trecho do português, qual operador o representa. A dificuldade não está nos casos fáceis, e sim em um punhado de construções que enganam de modo sistemático.</p>
     <div class="tw"><table>
       <tr><th>Português</th><th>Fórmula</th><th>Observação</th></tr>
-      <tr><td>não P; é falso que P; nem sempre P</td><td class="m2">¬P</td><td>Cuidado com o escopo: veja a unidade 3.1</td></tr>
+      <tr><td>não P; é falso que P</td><td class="m2">¬P</td><td>Cuidado com o escopo: veja a unidade 3.1</td></tr>
       <tr><td>P e Q; P mas Q; P embora Q; P; Q</td><td class="m2">P ∧ Q</td><td>A oposição de «mas» não é representada</td></tr>
       <tr><td>P ou Q</td><td class="m2">P ∨ Q</td><td>Leitura inclusiva; a exclusiva é (P ∨ Q) ∧ ¬(P ∧ Q)</td></tr>
       <tr><td>se P, então Q; Q se P; P só se Q</td><td class="m2">P → Q</td><td>Note a terceira: «só se» põe Q no consequente</td></tr>
@@ -312,6 +317,7 @@ Sinais de pontuação  (  )</div>
       <tr><td>P a não ser que Q; salvo se Q</td><td class="m2">¬Q → P</td><td>Mesma estrutura de «a menos que»</td></tr>
     </table></div>
     <h4>Os três erros que se repetem</h4>
+    <p>«Nem sempre chove» nega «sempre chove», e não equivale a «não chove». O CPC não decompõe essa quantificação temporal: se S representar a proposição inteira «sempre chove», a negação será ¬S. Uma tradução deve preservar o que foi escolhido como proposição atômica.</p>
     <p>O <strong>primeiro</strong> é confundir condição necessária com suficiente. «Só passo se estudar» não diz que estudar basta para passar; diz que sem estudar não se passa. A fórmula é P → E, e não E → P. O teste é perguntar qual das duas coisas o falante está descartando: ele descarta passar sem estudar, e é isso que P → E exclui.</p>
     <p>O <strong>segundo</strong> é dar à negação escopo maior do que ela tem. «Não é verdade que João veio e Maria ficou» é ¬(J ∧ M). Já «João não veio e Maria ficou» é ¬J ∧ M. A vírgula e a ordem das palavras carregam, em português, informação de escopo que os parênteses carregam na fórmula.</p>
     <p>O <strong>terceiro</strong> é traduzir a ordem em que as sentenças aparecem em vez da relação que exprimem. «Vou se ele vier» tem o antecedente no fim, e a fórmula é V → I, com a vinda dele no antecedente. Ler da esquerda para a direita produz o inverso.</p>
@@ -339,8 +345,8 @@ Sinais de pontuação  (  )</div>
       <tr><td class="c">F</td><td class="c">F</td><td class="c">V</td><td class="c">F</td><td class="c">F</td><td class="c">V</td><td class="c">V</td></tr>
     </table></div>
     <h4>O condicional material</h4>
-    <p>Três linhas da coluna de → costumam ser aceitas sem hesitação, e a segunda também. As duas últimas são o problema: por que um condicional de antecedente falso é verdadeiro, independentemente do consequente?</p>
-    <p>A resposta honesta tem duas partes. A primeira é que a estipulação é a única compatível com a veritofuncionalidade e com o que se espera de um condicional. Se o antecedente é falso, o condicional não foi posto à prova, e declará-lo falso significaria afirmar que a promessa foi quebrada em um caso em que ela nem foi acionada. A segunda parte é que a estipulação de fato se afasta do «se» do português, que costuma sugerir conexão entre antecedente e consequente. «Se a Lua é de queijo, então 2 + 2 = 4» é verdadeira no cálculo, e soa mal em português.</p>
+    <p>As duas primeiras linhas da coluna de → costumam ser aceitas com mais facilidade. As duas últimas suscitam a pergunta: por que um condicional de antecedente falso é verdadeiro, independentemente do consequente?</p>
+    <p>O condicional material é definido para excluir exatamente o caso de antecedente verdadeiro e consequente falso; por isso equivale a ¬α ∨ β. Uma promessa condicional ajuda a motivar essa escolha: quando a condição não ocorre, ela não foi descumprida. Isso não demonstra que todo uso de «se» em português tenha essa tabela. O português frequentemente sugere uma conexão causal ou temática que → não representa. «Se a Lua é de queijo, então 2 + 2 = 4» é verdadeira no cálculo, embora soe estranha em português.</p>
     <p>Essa distância é um resultado, não um defeito escondido. Ela é o ponto de partida das lógicas da relevância, tratadas no módulo complementar 8, que recusam precisamente que um condicional válido possa ter antecedente e consequente sem conexão alguma.</p>
     <h2 id="u4"><span class="num">Unidade 3.4</span>Tabelas de verdade e consequência tautológica</h2>
     <p>Uma fórmula com n letras distintas admite 2ⁿ valorações relevantes, e a tabela de verdade é o modo tabular de percorrê-las todas. Cada linha é uma valoração; cada coluna, uma subfórmula; a última coluna, a fórmula inteira.</p>
@@ -396,9 +402,44 @@ Sinais de pontuação  (  )</div>
     <p><strong>5.</strong> Verifique, por tabela, se «P ∨ Q, ¬P ∴ Q» é válido, e se «P ∨ Q, P ∴ ¬Q» também é. Explique a diferença, e relacione-a com a leitura inclusiva da disjunção.</p>
     <p><strong>6.</strong> Use o laboratório para testar «P → Q; Q → R; P → R». Depois altere a conclusão para R → P e localize a linha de contraexemplo. Escreva em português o que essa linha descreve.</p>
     <p><strong>7.</strong> Mostre, sem construir a tabela inteira, que qualquer fórmula da forma α → (β → α) é tautologia. Basta considerar as duas hipóteses sobre o valor de α.</p>
-    <p><strong>8.</strong> Os exercícios 5.1, 6.1 a 6.9 e 7.1 a 7.6 do livro-texto cobrem esta unidade, e todos têm resolução comentada em Pagani (s.d.). Resolva ao menos um de cada bloco antes de conferir.</p>
+    <p><strong>Leitura e prática complementar.</strong> Use a <a href="guia-estudo.html">trilha de estudo</a> para localizar as leituras e os exercícios verificados na 2ª edição de Mortari. A numeração e a cobertura de Pagani não coincidem automaticamente com essa edição; confira o enunciado antes de comparar uma resposta.</p>
 
-    <h2 id="proximo"><span class="num">Encerramento</span>Próximo passo</h2><p>O ciclo de cada módulo se fecha em três movimentos: resolver os exercícios, verificar o marco no banco de itens e submeter o artefato escrito à rubrica correspondente.</p><div class="nextgrid"><a class="nx" href="provas.html#B1"><span class="k">Verificar o marco</span><span class="t">Provas de Domínio · marco B1</span><span class="d">Itens autocorrigidos com justificativa e fonte. O marco é vencido a partir de 75% de acerto.</span></a><a class="nx" href="prompts.html#p2"><span class="k">Corrigir o artefato</span><span class="t">Prompt 2 · Tradução proposicional</span><span class="d">Verifica cada tradução por valoração, e não por impressão de leitura.</span></a><a class="nx" href="prompts.html#p3"><span class="k">Corrigir o artefato</span><span class="t">Prompt 3 · Tabela de verdade</span><span class="d">Exige recomputação célula a célula e conferência do veredito.</span></a><a class="nx" href="04-modulo-4.html"><span class="k">Seguir</span><span class="t">Módulo 4 · Tablôs e dedução natural</span><span class="d">Nível B · módulo 4 no percurso.</span></a></div>
+    <h2 id="solucoes"><span class="num">Apoio à prática</span>Pistas e soluções comentadas</h2>
+    <p>Tente cada exercício por escrito. Abra a pista se precisar; depois confronte sua resolução com a solução. Respostas equivalentes são aceitas quando a leitura, o dicionário e o procedimento estão justificados.</p>
+    <h3>1. Fórmulas bem formadas</h3>
+    <details class="ajuda"><summary>Pista</summary><p>Procure o último operador aplicado. Antes de usar a definição estrita, reponha os parênteses que as convenções permitem omitir.</p></details>
+    <details class="ajuda"><summary>Solução comentada</summary><p>(a) É uma abreviação de (¬(P ∧ Q) → R): construa P ∧ Q, negue e forme o condicional. (b) Não é fórmula: falta fechar o parêntese. (c) Não é fórmula: ∧ não recebe uma fórmula à direita. (d) É fórmula por três aplicações da cláusula de negação a P. (e) É fórmula: construa ¬R, depois Q → ¬R e finalmente o bicondicional com P. Uma resposta completa distingue a escrita estrita da abreviada.</p></details>
+    <h3>2. Árvore e operador principal</h3>
+    <details class="ajuda"><summary>Pista</summary><p>A última operação da construção dá a raiz da árvore. Ela pode ser a primeira marca que você lê na expressão.</p></details>
+    <details class="ajuda"><summary>Solução comentada</summary><pre>¬
+└─ →
+   ├─ P
+   └─ ∧
+      ├─ Q
+      └─ ¬
+         └─ R</pre><p>A raiz é ¬, cujo escopo é P → (Q ∧ ¬R). A fórmula inteira nega um condicional; o condicional é uma subfórmula, não o operador principal.</p></details>
+    <h3>3. Confissão, processo e testemunha</h3>
+    <details class="ajuda"><summary>Pista</summary><p>Escolha três proposições atômicas afirmativas. Na leitura inclusiva de «a menos que», a ausência da exceção garante o que vem antes dela.</p></details>
+    <details class="ajuda"><summary>Uma solução e critérios de conferência</summary><p>C: o réu confessa; P: o processo continua; T: a testemunha comparece. Uma leitura é ¬C → (¬T → P), equivalente a (¬C ∧ ¬T) → P. Ela exclui exatamente o caso em que não há confissão nem comparecimento, mas o processo não continua. Não afirma que a presença da testemunha interrompe o processo.</p><p><strong>Critérios:</strong> declarar o dicionário; ligar ¬ a C; indicar T como exceção; justificar o escopo de «a menos que»; conferir a situação que falsifica a fórmula. Uma leitura contextual diferente precisa ser declarada, não apenas apresentada como outra sequência de símbolos.</p></details>
+    <h3>4. Contraposição</h3>
+    <details class="ajuda"><summary>Pista</summary><p>Calcule separadamente os dois condicionais e só então compare suas colunas.</p></details>
+    <details class="ajuda"><summary>Solução comentada</summary><pre>P  Q | P → Q | ¬Q → ¬P | bicondicional
+V  V |   V   |    V    |      V
+V  F |   F   |    F    |      V
+F  V |   V   |    V    |      V
+F  F |   V   |    V    |      V</pre><p>O bicondicional é tautologia. Portanto P → Q e ¬Q → ¬P são tautologicamente equivalentes, embora cada condicional isolado seja contingente.</p></details>
+    <h3>5. Dois argumentos com disjunção</h3>
+    <details class="ajuda"><summary>Pista</summary><p>Procure premissas verdadeiras com conclusão falsa; não basta procurar qualquer linha com conclusão falsa.</p></details>
+    <details class="ajuda"><summary>Solução comentada</summary><p>P ∨ Q, ¬P ⊨ Q é válido: a segunda premissa força P falsa, e a primeira exige então Q verdadeira. Já P ∨ Q, P ⊭ ¬Q tem contramodelo P = V e Q = V. A disjunção inclusiva permite os dois disjuntos verdadeiros; por isso afirmar um não elimina o outro.</p></details>
+    <h3>6. Encadeamento de condicionais</h3>
+    <details class="ajuda"><summary>Pista</summary><p>Para falsificar P → R, seria preciso P verdadeira e R falsa. Isso é compatível com os dois condicionais das premissas?</p></details>
+    <details class="ajuda"><summary>Solução comentada</summary><p>P → Q, Q → R ⊨ P → R é válido: se P é verdadeira, a primeira premissa força Q e a segunda força R. Com conclusão R → P, tome P = F, Q = F e R = V. As duas premissas são verdadeiras e a conclusão falsa. Por exemplo: «Se estudo, aprendo; se aprendo, passo» não garante «se passo, estudo»: é possível passar sem estudar nem aprender, na leitura puramente veritofuncional das três letras.</p></details>
+    <h3>7. Uma tautologia sem tabela completa</h3>
+    <details class="ajuda"><summary>Pista</summary><p>Divida os casos segundo o valor de α. O valor de β será necessário?</p></details>
+    <details class="ajuda"><summary>Solução comentada</summary><p>Se α é falsa, α → (β → α) é verdadeira pelo antecedente falso. Se α é verdadeira, β → α é verdadeira pelo consequente verdadeiro; assim, o condicional externo também é verdadeiro. Os casos esgotam as valorações e não dependem do valor de β. Logo a fórmula é tautologia.</p></details>
+    <p class="note"><strong>Conferência do artefato B1:</strong> tradução com dicionário e escopos justificados; tabela com todas as combinações relevantes; classificação calculada na fórmula inteira; argumento inválido acompanhado de premissas V e conclusão F na mesma linha. Complete também o teste do marco e a revisão da produção escrita indicada abaixo.</p>
+
+    <h2 id="proximo"><span class="num">Encerramento</span>Próximo passo</h2><p>O ciclo de cada módulo se fecha em três movimentos: resolver os exercícios, concluir o teste do marco e submeter o artefato escrito à rubrica correspondente. O domínio exige as três verificações.</p><div class="nextgrid"><a class="nx" href="provas.html#B1"><span class="k">Verificar o marco</span><span class="t">Provas de Domínio · marco B1</span><span class="d">Itens autocorrigidos com justificativa e fonte. O teste é aprovado com 75% de acerto e todos os itens respondidos; o marco exige também a produção escrita.</span></a><a class="nx" href="prompts.html#p2"><span class="k">Corrigir o artefato</span><span class="t">Prompt 2 · Tradução proposicional</span><span class="d">Verifica cada tradução por valoração, e não por impressão de leitura.</span></a><a class="nx" href="prompts.html#p3"><span class="k">Corrigir o artefato</span><span class="t">Prompt 3 · Tabela de verdade</span><span class="d">Exige recomputação célula a célula e conferência do veredito.</span></a><a class="nx" href="04-modulo-4.html"><span class="k">Seguir</span><span class="t">Módulo 4 · Tablôs e dedução natural</span><span class="d">Nível B · módulo 4 no percurso.</span></a></div>
 
     <h2 id="ref">Referências</h2>
     <div class="refs">
@@ -462,7 +503,7 @@ function show(n,pai){
   let s,pr=PREC[n.op];
   if(n.op==='at') return n.nome;
   if(n.op==='¬') s='¬'+show(n.a,PREC['¬']);
-  else s=show(n.l, n.op==='→'?pr+1:pr)+' '+n.op+' '+show(n.r,pr);
+  else s=show(n.l, n.op==='→'?pr+1:pr)+' '+n.op+' '+show(n.r,n.op==='→'?pr:pr+1);
   return pr<pai?'('+s+')':s;
 }
 function atomos(n,acc){ acc=acc||new Set(); if(n.op==='at')acc.add(n.nome); else if(n.op==='¬')atomos(n.a,acc); else {atomos(n.l,acc);atomos(n.r,acc);} return acc; }
@@ -485,7 +526,7 @@ function evalf(n,v){
     ["Só viajo se o visto sair.", ["V → S", "S → V", "V ∧ S"], 0,
      "«Só ... se» introduz condição necessária: o visto sair é necessário para viajar. Logo, se viajo, o visto saiu. A segunda alternativa afirmaria que o visto sair basta para eu viajar."],
     ["Não é verdade que ele veio e ficou.", ["¬(V ∧ F)", "¬V ∧ F", "¬V ∧ ¬F"], 0,
-     "A negação incide sobre a conjunção inteira, e não sobre o primeiro conjunto. A fórmula afirma apenas que os dois não ocorreram juntos, deixando em aberto qual deles ocorreu."],
+     "A negação incide sobre a conjunção inteira, e não apenas sobre o primeiro conjunto. A fórmula afirma que os dois não ocorreram juntos, deixando em aberto qual deles ocorreu, ou se nenhum ocorreu."],
     ["O contrato vale a menos que haja fraude.", ["¬F → V", "F → V", "V ∧ ¬F"], 0,
      "«A menos que» introduz a exceção no antecedente negado: não havendo fraude, o contrato vale. Equivale também a V ∨ F, o que se verifica pela tabela."],
     ["Nem chove nem faz sol.", ["¬C ∧ ¬S", "¬(C ∧ S)", "¬C ∨ ¬S"], 0,
@@ -493,7 +534,7 @@ function evalf(n,v){
     ["Ela assina somente se o prazo for cumprido.", ["A → P", "P → A", "A ↔ P"], 0,
      "«Somente se» põe a condição no consequente. O cumprimento do prazo é necessário para a assinatura, e não suficiente: por isso não é o bicondicional."],
     ["Se ele não avisar, a reunião é cancelada.", ["¬A → C", "A → ¬C", "¬(A → C)"], 0,
-     "A negação incide sobre o antecedente, e apenas sobre ele. A terceira alternativa negaria o condicional inteiro, o que afirmaria que ele avisou e a reunião foi cancelada assim mesmo."]
+     "A negação incide sobre o antecedente, e apenas sobre ele. A terceira alternativa negaria o condicional inteiro, o que afirmaria que ele avisou e a reunião não foi cancelada: ¬(A → C) equivale a A ∧ ¬C."]
   ];
   const trBox = document.getElementById("trBox");
   TR.forEach((q, k) => {
@@ -526,6 +567,7 @@ function evalf(n,v){
     const src = ent.value.trim();
     if(!src){ saida.innerHTML = '<div class="erro">Escreva uma fórmula para começar.</div>'; return; }
     const partes = src.split(";").map(x => x.trim()).filter(x => x.length);
+    if(!partes.length){ saida.innerHTML = '<div class="erro">Escreva ao menos uma fórmula.</div>'; return; }
     if(modo === "f" && partes.length > 1){ modo = "a"; sincronizaModo(); }
     let arvores;
     try {
@@ -571,7 +613,7 @@ function evalf(n,v){
     h += "</table></div>";
 
     if(modo === "f"){
-      const fin = linhas.map(l => l.vals[l.vals.length - 1]);
+      const fin = linhas.map(l => evalf(arvores[0], l.v));
       const cls = fin.every(x => x) ? "tautologia" : fin.every(x => !x) ? "contradição" : "contingência";
       const nV = fin.filter(x => x).length;
       h += '<div class="verdict"><b>Classificação</b>A fórmula é uma <strong>' + cls + "</strong>: a coluna principal tem " +
@@ -602,8 +644,8 @@ function evalf(n,v){
     modo = b.dataset.modo; sincronizaModo(); render();
   }));
   document.querySelectorAll("[data-ins]").forEach(b => b.addEventListener("click", () => {
-    const p = ent.selectionStart || ent.value.length;
-    ent.value = ent.value.slice(0, p) + b.dataset.ins + ent.value.slice(ent.selectionEnd || p);
+    const p = ent.selectionStart ?? ent.value.length;
+    ent.value = ent.value.slice(0, p) + b.dataset.ins + ent.value.slice(ent.selectionEnd ?? p);
     ent.focus(); ent.selectionStart = ent.selectionEnd = p + b.dataset.ins.length;
     render();
   }));

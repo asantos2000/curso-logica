@@ -150,6 +150,9 @@ td.m{font-family:var(--mono);white-space:nowrap}
 .opt.wrong{border-color:var(--falsum);opacity:.75}
 .fb{font-size:14.5px;color:var(--ink-soft);margin:11px 0 0;padding-top:10px;border-top:1px solid var(--line-soft)}
 .fb:empty{display:none}
+details{margin:10px 0;border:1px solid var(--line);border-radius:4px;background:var(--surface);padding:0 15px}
+summary{padding:11px 0;cursor:pointer;font-weight:600;color:var(--accent)}
+details p{margin:0 0 14px}
 @media (max-width:700px){
   .matrix{min-width:520px}
 }
@@ -200,7 +203,7 @@ td.m{font-family:var(--mono);white-space:nowrap}
         <div><div class="k">Marco</div><div class="v">A1</div></div>
       </div>
     </div>
-    <p class="note"><b>Nota do professor</b>Este módulo trabalha inteiramente em português. Nenhuma letra sentencial aparece antes da unidade 3.1: a experiência de sala mostra que quem simboliza cedo demais aprende a manipular fórmulas sem reconhecer o argumento que elas representam.</p>
+    <p class="note"><b>Nota do professor</b>O módulo começa pela leitura em português. As letras dos esquemas apenas reservam lugares para expressões; a linguagem formal será estudada no módulo 3. Peça sempre ao aluno que explique o argumento representado.</p>
   </section>
 
   <section class="slide">
@@ -227,14 +230,14 @@ td.m{font-family:var(--mono);white-space:nowrap}
       <div class="box neg"><h3>O que a lógica não é</h3><p>Não é o estudo empírico dos processos mentais de quem raciocina. Que uma pessoa de fato conclua algo, sob pressão ou por hábito, é assunto da psicologia.</p></div>
       <div class="box pos"><h3>O que a lógica é</h3><p>É o estudo de quais passos de um conjunto de afirmações a outra preservam verdade. A pergunta não é como se chegou à conclusão, e sim se ela se segue.</p></div>
     </div>
-    <p>Mortari (2016) formula a diferença como a que existe entre <strong>raciocínio</strong>, um processo que ocorre no tempo e pode ser bom ou ruim por muitas razões, e <strong>inferência</strong>, uma relação entre proposições que se sustenta ou não se sustenta.</p>
+    <p>Mortari (2016, §1.2, pp. 16–17) chama o processo mental de <strong>raciocínio</strong> ou <strong>processo de inferência</strong>. A <strong>relação de consequência lógica</strong> é outra coisa: diz respeito a se a conclusão se segue das premissas, independentemente de alguém executar mentalmente a passagem.</p>
     <p class="note"><b>Nota do professor</b>Peça um exemplo em que alguém chega a uma conclusão verdadeira por um caminho péssimo. A intuição de que há aí algo defeituoso, ainda que o resultado esteja certo, é exatamente a intuição de validade.</p>
   </section>
 
   <section class="slide">
     <div class="eyebrow">Unidade 1.2 · exercício</div>
     <h2>Encontre o argumento</h2>
-    <p class="deck">Clique em cada período. O curso classifica: conclusão, premissa ou material que não sustenta nada.</p>
+    <p class="deck">Antecipe a função de cada período; clique para conferir: conclusão, premissa ou concessão que, neste exemplo, não apoia a conclusão.</p>
     <p class="para" id="para">
       <span class="sent" data-role="conclusao">O aumento da tarifa não pode ser justificado pelo custo do combustível.</span>
       <span class="sent" data-role="premissa">O combustível responde por menos de um quinto do custo operacional da frota.</span>
@@ -242,7 +245,7 @@ td.m{font-family:var(--mono);white-space:nowrap}
       <span class="sent" data-role="ruido">É verdade que a empresa vem operando com margens apertadas.</span>
     </p>
     <div class="readout" id="paraOut"><div class="rk">Leitura</div><p>Nenhum período selecionado. Comece pelo que a passagem quer que você aceite: essa é a conclusão.</p></div>
-    <p class="note"><b>Nota do professor</b>O quarto período é uma concessão. Aparece em quase todo texto argumentativo real e não é premissa: retirá-lo não enfraquece a conclusão. Aprender a descartá-lo é metade do trabalho de reconstrução.</p>
+    <p class="note"><b>Nota do professor</b>O quarto período reconhece uma dificuldade da empresa sem apoiar a conclusão específica sobre combustível. A função depende do contexto: não descarte automaticamente toda concessão, ilustração ou informação contextual.</p>
   </section>
 
   <section class="slide">
@@ -254,15 +257,15 @@ td.m{font-family:var(--mono);white-space:nowrap}
       <tr><td>logo, portanto, assim, segue-se que, conclui-se que, consequentemente</td><td>pois, porque, já que, uma vez que, dado que, visto que</td></tr>
     </table></div>
     <p>Quando não há indicador, o teste é funcional: pergunte de cada período <strong>o que ele está fazendo ali</strong>. Se a passagem oferece o período como razão para aceitar outro, é premissa; se é aquilo que a passagem quer que se aceite, é conclusão.</p>
-    <p>A reconstrução frequentemente exige <strong>explicitar uma premissa implícita</strong>. Nesse caso vale a regra da caridade: acrescente a premissa mais fraca que torna o argumento válido, não a mais conveniente para refutá-lo.</p>
+    <p>A reconstrução frequentemente exige <strong>explicitar uma premissa implícita</strong>. A caridade combina fidelidade ao contexto e uma leitura razoável: proponha a ponte necessária ao apoio pretendido, marque-a como hipótese de reconstrução e justifique por que o autor poderia aceitá-la. Acrescentar qualquer condicional que torne a inferência válida não basta.</p>
   </section>
 
   <section class="slide">
     <div class="eyebrow">Unidade 1.3</div>
     <h2>Três coisas que se confundem</h2>
     <div class="grid2">
-      <div class="box"><h3>Sentença</h3><p>A cadeia de símbolos de uma língua. &ldquo;Está chovendo&rdquo; e &ldquo;It is raining&rdquo; são sentenças distintas.</p></div>
-      <div class="box"><h3>Proposição</h3><p>O que a sentença exprime. As duas sentenças acima exprimem a mesma proposição, e é ela que é verdadeira ou falsa.</p></div>
+      <div class="box"><h3>Sentença</h3><p>Uma sequência formada segundo a gramática de uma língua. &ldquo;Está chovendo&rdquo; e &ldquo;It is raining&rdquo; são sentenças distintas.</p></div>
+      <div class="box"><h3>Proposição</h3><p>O que a sentença exprime em um contexto. As duas acima podem exprimir a mesma proposição quando falam do mesmo lugar e momento; é ela que é verdadeira ou falsa.</p></div>
       <div class="box"><h3>Enunciado</h3><p>O ato de proferir a sentença numa ocasião. Duas pessoas dizendo &ldquo;eu tenho fome&rdquo; produzem enunciados diferentes.</p></div>
     </div>
     <p>A distinção não é preciosismo. Quando, no módulo 3, uma letra sentencial <span class="m">P</span> for introduzida, ela representará <strong>a proposição</strong>, e é por isso que a mesma letra pode traduzir sentenças diferentes.</p>
@@ -342,14 +345,16 @@ td.m{font-family:var(--mono);white-space:nowrap}
     <h2>Oito falácias informais</h2>
     <p class="deck">Clique para ver a definição e um exemplo de circulação corrente.</p>
     <div class="cards" id="fcards"></div>
-    <div class="readout" id="falOut"><div class="rk">Falácia</div><p>Falácias informais não têm forma defeituosa: o defeito está na relação entre o conteúdo das premissas e o da conclusão. Por isso nenhum cálculo as detecta, e a única defesa é o reconhecimento treinado.</p></div>
+    <div class="readout" id="falOut"><div class="rk">Falácia</div><p>Identificar uma falácia informal exige avaliar conteúdo e contexto, além da forma. Uma inferência pode preservar verdade e ainda pressupor o que deveria justificar, como ocorre na petição de princípio.</p></div>
   </section>
 
   <section class="slide">
     <div class="eyebrow">Verificação</div>
     <h2>Três perguntas antes de seguir</h2>
-    <p class="deck">Resposta imediata, com o motivo. O banco completo do marco A1 tem quatro itens.</p>
+    <p class="deck">Resposta imediata, com o motivo. Depois, resolva os itens de aplicação do banco do marco A1 e confira sua produção escrita.</p>
     <div id="quiz"></div>
+    <details><summary>Pistas para as três perguntas</summary><p>1: observe a função de «pois». 2: separe os valores de verdade atuais da possibilidade de um contraexemplo. 3: procure uma posição que as duas alternativas tenham omitido.</p></details>
+    <details><summary>Soluções comentadas</summary><p><strong>1.</strong> A conclusão é «O concurso será anulado»; o vazamento é a razão oferecida. <strong>2.</strong> O perfil não decide a validade: há formas válidas e inválidas com premissas falsas e conclusão verdadeira. <strong>3.</strong> Falsa dicotomia: é possível apoiar o desenvolvimento da cidade e rejeitar esse projeto. Em uma análise real, explique também o contexto em que a oposição foi apresentada.</p></details>
     <p class="note"><b>Nota do professor</b>Erro no item 2 é o mais comum e o mais informativo: indica que a validade ainda está sendo lida como &ldquo;as premissas são verdadeiras&rdquo;. Nesse caso, volte ao quadro de validade e verdade antes de avançar.</p>
   </section>
 
@@ -357,7 +362,7 @@ td.m{font-family:var(--mono);white-space:nowrap}
     <div class="eyebrow">Fechamento</div>
     <h2>O que vem a seguir</h2>
     <p>O módulo 2 fornece as duas ferramentas de que a formalização dependerá: o controle metalinguístico, isto é, saber quando uma expressão está sendo usada e quando está sendo mencionada, e a teoria elementar de conjuntos. Em paralelo, situa a disciplina em sua história, de Heráclito ao silogismo aristotélico.</p>
-    <p>Só no módulo 3 aparece a primeira letra sentencial. Quando ela aparecer, o aluno já saberá o que ela representa e por que a substituição de conteúdo preserva a forma.</p>
+    <p>No módulo 3, as letras sentenciais ganham regras explícitas de formação e interpretação. Para continuar, consulte as <a href="01-modulo-1.html#solucoes">pistas e soluções do módulo 1</a> e o <a href="guia-estudo.html">guia de estudo</a>.</p>
     <div class="tw"><table>
       <tr><th>Fonte</th><th>Uso neste módulo</th></tr>
       <tr><td>Mortari (2016)</td><td>Capítulos 1 e 2, texto-base de todas as unidades.</td></tr>
@@ -396,7 +401,8 @@ td.m{font-family:var(--mono);white-space:nowrap}
   document.getElementById("prev").onclick = () => go(i-1);
   document.getElementById("next").onclick = () => go(i+1);
   document.addEventListener("keydown", e => {
-    if(e.target.closest("button") && (e.key === " " || e.key === "Enter")) return;
+    if(e.defaultPrevented) return;
+    if(e.target.closest("button, [role='button'], summary, a") && (e.key === " " || e.key === "Enter")) return;
     if(e.key === "ArrowRight" || e.key === "PageDown" || e.key === " ") { e.preventDefault(); go(i+1); }
     if(e.key === "ArrowLeft" || e.key === "PageUp") { e.preventDefault(); go(i-1); }
   });
@@ -410,9 +416,9 @@ td.m{font-family:var(--mono);white-space:nowrap}
 
   /* ---------- 1.2 reconstrução ---------- */
   const ROLE = {
-    conclusao: ["Conclusão", "É o que a passagem quer que você aceite. Tudo o mais ali existe para sustentá-la, e é ela que será julgada quanto à validade da inferência."],
-    premissa: ["Premissa", "Oferecida como razão para aceitar a conclusão. Retirá-la enfraquece o argumento, o que é o teste prático para identificá-la."],
-    ruido: ["Não é premissa", "Uma concessão. Reconhece um ponto do adversário sem oferecer apoio à conclusão; suprimi-la deixa o argumento intacto. Descartar este material é metade do trabalho de reconstrução."]
+    conclusao: ["Conclusão", "É o que a passagem quer que você aceite com base nas razões oferecidas. A validade será julgada do argumento, não da conclusão isolada."],
+    premissa: ["Premissa", "Oferecida como razão para aceitar a conclusão. Avalie essa função no contexto; a possibilidade de retirar uma frase não decide sozinha, pois uma premissa também pode ser redundante."],
+    ruido: ["Concessão", "Reconhece a dificuldade da empresa sem apoiar a conclusão específica sobre o combustível. Pode ficar fora da lista de premissas desse apoio, mas continua relevante para entender a discussão."]
   };
   const paraOut = document.getElementById("paraOut");
   document.querySelectorAll("#para .sent").forEach(s => {

@@ -126,9 +126,13 @@ figcaption b{font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-
 .readout ol li{margin-bottom:5px}
 .refs{margin-top:12px}
 .refs p{padding-left:34px;text-indent:-34px;font-size:15.5px;margin-bottom:13px}
+.ajuda{margin:10px 0;border:1px solid var(--line);border-radius:4px;padding:12px 16px;background:var(--surface)}
+.ajuda summary{cursor:pointer;color:var(--accent);font-weight:600}
+.ajuda[open] summary{margin-bottom:12px}
+.ajuda pre{overflow-x:auto;white-space:pre;font:13px/1.65 var(--mono);color:var(--ink)}
 :focus-visible{outline:2px solid var(--accent);outline-offset:3px}
 @media (max-width:900px){
-  .shell{grid-template-columns:1fr;gap:0}
+  .shell{grid-template-columns:minmax(0,1fr);gap:0}
   nav.toc{position:static;padding:22px 0 0;columns:2;column-gap:24px}
   nav.toc .lbl{column-span:all}
   article{padding-top:22px}
@@ -223,6 +227,7 @@ figcaption b{font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-
     <a href="#u4">4.4 Regras derivadas</a>
     <a href="#u5">4.5 ⊢ e ⊨</a>
     <a href="#marco">Marco B2</a>
+    <a href="#solucoes">Pistas e soluções</a>
     <a href="#proximo">Próximo passo</a>
     <a href="#ref">Referências</a>
   </nav>
@@ -231,7 +236,7 @@ figcaption b{font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-
     <h2 id="i"><span class="num">Abertura</span>Por que dois métodos</h2>
     <p class="intro">O módulo 3 entregou um procedimento de decisão completo, a tabela de verdade. Poder-se-ia perguntar por que continuar. A resposta tem duas partes, e a segunda é a que importa.</p>
     <p>A primeira parte é prática. A tabela cresce exponencialmente: cinco letras exigem trinta e duas linhas, dez exigem mais de mil. Os métodos deste módulo aproveitam a estrutura das fórmulas e frequentemente decidem a questão examinando uma fração das valorações.</p>
-    <p>A segunda parte é conceitual. A tabela verifica; ela não demonstra. Diante de um argumento válido, ela informa que não há contraexemplo, mas não exibe a razão pela qual a conclusão se segue. A dedução natural exibe: ela produz um objeto, a derivação, que mostra passo a passo como a conclusão é extraída das premissas. É essa a diferença entre saber que algo é verdade e saber por quê, e é o que justifica que o curso trate a escrita de provas como um eixo próprio.</p>
+    <p>A segunda parte é conceitual. Uma tabela completa oferece uma prova semântica por exame exaustivo: mostra que não há contraexemplo. A dedução natural oferece outra forma de prova, uma derivação que explicita como a conclusão é obtida das premissas por regras de inferência. Comparar as duas formas de demonstração ajuda a compreender tanto a validade quanto a organização de um argumento.</p>
     <p>A ordem adotada é deliberada. O tablô é apresentado primeiro porque é mecânico como a tabela e informativo como uma prova: quando o argumento é válido, o tablô fecha; quando é inválido, o ramo que permanece aberto entrega diretamente a valoração que o refuta. Só depois, quando o aluno já sabe que a prova existe e por quê, a dedução natural lhe pede que a construa.</p>
 
     <h2 id="u1"><span class="num">Unidade 4.1</span>Tablôs semânticos</h2>
@@ -249,7 +254,7 @@ figcaption b{font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-
       <tr><td class="m2">β</td><td class="m2">α ↔ β</td><td class="m2">α , β &nbsp;|&nbsp; ¬α , ¬β</td><td>Sim</td></tr>
       <tr><td class="m2">β</td><td class="m2">¬(α ↔ β)</td><td class="m2">α , ¬β &nbsp;|&nbsp; ¬α , β</td><td>Sim</td></tr>
     </table></div>
-    <p>A regra de ¬(α → β) merece atenção porque é a que os alunos mais erram. Um condicional só é falso de uma maneira, com antecedente verdadeiro e consequente falso, e por isso a sua negação não ramifica. Já o condicional afirmado é verdadeiro de duas maneiras, e por isso ramifica.</p>
+    <p>A regra de ¬(α → β) merece atenção porque é a que os alunos mais erram. Um condicional só é falso com antecedente verdadeiro e consequente falso, e por isso a sua negação não ramifica. O condicional afirmado é verdadeiro em três valorações, agrupadas em duas condições que podem se sobrepor: α é falsa ou β é verdadeira. Essas condições justificam os dois ramos.</p>
     <h4>Fechamento, saturação e contramodelo</h4>
     <p>Um ramo está <strong>fechado</strong> quando contém uma fórmula e a sua negação, pois nenhuma valoração torna as duas verdadeiras. Um ramo está <strong>saturado</strong> quando não há mais decomposição pendente nele. Um ramo saturado e não fechado está <strong>aberto</strong>, e dele se lê o contramodelo: cada letra que aparece afirmada recebe V, cada letra que aparece negada recebe F, e as demais recebem qualquer valor.</p>
     <p>Se todos os ramos fecham, não há valoração que satisfaça as premissas e a negação da conclusão, e o argumento é válido. Se algum ramo permanece aberto, o argumento é inválido, e o contramodelo lido dele pode ser conferido diretamente na tabela de verdade do módulo 3.</p>
@@ -313,7 +318,18 @@ figcaption b{font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-
 
     <h2 id="u3"><span class="num">Unidade 4.3</span>Dedução natural</h2>
     <p>Uma <strong>derivação</strong> é uma sequência numerada de fórmulas em que cada linha ou é uma premissa, ou é uma hipótese, ou resulta de linhas anteriores pela aplicação de uma regra. Cada linha traz a sua justificativa: as linhas de que depende e o nome da regra. A derivação termina quando a conclusão desejada aparece sem depender de hipótese alguma que não tenha sido descarregada.</p>
-    <p>O sistema adotado aqui é o de Sell (2014), com dez regras básicas, das quais oito são diretas e duas são hipotéticas. A apresentação de Mortari (2016, cap. 14) organiza as mesmas regras em pares de introdução e eliminação, e a correspondência entre as duas é imediata: a prova do condicional é a regra de introdução do condicional.</p>
+    <p>O sistema oficial deste curso é o de Sell (2014), com dez regras básicas: oito diretas e duas hipotéticas. E∨ é a regra <strong>direta</strong> aplicada à disjunção e a dois condicionais. Uma prova por casos com duas subderivações pode ser escrita neste sistema: primeiro encerre cada caso por PC, obtendo os dois condicionais; depois aplique E∨. A metaprova do módulo 7 usa essa mesma apresentação.</p>
+    <h4>Como comparar Sell e Mortari</h4>
+    <p>As fontes demonstram as mesmas consequências clássicas, mas escolhem regras primitivas diferentes. Uma regra derivada pode ser usada depois de demonstrada; confira sempre se o exercício permite esse atalho.</p>
+    <div class="tw"><table>
+      <tr><th>Passo</th><th>Sistema adotado: Sell</th><th>Mortari</th></tr>
+      <tr><td>De ¬¬α a α</td><td>E¬, regra básica direta</td><td>Dupla negação, regra derivada</td></tr>
+      <tr><td>De α ∨ β e ¬α a β</td><td>SD, regra derivada</td><td>Eliminação da disjunção por silogismo disjuntivo, primitiva</td></tr>
+      <tr><td>De α ∨ β, α → γ e β → γ a γ</td><td>E∨, regra básica direta</td><td>Forma justificável pelas regras do sistema; não confundir com a sua E∨</td></tr>
+      <tr><td>Supor α, obter β e concluir α → β</td><td>PC, hipotética</td><td>Prova do condicional, hipotética</td></tr>
+      <tr><td>Supor α, obter contradição e concluir ¬α</td><td>RAA, hipotética</td><td>Redução ao absurdo, hipotética</td></tr>
+    </table></div>
+    <p class="note">Conferência: Sell, unidade 1, pp. 24–25, e unidade 2; Mortari, cap. 14 e p. 343, onde a escolha entre regras primitivas e derivadas é discutida explicitamente. A troca de apresentação exige justificar as regras que deixam de ser primitivas.</p>
     <div class="lab" id="regras">
       <h4>As dez regras básicas</h4>
       <p class="sub">Clique em uma regra para ver o esquema, um exemplo de aplicação e a situação em que ela se usa.</p>
@@ -360,7 +376,7 @@ figcaption b{font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-
       <tr><td>Contraposição (CP)</td><td class="m2">α → β</td><td class="m2">¬β → ¬α</td></tr>
       <tr><td>De Morgan (DM)</td><td class="m2">¬(α ∧ β)</td><td class="m2">¬α ∨ ¬β</td></tr>
       <tr><td>De Morgan (DM)</td><td class="m2">¬(α ∨ β)</td><td class="m2">¬α ∧ ¬β</td></tr>
-      <tr><td>Dilema construtivo (DC)</td><td class="m2">α ∨ β , α → γ , β → γ</td><td class="m2">γ</td></tr>
+      <tr><td>Dilema construtivo (DC)</td><td class="m2">α ∨ β , α → γ , β → δ</td><td class="m2">γ ∨ δ</td></tr>
     </table></div>
     <h4>Teoremas</h4>
     <p>Um <strong>teorema</strong> é uma fórmula derivável sem premissa alguma. Como não depende de nada, ela é verdadeira sob toda valoração, isto é, é uma tautologia. Escreve-se ⊢ α para dizer que α é teorema.</p>
@@ -374,7 +390,7 @@ figcaption b{font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-
     </div>
     <p>Nada na definição de uma menciona a outra. Um marciano que soubesse aplicar as dez regras sem saber o que é verdade poderia produzir derivações corretas; um outro que soubesse construir tabelas sem conhecer regra alguma poderia decidir toda questão de consequência semântica. As duas atividades são independentes.</p>
     <p>E, no entanto, o aluno terá notado que elas concordam em todos os casos examinados. Sempre que um tablô fechou, foi possível encontrar uma derivação; sempre que um ramo ficou aberto, nenhuma derivação existia. A pergunta que se impõe é se essa concordância é acidental, e ela tem nome:</p>
-    <div class="fx">Correção     Se Γ ⊢ α, então Γ ⊨ α.   O sistema não prova nada falso.
+    <div class="fx">Correção     Se Γ ⊢ α, então Γ ⊨ α.   Preserva a verdade das premissas.
 Completude   Se Γ ⊨ α, então Γ ⊢ α.   O sistema prova tudo o que se segue.</div>
     <p>Os dois enunciados são teoremas, e o módulo 6 os apresenta com a discussão do que afirmam. Quem quiser vê-los demonstrados encontrará as demonstrações no módulo complementar 7, que exige apenas indução matemática e a noção de conjunto enumerável da unidade 2.2.</p>
     <p>Por ora, basta reter o que a distinção implica para a prática. Não haver encontrado derivação não é o mesmo que não haver derivação, e por isso a incapacidade de provar algo não estabelece a sua invalidade. Para estabelecer invalidade, é preciso exibir o contramodelo, seja pela tabela do módulo 3, seja pelo ramo aberto de um tablô. Confundir as duas coisas é o erro conceitual mais comum deste nível.</p>
@@ -389,9 +405,78 @@ Completude   Se Γ ⊨ α, então Γ ⊢ α.   O sistema prova tudo o que se seg
     <p><strong>5.</strong> Demonstre o silogismo disjuntivo como regra derivada, isto é, derive β a partir de α ∨ β e ¬α usando somente regras básicas. Compare o número de linhas com o da derivação do modus tollens apresentada na unidade 4.4.</p>
     <p><strong>6.</strong> Prove que ⊢ ¬(P ∧ ¬P). Identifique qual regra hipotética a prova exige e por quê.</p>
     <p><strong>7.</strong> Um colega afirma que «não consegui derivar, logo o argumento é inválido». Explique por que o raciocínio é incorreto e descreva o que ele teria de fazer para estabelecer a invalidade.</p>
-    <p><strong>8.</strong> Os exercícios 12.1 a 12.6 do livro-texto cobrem os tablôs e têm resolução comentada em Pagani (s.d.). Os de dedução natural estão nas unidades 1 e 2 de Sell (2014), com respostas ao fim do volume.</p>
+    <p><strong>Leitura e prática complementar.</strong> Consulte a <a href="guia-estudo.html">trilha de estudo</a> para os exercícios de tablôs de Mortari e de dedução natural nas unidades 1 e 2 de Sell. Use Pagani apenas quando a correspondência entre os enunciados estiver verificada; a mesma numeração não garante o mesmo exercício.</p>
 
-    <h2 id="proximo"><span class="num">Encerramento</span>Próximo passo</h2><p>O ciclo de cada módulo se fecha em três movimentos: resolver os exercícios, verificar o marco no banco de itens e submeter o artefato escrito à rubrica correspondente.</p><div class="nextgrid"><a class="nx" href="provas.html#B2"><span class="k">Verificar o marco</span><span class="t">Provas de Domínio · marco B2</span><span class="d">Itens autocorrigidos com justificativa e fonte. O marco é vencido a partir de 75% de acerto.</span></a><a class="nx" href="prompts.html#p4"><span class="k">Corrigir o artefato</span><span class="t">Prompt 4 · Tablô semântico</span><span class="d">Confere a decomposição, o fechamento dos ramos e a leitura do contramodelo.</span></a><a class="nx" href="prompts.html#p5"><span class="k">Corrigir o artefato</span><span class="t">Prompt 5 · Dedução natural</span><span class="d">Percorre a derivação linha a linha, inclusive o escopo das hipóteses.</span></a><a class="nx" href="05-modulo-5.html"><span class="k">Seguir</span><span class="t">Módulo 5 · Primeira ordem</span><span class="d">Nível C · módulo 5 no percurso.</span></a></div>
+    <h2 id="solucoes"><span class="num">Apoio à prática</span>Pistas e soluções comentadas</h2>
+    <p>Compare justificativas e dependências, não apenas a última linha. Nas derivações abaixo, as barras indicam hipóteses abertas. «Reiteração» apenas copia uma fórmula que continua disponível; uma linha de hipótese já encerrada não pode ser recuperada dessa forma.</p>
+    <h3>1. Fechamento e ordem das expansões</h3>
+    <details class="ajuda"><summary>Pista</summary><p>Negue ¬P para começar. Decomponha P → (Q ∨ R) e observe o que ocorre em cada ramo diante de ¬Q e ¬R.</p></details>
+    <details class="ajuda"><summary>Solução comentada</summary><pre>1. P → (Q ∨ R)     premissa
+2. ¬Q              premissa
+3. ¬R              premissa
+4. ¬¬P             negação da conclusão
+5. P               4, ¬¬
+          /                 \
+6. ¬P                         7. Q ∨ R     1, →
+× com 5                      /        \
+                         8. Q          9. R   7, ∨
+                         × com 2       × com 3</pre><p>Todos os ramos fecham. Nesta ordem há nove ocorrências de fórmulas. Se expandirmos o condicional primeiro, o ramo ¬P já fecha com ¬¬P, pois uma fórmula e sua negação podem ser compostas. No outro ramo, Q e R fecham com ¬Q e ¬R. São oito ocorrências, sem decompor ¬¬P. A heurística de priorizar regras sem ramificação costuma ajudar, mas não garante a árvore menor em todo caso.</p></details>
+    <h3>2. Condicional e negação do condicional</h3>
+    <details class="ajuda"><summary>Pista</summary><p>Identifique as valorações que tornam verdadeira cada fórmula de entrada da regra.</p></details>
+    <details class="ajuda"><summary>Solução comentada</summary><p>¬(α → β) exige α verdadeira e β falsa simultaneamente: acrescente α e ¬β no mesmo ramo. Já α → β exige α falsa <em>ou</em> β verdadeira: os ramos ¬α e β representam esses dois casos, que podem se sobrepor. São três combinações verdadeiras na tabela do condicional, não apenas duas.</p></details>
+    <h3>3. Um argumento válido por resolução de casos</h3>
+    <details class="ajuda"><summary>Pista</summary><p>A negação da conclusão Q ∨ R exige ¬Q e ¬R. O que cada disjunto das premissas passa a exigir?</p></details>
+    <details class="ajuda"><summary>Solução comentada</summary><p>Parta de P ∨ Q, ¬P ∨ R e ¬(Q ∨ R). Esta última produz ¬Q e ¬R. Ao expandir P ∨ Q, o ramo Q fecha com ¬Q. No ramo P, expanda ¬P ∨ R: ¬P fecha com P, e R fecha com ¬R. Não há ramo aberto nem contramodelo. Pela tabela, se Q e R fossem ambas falsas, as premissas exigiriam simultaneamente P e ¬P.</p></details>
+    <h3>4. Três derivações com regras básicas</h3>
+    <details class="ajuda"><summary>Pista</summary><p>(a) Desmonte e remonte a conjunção. (b) Abra PC e depois RAA. (c) Abra duas provas do condicional, conservando a hipótese externa disponível.</p></details>
+    <details class="ajuda"><summary>Soluções comentadas</summary><pre>(a)
+1. P ∧ Q           premissa
+2. Q               1, E∧
+3. P               1, E∧
+4. Q ∧ P           2,3, I∧
+
+(b)
+1. P → Q           premissa
+2. │ ¬Q            hipótese para PC
+3. │ │ P           hipótese para RAA
+4. │ │ Q           1,3, MP
+5. │ │ Q ∧ ¬Q      4,2, I∧
+6. │ ¬P            3–5, RAA
+7. ¬Q → ¬P         2–6, PC
+
+(c)
+1. │ P             hipótese para PC
+2. │ │ Q           hipótese para PC
+3. │ │ P           1, reiteração
+4. │ Q → P         2–3, PC
+5. P → (Q → P)     1–4, PC</pre><p>Em (b), a linha 6 ainda depende da hipótese 2; só a linha 7 depende exclusivamente da premissa. Em (c), nenhuma hipótese permanece aberta ao final, por isso a conclusão é um teorema.</p></details>
+    <h3>5. Silogismo disjuntivo como regra derivada</h3>
+    <details class="ajuda"><summary>Pista</summary><p>Para usar a E∨ direta, obtenha α → β e β → β. No primeiro caso, α e a premissa ¬α fornecem uma contradição; RAA e E¬ permitem obter β.</p></details>
+    <details class="ajuda"><summary>Solução comentada</summary><pre> 1. α ∨ β             premissa
+ 2. ¬α                premissa
+ 3. │ α               hipótese para PC
+ 4. │ α ∧ ¬α          3,2, I∧
+ 5. │ │ ¬β            hipótese para RAA
+ 6. │ │ α ∧ ¬α        4, reiteração
+ 7. │ ¬¬β             5–6, RAA
+ 8. │ β               7, E¬
+ 9. α → β             3–8, PC
+10. │ β               hipótese para PC
+11. β → β             10–10, PC
+12. β                 1,9,11, E∨</pre><p>A hipótese ¬β pode ser descarregada mesmo que a contradição já estivesse disponível: o sistema permite provar qualquer fórmula a partir de uma contradição. A linha 11 usa uma subderivação de uma única linha. Esta apresentação tem doze linhas, contra seis na prova de MT do texto; contagens podem variar com a convenção de reiteração, sem alterar a validade.</p></details>
+    <h3>6. Não contradição como teorema</h3>
+    <details class="ajuda"><summary>Pista</summary><p>A conclusão é uma negação. Suponha a fórmula que ela nega e identifique a contradição já contida nela.</p></details>
+    <details class="ajuda"><summary>Solução comentada</summary><pre>1. │ P ∧ ¬P          hipótese para RAA
+2. │ P               1, E∧
+3. │ ¬P              1, E∧
+4. │ P ∧ ¬P          2,3, I∧
+5. ¬(P ∧ ¬P)         1–4, RAA</pre><p>A hipótese é descarregada por RAA, e não resta premissa. As linhas 2–4 tornam o raciocínio explícito; a própria linha 1 já tem a forma de contradição, permitindo uma apresentação mais curta.</p></details>
+    <h3>7. Não encontrar uma prova</h3>
+    <details class="ajuda"><summary>Pista</summary><p>Distinga um fato sobre sua busca de um fato sobre todas as derivações possíveis.</p></details>
+    <details class="ajuda"><summary>Resposta esperada e critérios</summary><p>Uma tentativa malsucedida não demonstra que nenhuma derivação exista. No CPC, o colega pode construir a tabela completa ou um tablô saturado. Para estabelecer invalidade, deve apresentar uma valoração que torne todas as premissas verdadeiras e a conclusão falsa.</p><p><strong>Critérios:</strong> distinguir falha de busca e inexistência de prova; indicar um procedimento de decisão proposicional; explicar por que o contramodelo satisfaz as premissas e refuta a conclusão. Dizer apenas «tente outra regra» não justifica a invalidade.</p></details>
+    <p class="note"><strong>Conferência do artefato B2:</strong> explicite as fórmulas iniciais do tablô, cite a regra de cada expansão e o par que fecha cada ramo; para um ramo aberto saturado, dê uma valoração e confira-a. Na derivação, cite linhas disponíveis, marque cada hipótese e seu descarregamento. O teste de reconhecimento e essa produção escrita são verificações complementares.</p>
+
+    <h2 id="proximo"><span class="num">Encerramento</span>Próximo passo</h2><p>O ciclo de cada módulo se fecha em três movimentos: resolver os exercícios, concluir o teste do marco e submeter o artefato escrito à rubrica correspondente. O domínio exige as três verificações.</p><div class="nextgrid"><a class="nx" href="provas.html#B2"><span class="k">Verificar o marco</span><span class="t">Provas de Domínio · marco B2</span><span class="d">Itens autocorrigidos com justificativa e fonte. O teste é aprovado com 75% de acerto e todos os itens respondidos; o marco exige também a produção escrita.</span></a><a class="nx" href="prompts.html#p4"><span class="k">Corrigir o artefato</span><span class="t">Prompt 4 · Tablô semântico</span><span class="d">Confere a decomposição, o fechamento dos ramos e a leitura do contramodelo.</span></a><a class="nx" href="prompts.html#p5"><span class="k">Corrigir o artefato</span><span class="t">Prompt 5 · Dedução natural</span><span class="d">Percorre a derivação linha a linha, inclusive o escopo das hipóteses.</span></a><a class="nx" href="05-modulo-5.html"><span class="k">Seguir</span><span class="t">Módulo 5 · Primeira ordem</span><span class="d">Nível C · módulo 5 no percurso.</span></a></div>
 
     <h2 id="ref">Referências</h2>
     <div class="refs">
@@ -455,7 +540,7 @@ function show(n,pai){
   let s,pr=PREC[n.op];
   if(n.op==='at') return n.nome;
   if(n.op==='¬') s='¬'+show(n.a,PREC['¬']);
-  else s=show(n.l, n.op==='→'?pr+1:pr)+' '+n.op+' '+show(n.r,pr);
+  else s=show(n.l, n.op==='→'?pr+1:pr)+' '+n.op+' '+show(n.r,n.op==='→'?pr:pr+1);
   return pr<pai?'('+s+')':s;
 }
 function atomos(n,acc){ acc=acc||new Set(); if(n.op==='at')acc.add(n.nome); else if(n.op==='¬')atomos(n.a,acc); else {atomos(n.l,acc);atomos(n.r,acc);} return acc; }
@@ -529,7 +614,7 @@ function abertos(no,acc){ acc=acc||[]; if(no.aberto){acc.push(no.ramo);return ac
     ["E∧","Eliminação da conjunção","De α ∧ β infere-se α, e também β.","P ∧ Q  ⊢  P","Use logo no início para desmontar premissas conjuntivas em partes utilizáveis."],
     ["I∧","Introdução da conjunção","De α e β infere-se α ∧ β.","P , Q  ⊢  P ∧ Q","Serve para montar a conclusão e, sobretudo, para formar a contradição exigida pela redução ao absurdo."],
     ["E∨","Eliminação da disjunção","De α ∨ β, α → γ e β → γ infere-se γ.","P ∨ Q , P → R , Q → R  ⊢  R","É a análise por casos: mostrando que γ decorre de cada disjunto, γ decorre da disjunção."],
-    ["I∨","Introdução da disjunção","De α infere-se α ∨ β, para β qualquer.","P  ⊢  P ∨ Q","Parece gratuita e não é: enfraquecer a afirmação é exatamente o que a disjunção permite."],
+    ["I∨","Introdução da disjunção","De α infere-se α ∨ β ou β ∨ α, para β qualquer.","P  ⊢  P ∨ Q","A fórmula conhecida pode ocupar qualquer dos lados. Enfraquecer a afirmação é exatamente o que a disjunção permite."],
     ["E↔","Eliminação do bicondicional","De α ↔ β infere-se α → β, e também β → α.","P ↔ Q  ⊢  P → Q","Primeiro passo diante de qualquer premissa bicondicional."],
     ["I↔","Introdução do bicondicional","De α → β e β → α infere-se α ↔ β.","P → Q , Q → P  ⊢  P ↔ Q","Para concluir um bicondicional, prove os dois condicionais separadamente."],
     ["PC","Prova do condicional","Se de α se deriva β, infere-se α → β, descarregando α.","hipótese P ⋯ Q  ⊢  P → Q","Regra hipotética. Estratégia padrão sempre que a conclusão é um condicional."],
@@ -605,7 +690,7 @@ function abertos(no,acc){ acc=acc||[]; if(no.aberto){acc.push(no.ramo);return ac
     const ab = abertos(res.arvore);
     if(ab.length === 0){
       h += '<div class="verdict"><b>Válido</b>Todos os ramos fecham. Não há valoração que torne as premissas verdadeiras e a conclusão falsa, e portanto ' +
-        (prem.length ? esc(prem.map(show).join(", ")) + " ⊨ " : "⊨ ") + esc(show(conc)) + ".</div>";
+        (prem.length ? esc(prem.map(p => show(p)).join(", ")) + " ⊨ " : "⊨ ") + esc(show(conc)) + ".</div>";
     } else {
       h += '<div class="verdict bad"><b>Inválido</b>' + ab.length + " ramo" + (ab.length === 1 ? "" : "s") +
         " permanece" + (ab.length === 1 ? "" : "m") + " aberto. " +
@@ -616,8 +701,8 @@ function abertos(no,acc){ acc=acc||[]; if(no.aberto){acc.push(no.ramo);return ac
     saida.innerHTML = h;
   }
   document.querySelectorAll("[data-ins]").forEach(b => b.addEventListener("click", () => {
-    const p = ent.selectionStart || ent.value.length;
-    ent.value = ent.value.slice(0, p) + b.dataset.ins + ent.value.slice(ent.selectionEnd || p);
+    const p = ent.selectionStart ?? ent.value.length;
+    ent.value = ent.value.slice(0, p) + b.dataset.ins + ent.value.slice(ent.selectionEnd ?? p);
     ent.focus(); ent.selectionStart = ent.selectionEnd = p + b.dataset.ins.length;
     render();
   }));

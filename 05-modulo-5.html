@@ -126,9 +126,13 @@ figcaption b{font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-
 .readout ol li{margin-bottom:5px}
 .refs{margin-top:12px}
 .refs p{padding-left:34px;text-indent:-34px;font-size:15.5px;margin-bottom:13px}
+.ajuda{margin:10px 0;border:1px solid var(--line);border-radius:4px;padding:12px 16px;background:var(--surface)}
+.ajuda summary{cursor:pointer;color:var(--accent);font-weight:600}
+.ajuda[open] summary{margin-bottom:12px}
+.ajuda pre{overflow-x:auto;white-space:pre;font:13px/1.65 var(--mono);color:var(--ink)}
 :focus-visible{outline:2px solid var(--accent);outline-offset:3px}
 @media (max-width:900px){
-  .shell{grid-template-columns:1fr;gap:0}
+  .shell{grid-template-columns:minmax(0,1fr);gap:0}
   nav.toc{position:static;padding:22px 0 0;columns:2;column-gap:24px}
   nav.toc .lbl{column-span:all}
   article{padding-top:22px}
@@ -228,6 +232,7 @@ figcaption b{font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-
     <a href="#u6">5.6 Dedução natural e escopo</a>
     <a href="#u7">5.7 Identidade</a>
     <a href="#marco">Marco C1</a>
+    <a href="#solucoes">Pistas e soluções</a>
     <a href="#proximo">Próximo passo</a>
     <a href="#ref">Referências</a>
   </nav>
@@ -244,11 +249,11 @@ figcaption b{font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-
 Variáveis individuais   x, y, z, …      ocupam lugar de objeto sem nomear nenhum
 Constantes de predicado P, Q, R, …      com aridade fixa: 1, 2, 3, …
 Quantificadores         ∀  ∃            universal e existencial</div>
-    <p>Uma <strong>fórmula atômica</strong> é uma constante de predicado seguida de tantos termos quanto a sua aridade exige. Escreve-se Pa para «a tem a propriedade P», Rab para «a está na relação R com b», e assim por diante. A ordem dos termos importa: Rab e Rba dizem coisas distintas, e confundi-las é o erro mais comum ao formalizar relações assimétricas como «ama», «é maior que» ou «é pai de».</p>
+    <p>Uma <strong>fórmula atômica</strong> é uma constante de predicado seguida de tantos termos quanto a sua aridade exige. Escreve-se Pa para «a tem a propriedade P», Rab para «a está na relação R com b», e assim por diante. A ordem dos termos importa: Rab e Rba podem ter valores diferentes em relações como «ama», «é maior que» ou «é pai de». Não se deve presumir simetria sem que ela tenha sido estabelecida.</p>
     <p>As fórmulas moleculares se formam como no módulo 3, com os mesmos cinco operadores. As <strong>fórmulas gerais</strong> se formam com quantificadores: se α é fórmula e x é variável, então ∀xα e ∃xα são fórmulas.</p>
     <h4>Variáveis livres e ligadas</h4>
-    <p>Uma ocorrência de variável é <strong>ligada</strong> quando cai no escopo de um quantificador que a governa, e <strong>livre</strong> caso contrário. Em ∀x(Px → Qx), todas as ocorrências de x são ligadas. Em ∀xPx ∧ Qx, a ocorrência final de x é livre, pois o escopo do quantificador termina no primeiro parêntese fechado.</p>
-    <p>A distinção decide o que uma fórmula é. Uma fórmula sem variáveis livres chama-se <strong>sentença</strong>, e só sentenças são verdadeiras ou falsas em uma estrutura. Uma fórmula com variável livre é como uma frase com um pronome sem antecedente: «ele é mortal» não é verdadeira nem falsa até que se diga de quem se fala.</p>
+    <p>Uma ocorrência de variável é <strong>ligada</strong> quando cai no escopo de um quantificador que a governa, e <strong>livre</strong> caso contrário. Em ∀x(Px → Qx), as ocorrências de x na matriz são ligadas. Em (∀xPx) ∧ Qx, a ocorrência final de x é livre: o escopo de ∀x é apenas Px. Sem parênteses adicionais, quantificadores e negação ligam mais fortemente que os operadores binários.</p>
+    <p>Uma fórmula sem variáveis livres chama-se <strong>sentença</strong>; seu valor de verdade em uma estrutura independe de atribuição às variáveis. Fórmulas abertas são avaliadas em uma estrutura <em>com uma atribuição</em>, como veremos na unidade 5.3. A analogia é um pronome sem antecedente: para avaliar «ele é mortal», precisamos fixar de quem se fala.</p>
     <div class="note">A recomendação prática deste módulo é escrever sempre os parênteses do escopo, como em ∀x(Px → Qx), mesmo quando a convenção os dispensaria. A economia de sinais é conveniência de quem já lê com fluência; para quem está aprendendo, ela esconde exatamente a informação que precisa ser vista.</div>
 
     <h2 id="u2"><span class="num">Unidade 5.2</span>Categóricas e quantificação múltipla</h2>
@@ -260,14 +265,14 @@ Quantificadores         ∀  ∃            universal e existencial</div>
       <tr><td class="m2">I</td><td>Algum S é P</td><td class="m2">∃x(Sx ∧ Px)</td><td>Conjunção</td></tr>
       <tr><td class="m2">O</td><td>Algum S não é P</td><td class="m2">∃x(Sx ∧ ¬Px)</td><td>Conjunção</td></tr>
     </table></div>
-    <p>A regra é firme: <strong>universal com condicional, existencial com conjunção</strong>. Trocá-las produz disparate. ∀x(Sx ∧ Px) afirma que tudo o que existe é S e é P, o que é muito mais forte do que «todo S é P». E ∃x(Sx → Px) é satisfeita por qualquer objeto que não seja S, porque o condicional se satisfaz por antecedente falso, de modo que a fórmula quase nada afirma.</p>
+    <p>Para as categóricas desta tabela, o padrão é <strong>universal com condicional, existencial com conjunção</strong>. Isso não é uma regra geral de formação ou tradução. ∀x(Sx ∧ Px) traduz corretamente «Tudo é S e é P», mas afirma mais do que «todo S é P». Já ∃x(Sx → Px) é satisfeita por qualquer objeto que não seja S, porque o condicional é verdadeiro com antecedente falso; portanto, ela não traduz «algum S é P».</p>
     <p>Daí decorre também a divergência com a tradição aristotélica registrada na unidade 2.4. A universal, escrita com condicional, é verdadeira por vacuidade quando não há nenhum S, e nesse caso a particular correspondente é falsa. A subalternação, portanto, falha, e o quadrado das oposições perde três de suas quatro relações.</p>
     <h4>Quantificação múltipla</h4>
     <p>O ganho decisivo aparece quando dois quantificadores se combinam. A ordem em que aparecem altera o que é dito, e a diferença não tem análogo no módulo 3.</p>
     <div class="fx">∀x∃yAxy     Todos amam alguém.        Cada um pode amar uma pessoa diferente.
 ∃y∀xAxy     Alguém é amado por todos.  Existe uma pessoa que todos amam.</div>
     <p>A segunda implica a primeira; a primeira não implica a segunda. A verificação é imediata no laboratório da unidade seguinte, e é o exercício que mais rende neste módulo.</p>
-    <p>Três outras construções merecem registro. «Todo amigo de alguém tem um amigo» exige quantificadores encaixados e é o exemplo que Frege usou para mostrar o alcance do novo aparato. «Nenhum objeto se relaciona consigo mesmo» é ∀x¬Rxx, e afirma a irreflexividade. «Toda pessoa tem exatamente um pai biológico» exige identidade, e é matéria da unidade 5.7.</p>
+    <p>Outras construções ajudam a distinguir propriedades de relações. «Nenhum objeto se relaciona consigo mesmo» é ∀x¬Rxx e afirma a irreflexividade. «Se alguém se relaciona com outro, este se relaciona com o primeiro» é ∀x∀y(Rxy → Ryx) e afirma a simetria. Já «Toda pessoa tem exatamente um pai biológico» exige identidade, tratada na unidade 5.7.</p>
     <h2 id="u3"><span class="num">Unidade 5.3</span>Estruturas e verdade</h2>
     <p>No módulo 3, uma valoração bastava para determinar o valor de toda fórmula. Aqui não basta, porque as fórmulas falam de objetos, e é preciso dizer de quais objetos se fala.</p>
     <div class="thm"><span class="lb">Definição · estrutura</span>
@@ -279,7 +284,7 @@ Quantificadores         ∀  ∃            universal e existencial</div>
 
     <div class="lab" id="lab">
       <h4>Laboratório de estruturas</h4>
-      <p class="sub">Monte uma estrutura pequena e teste fórmulas nela. O domínio tem dois ou três indivíduos; P e Q são predicados unários, R é binário, e a e b são constantes.</p>
+      <p class="sub">Monte uma estrutura pequena e teste sentenças nela. O domínio tem dois ou três indivíduos; P e Q são predicados unários, R é binário, a e b são constantes, e x, y, z são variáveis. Use apenas esses símbolos, além dos operadores, quantificadores e identidade. Por exemplo, Pa e Rxy têm aridade correta; Pab e ∀aPa não pertencem à linguagem deste laboratório. Símbolos funcionais não são aceitos aqui.</p>
       <div class="row">
         <div class="seg" role="group" aria-label="Tamanho do domínio">
           <span class="lbl">Domínio</span>
@@ -343,11 +348,12 @@ Quantificadores         ∀  ∃            universal e existencial</div>
       <tr><th>Fórmula</th><th>Produz</th><th>Condição sobre o termo</th></tr>
       <tr><td class="m2">∃xα</td><td class="m2">α(x/c)</td><td>c deve ser uma constante <strong>nova</strong> no ramo</td></tr>
       <tr><td class="m2">¬∀xα</td><td class="m2">¬α(x/c)</td><td>c deve ser uma constante <strong>nova</strong> no ramo</td></tr>
-      <tr><td class="m2">∀xα</td><td class="m2">α(x/t)</td><td>t pode ser <strong>qualquer</strong> termo já presente</td></tr>
-      <tr><td class="m2">¬∃xα</td><td class="m2">¬α(x/t)</td><td>t pode ser <strong>qualquer</strong> termo já presente</td></tr>
+      <tr><td class="m2">∀xα</td><td class="m2">α(x/c)</td><td>c pode ser qualquer constante; se não houver nome no ramo, introduza um</td></tr>
+      <tr><td class="m2">¬∃xα</td><td class="m2">¬α(x/c)</td><td>c pode ser qualquer constante; reaplique a cada novo nome relevante</td></tr>
     </table></div>
-    <p>A assimetria entre as duas primeiras regras e as duas últimas é a fonte de toda a dificuldade, e a razão dela é semântica. Afirmar que existe um objeto com certa propriedade não diz qual é, e por isso o objeto recebe um nome novo, que não pode carregar informação alguma vinda de outro lugar. Afirmar que todos os objetos têm a propriedade permite aplicá-la a qualquer objeto já mencionado, e nada impede que se volte a aplicá-la a um objeto que apareça depois.</p>
-    <p>É esta última cláusula que quebra a garantia de terminação. Uma fórmula universal nunca se esgota: sempre que uma constante nova entra no ramo, ela pode ser instanciada de novo. Se as constantes novas continuarem aparecendo, o processo não para.</p>
+    <p>Nesta apresentação de tablôs para sentenças sem símbolos funcionais, α(x/c) substitui apenas as ocorrências livres de x na matriz α pela constante c. A assimetria é semântica: uma existência pede uma testemunha com nome novo; uma universal permite falar de qualquer objeto, inclusive um que apareça depois. Nome novo não significa objeto diferente: constantes distintas podem designar o mesmo indivíduo.</p>
+    <p><strong>Se ainda não houver constante no ramo, introduza a primeira.</strong> O domínio não é vazio. Por exemplo, para testar ∀xPx ⊨ ∃xPx, começamos com ∀xPx e ¬∃xPx; escolhemos a e obtemos Pa e ¬Pa, fechando o ramo. Não se deve declarar saturado um ramo apenas porque ele começou sem nomes. Consulte Mortari, §12.5, p. 282.</p>
+    <p>A reaplicação quebra a garantia de terminação: cada nome novo pode exigir novas instâncias das universais. Para uma busca sistemática, registre os pares fórmula–constante já utilizados e não deixe uma fórmula ou instância pendente para sempre. Essa exigência de distribuição justa das expansões é necessária para que a busca encontre um fechamento quando ele existe.</p>
     <div class="fx">∀x∃yRxy , ∀x¬Rxx , ∀x∀y∀z((Rxy ∧ Ryz) → Rxz)
 
 Este conjunto é satisfazível, mas apenas em domínios infinitos.
@@ -356,20 +362,22 @@ O tablô gera a₁, a₂, a₃, … indefinidamente, e nunca fecha nem satura.</
     <p>Na prática, o aluno deve reter a orientação seguinte. Se o tablô fecha, o argumento é válido, e a resposta é definitiva. Se um ramo satura sem fechar, o argumento é inválido, e o ramo entrega o contramodelo. Se o tablô cresce sem sinal de parar, nenhuma conclusão foi obtida, e a estratégia recomendada passa a ser procurar diretamente um contramodelo pequeno, como no laboratório da unidade 5.3.</p>
 
     <h2 id="u6"><span class="num">Unidade 5.6</span>Dedução natural com quantificadores</h2>
-    <p>As dez regras do módulo 4 permanecem válidas e continuam a ser usadas. Acrescentam-se quatro, uma de introdução e uma de eliminação para cada quantificador, e duas delas trazem restrições que são a matéria desta unidade.</p>
+    <p>As dez regras do módulo 4 continuam a ser usadas. Acrescentam-se quatro regras quantificacionais. Todas pressupõem substituição admissível; I∀ e E∃ exigem também um parâmetro próprio, que representa um objeto arbitrário ou uma testemunha temporária.</p>
+    <p><strong>Convenção de substituição.</strong> α(x/t) resulta da substituição de todas as ocorrências <em>livres</em> de x em α pelo termo t. Exigimos que t seja <em>livre para x em α</em>: nenhuma variável de t pode ficar capturada por um quantificador de α. Quando necessário, renomeie primeiro as variáveis ligadas. Por exemplo, substituir x por y em ∃yRxy pede antes escrever ∃zRxz; o resultado correto é ∃zRyz, e não ∃yRyy.</p>
     <div class="tw"><table>
       <tr><th>Regra</th><th>De</th><th>Infere</th><th>Restrição</th></tr>
-      <tr><td class="m2">E∀</td><td class="m2">∀xα</td><td class="m2">α(x/t)</td><td>Nenhuma</td></tr>
-      <tr><td class="m2">I∃</td><td class="m2">α(x/t)</td><td class="m2">∃xα</td><td>Nenhuma</td></tr>
-      <tr><td class="m2">I∀</td><td class="m2">α(x/a)</td><td class="m2">∀xα</td><td>a não ocorre em premissa nem em hipótese não descarregada</td></tr>
-      <tr><td class="m2">E∃</td><td class="m2">∃xα e uma derivação de γ a partir de α(x/a)</td><td class="m2">γ</td><td>a é nova e não ocorre em γ nem nas premissas</td></tr>
+      <tr><td class="m2">E∀</td><td class="m2">∀xα</td><td class="m2">α(x/t)</td><td>t é livre para x em α</td></tr>
+      <tr><td class="m2">I∃</td><td class="m2">α(x/t)</td><td class="m2">∃xα</td><td>t é livre para x em α</td></tr>
+      <tr><td class="m2">I∀</td><td class="m2">α(x/a)</td><td class="m2">∀xα</td><td>a é um parâmetro que não ocorre em α, nas premissas ou em hipótese não descarregada; a substituição é admissível</td></tr>
+      <tr><td class="m2">E∃</td><td class="m2">∃xα e uma derivação de γ sob a hipótese temporária α(x/a)</td><td class="m2">γ</td><td>Descarregue α(x/a). O parâmetro novo a não ocorre em α, γ, nas premissas nem nas outras hipóteses abertas</td></tr>
     </table></div>
-    <p>As duas primeiras regras são inócuas e correspondem ao raciocínio comum: do que vale para todos, vale para este; do que vale para este, segue-se que vale para algum. As duas últimas exigem cuidado, e vale entender por quê.</p>
+    <p>Com essas condições, E∀ e I∃ formalizam dois passos usuais: do que vale para todos, vale para este; do que vale para este, segue-se que vale para algum. A condição de substituição impede inferências falsas: ∀x∃yRxy não permite concluir ∃yRyy. Em dois objetos, a relação «é diferente de» torna a primeira verdadeira e a segunda falsa.</p>
+    <p class="note">Referências para as restrições: Mortari, §15.2, pp. 344 e 347–348; Sell, unidade 4, pp. 79–81. As fontes apresentam instanciações por constantes. A notação com um termo t usada na tabela explicita também o cuidado necessário quando o termo contém variáveis.</p>
     <h4>A restrição sobre a variável própria</h4>
     <p>A introdução do universal formaliza o raciocínio «tome um objeto arbitrário; mostrei que ele tem a propriedade; logo todos a têm». A palavra que carrega todo o peso é <em>arbitrário</em>. Se algo particular foi suposto a respeito daquele objeto, a generalização não se sustenta.</p>
     <div class="deriv" style="font-family:var(--mono);font-size:14px;background:var(--ground);border:1px solid var(--line-soft);border-radius:4px;padding:14px 16px;white-space:pre;overflow-x:auto;color:var(--ink);line-height:1.75">  1.  Pa             premissa
   2.  ∀xPx          <span style="color:var(--falsum)">1, I∀   ← ilegítimo: a ocorre na premissa 1</span></div>
-    <p>Sem a restrição, de «Sócrates é mortal» seguir-se-ia «tudo é mortal», o que é absurdo. Com ela, o passo é bloqueado, porque a constante a ocorre em uma premissa e portanto não designa objeto arbitrário: designa aquele de que a premissa fala. O módulo complementar 7 mostra que é exatamente esta restrição que faz a demonstração da correção funcionar; sem ela, o sistema provaria coisas falsas.</p>
+    <p>Sem a restrição, de «Sócrates é mortal» seguir-se-ia «tudo é mortal». A condição sobre a conclusão também importa: de a = a não se pode generalizar apenas uma ocorrência e concluir ∀x(x = a). A generalização admissível é ∀x(x = x), na qual o parâmetro desaparece. O módulo 7 usa essas condições na demonstração da correção.</p>
     <p>A eliminação do existencial tem estrutura análoga à eliminação da disjunção do módulo 4. De ∃xPx não se pode extrair um nome: sabe-se que algo é P, não qual. O procedimento consiste em batizar esse algo com uma constante nova, derivar dela a conclusão pretendida, e observar que a conclusão não menciona o nome inventado. Se mencionasse, a derivação teria contrabandeado informação que não estava disponível.</p>
     <h4>Intercâmbio de quantificadores</h4>
     <p>As quatro equivalências seguintes são deriváveis e usadas o tempo todo. Elas são o análogo quantificacional das leis de De Morgan.</p>
@@ -381,32 +389,75 @@ O tablô gera a₁, a₂, a₃, … indefinidamente, e nunca fecha nem satura.</
 
     <h2 id="u7"><span class="num">Unidade 5.7</span>Identidade e símbolos funcionais</h2>
     <p>A linguagem ganha um último recurso: um predicado binário fixo, escrito t = u, cuja interpretação não é livre. Em toda estrutura, ele denota a relação de identidade, isto é, vale entre um objeto e ele mesmo e entre nenhum outro par.</p>
-    <p>O seu comportamento dedutivo é dado por duas regras: <strong>reflexividade</strong>, que permite escrever t = t em qualquer ponto, e <strong>substituição</strong>, que permite trocar t por u em qualquer fórmula quando se dispõe de t = u. Delas decorrem a simetria e a transitividade, que por isso não precisam ser postuladas.</p>
+    <p>O seu comportamento dedutivo é dado por duas regras: <strong>reflexividade</strong>, que permite escrever t = t, e <strong>eliminação da identidade</strong>: de t = u e α(x/t), infere-se α(x/u), desde que ambas as substituições sejam admissíveis. A troca alcança as ocorrências indicadas por x, sem substituir ocorrências ligadas ou capturar variáveis. Delas decorrem a simetria e a transitividade.</p>
     <h4>O que a identidade permite dizer</h4>
     <p>O acréscimo é pequeno e o ganho expressivo é considerável, porque só com identidade se exprime numeralidade.</p>
     <div class="fx">Ao menos um P      ∃xPx
 Ao menos dois P    ∃x∃y(Px ∧ Py ∧ ¬(x = y))
 No máximo um P     ∀x∀y((Px ∧ Py) → x = y)
 Exatamente um P    ∃x(Px ∧ ∀y(Py → y = x))
-Todos, salvo a     ∀x(¬(x = a) → Px)</div>
+Todos, salvo a     ¬Pa ∧ ∀x(¬(x = a) → Px)</div>
+    <p>A última linha toma a como exceção efetiva: todos os demais são P e a não é P. Se a intenção for apenas afirmar algo dos demais, deixando Pa em aberto, basta ∀x(¬(x = a) → Px). Declare a leitura do português antes de formalizar.</p>
     <p>A fórmula de «exatamente um» merece leitura atenta, porque é a que mais aparece. Ela afirma duas coisas: que existe um objeto com a propriedade, e que qualquer objeto com a propriedade coincide com ele. A segunda cláusula é a de unicidade, e omiti-la é o erro característico. É também a estrutura das descrições definidas, isto é, das expressões da forma «o tal», cuja análise por Russell é um dos textos fundadores da filosofia analítica.</p>
     <h4>Símbolos funcionais</h4>
     <p>Um <strong>símbolo funcional</strong> designa uma operação sobre o domínio, e permite formar termos compostos: se f é unário e a é constante, então f(a) é termo, e pode ocupar o lugar de qualquer termo. Escreve-se «o pai de a» como p(a), e «o pai do pai de a» como p(p(a)).</p>
-    <p>Símbolos funcionais não aumentam o poder expressivo, pois toda função pode ser representada por uma relação mais o axioma de que ela é funcional. Aumentam a legibilidade, e é por isso que a aritmética formalizada, tratada na unidade 6.1, os emprega para a soma e o produto.</p>
+    <p>Na lógica com identidade, símbolos funcionais podem ser traduzidos por relações acompanhadas de axiomas de <strong>existência e unicidade</strong> do resultado para cada entrada. Uma função unária, por exemplo, corresponde a F com ∀x∃y(Fxy ∧ ∀z(Fxz → z = y)). Só unicidade não bastaria, pois funções são totais no domínio. Os símbolos funcionais tornam muitas fórmulas mais legíveis; a aritmética da unidade 6.1 os usa para soma e produto.</p>
     <h2 id="marco"><span class="num">Verificação</span>Marco C1 e exercícios</h2>
-    <div class="marco"><b>Marco C1</b>Formalizar um enunciado com quantificação múltipla e identidade, declarando o domínio e o dicionário; refutá-lo por estrutura finita quando falso, exibindo a estrutura e o cálculo do valor da fórmula nela; e prová-lo em dedução natural respeitando as restrições sobre a variável própria.</div>
+    <div class="marco"><b>Marco C1</b>Formalizar enunciados com quantificação múltipla e identidade, declarando domínio e dicionário; em argumentos selecionados, exibir um contramodelo finito para um inválido e uma derivação para um válido, respeitando substituição e parâmetro próprio. Um argumento arbitrário pode não ter contramodelo finito; uma busca que não termina deve ser registrada como inconclusiva, sem declarar validade ou invalidade.</div>
     <h4>Exercícios</h4>
     <p><strong>1.</strong> Formalize, declarando o dicionário: (a) todo estudante lê algum livro; (b) há um livro que todo estudante lê; (c) nenhum estudante lê todos os livros; (d) exatamente um estudante não lê livro algum.</p>
-    <p><strong>2.</strong> Use o laboratório para construir uma estrutura em que (a) do exercício anterior seja verdadeira e (b) seja falsa. Descreva em português o que a estrutura representa.</p>
+    <p><strong>2.</strong> Construa no papel uma estrutura em que (a) do exercício anterior seja verdadeira e (b) seja falsa, usando dois estudantes e dois livros distintos. Depois reproduza no laboratório o padrão abstrato ∀x∃yRxy verdadeiro e ∃y∀xRxy falso. Descreva a diferença entre essas duas experiências.</p>
     <p><strong>3.</strong> Explique por que ∃x(Px → Qx) é verdadeira em toda estrutura em que exista ao menos um objeto que não seja P. Verifique no laboratório e conclua por que essa fórmula não traduz «algum P é Q».</p>
     <p><strong>4.</strong> Mostre, exibindo uma estrutura, que ∀x(Px → Qx) não implica ∃x(Px ∧ Qx). Relacione o resultado com a falha da subalternação discutida na unidade 2.4.</p>
     <p><strong>5.</strong> Derive ∀x¬Px a partir de ¬∃xPx usando apenas as regras básicas e as quantificacionais, sem invocar o intercâmbio como regra derivada.</p>
     <p><strong>6.</strong> Exiba uma tentativa de derivação que viole a restrição sobre a variável própria e mostre, com uma estrutura, que a conclusão obtida seria falsa. Este exercício é o núcleo do marco.</p>
     <p><strong>7.</strong> Escreva a fórmula de «há exatamente dois P» e verifique-a no laboratório em uma estrutura com três indivíduos, ajustando P até que ela fique verdadeira.</p>
-    <p><strong>8.</strong> O conjunto {∀x∃yRxy, ∀x¬Rxx, ∀x∀y∀z((Rxy ∧ Ryz) → Rxz)} é satisfazível apenas em domínios infinitos. Verifique no laboratório que nenhuma estrutura com dois ou três indivíduos o satisfaz, e explique por quê.</p>
-    <p><strong>9.</strong> Os exercícios 9.1 a 9.6, 10.1 a 10.5 e 11.1 a 11.5 do livro-texto cobrem estas unidades e têm resolução comentada em Pagani (s.d.). Os de dedução natural quantificacional estão na unidade 4 de Sell (2014).</p>
+    <p><strong>8.</strong> O conjunto {∀x∃yRxy, ∀x¬Rxx, ∀x∀y∀z((Rxy ∧ Ryz) → Rxz)} é satisfazível apenas em domínios infinitos. Tente montar um modelo com dois ou três indivíduos no laboratório e identifique o conflito entre as condições. Depois prove que nenhum domínio finito serve e apresente um modelo infinito. Algumas tentativas no laboratório não substituem essa prova.</p>
+    <p><strong>Leitura e prática complementar.</strong> A <a href="guia-estudo.html">trilha de estudo</a> organiza os capítulos 8–11 e 15–16 de Mortari e a unidade 4 de Sell. A numeração de Pagani deve ser conferida pelo enunciado antes de usar uma resolução como gabarito.</p>
 
-    <h2 id="proximo"><span class="num">Encerramento</span>Próximo passo</h2><p>O ciclo de cada módulo se fecha em três movimentos: resolver os exercícios, verificar o marco no banco de itens e submeter o artefato escrito à rubrica correspondente.</p><div class="nextgrid"><a class="nx" href="provas.html#C1"><span class="k">Verificar o marco</span><span class="t">Provas de Domínio · marco C1</span><span class="d">Itens autocorrigidos com justificativa e fonte. O marco é vencido a partir de 75% de acerto.</span></a><a class="nx" href="prompts.html#p6"><span class="k">Corrigir o artefato</span><span class="t">Prompt 6 · Formalização em primeira ordem</span><span class="d">Cobre escopo, ordem de quantificadores, identidade e restrições sobre variáveis.</span></a><a class="nx" href="06-modulo-6.html"><span class="k">Seguir</span><span class="t">Módulo 6 · Metateoria</span><span class="d">Nível C · módulo 6 no percurso.</span></a></div>
+    <h2 id="solucoes"><span class="num">Apoio à prática</span>Pistas e soluções comentadas</h2>
+    <p>Declare sempre a linguagem e a estrutura. Nas questões de tradução, a solução abaixo fixa uma leitura; fórmulas equivalentes e mudanças consistentes de letras são aceitas. Nas provas, confira especialmente as hipóteses que permanecem abertas.</p>
+    <h3>1. Estudantes e livros</h3>
+    <details class="ajuda"><summary>Pista</summary><p>Use P para estudantes, Q para livros e Rxy para «x lê y». Em (b), escolha o livro antes de percorrer os estudantes. Em (d), combine existência de um estudante com a propriedade desejada e unicidade entre os estudantes com essa propriedade.</p></details>
+    <details class="ajuda"><summary>Uma solução e critérios de conferência</summary><p>Domínio: pessoas e livros. P e Q são unários; R é binário, com leitor no primeiro lugar e objeto lido no segundo.</p><pre>(a) ∀x(Px → ∃y(Qy ∧ Rxy))
+(b) ∃y(Qy ∧ ∀x(Px → Rxy))
+(c) ∀x(Px → ¬∀y(Qy → Rxy))
+(d) ∃x((Px ∧ ¬∃y(Qy ∧ Rxy)) ∧
+       ∀z((Pz ∧ ¬∃y(Qy ∧ Rzy)) → z = x))</pre><p>Em (c), cada estudante deixa de ler ao menos um livro; isso equivale a ∀x(Px → ∃y(Qy ∧ ¬Rxy)). Se não há livros, a frase «lê todos os livros» é verdadeira por vacuidade para cada estudante, e por isso (c) só será verdadeira se também não houver estudantes. Em (d), a unicidade vale entre os estudantes que não leem livro algum, sem proibir outros estudantes leitores.</p><p><strong>Critérios:</strong> fixar domínio e aridades; preservar a ordem de R; colocar o quantificador que escolhe o livro no escopo correto; em (d), incluir existência e unicidade da mesma propriedade. O uso de → ou ∧ depende do enunciado, não apenas do quantificador externo.</p></details>
+    <h3>2. Uma escolha por estudante e uma escolha para todos</h3>
+    <details class="ajuda"><summary>Pista</summary><p>Dê a cada estudante um livro diferente e não acrescente outras leituras. Para a versão abstrata do laboratório, use uma relação que só ligue cada objeto a si mesmo.</p></details>
+    <details class="ajuda"><summary>Solução comentada</summary><p>No papel, tome D = {Ana, Bia, livro 1, livro 2}, P = {Ana, Bia}, Q = {livro 1, livro 2} e R = {(Ana, livro 1), (Bia, livro 2)}. Cada estudante lê um livro, mas nenhum livro é lido pelos dois. Logo (a) é verdadeira e (b) falsa.</p><p>O laboratório tem no máximo três indivíduos. Para testar somente a ordem dos quantificadores, selecione dois indivíduos e deixe em R apenas os pares (1,1) e (2,2). Cada linha da matriz contém uma seta, então ∀x∃yRxy é verdadeira; nenhuma coluna recebe setas de ambos, então ∃y∀xRxy é falsa. Esse segundo exemplo abstrai os predicados de estudante e livro; não é a estrutura de quatro objetos do primeiro.</p></details>
+    <h3>3. Por que o existencial com condicional não traduz a particular</h3>
+    <details class="ajuda"><summary>Pista</summary><p>O existencial só precisa de uma testemunha. Avalie Px → Qx em um objeto fora de P.</p></details>
+    <details class="ajuda"><summary>Solução comentada</summary><p>Se d não pertence a P, Pd é falsa e Pd → Qd é verdadeira, qualquer que seja Qd. Esse d já testemunha ∃x(Px → Qx). No laboratório, esvazie P e Q: a fórmula continua verdadeira, mas ∃x(Px ∧ Qx) é falsa. A primeira não exige um objeto que seja simultaneamente P e Q.</p></details>
+    <h3>4. Universal sem importação existencial</h3>
+    <details class="ajuda"><summary>Pista</summary><p>Mantenha o domínio não vazio e esvazie apenas a extensão de P. Domínio vazio e predicado vazio são coisas diferentes.</p></details>
+    <details class="ajuda"><summary>Solução comentada</summary><p>Tome D = {1,2}, P = ∅ e Q = ∅. Todo antecedente Px é falso, então ∀x(Px → Qx) é verdadeira. Não há testemunha de Px ∧ Qx, então ∃x(Px ∧ Qx) é falsa. É um contramodelo à consequência pretendida. A subalternação precisa de uma hipótese adicional de existência de P, como ∃xPx.</p></details>
+    <h3>5. Derivar uma equivalência quantificacional</h3>
+    <details class="ajuda"><summary>Pista</summary><p>Escolha um parâmetro novo a. Para provar ¬Pa, suponha Pa; I∃ contradirá a premissa. Generalize somente depois de descarregar a hipótese.</p></details>
+    <details class="ajuda"><summary>Solução comentada</summary><pre>1. ¬∃xPx               premissa
+2. │ Pa                hipótese para RAA; a é novo
+3. │ ∃xPx              2, I∃
+4. │ ∃xPx ∧ ¬∃xPx      3,1, I∧
+5. ¬Pa                 2–4, RAA
+6. ∀x¬Px               5, I∀</pre><p>Na linha 6, a não aparece na premissa 1, em hipótese aberta nem na fórmula generalizada. A hipótese Pa da linha 2 já foi descarregada. Generalizar enquanto ela permanecesse aberta violaria a regra.</p></details>
+    <h3>6. Diagnosticar uma generalização ilegítima</h3>
+    <details class="ajuda"><summary>Pista</summary><p>Uma instância sobre um objeto nomeado não estabelece o que ocorre com os demais. Outra maneira de errar é deixar o parâmetro na própria conclusão.</p></details>
+    <details class="ajuda"><summary>Exemplos e critérios de conferência</summary><pre>1. Pa                  premissa
+2. ∀xPx                I∀ ilegítima: a ocorre na premissa
+
+1. a = a               reflexividade
+2. ∀x(x = a)           I∀ ilegítima: a permanece na conclusão</pre><p>No primeiro caso, D = {1,2}, a = 1 e P = {1} tornam a premissa verdadeira e a conclusão falsa. No segundo, a = a é verdadeira, mas o objeto 2 não coincide com a = 1. Substituir todas as ocorrências adequadamente daria ∀x(x = x), que é válida.</p><p><strong>Critérios:</strong> indicar a condição violada e a linha exata; dar domínio não vazio e interpretações completas dos símbolos usados; calcular a verdade da premissa e a falsidade da conclusão. Não basta dizer que «a não é arbitrário» sem mostrar onde a arbitrariedade foi perdida.</p></details>
+    <h3>7. Exatamente dois P</h3>
+    <details class="ajuda"><summary>Pista</summary><p>Escolha dois P distintos e diga que todo P coincide com um desses dois. Duas existências isoladas podem ter a mesma testemunha.</p></details>
+    <details class="ajuda"><summary>Solução comentada</summary><pre>∃x∃y(Px ∧ Py ∧ ¬(x = y) ∧
+      ∀z(Pz → (z = x ∨ z = y)))</pre><p>No laboratório com três indivíduos, marque P nos indivíduos 1 e 2 e desmarque no 3. A fórmula é verdadeira, com testemunhas 1 e 2. Se P tiver um único elemento, falta um par distinto; se tiver três, falha a cláusula de que todo P é um dos dois escolhidos.</p></details>
+    <h3>8. Um conjunto que exige infinitos objetos</h3>
+    <details class="ajuda"><summary>Pista</summary><p>Comece em um objeto e escolha repetidamente um sucessor por R. Em um domínio finito, algum objeto reaparece. Use a transitividade para analisar esse ciclo.</p></details>
+    <details class="ajuda"><summary>Solução comentada</summary><p>Suponha um domínio com n objetos. A primeira sentença permite escolher uma sequência a₀Ra₁R…Raₙ. Como são n + 1 posições, algum objeto se repete: aᵢ = aⱼ com i &lt; j. Pela transitividade, o caminho entre essas posições dá Raᵢaⱼ e, portanto, Raᵢaᵢ. Isso contradiz a irreflexividade. Nenhum domínio finito satisfaz as três sentenças.</p><p>Um modelo infinito é D = ℕ e Rxy significando x &lt; y. Todo natural tem um maior, nenhum é menor que si mesmo e &lt; é transitiva. Nas tentativas finitas do laboratório, garantir um sucessor para todos força um ciclo; manter também a transitividade acaba impondo um laço que a irreflexividade proíbe.</p><p><strong>Critérios:</strong> justificar a repetição no domínio finito; usar transitividade para obter o laço; mostrar a contradição com a segunda sentença; verificar separadamente as três condições no modelo infinito. Testar apenas alguns desenhos não demonstra impossibilidade.</p></details>
+    <p class="note"><strong>Conferência do artefato C1:</strong> tradução com domínio, assinatura e escopos explícitos; um contramodelo dos casos selecionados com cálculo das premissas e conclusão; uma derivação com substituições admissíveis, parâmetros próprios e hipóteses descarregadas. Distinguir fórmula falsa em uma estrutura, fórmula não válida e busca inconclusiva. O teste do marco complementa essa produção.</p>
+
+    <h2 id="proximo"><span class="num">Encerramento</span>Próximo passo</h2><p>O ciclo de cada módulo se fecha em três movimentos: resolver os exercícios, concluir o teste do marco e submeter o artefato escrito à rubrica correspondente. O domínio exige as três verificações.</p><div class="nextgrid"><a class="nx" href="provas.html#C1"><span class="k">Verificar o marco</span><span class="t">Provas de Domínio · marco C1</span><span class="d">Itens autocorrigidos com justificativa e fonte. O teste é aprovado com 75% de acerto e todos os itens respondidos; o marco exige também a produção escrita.</span></a><a class="nx" href="prompts.html#p6"><span class="k">Corrigir o artefato</span><span class="t">Prompt 6 · Formalização em primeira ordem</span><span class="d">Cobre escopo, ordem de quantificadores, identidade e restrições sobre variáveis.</span></a><a class="nx" href="06-modulo-6.html"><span class="k">Seguir</span><span class="t">Módulo 6 · Metateoria</span><span class="d">Nível C · módulo 6 no percurso.</span></a></div>
 
     <h2 id="ref">Referências</h2>
     <div class="refs">
@@ -460,7 +511,11 @@ function parseFO(src){
   function termo(){ if(peek()!=='termo') throw {msg:'esperava um termo',pos:t[p]?t[p].i:src.length}; const n=t[p].nome; p++; return n; }
   function un(){
     if(peek()==='¬'){p++; return {op:'¬',a:un()};}
-    if(peek()==='∀'||peek()==='∃'){ const q=peek(); p++; const v=termo(); return {op:q, v, a:un()}; }
+    if(peek()==='∀'||peek()==='∃'){
+      const q=peek(); p++; const v=termo();
+      if(!/^[xyz]$/.test(v)) throw {msg:'após um quantificador, use uma variável: x, y ou z; '+v+' não é variável deste laboratório',pos:t[p-1].i};
+      return {op:q, v, a:un()};
+    }
     if(peek()==='('){p++; const e=bic(); esperar(')'); return e;}
     if(peek()==='pred'){ const nome=t[p].nome; p++; const ts=termos();
       if(!ts.length) throw {msg:'o predicado '+nome+' precisa de ao menos um termo',pos:t[p-1].i};
@@ -482,27 +537,55 @@ function showFO(n,pai){
   if(n.op==='=') return n.l+' = '+n.r;
   if(n.op==='¬') s = (n.a.op==='=') ? '¬('+showFO(n.a)+')' : '¬'+showFO(n.a,PR['¬']);
   else if(n.op==='∀'||n.op==='∃') s=n.op+n.v+showFO(n.a,PR['∀']);
-  else s=showFO(n.l,n.op==='→'?pr+1:pr)+' '+n.op+' '+showFO(n.r,pr);
+  else s=showFO(n.l,n.op==='→'?pr+1:pr)+' '+n.op+' '+showFO(n.r,n.op==='→'?pr:pr+1);
   return pr<pai?'('+s+')':s;
 }
+function validarFO(n,M){
+  const tem=(obj,k)=>Object.prototype.hasOwnProperty.call(obj,k);
+  function termo(t){
+    if(!/^[xyz]$/.test(t) && !tem(M.konst,t))
+      throw {msg:'constante sem interpretação neste laboratório: '+t+'. Use a ou b.',pos:0};
+  }
+  function percorre(f){
+    if(f.op==='at'){
+      const aridade=tem(M.un,f.pred)?1:tem(M.bin,f.pred)?2:0;
+      if(!aridade) throw {msg:'predicado sem interpretação neste laboratório: '+f.pred+'. Use P, Q ou R.',pos:0};
+      if(f.ts.length!==aridade) throw {msg:'o predicado '+f.pred+' exige '+aridade+' termo'+(aridade===1?'':'s')+'; foram escritos '+f.ts.length+'.',pos:0};
+      f.ts.forEach(termo); return;
+    }
+    if(f.op==='='){termo(f.l);termo(f.r);return;}
+    if(f.op==='¬'){percorre(f.a);return;}
+    if(f.op==='∀'||f.op==='∃'){
+      if(!/^[xyz]$/.test(f.v)) throw {msg:'quantifique uma variável: x, y ou z.',pos:0};
+      percorre(f.a); return;
+    }
+    percorre(f.l); percorre(f.r);
+  }
+  percorre(n);
+}
 function evalFO(n,M,g){
+  // Validate the entire formula before truth-functional short-circuit evaluation.
+  validarFO(n,M);
+  return calculaFO(n,M,g);
+}
+function calculaFO(n,M,g){
   const val=t=> (t in M.konst)?M.konst[t]:(t in g?g[t]:null);
   switch(n.op){
     case 'at': {
       const vs=n.ts.map(val);
       if(vs.some(v=>v===null)) throw {msg:'variável livre sem valor: '+n.ts.join(''),pos:0};
-      if(vs.length===1) return (M.un[n.pred]||new Set()).has(vs[0]);
-      return (M.bin[n.pred]||new Set()).has(vs[0]+','+vs[1]);
+      if(vs.length===1) return M.un[n.pred].has(vs[0]);
+      return M.bin[n.pred].has(vs[0]+','+vs[1]);
     }
     case '=': { const a=val(n.l),b=val(n.r);
       if(a===null||b===null) throw {msg:'variável livre sem valor',pos:0}; return a===b; }
-    case '¬': return !evalFO(n.a,M,g);
-    case '∧': return evalFO(n.l,M,g)&&evalFO(n.r,M,g);
-    case '∨': return evalFO(n.l,M,g)||evalFO(n.r,M,g);
-    case '→': return !evalFO(n.l,M,g)||evalFO(n.r,M,g);
-    case '↔': return evalFO(n.l,M,g)===evalFO(n.r,M,g);
-    case '∀': return M.dom.every(d=>evalFO(n.a,M,Object.assign({},g,{[n.v]:d})));
-    case '∃': return M.dom.some(d=>evalFO(n.a,M,Object.assign({},g,{[n.v]:d})));
+    case '¬': return !calculaFO(n.a,M,g);
+    case '∧': return calculaFO(n.l,M,g)&&calculaFO(n.r,M,g);
+    case '∨': return calculaFO(n.l,M,g)||calculaFO(n.r,M,g);
+    case '→': return !calculaFO(n.l,M,g)||calculaFO(n.r,M,g);
+    case '↔': return calculaFO(n.l,M,g)===calculaFO(n.r,M,g);
+    case '∀': return M.dom.every(d=>calculaFO(n.a,M,Object.assign({},g,{[n.v]:d})));
+    case '∃': return M.dom.some(d=>calculaFO(n.a,M,Object.assign({},g,{[n.v]:d})));
   }
 }
 function livres(n,lig,acc){ lig=lig||new Set(); acc=acc||new Set();
@@ -605,10 +688,12 @@ function livres(n,lig,acc){ lig=lig||new Set(); acc=acc||new Set();
         "<code>" + esc(src) + "\n" + " ".repeat(Math.max(0, e.pos || 0)) + "^</code></div>";
       return;
     }
+    try { validarFO(no, M); }
+    catch(e){ saida.innerHTML = '<div class="erro"><strong>Fora da linguagem deste laboratório.</strong> '+esc(e.msg)+'</div>'; return; }
     const lv = [...livres(no)];
     if(lv.length){
       saida.innerHTML = '<div class="erro"><strong>A fórmula tem variável livre:</strong> ' + esc(lv.join(", ")) +
-        ". Só sentenças, isto é, fórmulas sem variável livre, são verdadeiras ou falsas em uma estrutura.</div>";
+        ". O laboratório avalia somente sentenças. Fórmulas abertas exigem também uma atribuição de objetos às variáveis livres.</div>";
       return;
     }
     let v;
@@ -650,8 +735,8 @@ function livres(n,lig,acc){ lig=lig||new Set(); acc=acc||new Set();
     montar();
   }));
   document.querySelectorAll("[data-ins]").forEach(b => b.addEventListener("click", () => {
-    const p = ent.selectionStart || ent.value.length;
-    ent.value = ent.value.slice(0, p) + b.dataset.ins + ent.value.slice(ent.selectionEnd || p);
+    const p = ent.selectionStart ?? ent.value.length;
+    ent.value = ent.value.slice(0, p) + b.dataset.ins + ent.value.slice(ent.selectionEnd ?? p);
     ent.focus(); ent.selectionStart = ent.selectionEnd = p + b.dataset.ins.length;
     avaliar();
   }));

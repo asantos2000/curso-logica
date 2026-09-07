@@ -128,7 +128,7 @@ figcaption b{font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-
 .refs p{padding-left:34px;text-indent:-34px;font-size:15.5px;margin-bottom:13px}
 :focus-visible{outline:2px solid var(--accent);outline-offset:3px}
 @media (max-width:900px){
-  .shell{grid-template-columns:1fr;gap:0}
+  .shell{grid-template-columns:minmax(0,1fr);gap:0}
   nav.toc{position:static;padding:22px 0 0;columns:2;column-gap:24px}
   nav.toc .lbl{column-span:all}
   article{padding-top:22px}
@@ -168,12 +168,12 @@ figcaption b{font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-
   <header class="hero">
     <div class="eyebrow">Ponto de entrada</div>
     <h1>Curso de fluência em lógica</h1>
-    <p class="lede">Percurso autoinstrucional do iniciante absoluto à metateoria e às lógicas não clássicas, construído sobre seis fontes em português e organizado por marcos de domínio. Esta página é o índice: comece por ela e volte a ela.</p>
+    <p class="lede">Percurso autoinstrucional do iniciante absoluto à metateoria e às lógicas não clássicas, com percurso principal apoiado em seis fontes em português e organizado por marcos de domínio. Esta página é o índice: comece por ela e volte a ela.</p>
     <div class="facts">
       <div><div class="k">Módulos</div><div class="v">Nove</div></div>
       <div><div class="k">Obrigatórios</div><div class="v">Seis</div></div>
       <div><div class="k">Complementares</div><div class="v">Três</div></div>
-      <div><div class="k">Marcos</div><div class="v">Oito</div></div>
+      <div><div class="k">Marcos</div><div class="v">Nove (seis principais)</div></div>
       <div><div class="k">Progressão</div><div class="v">Por domínio, não por calendário</div></div>
       <div><div class="k">Pré-requisito</div><div class="v">Nenhum</div></div>
     </div>
@@ -181,12 +181,12 @@ figcaption b{font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-
 
   <article style="max-width:none">
     <h2 id="uso"><span class="num">Antes de começar</span>Como o material funciona</h2>
-    <p class="intro">Há três espécies de material aqui, e confundi-las torna o percurso mais difícil do que precisa ser. Os <strong>módulos</strong> são a referência: texto expositivo, figuras, laboratórios interativos e exercícios. O <strong>banco de provas</strong> verifica se o marco foi vencido. Os <strong>prompts</strong> corrigem aquilo que nenhum teste automático alcança, que é a produção escrita.</p>
+    <p class="intro">Os materiais têm funções diferentes no percurso. Os <strong>módulos</strong> são a referência: texto expositivo, figuras, laboratórios interativos e exercícios. O <strong>banco de provas</strong> verifica uma parte do marco. Os <strong>prompts</strong> orientam a revisão da produção escrita, que precisa de conferência independente. O <a href="guia-estudo.html">guia de estudo</a> reúne leituras, prática essencial e convenções de notação.</p>
     <p>O ciclo de cada módulo tem quatro movimentos, e pular o terceiro ou o quarto é o modo mais comum de terminar o curso sabendo reconhecer respostas certas sem saber produzi-las.</p>
     <div class="ciclo">
       <div class="et"><span class="n">Primeiro</span><p>Ler o módulo inteiro, operando os laboratórios à medida que aparecem. Eles não são ilustração: calculam de verdade.</p></div>
       <div class="et"><span class="n">Segundo</span><p>Resolver os exercícios do fim do módulo e os do livro-texto indicados, conferindo no gabarito quando houver.</p></div>
-      <div class="et"><span class="n">Terceiro</span><p>Fazer o teste do marco no banco de provas. A partir de setenta e cinco por cento de acerto, o marco está vencido.</p></div>
+      <div class="et"><span class="n">Terceiro</span><p>Fazer o teste do marco no banco de provas. Responda a todos os itens e obtenha pelo menos 75% de acerto para aprovar o teste. A verificação da produção escrita completa o marco.</p></div>
       <div class="et"><span class="n">Quarto</span><p>Escrever o artefato que o marco exige e submetê-lo ao prompt de correção correspondente, refazendo-o antes de avançar.</p></div>
     </div>
     <p>Ao fim de cada módulo há um bloco chamado «Próximo passo», com os três destinos já ligados: o marco no banco de provas, o prompt da rubrica certa e o módulo seguinte. A barra no alto de cada página traz o caminho de volta a este índice.</p>
@@ -198,85 +198,86 @@ figcaption b{font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-
       <div class="tr-nivel">Documento de referência</div>
       <a class="it" href="00-proposta.html">
         <span class="num">00</span>
-        <span><span class="t">Proposta curricular</span><span class="d">O desenho do curso: diagnóstico das fontes, princípios de organização, os seis módulos unidade a unidade e o plano de avaliação. Leitura útil para quem vai ensinar; dispensável para quem vai estudar.</span></span>
+        <span><span class="t">Proposta curricular: </span><span class="d">O desenho do curso: diagnóstico das fontes, princípios de organização, os seis módulos unidade a unidade e o plano de avaliação. Leitura útil para quem vai ensinar; dispensável para quem vai estudar.</span></span>
         <span class="chip">relatório</span>
       </a>
 
-      <div class="tr-nivel">Nível A · iniciante absoluto · sem notação</div>
+      <div class="tr-nivel">Nível A · iniciante absoluto · introdução gradual à notação</div>
       <a class="it" href="01-modulo-1.html">
         <span class="num">01</span>
-        <span><span class="t">Argumento, inferência e validade</span><span class="d">Premissas e conclusão em texto corrido, validade como propriedade da forma, correção, dedução e indução, e oito falácias informais. Nenhum símbolo.</span></span>
+        <span><span class="t">Argumento, inferência e validade: </span><span class="d">Premissas e conclusão em texto corrido, validade como propriedade da forma, correção, dedução e indução, e oito falácias informais. Argumentos em português.</span></span>
         <span class="chip marco">marco A1</span>
       </a>
       <a class="it" href="01a-slides-modulo-1.html">
         <span class="num">01a</span>
-        <span><span class="t">Anatomia do argumento · aula</span><span class="d">Os mesmos conteúdos do módulo 1 em treze slides, com reconstrução por clique, quadro interativo de validade e verdade e verificação imediata.</span></span>
+        <span><span class="t">Anatomia do argumento · aula: </span><span class="d">Os mesmos conteúdos do módulo 1 em treze slides, com reconstrução por clique, quadro interativo de validade e verdade e verificação imediata.</span></span>
         <span class="chip">aula</span>
       </a>
       <a class="it" href="01b-modulo-1a.html">
         <span class="num">01b</span>
-        <span><span class="t">Bons e maus argumentos</span><span class="d">Argumentação informal: reconstrução caridosa, premissas implícitas, estrutura de apoio, esquemas argumentativos com perguntas críticas, ônus da prova e força indutiva.</span></span>
+        <span><span class="t">Bons e maus argumentos: </span><span class="d">Argumentação informal: reconstrução caridosa, premissas implícitas, estrutura de apoio, esquemas argumentativos com perguntas críticas, ônus da prova e força indutiva.</span></span>
         <span class="chip compl">complementar</span>
       </a>
       <a class="it" href="02-modulo-2.html">
         <span class="num">02</span>
-        <span><span class="t">A linguagem antes do símbolo</span><span class="d">Uso e menção, metalinguagem, teoria elementar de conjuntos, origens gregas e Aristóteles, com quadrado das oposições e verificador de silogismos.</span></span>
+        <span><span class="t">A linguagem antes do símbolo: </span><span class="d">Uso e menção, metalinguagem, teoria elementar de conjuntos, origens gregas e Aristóteles, com quadrado das oposições e verificador de silogismos.</span></span>
         <span class="chip marco">marco A2</span>
       </a>
 
       <div class="tr-nivel">Nível B · intermediário · cálculo proposicional</div>
       <a class="it" href="03-modulo-3.html">
         <span class="num">03</span>
-        <span><span class="t">A primeira linguagem formal</span><span class="d">Sintaxe como definição recursiva, tradução do português, valorações e tabelas de verdade, com laboratório que analisa fórmulas e testa argumentos.</span></span>
+        <span><span class="t">A primeira linguagem formal: </span><span class="d">Sintaxe como definição recursiva, tradução do português, valorações e tabelas de verdade, com laboratório que analisa fórmulas e testa argumentos.</span></span>
         <span class="chip marco">marco B1</span>
       </a>
       <a class="it" href="04-modulo-4.html">
         <span class="num">04</span>
-        <span><span class="t">Como se escreve uma prova</span><span class="d">Tablôs semânticos com construtor automático, sistemas formais, as dez regras da dedução natural, regras derivadas e a distinção entre ⊢ e ⊨.</span></span>
+        <span><span class="t">Como se escreve uma prova: </span><span class="d">Tablôs semânticos com construtor automático, sistemas formais, as dez regras da dedução natural, regras derivadas e a distinção entre ⊢ e ⊨.</span></span>
         <span class="chip marco">marco B2</span>
       </a>
 
       <div class="tr-nivel">Nível C · avançado · primeira ordem e metateoria</div>
       <a class="it" href="05-modulo-5.html">
         <span class="num">05</span>
-        <span><span class="t">Dentro da proposição</span><span class="d">Cálculo de predicados, quantificação múltipla, estruturas e verdade, tablôs quantificacionais, dedução natural com restrições e identidade.</span></span>
+        <span><span class="t">Dentro da proposição: </span><span class="d">Cálculo de predicados, quantificação múltipla, estruturas e verdade, tablôs quantificacionais, dedução natural com restrições e identidade.</span></span>
         <span class="chip marco">marco C1</span>
       </a>
       <a class="it" href="06-modulo-6.html">
         <span class="num">06</span>
-        <span><span class="t">O sistema como objeto</span><span class="d">Teorias formalizadas, correção e completude enunciadas, decidibilidade, o mapa das lógicas não clássicas e calculadora que compara cinco sistemas.</span></span>
+        <span><span class="t">O sistema como objeto: </span><span class="d">Teorias formalizadas, correção e completude enunciadas, decidibilidade, o mapa das lógicas não clássicas e calculadora que compara cinco sistemas.</span></span>
         <span class="chip marco">marco C2</span>
       </a>
       <a class="it" href="07-modulo-7.html">
         <span class="num">07</span>
-        <span><span class="t">Correção e completude</span><span class="d">As demonstrações: indução sobre derivações, lema de Lindenbaum, modelo canônico, compacidade, método de Henkin, indecidibilidade e incompletude.</span></span>
+        <span><span class="t">Correção e completude: </span><span class="d">As demonstrações: indução sobre derivações, lema de Lindenbaum, modelo canônico, compacidade, método de Henkin, indecidibilidade e incompletude.</span></span>
         <span class="chip compl">complementar</span>
       </a>
       <a class="it" href="08-modulo-8.html">
         <span class="num">08</span>
-        <span><span class="t">Seis lógicas não clássicas</span><span class="d">Modais aléticas com laboratório de Kripke, deônticas, epistêmicas e temporais, polivalentes, intuicionista, relevância e paraconsistência.</span></span>
+        <span><span class="t">Seis lógicas não clássicas: </span><span class="d">Modais aléticas com laboratório de Kripke, deônticas, epistêmicas e temporais, polivalentes, intuicionista, relevância e paraconsistência.</span></span>
         <span class="chip compl">complementar</span>
       </a>
     </div>
 
     <h2 id="instrumentos"><span class="num">Transversais</span>Instrumentos</h2>
-    <p>Estes três acompanham o curso inteiro e não pertencem a nenhum módulo em particular.</p>
+    <p>Estes quatro acompanham o curso inteiro e não pertencem a nenhum módulo em particular.</p>
     <div class="inst">
+      <a href="guia-estudo.html"><span class="k">Estudo</span><span class="t">Guia de leituras e exercícios</span><span class="d">Páginas por unidade, prática essencial e aprofundamento, soluções locais, correspondências de Pagani e folha de notação.</span></a>
       <a href="atlas.html"><span class="k">Mapa</span><span class="t">Atlas da Lógica</span><span class="d">Árvore navegável dos três níveis, seis módulos e trinta e três unidades, com ficha por nó, notação típica, fonte e filtro por eixo de fluência.</span></a>
-      <a href="provas.html"><span class="k">Avaliação</span><span class="t">Provas de Domínio</span><span class="d">Vinte e nove itens autocorrigidos, distribuídos pelos marcos A1 a C2, com justificativa e fonte em cada resposta e registro de progresso.</span></a>
-      <a href="prompts.html"><span class="k">Correção</span><span class="t">Sete Prompts de Correção</span><span class="d">Rubricas prontas para submeter cada tipo de artefato escrito a um modelo de linguagem, com protocolo de conferência do veredito.</span></a>
+      <a href="provas.html"><span class="k">Avaliação</span><span class="t">Provas de Domínio</span><span class="d">Quarenta e sete itens autocorrigidos, distribuídos pelos marcos A1 a C2, com justificativa e fonte em cada resposta e registro de progresso.</span></a>
+      <a href="prompts.html"><span class="k">Correção</span><span class="t">Nove Prompts de Correção</span><span class="d">Rubricas prontas para submeter cada tipo de artefato escrito a um modelo de linguagem, com protocolo de conferência do veredito.</span></a>
     </div>
 
     <h2 id="fontes"><span class="num">Base</span>As fontes</h2>
-    <p>Todo o material foi construído sobre seis fontes em português, e cada unidade indica de qual capítulo provém. O curso não substitui a leitura delas: organiza-a, verifica-a e a torna praticável sem professor.</p>
+    <p>O percurso principal se apoia nas seis fontes abaixo. As demonstrações e ampliações dos módulos complementares incluem desenvolvimento didático autoral, com fontes adicionais identificadas quando utilizadas. O <a href="guia-estudo.html">guia</a> indica leituras e limites de cobertura; o curso não substitui a consulta às obras.</p>
     <div class="tw"><table>
       <tr><th>Fonte</th><th>Papel</th></tr>
-      <tr><td>Mortari (2016), <em>Introdução à lógica</em></td><td>Espinha dorsal. Fornece a sequência e o rigor de todos os módulos</td></tr>
-      <tr><td>Neves Filho e Rui (2016), <em>Elementos de lógica</em></td><td>Primeira leitura do nível A e única fonte para as falácias</td></tr>
+      <tr><td>Mortari (2016), <em>Introdução à lógica</em></td><td>Espinha dorsal dos seis módulos principais; introduz os temas aprofundados nos complementares</td></tr>
+      <tr><td>Neves Filho e Rui (2016), <em>Elementos de lógica</em></td><td>Primeira leitura do nível A e base da seleção de falácias</td></tr>
       <tr><td>Sell (2014), <em>Lógica II</em></td><td>Exercícios de dedução natural, na notação de Nolt e Rohatyn</td></tr>
       <tr><td>Morais et al. (2019), <em>Introdução à lógica a partir de sua história filosófica</em></td><td>Contextualização histórica do módulo 2</td></tr>
-      <tr><td>Mortari (2023), plano de ensino FIL 6021</td><td>Referência de sequência, validada em uso institucional</td></tr>
-      <tr><td>Pagani (s.d.), gabarito comentado</td><td>Torna o formato autoinstrucional viável até o capítulo 12</td></tr>
+      <tr><td>Mortari (2023), plano de ensino FIL 6021</td><td>Exemplo institucional de sequência e avaliação; não valida este curso</td></tr>
+      <tr><td>Pagani (s.d.), gabarito comentado</td><td>Respostas de outra organização do livro; consultar somente após comparar os enunciados</td></tr>
     </table></div>
     <p class="note">Os arquivos são autocontidos: abrem sem conexão, em qualquer navegador, e podem ser copiados ou distribuídos como uma pasta. Os laboratórios interativos rodam localmente, sem servidor.</p>
   </article>

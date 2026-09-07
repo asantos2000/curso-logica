@@ -7,7 +7,7 @@
 <style>:root{color-scheme:light dark}body{margin:0;font:14px/1.5 system-ui,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style>
 </head>
 <body>
-<title>Sete Prompts de Correção</title>
+<title>Nove Prompts de Correção</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,600&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
 <style>
 :root{
@@ -128,7 +128,7 @@ figcaption b{font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-
 .refs p{padding-left:34px;text-indent:-34px;font-size:15.5px;margin-bottom:13px}
 :focus-visible{outline:2px solid var(--accent);outline-offset:3px}
 @media (max-width:900px){
-  .shell{grid-template-columns:1fr;gap:0}
+  .shell{grid-template-columns:minmax(0,1fr);gap:0}
   nav.toc{position:static;padding:22px 0 0;columns:2;column-gap:24px}
   nav.toc .lbl{column-span:all}
   article{padding-top:22px}
@@ -185,11 +185,11 @@ pre.prompt{margin:14px 18px;padding:15px 16px;background:var(--ground);border:1p
 <div class="shell">
   <header class="hero">
     <div class="eyebrow">Curso de fluência em lógica · instrumento de avaliação</div>
-    <h1>Sete prompts de correção</h1>
-    <p class="lede">A produção escrita é o que evidencia fluência, e é justamente o que nenhum teste autocorrigido alcança. Estes sete prompts permitem ao aluno submeter cada artefato a um modelo de linguagem e obter crítica estruturada, sem receber a solução pronta.</p>
+    <h1>Nove prompts de correção</h1>
+    <p class="lede">A produção escrita é o que evidencia fluência, e é justamente o que nenhum teste autocorrigido alcança. Estes nove prompts permitem ao aluno submeter cada artefato a um modelo de linguagem e obter crítica estruturada, sem receber a solução pronta.</p>
     <div class="facts">
-      <div><div class="k">Prompts</div><div class="v">Sete</div></div>
-      <div><div class="k">Cobrem</div><div class="v">Marcos A1b a C2</div></div>
+      <div><div class="k">Prompts</div><div class="v">Nove</div></div>
+      <div><div class="k">Cobrem</div><div class="v">A1, A1b e B1 a C4</div></div>
       <div><div class="k">Modelo</div><div class="v">Qualquer, indiferente</div></div>
       <div><div class="k">Postura</div><div class="v">Crítica, não resolução</div></div>
       <div><div class="k">Substitui</div><div class="v">Não substitui leitura humana</div></div>
@@ -200,7 +200,7 @@ pre.prompt{margin:14px 18px;padding:15px 16px;background:var(--ground);border:1p
     <span class="lbl">Seções</span>
     <a href="#i">Por que prompts e não conversa</a>
     <a href="#uso">Como usar</a>
-    <a href="#p">Os sete prompts</a>
+    <a href="#p">Os nove prompts</a>
     <a href="#desconf">Protocolo de desconfiança</a>
     <a href="#nao">O que não pedir</a>
     <a href="#ref">Referências</a>
@@ -217,7 +217,7 @@ pre.prompt{margin:14px 18px;padding:15px 16px;background:var(--ground);border:1p
     <p>Ao receber a resposta, resista ao impulso de pedir a correção. Trabalhe primeiro sobre as perguntas críticas devolvidas, refaça o artefato e submeta a segunda versão ao mesmo prompt. Só depois de duas passagens, e apenas se algo permanecer opaco, peça a solução comentada. Este é o único modo de o instrumento treinar, em vez de apenas informar.</p>
     <div class="note">Os prompts são independentes de modelo e de fornecedor. Foram redigidos em português e devem ser enviados como primeira mensagem de uma conversa nova, para que nada do contexto anterior interfira na avaliação.</div>
 
-    <h2 id="p"><span class="num">Instrumento</span>Os sete prompts</h2>
+    <h2 id="p"><span class="num">Instrumento</span>Os nove prompts</h2>
     <p>Cada prompt corresponde a um tipo de artefato e ao marco em que ele é exigido.</p>
     <div class="picker" id="picker"></div>
     <div class="pbox" id="pbox"></div>
@@ -227,7 +227,7 @@ pre.prompt{margin:14px 18px;padding:15px 16px;background:var(--ground);border:1p
     <p><strong>Exija o contramodelo.</strong> Se o modelo afirma que o seu argumento é inválido, peça a valoração ou a estrutura que o refuta, e verifique-a você mesmo, calculando o valor de cada premissa e da conclusão. Um modelo que erra o veredito raramente consegue produzir um contramodelo que sobreviva à conferência.</p>
     <p><strong>Exija a linha.</strong> Se o modelo aponta erro em uma derivação, ele deve citar o número da linha, a regra invocada e a razão pela qual as fórmulas citadas não licenciam a aplicação. Crítica sem número de linha é crítica não verificável e deve ser descartada.</p>
     <p><strong>Refaça a coluna à mão.</strong> Para tabelas de verdade e tablôs, recalcule uma linha ou um ramo por conta própria. É o teste mais rápido disponível e o que mais frequentemente revela erro do corretor.</p>
-    <p><strong>Use o gabarito quando houver.</strong> Para os exercícios dos capítulos 1 a 12 do livro-texto, o gabarito comentado de Pagani (s.d.) é a autoridade, e prevalece sobre o modelo em qualquer divergência. A partir do capítulo 13 essa referência não existe, e é exatamente aí que o protocolo acima passa a ser indispensável.</p>
+    <p><strong>Confira o enunciado antes de usar um gabarito.</strong> A numeração de Pagani não corresponde automaticamente à 2ª edição de Mortari adotada aqui. Use as correspondências verificadas no <a href="guia-estudo.html#pagani">guia de estudo</a>. Para os exercícios autorais, consulte as pistas e soluções do próprio módulo. Em uma divergência, reconstrua a verificação com as regras e definições: nem o gabarito nem o modelo dispensam esse exame.</p><p>O texto de cada produção é mantido ao alternar entre os nove prompts enquanto esta página permanece aberta. Guarde uma cópia antes de fechar ou recarregar a página.</p>
 
     <h2 id="nao"><span class="num">Limites</span>O que não pedir</h2>
     <p>Não peça ao modelo que resolva o exercício antes de você o ter tentado até o fim. O artefato malfeito é o insumo do instrumento; sem ele não há o que corrigir, e o que se obtém é uma solução alheia que não deixa aprendizado.</p>
@@ -258,16 +258,20 @@ plausibilidade.`;
 
 const SAIDA = `FORMATO DE SAÍDA
 1. Tabela com uma linha por critério da rubrica, e as colunas:
-   critério | atende / não atende / não verificado | evidência exata
-   A evidência deve citar a linha, a célula ou o trecho específico do artefato.
+   critério | atende / não atende / não verificado / não se aplica | evidência exata
+    A evidência deve citar a linha, a célula ou o trecho específico do artefato.
+   Use "não se aplica" para critérios condicionais cujo objeto não foi solicitado
+   no exercício; isso não é falha nem informação decisiva ausente.
 2. No máximo três perguntas críticas, dirigidas aos pontos que falharam,
    formuladas de modo que respondê-las corrija o artefato sem que a resposta
    seja dada.
-3. Uma única frase de veredito: o artefato cumpre ou não cumpre o marco.
+3. Uma única frase de veredito: artefato aprovado, artefato a revisar ou
+   verificação inconclusiva. Use inconclusiva quando faltar informação decisiva.
+   A aprovação deste artefato não certifica sozinha o domínio de todo o marco.
 Não escreva mais nada.`;
 
 const P = [
- { id:"A1b", t:"Reconstrução informal", marco:"Marco A1b",
+ { id:"A1b", t:"Reconstrução informal", marco:"Marcos A1 e A1b",
    why:"Verifica a padronização de um argumento em língua natural, a premissa suprimida escolhida pela regra de caridade, a estrutura de apoio e o esquema aplicado. Não há gabarito único, e por isso a rubrica incide sobre a justificação e não sobre a resposta.",
    corpo:`TAREFA
 Corrija a reconstrução informal de um argumento feita por um estudante.
@@ -275,12 +279,13 @@ Corrija a reconstrução informal de um argumento feita por um estudante.
 RUBRICA
 R1. A conclusão identificada é de fato aquilo que a passagem quer que se aceite,
     e não uma premissa nem uma consequência lateral.
-R2. Cada premissa listada de fato apoia a conclusão. Material concessivo,
-    ilustrativo ou meramente contextual foi descartado e não aparece como premissa.
-R3. A premissa implícita acrescentada é a MAIS FRACA que torna o argumento válido
-    ou forte. Se existir uma premissa mais fraca que também bastaria, aponte-a
-    sem enunciá-la por extenso: descreva apenas em que sentido a do aluno é forte
-    demais.
+R2. A função de cada trecho foi justificada: premissa, conclusão, concessão,
+    ilustração ou contexto. Informações necessárias à interpretação foram
+    preservadas. Uma concessão não deve ser descartada automaticamente.
+R3. Cada premissa implícita foi marcada e justificada pelo contexto. Entre
+    reconstruções igualmente fiéis, prefira a que exige menos suposições.
+    Não acrescente uma ponte artificial apenas para tornar válido o argumento:
+    uma reconstrução fiel pode revelar um argumento inválido ou fraco.
 R4. A estrutura de apoio declarada (convergente, ligada, serial) corresponde ao
     modo como as premissas efetivamente sustentam a conclusão. Teste: remova
     mentalmente cada premissa e verifique se o apoio desaparece ou apenas enfraquece.
@@ -299,10 +304,12 @@ clássico feita por um estudante.
 RUBRICA
 R1. O dicionário de letras sentenciais está completo e cada letra representa uma
     proposição declarativa inteira, sem partes soltas.
-R2. Para CADA sentença, verifique a tradução assim, e mostre a verificação:
-    construa uma situação em que a sentença em português é verdadeira e teste se
-    a fórmula é verdadeira nela; depois construa uma em que a sentença é falsa e
-    teste se a fórmula é falsa. Se as duas coincidirem, a tradução passa.
+R2. Para CADA sentença, fixe sua leitura e o dicionário. Construa uma formalização
+    de referência justificada por essa leitura e compare todas as combinações
+    relevantes de valores, ou demonstre a equivalência. Mostre a verificação.
+    Duas situações concordantes não bastam para aprovar uma tradução.
+    Se houver ambiguidade, declare as leituras antes de julgar. Não exija uma
+    situação falsa de uma tautologia nem uma verdadeira de uma contradição.
 R3. Condições necessárias e suficientes: "somente se" e "só ... se" introduzem
     condição NECESSÁRIA e ocupam o consequente; "se" introduz condição
     SUFICIENTE e ocupa o antecedente. Verifique cada condicional quanto a isso.
@@ -328,7 +335,7 @@ R2. RECOMPUTE cada coluna intermediária, linha a linha, do operador mais intern
 R3. A coluna final corresponde ao operador principal da fórmula, e não a um
     subcomponente.
 R4. A classificação (tautologia, contradição, contingência) decorre da coluna
-    final tal como o aluno a construiu.
+    final recomputada. Distinga erro de cálculo de erro de classificação.
 R5. Para o veredito de validade: existe alguma linha com todas as premissas
     verdadeiras e conclusão falsa? Cite o número dessa linha, se existir. Se não
     existir, diga quantas linhas têm todas as premissas verdadeiras e confirme
@@ -347,16 +354,20 @@ R2. Cada decomposição aplica a regra correta e ramifica quando deve ramificar.
     Verifique em particular: ¬(α→β) NÃO ramifica e produz α e ¬β no mesmo ramo;
     α→β ramifica; ¬(α∧β) ramifica; α∨β ramifica; ¬(α∨β) não ramifica.
     Para cada linha do tablô, cite a linha de origem e nomeie a regra aplicada.
-R3. Toda fórmula não atômica foi decomposta em todos os ramos em que ocorre, ou
-    o ramo já estava fechado quando a decomposição seria devida.
+R3. Toda fórmula com regra de decomposição pendente foi tratada nos ramos
+    relevantes, ou o ramo já estava fechado. Um literal como ¬P não se decompõe.
 R4. Cada ramo declarado fechado contém de fato uma fórmula e a sua negação.
     Cite as duas linhas.
 R5. Cada ramo declarado aberto está saturado, isto é, não há decomposição
     pendente nele.
-R6. Se há ramo aberto, o aluno extraiu dele a valoração e ela de fato torna todas
-    as premissas verdadeiras e a conclusão falsa. VERIFIQUE calculando o valor de
-    cada premissa e da conclusão sob essa valoração, e mostre o cálculo.
-R7. O veredito final corresponde ao estado dos ramos.`},
+R6. De um ramo aberto saturado, o aluno extraiu uma valoração (ou estrutura,
+    em primeira ordem) que torna as premissas verdadeiras e a conclusão falsa.
+    VERIFIQUE cada premissa e a conclusão e mostre o cálculo.
+R7. Em primeira ordem, confira substituições sem captura, nomes novos para
+    testemunhas e reaplicações das universais. Se não havia nome no ramo,
+    pode-se introduzir um primeiro nome para o domínio não vazio. Uma busca
+    que não terminou não demonstra invalidade: registre resultado inconclusivo.
+R8. O veredito final corresponde ao estado dos ramos.`},
 
  { id:"B2b", t:"Dedução natural", marco:"Marco B2",
    why:"A rubrica mais longa, porque a derivação é o artefato com mais maneiras de falhar: regra mal aplicada, hipótese não descarregada, linha citada fora de escopo.",
@@ -372,13 +383,13 @@ R1. Toda premissa está justificada como premissa e pertence ao conjunto dado.
 R2. Cada aplicação de regra é legítima: as fórmulas citadas têm de fato a forma
     que a regra exige. Verifique em particular que modus ponens cita um
     condicional e o seu antecedente, e não o consequente.
-R3. Toda hipótese levantada foi descarregada, e foi descarregada pela regra
+R3. Toda hipótese adicional às premissas foi descarregada pela regra
     correta: prova do condicional descarrega o antecedente; redução ao absurdo
     descarrega a hipótese que conduziu à contradição.
 R4. Nenhuma linha cita uma linha interna a uma subderivação já encerrada.
     Este é o erro mais frequente; percorra o escopo de cada citação.
-R5. A conclusão da última linha é exatamente a fórmula pedida, e ela não depende
-    de nenhuma hipótese não descarregada.
+R5. A conclusão da última linha é exatamente a fórmula pedida e depende apenas
+    de premissas autorizadas, sem hipóteses adicionais ainda abertas.
 R6. Se o aluno usou uma regra derivada, ela é uma das regras derivadas
     disponíveis no curso, e foi nomeada.
 R7. Se houver notação divergente da adotada no material, isso NÃO é erro; anote
@@ -396,9 +407,10 @@ e a derivação que a acompanha, se houver.
 RUBRICA
 R1. O dicionário declara o domínio, cada constante de predicado com a sua aridade
     e cada constante individual.
-R2. Universais empregam condicional e existenciais empregam conjunção. Sinalize
-    toda ocorrência de ∀x(Px ∧ Qx) ou de ∃x(Px → Qx) e explique, para cada uma,
-    o que a fórmula passa a afirmar.
+R2. Para as categóricas "Todo P é Q" e "Algum P é Q", confira respectivamente
+    ∀x(Px → Qx) e ∃x(Px ∧ Qx). Esses padrões não são regras gerais de formação:
+    ∀x(Px ∧ Qx) e ∃x(Px → Qx) podem traduzir corretamente outros enunciados.
+    Julgue cada fórmula pela leitura pretendida, não só pelo conectivo usado.
 R3. A ordem dos quantificadores corresponde à leitura pretendida. Para cada
     fórmula com dois quantificadores de tipos diferentes, descreva em português
     o que a fórmula do aluno diz e o que a fórmula com a ordem invertida diria.
@@ -406,10 +418,15 @@ R4. Não há variável livre onde deveria haver ligada, nem captura de variável
 R5. Se há identidade, as fórmulas de unicidade e de numeralidade estão corretas.
     Verifique que "exatamente um" tem a cláusula de unicidade, e não apenas a de
     existência.
-R6. Se há derivação, verifique as restrições sobre a variável própria: na
-    introdução do universal, a variável não pode ocorrer livre em nenhuma
-    hipótese não descarregada; na eliminação do existencial, a constante ou
-    variável introduzida deve ser nova. Cite a linha de cada violação.
+R6. Se há derivação, confira substituição de ocorrências livres sem captura.
+    Na versão de I∀ com constante própria, ela não pode ocorrer nas premissas,
+    nas hipóteses abertas nem na conclusão universal. Na versão que passa de
+    α a ∀xα, exija que x não ocorra livre nas hipóteses abertas, inclusive premissas.
+    Em E∃ com constante própria, descarregue a hipótese temporária: a constante
+    não pode ocorrer na conclusão nem nas demais hipóteses abertas, inclusive
+    premissas. Aceite apresentações equivalentes com variáveis próprias,
+    conferindo as restrições correspondentes de ocorrência livre.
+    Cite a linha e a condição de cada violação.
 R7. Se o aluno apresentou uma estrutura para refutar uma fórmula, verifique-a:
     exiba o domínio, a interpretação e o cálculo do valor da fórmula nela.`},
 
@@ -418,19 +435,23 @@ R7. Se o aluno apresentou uma estrutura para refutar uma fórmula, verifique-a:
    corpo:`TAREFA
 Corrija o trabalho integrador de um estudante, que consiste em: um trecho de
 texto escolhido por ele, a reconstrução do argumento ali contido, a formalização
-desse argumento, a decisão sobre a sua validade e uma discussão do que a
+desse argumento, a análise de sua validade e uma discussão do que a
 formalização preservou e do que perdeu.
 
 RUBRICA
-R1. A reconstrução é fiel ao trecho: não acrescenta premissas ausentes nem
-    descarta premissas presentes. Cite o trecho para cada premissa.
+R1. A reconstrução é fiel ao trecho: distingue premissas explícitas de implícitas,
+    marca estas últimas e justifica cada uma pelo contexto. Não inventa premissas
+    apenas para obter validade nem omite informação relevante. Cite os trechos.
 R2. A formalização é fiel à reconstrução. Avalie cada fórmula contra a frase
     correspondente, e não contra a sua própria leitura do texto.
 R3. A escolha do sistema é adequada: se o argumento depende da estrutura interna
     das proposições, o cálculo proposicional é insuficiente, e isso deveria ter
     sido notado.
-R4. O método de decisão foi aplicado corretamente. Aplique a rubrica de tablô ou
-    a de dedução natural conforme o caso, e verifique o resultado.
+R4. O método de prova ou refutação foi aplicado corretamente. Confira o tablô,
+    a derivação ou o contramodelo. Em primeira ordem, busca não terminada permite
+    apenas resultado inconclusivo. Se o enunciado admite essa opção, avalie o
+    registro da tentativa e de seus limites; se exige decisão, peça um caso
+    tratável. Não confunda falta de prova com prova de invalidade.
 R5. A discussão final identifica ao menos uma perda REAL da formalização, isto é,
     algo que o texto afirma ou sugere e que a fórmula não captura. Recuse
     observações genéricas sobre a lógica ser abstrata: exija que a perda seja
@@ -440,13 +461,70 @@ R6. O trabalho não confunde a invalidade do argumento com a falsidade da
 
 OBSERVAÇÃO
 Não avalie o mérito filosófico da tese defendida no trecho escolhido. Avalie a
-formalização e o tratamento lógico.`}
+formalização e o tratamento lógico.`},
+
+ { id:"C3", t:"Demonstração metateórica", marco:"Marco C3",
+   why:"Confere a demonstração de correção ou completude, as hipóteses dos lemas e a passagem entre linguagem-objeto e metalinguagem.",
+   corpo:`TAREFA
+Avalie a demonstração metateórica e os exercícios do marco C3.
+
+RUBRICA
+R1. O enunciado declara linguagem, sistema dedutivo e quantificação sobre Γ e α.
+    A E∨ do sistema Sell adotado é direta; qualquer mudança de regra é justificada.
+R2. Cada indução declara objeto, base, hipótese e passo. Não confunda indução
+    na fórmula com indução na derivação, nem indução matemática com empírica.
+R3. Na correção, acompanhe as hipóteses abertas e seu descarregamento em PC/RAA.
+R4. Na construção maximal, confira a preservação da consistência e o argumento
+    de finitude na união. O lema da verdade trata todos os conectivos.
+R5. A passagem à completude não usa como premissa o próprio resultado a provar.
+    Diferencie extensão consistente, existência de modelo e contraposição final.
+    Confira a explicação do caráter não construtivo da prova apresentada:
+    a definição por casos de consistência não fornece um algoritmo geral para
+    realizar as escolhas. Distinga lógica-objeto e raciocínio metateórico.
+R6. Em primeira ordem, identifique a função das testemunhas de Henkin, termos
+    fechados e identidade; delimite esboço e prova completa e trate sentenças
+    antes de estender a fórmulas abertas com parâmetros.
+R7. Compacidade, completude de cálculo, completude de teoria, semidecidibilidade
+    e decidibilidade são distinguidas. Exija exemplo ou contraexemplo pertinente.
+R8. Localize qualquer lacuna numa linha ou passagem; se não puder verificar um
+    lema, declare a verificação inconclusiva, sem supor que o lema é verdadeiro.`},
+
+ { id:"C4", t:"Modelos e lógicas não clássicas", marco:"Marco C4",
+   why:"Verifica estruturas modais, contravalorações e comparações entre consequência clássica, polivalente e intuicionista.",
+   corpo:`TAREFA
+Avalie os modelos, cálculos e explicações produzidos para o marco C4.
+
+RUBRICA
+R1. O sistema, a linguagem e a semântica estão declarados: mundos, acessibilidade,
+    valoração ou, nas matrizes, operações e valores designados.
+R2. Recompute a verdade das fórmulas por mundo. Diferencie verdade no mundo,
+    validade no modelo e validade no frame para todas as valorações.
+R3. Para um esquema modal que falha, verifique uma valoração e um mundo
+    refutadores. Para validade no frame, um único exemplo favorável não basta.
+R4. As propriedades reflexiva, serial, transitiva, simétrica e euclidiana foram
+    verificadas. Em S5, acessibilidade mútua vale dentro de cada classe.
+R5. Em lógicas polivalentes, verifique a preservação de valores designados das
+    premissas à conclusão. LP conserva tautologias clássicas, mas não toda
+    consequência clássica com premissas. Preserve parênteses ao calcular ↔.
+R6. Em semântica intuicionista, a valoração é persistente e →/¬ consideram todos
+    os estados futuros. Não forçar P não significa forçar ¬P. Explique o caso
+    de dois estados em que P só passa a valer no segundo.
+R7. Compare a interpretação do valor intermediário de K₃ e LP e localize uma
+    inferência que separa sistemas. Nas lógicas de relevância, compartilhar
+    variáveis é condição necessária, não um teste suficiente de validade.
+R8. Nas leituras de re e de dicto, confira o escopo relativo de quantificadores
+    e modalidades. Exija domínio, interpretação dos predicados em cada mundo
+    e cálculo que mostre onde as duas formalizações divergem.
+R9. As leituras filosóficas se apoiam nos cálculos apresentados; limitações do
+    modelo finito e resultados inconclusivos são declarados com precisão.`}
 ];
 
 const picker = document.getElementById("picker"), box = document.getElementById("pbox");
 let atual = 0;
+let exibido = -1, campoAtual = null;
+const rascunhos = Object.create(null);
 function doHash(){
-  const m = (location.hash || "").match(/^#p([1-7])$/i);
+  const m = (location.hash || "").match(/^#p([1-9])$/i);
   if(m) atual = +m[1] - 1;
 }
 doHash();
@@ -467,6 +545,9 @@ function montar(p, artefato){
 }
 
 function render(){
+  if(exibido === atual) return;
+  if(campoAtual) rascunhos[exibido] = campoAtual.value;
+  exibido = atual;
   Array.from(picker.children).forEach((c, k) => c.setAttribute("aria-pressed", String(k === atual)));
   const p = P[atual];
   box.innerHTML = "";
@@ -474,6 +555,8 @@ function render(){
   h.innerHTML = "<h3>" + p.t + '</h3><span class="marco">' + p.marco + "</span>";
   const why = document.createElement("p"); why.className = "why"; why.textContent = p.why;
   const ta = document.createElement("textarea");
+  ta.value = rascunhos[atual] || "";
+  campoAtual = ta;
   ta.placeholder = "Cole aqui o seu artefato. O prompt abaixo se monta sozinho.";
   ta.setAttribute("aria-label", "Seu artefato");
   const pre = document.createElement("pre"); pre.className = "prompt";
@@ -484,7 +567,7 @@ function render(){
   tools.append(bcopy, bsel, msg);
   box.append(h, why, ta, pre, tools);
 
-  function atualiza(){ pre.textContent = montar(p, ta.value); }
+  function atualiza(){ rascunhos[exibido] = ta.value; pre.textContent = montar(p, ta.value); }
   ta.addEventListener("input", atualiza); atualiza();
 
   function selecionar(){

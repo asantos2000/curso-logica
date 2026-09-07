@@ -33,20 +33,35 @@ A navegação principal é feita pelo arquivo [index.html](index.html), que func
 - [atlas.html](atlas.html) — atlas ou mapa de referências/conceitos
 - [prompts.html](prompts.html) — prompts de apoio e correção de produções
 - [provas.html](provas.html) — banco de provas / atividades avaliativas
+- [guia-estudo.html](guia-estudo.html) — leituras por unidade, prática essencial, aprofundamento, notação e correspondências verificadas de Pagani
+- [REVISAO.md](REVISAO.md) — achados da revisão, correções aplicadas e evidências de verificação
 
 ## Como usar
 
 1. Abra o arquivo [index.html](index.html) em um navegador.
 2. Navegue pelos módulos e materiais em ordem.
-3. Siga o percurso recomendado do curso, começando pelos módulos introdutórios.
-4. Use os materiais de prova e os prompts como apoio para validação e feedback.
+3. Consulte o guia de estudo e tente os exercícios antes de abrir as pistas e soluções comentadas.
+4. Conclua todos os itens do teste do marco e obtenha pelo menos 75% de acerto. O banco reúne 47 questões.
+5. Verifique também a produção escrita do marco, com os critérios do módulo e as nove rubricas de correção. A aprovação do teste sozinha não conclui o marco.
 
 Como o projeto é estático em HTML, não há instalação de dependências nem build step. Basta abrir os arquivos diretamente no navegador ou servir a pasta localmente com um servidor simples.
+
+As leituras usam os PDFs da pasta [references/](references/). A numeração do gabarito de Pagani não corresponde automaticamente à 2ª edição de Mortari; consulte a tabela de correspondências no guia. O texto inserido nos prompts é preservado ao alternar entre eles enquanto a página permanece aberta; salve uma cópia antes de recarregar ou fechar.
 
 ## Requisitos
 
 - Navegador moderno
 - Sistema de arquivos local ou servidor HTTP simples
+
+## Verificação do material
+
+Para executar os testes de regressão, use Node.js, sem instalar pacotes (verificado com a versão 24.12.0):
+
+```powershell
+node --test tests/*.test.cjs
+```
+
+A suíte contém 47 testes e cobre cálculos proposicionais e polivalentes, assinatura de primeira ordem, silogismos, relações modais, teclado, preservação de textos e critérios de aprovação. Node é necessário apenas para esses testes, não para estudar o curso.
 
 ## Observações
 
